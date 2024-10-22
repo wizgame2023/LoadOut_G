@@ -7,57 +7,105 @@
     <Filter Include="Sources">
       <UniqueIdentifier>{96692d2a-8790-41a9-bfac-6c5662d4ad61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\GameObject">
+      <UniqueIdentifier>{5531b37e-09a6-4d12-ae48-6beffcfc0077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\GameObject">
+      <UniqueIdentifier>{1f183d0f-7f4e-41a6-836a-049a518f1a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\UI">
+      <UniqueIdentifier>{f6d240e1-bd2d-4003-8ac9-fe0fbc209341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\UI">
+      <UniqueIdentifier>{4b1395b0-3485-4317-b3fd-3863b5293f66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Stage">
+      <UniqueIdentifier>{bbd084e2-7db4-4bb3-ab11-6cfa4491eba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Stage">
+      <UniqueIdentifier>{a0a858ec-75ff-4aa6-a678-7a5bdf8d4cf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\PrivateStage">
+      <UniqueIdentifier>{f41316c0-48b6-4fcf-bcda-26eaea4f8e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\PrivateStage">
+      <UniqueIdentifier>{e29a0a0b-672a-4625-b367-2d0bf7095569}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\System">
+      <UniqueIdentifier>{31594912-3df9-4392-99f1-9851f96f7b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\System">
+      <UniqueIdentifier>{59ee6395-62c3-428a-bbeb-0ed5cf118629}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Block.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TuabkiStage.h">
+      <Filter>Headers\PrivateStage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)YuusinStage.h">
+      <Filter>Headers\PrivateStage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)YuutaStage.h">
+      <Filter>Headers\PrivateStage</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\Stage</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\System</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\System</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Block.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
+      <Filter>Headers\System</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
+      <Filter>Headers\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Block.cpp">
+      <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Sources\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp">
+      <Filter>Sources\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp">
+      <Filter>Sources\PrivateStage</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)YuusinStage.cpp">
+      <Filter>Sources\PrivateStage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)YuutaStage.cpp">
+      <Filter>Sources\PrivateStage</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Sources\System</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Block.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp">
+      <Filter>Sources\System</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
+      <Filter>Sources\System</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
+      <Filter>Sources\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
