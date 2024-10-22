@@ -13,9 +13,6 @@
     <Filter Include="Headers\GameObject">
       <UniqueIdentifier>{1f183d0f-7f4e-41a6-836a-049a518f1a10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\UI">
-      <UniqueIdentifier>{f6d240e1-bd2d-4003-8ac9-fe0fbc209341}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headers\UI">
       <UniqueIdentifier>{4b1395b0-3485-4317-b3fd-3863b5293f66}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,15 @@
     </Filter>
     <Filter Include="Sources\System">
       <UniqueIdentifier>{59ee6395-62c3-428a-bbeb-0ed5cf118629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\AI">
+      <UniqueIdentifier>{a98a2c21-93ab-4ea7-b250-b07276dd4497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\AI">
+      <UniqueIdentifier>{f6d240e1-bd2d-4003-8ac9-fe0fbc209341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\UI">
+      <UniqueIdentifier>{691e1999-5330-437d-bcac-3512a2b77cf7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +78,20 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>Headers\System</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Enemy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ground.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)State.h">
+      <Filter>Headers\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h">
+      <Filter>Headers\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h">
+      <Filter>Headers\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h">
+      <Filter>Headers\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -106,6 +126,20 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
       <Filter>Sources\System</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Ground.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp">
+      <Filter>Sources\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp">
+      <Filter>Sources\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp">
+      <Filter>Sources\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp">
+      <Filter>Sources\AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
