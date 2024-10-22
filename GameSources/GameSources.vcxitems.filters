@@ -72,6 +72,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>Headers\System</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ground.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -89,7 +90,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp">
       <Filter>Sources\PrivateStage</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)YuusinStage.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)YushinStage.cpp">
       <Filter>Sources\PrivateStage</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)YuutaStage.cpp">
@@ -107,5 +108,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
       <Filter>Sources\System</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Ground.cpp" />
   </ItemGroup>
 </Project>
