@@ -17,6 +17,9 @@
 #include "YuusinStage.h"
 #include "YuutaStage.h"
 #include "Ground.h"
-
+#include "Tracking.h"
+#include "Patrol.h"
+#include "State.h"
+#include "Attack.h"
 
 
