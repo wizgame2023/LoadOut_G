@@ -1,5 +1,5 @@
 /*!
-@file YuusinStage.cpp
+@file YushinStage.cpp
 @brief ゲームステージ実体
 */
 
