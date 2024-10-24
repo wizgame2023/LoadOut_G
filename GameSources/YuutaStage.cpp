@@ -40,7 +40,11 @@ namespace basecross {
 		//°‚Ìì¬
 		AddGameObject<Ground>();
 		//ƒuƒƒbƒN‚Ìì¬
-		//AddGameObject<Block>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		for (int i = 0; i < 10; i++)
+		{
+			AddGameObject<Block>(Vec3(-45.0f+(i*10), 5.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
+
+		}
 		//Player‚Ì¶¬
 		AddGameObject<Player>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 	}
