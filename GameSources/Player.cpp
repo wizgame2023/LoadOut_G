@@ -83,12 +83,17 @@ namespace basecross{
 
 		}
 
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		Vec2 selPos = mapManager->MyMapNow(m_Pos);
+
 		//デバック用
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
 		wss << L"デバッグ用文字列 "
 			<<L"\n傾き "<<deg
+			<< L"\nPos.x " << m_Pos.x << "\nPos.z " << m_Pos.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
 			<< endl;
 
 		scene->SetDebugString(wss.str());
