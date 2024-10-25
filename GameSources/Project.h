@@ -23,8 +23,9 @@
 //ステート用
 #include "State.h"//ステートの親クラス
 #include "Tracking.h"
+#include "State.h"
 #include "Patrol.h"
 #include "Attack.h"
-//
+
 
 

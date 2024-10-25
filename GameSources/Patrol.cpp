@@ -8,6 +8,20 @@
 
 namespace basecross {
 
+	void Patrol::OnStart()
+	{
+
+	}
+
+	void Patrol::OnUpdate()
+	{
+
+	}
+
+	void Patrol::OnExit()
+	{
+
+	}
 
 }
 //end basecross
