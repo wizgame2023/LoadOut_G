@@ -85,7 +85,8 @@ namespace basecross{
 		}
 
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
-		Vec2 selPos = mapManager->MyMapNow(m_Pos);
+		Vec2 selPos = mapManager->ConvertSelMap(m_Pos);//今いるセル座標を取得
+		int selNow = mapManager->SelMapNow(m_Pos);//現在いるセル座標に何があるかを取得
 
 		//デバック用
 		wstringstream wss(L"");
@@ -95,7 +96,8 @@ namespace basecross{
 			<<L"\n傾き "<<deg
 			<< L"\nPos.x " << m_Pos.x << "\nPos.z " << m_Pos.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<<L"\nCount "<<m_count
+			<< L"\nCount " << m_count
+			<< L"\nSelNow " << selNow
 			<< endl;
 
 		scene->SetDebugString(wss.str());
