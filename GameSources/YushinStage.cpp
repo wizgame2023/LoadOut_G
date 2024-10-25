@@ -5,14 +5,15 @@
 
 #include "stdafx.h"
 #include "Project.h"
+#include "Enemy.h"
 
 namespace basecross {
 
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
-	void YuusinStage::CreateViewLight() {
-		const Vec3 eye(0.0f, 5.0f, -5.0f);
+	void YushinStage::CreateViewLight() {
+		const Vec3 eye(0.0f, 100.0f, -100.0f);
 		const Vec3 at(0.0f);
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
@@ -26,12 +27,16 @@ namespace basecross {
 		PtrMultiLight->SetDefaultLighting();
 	}
 
+	void YushinStage::CreateEnemy()
+	{
+		shared_ptr<Enemy> ptrEnemy = AddGameObject<Enemy>(Vec3(0.0f, 0.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(10.0f));
+	}
 
-
-	void YuusinStage::OnCreate() {
+	void YushinStage::OnCreate() {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
+			CreateEnemy();
 		}
 		catch (...) {
 			throw;

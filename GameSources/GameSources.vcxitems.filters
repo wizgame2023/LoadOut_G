@@ -73,6 +73,7 @@
       <Filter>Headers\System</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Ground.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -109,5 +110,6 @@
       <Filter>Sources\System</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Ground.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp" />
   </ItemGroup>
 </Project>
