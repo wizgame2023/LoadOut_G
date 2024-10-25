@@ -80,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Enemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Ground.h" />
+<<<<<<< HEAD
+    <ClInclude Include="$(MSBuildThisFileDirectory)Enemy.h" />
+=======
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h">
       <Filter>Headers\AI</Filter>
     </ClInclude>
@@ -92,6 +95,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h">
       <Filter>Headers\AI</Filter>
     </ClInclude>
+>>>>>>> Debug
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -129,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ground.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp" />
+=======
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp">
       <Filter>Sources\AI</Filter>
     </ClCompile>
@@ -141,5 +148,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp">
       <Filter>Sources\AI</Filter>
     </ClCompile>
+>>>>>>> Debug
   </ItemGroup>
 </Project>
