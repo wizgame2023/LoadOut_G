@@ -70,10 +70,20 @@ namespace basecross {
 		int a = 0;//デバック用
 	}
 
+	//セルマップにマンホールなどを置く処理
 	void MapManager::MapDataUpdate(int leght, int height,int change)
 	{
 		//決めた配列の場所に数値を変更させる
 		m_stageMap[leght][height] = change;
+	}
+
+
+	//今のセル座標に何があるのかを返す
+	int MapManager::SelMapNow(Vec3 worldPosition)
+	{
+		Vec2 SelPos = ConvertSelMap(worldPosition);
+
+		return m_stageMap[SelPos.y][SelPos.x];
 	}
 
 }
