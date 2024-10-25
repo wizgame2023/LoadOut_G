@@ -10,6 +10,7 @@ namespace basecross {
 	class MapManager :public GameObject
 	{
 	private:
+		vector<vector<int>> m_stageMap;
 
 	public:
 		MapManager(shared_ptr<Stage>& stagePtr);//コンストラクタ
@@ -19,6 +20,9 @@ namespace basecross {
 		void OnUpdate()override;//更新
 
 		Vec2 MyMapNow(Vec3 worldPosition);
+
+
+		void StageMapLoad();
 	};
 
 
