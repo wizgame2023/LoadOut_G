@@ -18,8 +18,8 @@
 #include "YuutaStage.h"
 #include "Ground.h"
 #include "Tracking.h"
-#include "Patrol.h"
 #include "State.h"
+#include "Patrol.h"
 #include "Attack.h"
 
 
