@@ -27,7 +27,7 @@ namespace basecross {
 	}
 
 	//ワールド座標をセル座標に変換する
-	Vec2 MapManager::MyMapNow(Vec3 worldPosition)
+	Vec2 MapManager::ConvertSelMap(Vec3 worldPosition)
 	{
 		float length = ((worldPosition.x + 45) / 10.0f) + 0.5f;//横のセル座標
 		float height = -((worldPosition.z - 45) / 10.0f) + 0.5f;//縦のセル座標

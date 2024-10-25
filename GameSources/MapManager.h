@@ -19,7 +19,7 @@ namespace basecross {
 		void OnCreate()override;//ê∂ê¨
 		void OnUpdate()override;//çXêV
 
-		Vec2 MyMapNow(Vec3 worldPosition);
+		Vec2 ConvertSelMap(Vec3 worldPosition);
 
 		void MapDataUpdate(int leght, int height,int change);
 
