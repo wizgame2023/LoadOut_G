@@ -21,5 +21,6 @@
 #include "Patrol.h"
 #include "State.h"
 #include "Attack.h"
+#include "MapManager.h"
 
 
