@@ -29,18 +29,5 @@ namespace basecross {
 
 	}
 
-	void Enemy::StateBase::GetState(STATETYPE state)
-	{
-		switch (state)
-		{
-		case Enemy::m_platol:
-			break;
-		case Enemy::m_tracking:
-			break;
-		case Enemy::m_attack:
-			break;
-		}
-	}
-
 }
 //end basecross
