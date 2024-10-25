@@ -43,6 +43,12 @@
     <Filter Include="Sources\UI">
       <UniqueIdentifier>{691e1999-5330-437d-bcac-3512a2b77cf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Manager">
+      <UniqueIdentifier>{b335464f-df3d-429f-a635-6304a8b8735d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Manager">
+      <UniqueIdentifier>{869d3c38-f771-4b11-91da-7e3e4f1713a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
@@ -92,6 +98,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h">
       <Filter>Headers\AI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h">
+      <Filter>Headers\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Item.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -140,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp">
       <Filter>Sources\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp">
+      <Filter>Sources\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp">
+      <Filter>Sources\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
