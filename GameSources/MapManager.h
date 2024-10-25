@@ -21,6 +21,7 @@ namespace basecross {
 
 		Vec2 MyMapNow(Vec3 worldPosition);
 
+		void MapDataUpdate(int leght, int height,int change);
 
 		void StageMapLoad();
 	};

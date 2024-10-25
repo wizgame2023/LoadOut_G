@@ -67,11 +67,13 @@ namespace basecross {
 				m_stageMap.push_back(datas);//一行ずつマップデータを入れている
 			}
 		}
-
-
-		m_stageMap[4][5] = 12;
-
 		int a = 0;//デバック用
+	}
+
+	void MapManager::MapDataUpdate(int leght, int height,int change)
+	{
+		//決めた配列の場所に数値を変更させる
+		m_stageMap[leght][height] = change;
 	}
 
 }
