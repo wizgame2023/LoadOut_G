@@ -22,5 +22,6 @@
 #include "State.h"
 #include "Attack.h"
 #include "MapManager.h"
+#include "Item.h"
 
 
