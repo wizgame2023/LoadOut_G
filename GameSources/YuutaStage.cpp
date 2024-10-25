@@ -36,11 +36,21 @@ namespace basecross {
 		catch (...) {
 			throw;
 		}
+		//マップマネージャーの生成
+		auto mapManager = AddGameObject<MapManager>();
+		SetSharedGameObject(L"MapManager", mapManager);
 
 		//床の作成
 		AddGameObject<Ground>();
 		//ブロックの作成
-		//AddGameObject<Block>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		for (int i = 0; i < 10; i++)
+		{
+			AddGameObject<Block>(Vec3(-45.0f+(i*10), 5.0f, 45.0f), Vec3(0.0f, 0.0f, 0.0f));
+
+		}
+		
+		//アイテムの生成
+		AddGameObject<Item>(Vec3(15.0f,2.5f,0.0f),Vec3(0.0f,0.0f,0.0f));
 		//Playerの生成
 		AddGameObject<Player>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 	}

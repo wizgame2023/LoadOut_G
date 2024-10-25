@@ -17,9 +17,14 @@
 #include "YuusinStage.h"
 #include "YuutaStage.h"
 #include "Ground.h"
+#include "MapManager.h"
+#include "Item.h"
+
+//ステート用
+#include "State.h"//ステートの親クラス
 #include "Tracking.h"
 #include "Patrol.h"
-#include "State.h"
 #include "Attack.h"
+//
 
 

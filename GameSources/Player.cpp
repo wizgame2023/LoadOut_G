@@ -52,6 +52,7 @@ namespace basecross{
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"Player");//タグ追加
 	}
 
 	void Player::OnUpdate()
@@ -83,16 +84,30 @@ namespace basecross{
 
 		}
 
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		Vec2 selPos = mapManager->ConvertSelMap(m_Pos);//今いるセル座標を取得
+		int selNow = mapManager->SelMapNow(m_Pos);//現在いるセル座標に何があるかを取得
+
 		//デバック用
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
 		wss << L"デバッグ用文字列 "
 			<<L"\n傾き "<<deg
+			<< L"\nPos.x " << m_Pos.x << "\nPos.z " << m_Pos.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<< L"\nCount " << m_count
+			<< L"\nSelNow " << selNow
 			<< endl;
 
 		scene->SetDebugString(wss.str());
 
+	}
+
+	//m_countに数値がプラスされる
+	void Player::AddCount(int add)
+	{
+		m_count += add;
 	}
 
 }
