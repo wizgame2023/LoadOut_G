@@ -10,13 +10,17 @@ namespace basecross {
 	class Item :public GameObject
 	{
 	private:
+		Vec3 m_pos;//ƒ|ƒWƒVƒ‡ƒ“
+		Vec3 m_rot;//‰ñ“]
 
 	public:
-		Item(shared_ptr<Stage>& stagePtr);
+		Item(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot);
 		~Item();
 
 		void OnCreate()override;
 		void OnUpdate()override;
+
+		void OnCollisionEnter(shared_ptr<GameObject>& other)override;
 	};
 
 
