@@ -52,6 +52,7 @@ namespace basecross{
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"Player");//タグ追加
 	}
 
 	void Player::OnUpdate()
@@ -94,10 +95,17 @@ namespace basecross{
 			<<L"\n傾き "<<deg
 			<< L"\nPos.x " << m_Pos.x << "\nPos.z " << m_Pos.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<<L"\nCount "<<m_count
 			<< endl;
 
 		scene->SetDebugString(wss.str());
 
+	}
+
+	//m_countに数値がプラスされる
+	void Player::AddCount(int add)
+	{
+		m_count += add;
 	}
 
 }
