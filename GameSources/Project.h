@@ -19,6 +19,8 @@
 #include "Ground.h"
 #include "MapManager.h"
 #include "Item.h"
+#include "Enemy.h"
+#include "Manhole.h"
 
 //ステート用
 #include "State.h"//ステートの親クラス
