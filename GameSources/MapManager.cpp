@@ -71,10 +71,12 @@ namespace basecross {
 	}
 
 	//セルマップにマンホールなどを置く処理
-	void MapManager::MapDataUpdate(int leght, int height,int change)
+	void MapManager::MapDataUpdate(Vec3 worldPosition,int change)
 	{
+		Vec2 SelPos = ConvertSelMap(worldPosition);
+
 		//決めた配列の場所に数値を変更させる
-		m_stageMap[leght][height] = change;
+		m_stageMap[SelPos.y][SelPos.x] = change;
 	}
 
 
