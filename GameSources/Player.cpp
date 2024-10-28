@@ -60,22 +60,27 @@ namespace basecross{
 		//デルタタイム
 		auto Delta = App::GetApp()->GetElapsedTime();
 
+		// インプットデバイスオブジェクト
+		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
+
 		//コントローラーのアナログスティックの向き
-		auto contorollerVec = App::GetApp()->GetInputDevice().GetControlerVec();
+		auto& gamePad = inputDevice.GetControlerVec()[0];
+
+
 		//左ステックの向きにプレイヤーが進む
-		if (contorollerVec[0].bConnected)
+		if (gamePad.bConnected)
 		{
-			m_Pos.x += contorollerVec[0].fThumbLX*10*Delta;
-			m_Pos.z += contorollerVec[0].fThumbLY*10*Delta;
+			m_Pos.x += gamePad.fThumbLX*10*Delta;
+			m_Pos.z += gamePad.fThumbLY*10*Delta;
 
 			m_Trans->SetPosition(m_Pos);//ポジション更新
 		}
-		float deg;
+		float deg = 0;
 		//左ステックの向きにプレイヤーも向く
-		if (contorollerVec[0].bConnected)
+		if (gamePad.bConnected)
 		{
 			//スティックの傾きをラジアンにする
-			float rad = -atan2(contorollerVec[0].fThumbLY, contorollerVec[0].fThumbLX);
+			float rad = -atan2(gamePad.fThumbLY, gamePad.fThumbLX);
 			//ラジアンの傾きをディグリー角にする
 			deg = rad * 180 / 3.14f;
 			m_Rot.y = rad;
@@ -87,6 +92,23 @@ namespace basecross{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 		Vec2 selPos = mapManager->ConvertSelMap(m_Pos);//今いるセル座標を取得
 		int selNow = mapManager->SelMapNow(m_Pos);//現在いるセル座標に何があるかを取得
+
+		//できました
+		if (m_count >= 1)//カウントが１以上なら
+		{
+			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
+			if (gamePad.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+			{
+				m_count--;
+				if (mapManager->SelMapNow(m_Pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
+				{
+					mapManager->MapDataUpdate(m_Pos, 2);//罠を設置する
+
+				}
+			}
+
+			
+		}
 
 		//デバック用
 		wstringstream wss(L"");
@@ -102,6 +124,17 @@ namespace basecross{
 
 		scene->SetDebugString(wss.str());
 
+	}
+
+	void Player::SetUp()
+	{
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+
+		//そのセル座標がマンホールの上なら罠を置く処理
+		if (mapManager->SelMapNow(m_Pos) == 1)
+		{
+			mapManager->MapDataUpdate(m_Pos, 2);//現在のセル座標に罠を置く処理をする
+		}
 	}
 
 	//m_countに数値がプラスされる

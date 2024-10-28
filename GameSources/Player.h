@@ -23,6 +23,9 @@ namespace basecross{
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
 
+		//マンホールの上に罠を設置する
+		void SetUp();
+
 		void AddCount(int add);
 	};
 
