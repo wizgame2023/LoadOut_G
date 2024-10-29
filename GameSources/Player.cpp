@@ -41,11 +41,12 @@ namespace basecross{
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 
-		auto ptrColl = AddComponent<CollisionCapsule>();
-		ptrColl->SetFixed(true);
-		ptrColl->SetSleepActive(true);//ぶつからない限りスリープ状態になる
+		auto ptrColl = AddComponent<CollisionObb>();
+		//ptrColl->SetFixed(true);
+		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
+		ptrColl->SetAfterCollision(AfterCollision::Auto);
 
-		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 
 		GetStage()->SetCollisionPerformanceActive(true);
@@ -65,15 +66,17 @@ namespace basecross{
 
 		//コントローラーのアナログスティックの向き
 		auto& gamePad = inputDevice.GetControlerVec()[0];
+		auto pos = GetComponent<Transform>()->GetPosition();//ポジション取得
 
 
 		//左ステックの向きにプレイヤーが進む
 		if (gamePad.bConnected)
 		{
-			m_Pos.x += gamePad.fThumbLX*10*Delta;
-			m_Pos.z += gamePad.fThumbLY*10*Delta;
 
-			m_Trans->SetPosition(m_Pos);//ポジション更新
+			pos.x += (gamePad.fThumbLX*10*Delta)*2;
+			pos.z += (gamePad.fThumbLY*10*Delta)*2;
+
+			m_Trans->SetPosition(pos);//ポジション更新
 		}
 		float deg = 0;
 		//左ステックの向きにプレイヤーも向く
@@ -90,8 +93,8 @@ namespace basecross{
 		}
 
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
-		Vec2 selPos = mapManager->ConvertSelMap(m_Pos);//今いるセル座標を取得
-		int selNow = mapManager->SelMapNow(m_Pos);//現在いるセル座標に何があるかを取得
+		Vec2 selPos = mapManager->ConvertSelMap(pos);//今いるセル座標を取得
+		int selNow = mapManager->SelMapNow(pos);//現在いるセル座標に何があるかを取得
 
 		//できました
 		if (m_count >= 1)//カウントが１以上なら
@@ -100,9 +103,9 @@ namespace basecross{
 			if (gamePad.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
 			{
 				m_count--;
-				if (mapManager->SelMapNow(m_Pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
+				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
 				{
-					mapManager->MapDataUpdate(m_Pos, 2);//罠を設置する
+					mapManager->MapDataUpdate(pos, 2);//罠を設置する
 
 				}
 			}
@@ -116,7 +119,7 @@ namespace basecross{
 		//auto gameStage = scene->GetGameStage();
 		wss << L"デバッグ用文字列 "
 			<<L"\n傾き "<<deg
-			<< L"\nPos.x " << m_Pos.x << "\nPos.z " << m_Pos.z
+			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
 			<< L"\nCount " << m_count
 			<< L"\nSelNow " << selNow
@@ -129,11 +132,12 @@ namespace basecross{
 	void Player::SetUp()
 	{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		auto pos = GetComponent<Transform>()->GetPosition();
 
 		//そのセル座標がマンホールの上なら罠を置く処理
-		if (mapManager->SelMapNow(m_Pos) == 1)
+		if (mapManager->SelMapNow(pos) == 1)
 		{
-			mapManager->MapDataUpdate(m_Pos, 2);//現在のセル座標に罠を置く処理をする
+			mapManager->MapDataUpdate(pos, 2);//現在のセル座標に罠を置く処理をする
 		}
 	}
 
