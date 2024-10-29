@@ -14,12 +14,13 @@ namespace basecross {
 		Vec3 m_pos;
 		Vec3 m_rot;
 		Vec3 m_scale;
-
+		float m_speed;
 		// 現在のステートを入れておく
 		shared_ptr<StateBase> m_CurrentSt;
 
 		// 次のステートを入れておく、ステートが入ると即座に切り替わる
 		shared_ptr<StateBase> m_NextSt;
+
 	public:
 		//コンストラクタ・デストラクタ
 		Enemy(const shared_ptr<Stage>& StagePtr,
@@ -39,6 +40,7 @@ namespace basecross {
 
 			m_NextSt = makeShared<NextState>(GetThis<Enemy>());
 		}
+		float GetSpeed();
 	};
 
 }

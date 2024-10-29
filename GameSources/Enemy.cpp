@@ -14,7 +14,8 @@ namespace basecross {
 		GameObject(StagePtr),
 		m_pos(pos),
 		m_rot(rot),
-		m_scale(scale)
+		m_scale(scale),
+		m_speed(10)
 	{
 	}
 	Enemy::~Enemy()
@@ -38,6 +39,7 @@ namespace basecross {
 
 	void Enemy::OnUpdate()
 	{
+		auto trans = GetComponent<Transform>();
 
 		m_CurrentSt->OnUpdate();//現在のステート更新処理
 
@@ -54,6 +56,28 @@ namespace basecross {
 		
 			m_CurrentSt->OnExit();// 切り替わった新しいステートの最初に行う処理
 		}
+
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+			wss << L"transform : "
+			<< L"\n"
+			<< L"postion : ("
+			<< L"\nx."
+			<< trans->GetPosition().x
+			<< L","
+			<< "\ny."
+			<< trans->GetPosition().y
+			<< L","
+			<< "\nz."
+			<< trans->GetPosition().z
+			<< L")"
+			<< L"\nRot:"
+			<< L"\nx." << trans->GetRotation().x
+			<< L"\ny." << trans->GetRotation().y
+			<< L"\nz." << trans->GetRotation().z
+			<< endl;
+		scene->SetDebugString(wss.str());
+
 	}
 	void Enemy::OnDestroy()
 	{
@@ -61,6 +85,11 @@ namespace basecross {
 		m_CurrentSt.reset();
 		m_NextSt.reset();
 
+	}
+
+	float Enemy::GetSpeed()
+	{
+		return m_speed;
 	}
 }
 //end basecross

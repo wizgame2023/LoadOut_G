@@ -18,8 +18,8 @@ namespace basecross {
 		shared_ptr<Enemy> m_Owner;
 	public:
 		//StateBaseのコンストラクタ・デストラクタの宣言
-		StateBase(const shared_ptr<Enemy> OwnerPtr) :
-			m_Owner(OwnerPtr)
+		StateBase(const shared_ptr<Enemy> ptrOwner) :
+			m_Owner(ptrOwner)
 		{
 
 		}
