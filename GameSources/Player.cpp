@@ -34,7 +34,7 @@ namespace basecross{
 
 
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetMultiMeshResource(L"Player_Mesh_Kari");
 		//ptrDraw->SetTextureResource(L"");
 
 		//ptrDraw->SetFogEnabled(true);
