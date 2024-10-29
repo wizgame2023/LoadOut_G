@@ -30,6 +30,7 @@ namespace basecross {
 
 	void TubakiStage::OnCreate() {
 		try {
+			test_walls vector<vector<int>>
 			//ビューとライトの作成
 			CreateViewLight();
 		}
