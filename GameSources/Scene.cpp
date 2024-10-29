@@ -30,6 +30,8 @@ namespace basecross{
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
 			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
 
+			GameResourses();
+
 
 		}
 		catch (...) {
@@ -43,8 +45,28 @@ namespace basecross{
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
 		if (event->m_MsgStr == L"ToGameStage") {
 			//最初のアクティブステージの設定
-			ResetActiveStage<GameStage>();
+			ResetActiveStage<YuutaStage>();
 		}
+	}
+
+	void Scene::GameResourses()
+	{
+		auto& app = App::GetApp();
+
+		auto path = app->GetDataDirWString();
+		auto comPath = path + L"Comments/";
+		auto texPath = path + L"Textures/";
+		auto modPath = path + L"Models/";
+		auto SoundPath = path + L"Sounds/";
+
+		//ボーンモデル
+		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"Boss.bmf");
+		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
+
+		//ボーンマルチメッシュ
+		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");
+		app->RegisterResource(L"Player_Mesh_Kari", boneMultiModelMesh);
+
 	}
 
 }
