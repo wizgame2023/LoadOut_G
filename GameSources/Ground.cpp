@@ -22,7 +22,7 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();//Transformæ“¾
 		ptr->SetPosition(0.0f,0.0f,0.0f);
 		ptr->SetRotation(0.0f,0.0f,0.0f);
-		ptr->SetScale(100.0f, 1.0f, 100.0f);
+		ptr->SetScale(200.0f, 1.0f, 200.0f);
 
 		//Transform‚É‘Î‚µ‚Ä‚Ì“™·”—ñ
 		Mat4x4 spanMat;
