@@ -1,30 +1,31 @@
 /*!
-@file Ground.cpp
-@brief ブロックのオブジェクトの実装
-担当：三瓶
+@file Character.cpp
+@brief キャラクターなど実体
 */
 
 #include "stdafx.h"
 #include "Project.h"
 
 namespace basecross {
-	Ground::Ground(const shared_ptr<Stage>& StagePtr) :
-		GameObject(StagePtr)
+	Wall::Wall(shared_ptr<Stage>& stagePtr, Vec3 pos, Vec3 rot,Vec3 scale) :
+		GameObject(stagePtr),
+		m_pos(pos),
+		m_rot(rot),
+		m_scale(scale)
 	{
+
 	}
-	Ground::~Ground()
+	Wall::~Wall()
 	{
 	}
 
-	void Ground::OnCreate()
+	void Wall::OnCreate()
 	{
-		//Transform作成
-		auto ptr = GetComponent<Transform>();//Transform取得
-		ptr->SetPosition(0.0f,0.0f,0.0f);
-		ptr->SetRotation(0.0f,0.0f,0.0f);
-		ptr->SetScale(200.0f, 1.0f, 200.0f);
+		auto Trans = GetComponent<Transform>();
+		Trans->SetPosition(m_pos);
+		Trans->SetRotation(m_rot);
+		Trans->SetScale(m_scale);
 
-		//Transformに対しての等差数列
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
 			Vec3(1.0f, 1.0f, 1.0f),
@@ -33,18 +34,21 @@ namespace basecross {
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
-		//メッシュ生成
+
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"Black");
+		//ptrDraw->SetTextureResource(L"");
 
+		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
-		//コリジョン生成
+
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(false);
-		ptrColl->SetSleepActive(true);//ぶつからない限りスリープ状態になる
+		ptrColl->SetFixed(true);
+		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
+
 		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -53,3 +57,4 @@ namespace basecross {
 	}
 
 }
+//end basecross

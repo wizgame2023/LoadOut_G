@@ -34,24 +34,26 @@ namespace basecross{
 
 
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetMultiMeshResource(L"Player_Mesh_Kari");
 		//ptrDraw->SetTextureResource(L"");
 
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 
-		auto ptrColl = AddComponent<CollisionCapsule>();
-		ptrColl->SetFixed(true);
-		ptrColl->SetSleepActive(true);//ぶつからない限りスリープ状態になる
+		auto ptrColl = AddComponent<CollisionObb>();
+		//ptrColl->SetFixed(true);
+		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
+		ptrColl->SetAfterCollision(AfterCollision::Auto);
 
-		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"Player");//タグ追加
 	}
 
 	void Player::OnUpdate()
@@ -59,22 +61,29 @@ namespace basecross{
 		//デルタタイム
 		auto Delta = App::GetApp()->GetElapsedTime();
 
-		//コントローラーのアナログスティックの向き
-		auto contorollerVec = App::GetApp()->GetInputDevice().GetControlerVec();
-		//左ステックの向きにプレイヤーが進む
-		if (contorollerVec[0].bConnected)
-		{
-			m_Pos.x += contorollerVec[0].fThumbLX*10*Delta;
-			m_Pos.z += contorollerVec[0].fThumbLY*10*Delta;
+		// インプットデバイスオブジェクト
+		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 
-			m_Trans->SetPosition(m_Pos);//ポジション更新
+		//コントローラーのアナログスティックの向き
+		auto& gamePad = inputDevice.GetControlerVec()[0];
+		auto pos = GetComponent<Transform>()->GetPosition();//ポジション取得
+
+
+		//左ステックの向きにプレイヤーが進む
+		if (gamePad.bConnected)
+		{
+
+			pos.x += (gamePad.fThumbLX*10*Delta)*2;
+			pos.z += (gamePad.fThumbLY*10*Delta)*2;
+
+			m_Trans->SetPosition(pos);//ポジション更新
 		}
-		float deg;
+		float deg = 0;
 		//左ステックの向きにプレイヤーも向く
-		if (contorollerVec[0].bConnected)
+		if (gamePad.bConnected)
 		{
 			//スティックの傾きをラジアンにする
-			float rad = -atan2(contorollerVec[0].fThumbLY, contorollerVec[0].fThumbLX);
+			float rad = -atan2(gamePad.fThumbLY, gamePad.fThumbLX);
 			//ラジアンの傾きをディグリー角にする
 			deg = rad * 180 / 3.14f;
 			m_Rot.y = rad;
@@ -83,16 +92,59 @@ namespace basecross{
 
 		}
 
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		Vec2 selPos = mapManager->ConvertSelMap(pos);//今いるセル座標を取得
+		int selNow = mapManager->SelMapNow(pos);//現在いるセル座標に何があるかを取得
+
+		//できました
+		if (m_count >= 1)//カウントが１以上なら
+		{
+			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
+			if (gamePad.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+			{
+				m_count--;
+				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
+				{
+					mapManager->MapDataUpdate(pos, 2);//罠を設置する
+
+				}
+			}
+
+			
+		}
+
 		//デバック用
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
 		wss << L"デバッグ用文字列 "
 			<<L"\n傾き "<<deg
+			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<< L"\nCount " << m_count
+			<< L"\nSelNow " << selNow
 			<< endl;
 
 		scene->SetDebugString(wss.str());
 
+	}
+
+	void Player::SetUp()
+	{
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		auto pos = GetComponent<Transform>()->GetPosition();
+
+		//そのセル座標がマンホールの上なら罠を置く処理
+		if (mapManager->SelMapNow(pos) == 1)
+		{
+			mapManager->MapDataUpdate(pos, 2);//現在のセル座標に罠を置く処理をする
+		}
+	}
+
+	//m_countに数値がプラスされる
+	void Player::AddCount(int add)
+	{
+		m_count += add;
 	}
 
 }

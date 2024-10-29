@@ -5,6 +5,12 @@
 
 #pragma once
 
+//ステート用
+#include "State.h"//ステートの親クラス
+#include "Tracking.h"
+#include "State.h"
+#include "Patrol.h"
+#include "Attack.h"
 
 #include "ProjectShader.h"
 #include "ProjectBehavior.h"
@@ -17,9 +23,12 @@
 #include "YuusinStage.h"
 #include "YuutaStage.h"
 #include "Ground.h"
-#include "Tracking.h"
-#include "Patrol.h"
-#include "State.h"
-#include "Attack.h"
+#include "MapManager.h"
+#include "Item.h"
+#include "Enemy.h"
+#include "Manhole.h"
+#include "Wall.h"
+
+
 
 

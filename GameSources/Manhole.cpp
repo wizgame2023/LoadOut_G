@@ -1,28 +1,28 @@
 /*!
-@file Ground.cpp
-@brief ブロックのオブジェクトの実装
-担当：三瓶
+@file Manhole.cpp
+@brief マンホール
 */
 
 #include "stdafx.h"
 #include "Project.h"
 
 namespace basecross {
-	Ground::Ground(const shared_ptr<Stage>& StagePtr) :
-		GameObject(StagePtr)
+	Manhole::Manhole(shared_ptr<Stage>& stagePtr,Vec3 pos) :
+		GameObject(stagePtr),
+		m_pos(pos)
 	{
+
 	}
-	Ground::~Ground()
+	Manhole::~Manhole()
 	{
 	}
 
-	void Ground::OnCreate()
+	void Manhole::OnCreate()
 	{
-		//Transform作成
-		auto ptr = GetComponent<Transform>();//Transform取得
-		ptr->SetPosition(0.0f,0.0f,0.0f);
+		auto ptr = GetComponent<Transform>();
+		ptr->SetPosition(m_pos);
 		ptr->SetRotation(0.0f,0.0f,0.0f);
-		ptr->SetScale(200.0f, 1.0f, 200.0f);
+		ptr->SetScale(3.0f, 1.0f, 3.0f);
 
 		//Transformに対しての等差数列
 		Mat4x4 spanMat;
@@ -36,20 +36,27 @@ namespace basecross {
 		//メッシュ生成
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"Black");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		//コリジョン生成
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(false);
-		ptrColl->SetSleepActive(true);//ぶつからない限りスリープ状態になる
+		ptrColl->SetFixed(true);
+		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
 		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
+
+	}
+
+	void Manhole::OnUpdate()
+	{
+		//m_mapManager.lock()->MapDataUpdate(m_pos, 1);//今いるセル座標はマンホールのデータということを伝える
 	}
 
 }
+//end basecross
