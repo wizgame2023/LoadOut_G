@@ -107,6 +107,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -165,5 +166,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Wall.cpp" />
   </ItemGroup>
 </Project>
