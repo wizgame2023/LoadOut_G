@@ -25,6 +25,7 @@ namespace basecross {
 		int SelMapNow(Vec3 worldPosition);//¡‚ÌƒZƒ‹À•W‚É‰½‚ª‚ ‚é‚Ì‚©‚ğ•Ô‚·
 
 		void StageMapLoad();
+		void WallMapLoad();
 	};
 
 
