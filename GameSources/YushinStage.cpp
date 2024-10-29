@@ -29,7 +29,7 @@ namespace basecross {
 
 	void YushinStage::CreateEnemy()
 	{
-		shared_ptr<Enemy> ptrEnemy = AddGameObject<Enemy>(Vec3(0.0f, 0.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(10.0f));
+		shared_ptr<Enemy> ptrEnemy = AddGameObject<Enemy>(Vec3(0.0f, 0.5f, 30.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(10.0f));
 	}
 
 	void YushinStage::OnCreate() {
