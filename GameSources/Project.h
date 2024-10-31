@@ -30,6 +30,7 @@
 #include "Wall.h"
 #include "Sprite.h"//スプライト用
 #include "TilteStage.h"//タイトルステージ
+#include "GameOverStage.h"//ゲームオーバーステージ
 
 
 
