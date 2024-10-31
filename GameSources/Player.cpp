@@ -65,7 +65,7 @@ namespace basecross{
 
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
-		//コントローラーのアナログスティックの向き
+		//コントローラーの取得
 		m_controler = inputDevice.GetControlerVec()[0];
 		auto pos = GetComponent<Transform>()->GetPosition();//ポジション取得
 
