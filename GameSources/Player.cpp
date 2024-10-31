@@ -26,15 +26,17 @@ namespace basecross{
 
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.5f, 0.5f, 0.5f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, XMConvertToRadians(-90.0f), 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 
-		auto ptrDraw = AddComponent<PNTStaticDraw>();
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMultiMeshResource(L"Player_Mesh_Kari");
+		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+
 		//ptrDraw->SetTextureResource(L"");
 
 		//ptrDraw->SetFogEnabled(true);
@@ -73,8 +75,8 @@ namespace basecross{
 		if (gamePad.bConnected)
 		{
 
-			pos.x += (gamePad.fThumbLX*10*Delta)*2;
-			pos.z += (gamePad.fThumbLY*10*Delta)*2;
+			pos.x += (gamePad.fThumbLX * 10 * Delta) * 2;
+			pos.z += (gamePad.fThumbLY * 10 * Delta) * 2;
 
 			m_Trans->SetPosition(pos);//ポジション更新
 		}
@@ -87,14 +89,18 @@ namespace basecross{
 			//ラジアンの傾きをディグリー角にする
 			deg = rad * 180 / 3.14f;
 			m_Rot.y = rad;
-
-			m_Trans->SetRotation(m_Rot);
+			//ゲームパットの傾きが無ければ回転度は更新しない
+			if (gamePad.fThumbLY != 0.0f && gamePad.fThumbLX != 0.0f)
+			{
+				m_Trans->SetRotation(m_Rot);
+			}
 
 		}
 
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 		Vec2 selPos = mapManager->ConvertSelMap(pos);//今いるセル座標を取得
 		int selNow = mapManager->SelMapNow(pos);//現在いるセル座標に何があるかを取得
+		
 
 		//できました
 		if (m_count >= 1)//カウントが１以上なら
@@ -102,9 +108,9 @@ namespace basecross{
 			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
 			if (gamePad.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
 			{
-				m_count--;
 				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
-				{
+				{		
+					m_count--;
 					mapManager->MapDataUpdate(pos, 2);//罠を設置する
 
 				}
@@ -113,17 +119,22 @@ namespace basecross{
 			
 		}
 
+		auto rot = GetComponent<Transform>()->GetRotation();
+
 		//デバック用
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
 		wss << L"デバッグ用文字列 "
-			<<L"\n傾き "<<deg
+			<< L"\n傾き " << deg
 			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
 			<< L"\nCount " << m_count
 			<< L"\nSelNow " << selNow
+			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
 			<< endl;
+		//XMConvertToRadians(-90.0f)e
 
 		scene->SetDebugString(wss.str());
 
