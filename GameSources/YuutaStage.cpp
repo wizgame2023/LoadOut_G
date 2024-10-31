@@ -45,7 +45,7 @@ namespace basecross {
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
 		{
-			//AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
+			AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
 
 		}
 		
@@ -61,10 +61,10 @@ namespace basecross {
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
 		//外壁生成
-		auto wall = AddGameObject<Wall>(Vec3(100.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(200.0f,30.0f,1.0f));
-		AddGameObject<Wall>(Vec3(-100.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(200.0f, 30.0f, 1.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, -100.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(200.0f, 30.0f, 1.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, 100.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(200.0f, 30.0f, 1.0f));
+		auto wall = AddGameObject<Wall>(Vec3(100.0f+0.5f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(200.0f,30.0f,1.0f));
+		AddGameObject<Wall>(Vec3(-100.0f-0.5f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(200.0f, 30.0f, 1.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, -100.0f-0.5f), Vec3(0.0f, 0.0f, 0.0f), Vec3(200.0f, 30.0f, 1.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, 100.0f+0.5f), Vec3(0.0f, 0.0f, 0.0f), Vec3(200.0f, 30.0f, 1.0f));
 
 	}
 
