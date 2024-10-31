@@ -120,6 +120,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h">
       <Filter>Headers\Stage</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameOverStage.h">
+      <Filter>Headers\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -150,9 +153,6 @@
       <Filter>Sources\System</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
-      <Filter>Sources\System</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
       <Filter>Sources\System</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp">
@@ -189,6 +189,12 @@
       <Filter>Sources\UI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp">
+      <Filter>Sources\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
+      <Filter>Sources\System</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameOverStage.cpp">
       <Filter>Sources\Stage</Filter>
     </ClCompile>
   </ItemGroup>
