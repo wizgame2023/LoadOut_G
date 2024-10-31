@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
 
 			GameResourses();
 
@@ -45,6 +45,10 @@ namespace basecross{
 			//最初のアクティブステージの設定
 			ResetActiveStage<YuutaStage>();
 		}
+		if (event->m_MsgStr == L"ToTilteStage") {
+			//最初のアクティブステージの設定
+			ResetActiveStage<TilteStage>();
+		}
 	}
 
 	void Scene::GameResourses()
@@ -60,6 +64,8 @@ namespace basecross{
 		//テクスチャ
 		wstring strTexture = texPath + L"Black.jpg";
 		app->RegisterTexture(L"Black", strTexture);
+		strTexture = texPath + L"RordOutTitle.png";//タイトル用のテクスチャ
+		app->RegisterTexture(L"Title", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
