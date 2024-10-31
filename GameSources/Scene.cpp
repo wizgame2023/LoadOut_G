@@ -19,8 +19,6 @@ namespace basecross{
 			auto path = app->GetDataDirWString();
 			auto texPath = path + L"Textures/";
 
-			wstring strTexture = texPath + L"Black.jpg";
-			app->RegisterTexture(L"Black", strTexture);
 
 			//クリアする色を設定
 			Col4 Col;
@@ -59,12 +57,21 @@ namespace basecross{
 		auto modPath = path + L"Models/";
 		auto SoundPath = path + L"Sounds/";
 
+		//テクスチャ
+		wstring strTexture = texPath + L"Black.jpg";
+		app->RegisterTexture(L"Black", strTexture);
+
+		//モデルテクスチャ
+		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
+		app->RegisterTexture(L"Boss_Texture", strTexture);
+
+
 		//ボーンモデル
-		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"Boss.bmf");
+		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"Boss.bmf");//敵(仮)のメッシュ
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
 
 		//ボーンマルチメッシュ
-		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");
+		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");//プレイヤー(仮)メッシュ
 		app->RegisterResource(L"Player_Mesh_Kari", boneMultiModelMesh);
 
 	}
