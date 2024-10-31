@@ -9,12 +9,8 @@
 
 namespace basecross {
 	//コンストラクタの宣言・デストラクタ
-	Enemy::Enemy(const shared_ptr<Stage>& StagePtr,
-		Vec3& pos, const Vec3& rot, const Vec3& scale) :
+	Enemy::Enemy(const shared_ptr<Stage>& StagePtr) :
 		GameObject(StagePtr),
-		m_pos(pos),
-		m_rot(rot),
-		m_scale(scale),
 		m_speed(10)
 	{
 	}
@@ -25,15 +21,19 @@ namespace basecross {
 
 	void Enemy::OnCreate()
 	{
-
-		auto trans = GetComponent<Transform>();
-		trans->SetPosition(m_pos);
-		trans->SetRotation(m_rot);
-		trans->SetScale(m_scale);
-
+		GetComponent<Transform>()->SetScale(10,10,10);
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		m_CurrentSt = make_shared<Patrol>(GetThis<Enemy>());
+
+		Mat4x4 spanMat;
+		spanMat.affineTransformation
+		(
+			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
+		);
 		m_CurrentSt->OnStart();
 	}
 
@@ -57,27 +57,26 @@ namespace basecross {
 			m_CurrentSt->OnExit();// 切り替わった新しいステートの最初に行う処理
 		}
 
-		wstringstream wss(L"");
-		auto scene = App::GetApp()->GetScene<Scene>();
-			wss << L"transform : "
-			<< L"\n"
-			<< L"postion : ("
-			<< L"\nx."
-			<< trans->GetPosition().x
-			<< L","
-			<< "\ny."
-			<< trans->GetPosition().y
-			<< L","
-			<< "\nz."
-			<< trans->GetPosition().z
-			<< L")"
-			<< L"\nRot:"
-			<< L"\nx." << trans->GetRotation().x
-			<< L"\ny." << trans->GetRotation().y
-			<< L"\nz." << trans->GetRotation().z
-			<< endl;
-		scene->SetDebugString(wss.str());
-
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//	wss << L"transform : "
+		//	<< L"\n"
+		//	<< L"postion : ("
+		//	<< L"\nx."
+		//	<< trans->GetPosition().x
+		//	<< L","
+		//	<< "\ny."
+		//	<< trans->GetPosition().y
+		//	<< L","
+		//	<< "\nz."
+		//	<< trans->GetPosition().z
+		//	<< L")"
+		//	<< L"\nRot:"
+		//	<< L"\nx." << trans->GetRotation().x
+		//	<< L"\ny." << XMConvertToDegrees(trans->GetRotation().y)
+		//	<< L"\nz." << XMConvertToDegrees(trans->GetRotation().z)
+		//	<< endl;
+		//scene->SetDebugString(wss.str());
 	}
 	void Enemy::OnDestroy()
 	{

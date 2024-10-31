@@ -11,56 +11,68 @@ namespace basecross {
 //巡回ステートの最初の処理
 	void Patrol::OnStart()
 	{
-	//所有者(Enemy)向きの初期化
-		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
-		m_rot = m_trans->GetRotation();//所有者(Enemy)の回転の取得
-		m_rnd = 1;//デバック用 
-		//rndが１だった場合、所有者(Enemy)向きを下向き
-		if (m_rnd ==1)
-		{
-			m_rot.y = XM_PI;
-		}
-		//rndが１以外だった場合、所有者(Enemy)向きを右向き
-		else if(m_rnd==2)
-		{
-			m_rot.y = XM_PI*0.5f;
-		}
-		m_trans->SetRotation(m_rot);
+
 	}
 
 //巡回ステートの更新処理
 	void Patrol::OnUpdate()
 	{
-	//所有者(Enemy)向きの移動処理
+	//所有者(Enemy)の移動処理
 		auto app = App::GetApp;
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
-		m_time += app()->GetElapsedTime();
-		m_pos = m_trans->GetPosition();
+		m_ownerPos = m_trans->GetPosition();
+		float rad = atan2f((m_ownerPos.x - m_destinationPos.x), (m_ownerPos.z - m_destinationPos.z));
+		m_ownerRot.y = rad;
+		float deg = rad * 180 / XM_PI;
 
-		Vec3 forward(0, 0, 1);
-		Vec3 fod = forward * m_rot.y;
-		//rndが1だった場合、所有者(Enemy)向きが左周りで動く
-		if (m_rnd==1)
+		auto right = m_right * sin(rad);
+		auto forward = m_forward * sin(rad);
+
+		if (!m_destinationDecision)
 		{
-			if (m_time <= 3)
+			if (m_rnd==1)
 			{
-
-			}
-			//m_pointまで前進する
-			if (m_distance <= m_point && m_time > 3)
-			{
-				m_pos +=  m_Owner->GetSpeed() * app()->GetElapsedTime();
-				m_distance++;
-			}
-			else if (m_distance > m_point)
-			{
-				m_rot.y += XM_PI * 0.5f;
-				m_distance = 0;
-				m_time = 0;
+				if (m_ownerPos.x<=m_ownerPos.z)
+				{
+					m_destinationPos.x += m_point;
+					m_destinationDecision = true;
+				}
 			}
 		}
-		m_trans->SetPosition(m_pos);
-		m_trans->SetRotation(m_rot);
+		else if (m_destinationDecision)
+		{
+			m_time += app()->GetElapsedTime();
+			if (m_destinationPos.x > m_destinationPos.z && m_distance <= m_point)
+			{
+				m_ownerPos += -right * m_Owner->GetSpeed() * app()->GetElapsedTime();
+				m_distance +=m_Owner->GetSpeed() * app()->GetElapsedTime();
+			}
+			else if (m_destinationPos.x < m_destinationPos.z && m_distance <= m_point)
+			{
+				m_ownerPos += -forward * m_Owner->GetSpeed() * app()->GetElapsedTime();
+			}
+			if(m_ownerPos==m_destinationPos)
+			{
+				m_destinationDecision = false;
+				m_distance = 0;
+			}
+		}
+
+		m_trans->SetRotation(m_ownerRot);
+		m_trans->SetPosition(m_ownerPos);
+
+
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		wss << L"目的地_x : " << m_destinationPos.x
+			<< L"\n目的地_z : " << m_destinationPos.z 
+			<<L"\n敵の回転.y : "<<m_ownerRot.y 
+			<<L"\n敵の回転（deg）"<<deg
+			<<L"\n敵のPos.x : "<<m_ownerPos.x 
+			<<L"\n敵のPos.z : "<< m_ownerPos.z
+			<<L"\n移動距離 : "<<m_distance << endl;
+		scene->SetDebugString(wss.str());
+
 	}
 
 	void Patrol::OnExit()
