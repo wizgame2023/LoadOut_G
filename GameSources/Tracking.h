@@ -8,6 +8,30 @@
 
 namespace basecross {
 
+	class Tracking :public StateBase
+	{
+	private:
+		Vec3 m_ownerPos;
+		Vec3 m_ownerRot;
+		Vec3 m_playerPos;
+		Vec3 m_forward;
+
+		shared_ptr<Transform> m_trans;
+	public:
+		Tracking(const shared_ptr<Enemy> ptrOwner) :
+			StateBase(ptrOwner),
+			m_ownerPos(0, 0, 0),
+			m_ownerRot(0, 0, 0),
+			m_playerPos(0, 0, 0),
+			m_forward(0, 0, 1)
+		{
+		}
+
+		virtual ~Tracking() {}
+		void OnStart();
+		void OnUpdate();
+		void OnExit();
+	};
 
 }
 //end basecross
