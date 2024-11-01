@@ -14,7 +14,7 @@ namespace basecross{
 		Vec3 m_Rot;//回転度
 
 		int m_count;//アイテムの所持数、この数の分だけマンホールを上げれる
-		int m_hp;//Playerの体力
+		int m_hp = 3;//Playerの体力
 
 		float m_deg;//角度
 
