@@ -32,7 +32,6 @@ namespace basecross {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
-			AddGameObject<Sprite>(L"Title", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));
 		}
 		catch (...) {
 			throw;
@@ -46,9 +45,13 @@ namespace basecross {
 		//コントローラーのアナログスティックの向き
 		auto m_controler = inputDevice.GetControlerVec()[0];
 
-		if (m_controler.wButtons & XINPUT_GAMEPAD_B)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+		}
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}
 	}
 
