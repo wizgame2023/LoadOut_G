@@ -1,5 +1,5 @@
 /*!
-@file YuutaStage.h
+@file GameOverStage.h
 @brief ゲームステージ
 */
 
@@ -11,16 +11,16 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス
 	//--------------------------------------------------------------------------------------
-	class YuutaStage : public Stage {
+	class GameOverStage : public Stage {
 		//ビューの作成
 		void CreateViewLight();
 	public:
 		//構築と破棄
-		YuutaStage() :Stage() {}
-		virtual ~YuutaStage() {}
+		GameOverStage() :Stage() {}
+		virtual ~GameOverStage() {}
 		//初期化
 		virtual void OnCreate()override;
-		void OutWallCreate(int selLength);//外壁を作る関数
+		virtual void OnUpdate()override;
 	};
 
 

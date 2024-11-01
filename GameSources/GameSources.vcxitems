@@ -18,6 +18,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Block.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Enemy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameOverStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Ground.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Item.h" />
@@ -29,7 +30,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TuabkiStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Wall.h" />
@@ -41,6 +44,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Block.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameOverStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ground.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp" />
@@ -51,7 +55,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Wall.cpp" />

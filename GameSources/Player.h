@@ -12,9 +12,16 @@ namespace basecross{
 	private:
 		Vec3 m_Pos;//ポジション
 		Vec3 m_Rot;//回転度
+
 		int m_count;//アイテムの所持数、この数の分だけマンホールを上げれる
+		int m_hp = 3;//Playerの体力
+
+		float m_deg;//角度
 
 		shared_ptr<Transform> m_Trans;//トランスフォーム
+
+		shared_ptr<InputDevice> m_Device;//コントローラー
+		CONTROLER_STATE m_controler;//コントローラー
 
 	public:
 		Player(const shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ
@@ -27,6 +34,8 @@ namespace basecross{
 		void SetUp();
 
 		void AddCount(int add);
+		void PlayerMove();
+		void ManholeSet(Vec3 pos);//マンホールの上にわなを仕掛ける
 	};
 
 }
