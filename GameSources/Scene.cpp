@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
 
 			GameResourses();
 
@@ -46,8 +46,12 @@ namespace basecross{
 			ResetActiveStage<YuutaStage>();
 		}
 		if (event->m_MsgStr == L"ToTilteStage") {
-			//最初のアクティブステージの設定
+			//タイトルのアクティブステージの設定
 			ResetActiveStage<TilteStage>();
+		}
+		if (event->m_MsgStr == L"ToGameOverStage") {
+			//タイトルのアクティブステージの設定
+			ResetActiveStage<GameOverStage>();
 		}
 	}
 
