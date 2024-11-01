@@ -26,21 +26,24 @@ namespace basecross {
 		float deg = rad * 180 / XM_PI;
 		m_time += app()->GetElapsedTime();
 		auto right = m_right * sin(rad);
-		auto forward = m_forward * sin(rad);
+		auto forward = m_forward * cos(rad);
+		
 
 		if (!m_destinationDecision)
 		{
 			if (m_rnd==1)
 			{
-				if (m_ownerPos.x == m_ownerPos.z && (m_ownerPos.x < m_point || m_ownerPos.z < m_point))
+				if (m_ownerPos.x == m_ownerPos.z)
 				{
 					m_destinationPos.x += m_point;
+					m_numbersX++;
 					m_destinationDecision = true;
 				}
-				else if(m_ownerPos.x>m_ownerPos.z)
+				else if (m_ownerPos.x > m_ownerPos.z)
 				{
 					m_destinationPos.z += m_point;
 					m_destinationDecision = true;
+					m_numbersZ++;
 				}
 			}
 		}
@@ -52,14 +55,19 @@ namespace basecross {
 				m_ownerPos += -right * m_Owner->GetSpeed() * app()->GetElapsedTime();
 				m_distance +=m_Owner->GetSpeed() * app()->GetElapsedTime();
 			}
-			else if (m_destinationPos.x < m_destinationPos.z && m_distance <= m_point)
+			else if (m_destinationPos.x == m_destinationPos.z && m_distance <= m_point && m_time > 3)
 			{
 				m_ownerPos += -forward * m_Owner->GetSpeed() * app()->GetElapsedTime();
+				m_distance += m_Owner->GetSpeed() * app()->GetElapsedTime();
 			}
-			if ((m_ownerPos.x >= m_point || m_ownerPos.z >= m_point) && m_time > 3)
+			if (m_distance >= m_point)
 			{
 				m_distance = 0;
 				m_time = 0;
+
+				m_ownerPos.x = m_point * m_numbersX;
+				m_ownerPos.z = m_point * m_numbersZ;
+
 				m_destinationDecision = false;
 			}
 		}
@@ -76,7 +84,11 @@ namespace basecross {
 			<<L"\n“G‚Ì‰ñ“]idegj"<<deg
 			<<L"\n“G‚ÌPos.x : "<<m_ownerPos.x 
 			<<L"\n“G‚ÌPos.z : "<< m_ownerPos.z
-			<<L"\nˆÚ“®‹——£ : "<<m_distance << endl;
+			<<L"\nˆÚ“®‹——£ : "<<m_distance
+			<<L"\nˆÚ“®ƒN[ƒ‹ƒ^ƒCƒ€ : "<<m_time
+			<<L"\n”ŽšX : "<< m_numbersX
+			<< L"\n”ŽšZ : " << m_numbersZ
+			<< endl;
 		scene->SetDebugString(wss.str());
 
 	}
