@@ -70,6 +70,8 @@ namespace basecross{
 		app->RegisterTexture(L"Black", strTexture);
 		strTexture = texPath + L"RordOutTitle.png";//タイトル用のテクスチャ
 		app->RegisterTexture(L"Title", strTexture);
+		strTexture = texPath + L"RordOutGameOver.png";//ゲームオーバー用のテクスチャ
+		app->RegisterTexture(L"GameOver", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
