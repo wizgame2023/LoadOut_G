@@ -33,6 +33,13 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 			AddGameObject<Enemy>();
+			//Playerの生成
+			auto ptrPlayer = AddGameObject<Player>(Vec3(50.0f, 5.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
+			SetSharedGameObject(L"Player", ptrPlayer);
+
+			auto mapManager = AddGameObject<MapManager>();
+			SetSharedGameObject(L"MapManager", mapManager);
+
 		}
 		catch (...) {
 			throw;

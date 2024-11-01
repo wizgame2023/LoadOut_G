@@ -24,7 +24,7 @@ namespace basecross {
 		float rad = atan2f((m_ownerPos.x - m_destinationPos.x), (m_ownerPos.z - m_destinationPos.z));
 		m_ownerRot.y = rad;
 		float deg = rad * 180 / XM_PI;
-
+		m_time += app()->GetElapsedTime();
 		auto right = m_right * sin(rad);
 		auto forward = m_forward * sin(rad);
 
@@ -32,17 +32,22 @@ namespace basecross {
 		{
 			if (m_rnd==1)
 			{
-				if (m_ownerPos.x<=m_ownerPos.z)
+				if (m_ownerPos.x == m_ownerPos.z && (m_ownerPos.x < m_point || m_ownerPos.z < m_point))
 				{
 					m_destinationPos.x += m_point;
+					m_destinationDecision = true;
+				}
+				else if(m_ownerPos.x>m_ownerPos.z)
+				{
+					m_destinationPos.z += m_point;
 					m_destinationDecision = true;
 				}
 			}
 		}
 		else if (m_destinationDecision)
 		{
-			m_time += app()->GetElapsedTime();
-			if (m_destinationPos.x > m_destinationPos.z && m_distance <= m_point)
+			auto endTime= app()->GetElapsedTime();
+			if (m_destinationPos.x > m_destinationPos.z && m_distance <= m_point && m_time > 3)
 			{
 				m_ownerPos += -right * m_Owner->GetSpeed() * app()->GetElapsedTime();
 				m_distance +=m_Owner->GetSpeed() * app()->GetElapsedTime();
@@ -51,10 +56,11 @@ namespace basecross {
 			{
 				m_ownerPos += -forward * m_Owner->GetSpeed() * app()->GetElapsedTime();
 			}
-			if(m_ownerPos==m_destinationPos)
+			if ((m_ownerPos.x >= m_point || m_ownerPos.z >= m_point) && m_time > 3)
 			{
-				m_destinationDecision = false;
 				m_distance = 0;
+				m_time = 0;
+				m_destinationDecision = false;
 			}
 		}
 

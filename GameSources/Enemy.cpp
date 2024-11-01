@@ -11,7 +11,7 @@ namespace basecross {
 	//コンストラクタの宣言・デストラクタ
 	Enemy::Enemy(const shared_ptr<Stage>& StagePtr) :
 		GameObject(StagePtr),
-		m_speed(10)
+		m_speed(15)
 	{
 	}
 	Enemy::~Enemy()
@@ -24,7 +24,7 @@ namespace basecross {
 		GetComponent<Transform>()->SetScale(10,10,10);
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
-		m_CurrentSt = make_shared<Patrol>(GetThis<Enemy>());
+		m_CurrentSt = make_shared<Tracking>(GetThis<Enemy>());
 
 		Mat4x4 spanMat;
 		spanMat.affineTransformation
