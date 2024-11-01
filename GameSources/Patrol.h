@@ -18,13 +18,14 @@ namespace basecross {
 		Vec3 m_forward;
 
 		int m_rnd;
+		int m_numbersX;
+		int m_numbersZ;
 
 		float m_time;
 		float m_distance;
 		const float m_point;
 
 		bool m_destinationDecision;
-
 
 		shared_ptr<Transform> m_trans;
 	public:
@@ -36,10 +37,13 @@ namespace basecross {
 			m_right(1, 0, 0),
 			m_forward(0, 0, 1),
 			m_rnd(1),
+			m_numbersX(0),
+			m_numbersZ(0),
 			m_time(0.0f),
-			m_distance(0),
-			m_point(70),
+			m_distance(0.0f),
+			m_point(70.0f),
 			m_destinationDecision(false)
+
 		{
 		}
 		virtual ~Patrol() {}
