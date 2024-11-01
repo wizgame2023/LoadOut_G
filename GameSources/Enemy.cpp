@@ -57,26 +57,13 @@ namespace basecross {
 			m_CurrentSt->OnExit();// 切り替わった新しいステートの最初に行う処理
 		}
 
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		//	wss << L"transform : "
-		//	<< L"\n"
-		//	<< L"postion : ("
-		//	<< L"\nx."
-		//	<< trans->GetPosition().x
-		//	<< L","
-		//	<< "\ny."
-		//	<< trans->GetPosition().y
-		//	<< L","
-		//	<< "\nz."
-		//	<< trans->GetPosition().z
-		//	<< L")"
-		//	<< L"\nRot:"
-		//	<< L"\nx." << trans->GetRotation().x
-		//	<< L"\ny." << XMConvertToDegrees(trans->GetRotation().y)
-		//	<< L"\nz." << XMConvertToDegrees(trans->GetRotation().z)
-		//	<< endl;
-		//scene->SetDebugString(wss.str());
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+
+		if (mapManager->SelMapNow(trans->GetPosition())==2)
+		{
+			GetStage()->RemoveGameObject<Enemy>(GetThis<Enemy>());
+		}
+
 	}
 	void Enemy::OnDestroy()
 	{
