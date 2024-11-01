@@ -5,6 +5,9 @@
 
 #pragma once
 
+//ツール用
+#include "Ray.h";//レイ
+
 //ステート用
 #include "State.h"//ステートの親クラス
 #include "Tracking.h"
@@ -31,6 +34,7 @@
 #include "Sprite.h"//スプライト用
 #include "TilteStage.h"//タイトルステージ
 #include "GameOverStage.h"//ゲームオーバーステージ
+
 
 
 
