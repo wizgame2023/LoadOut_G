@@ -67,9 +67,14 @@ namespace basecross {
 				case 2:
 					AddGameObject<Wall>(startPos, Vec3(0, 0, 0), Vec3(1.0, 10, 30.0));
 					break;
-
 				}
 			}
+			auto selLength = 20;
+			auto wall = AddGameObject<Wall>(Vec3((selLength * 10.0f) / 2 + 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+			AddGameObject<Wall>(Vec3(-(selLength * 10.0f) / 2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+			AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength * 10) / 2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+			AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength * 10) / 2 + 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+
 		}
 	}
 
@@ -80,7 +85,7 @@ namespace basecross {
 			CreateViewLight();
 			AddGameObject<Enemy>();
 			//PlayerÇÃê∂ê¨
-			auto ptrPlayer = AddGameObject<Player>(Vec3(50.0f, 5.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
+			auto ptrPlayer = AddGameObject<Player>(Vec3(50.0f, 3.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
 			SetSharedGameObject(L"Player", ptrPlayer);
 			CreateWall();
 			AddGameObject<Ground>();

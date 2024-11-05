@@ -15,6 +15,7 @@ namespace basecross {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
 		void CreateWall();
+
 	public:
 		//\’z‚Æ”jŠü
 		YushinStage() :Stage() {}
