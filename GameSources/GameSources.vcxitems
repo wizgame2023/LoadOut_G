@@ -35,7 +35,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)TuabkiStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Wall.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YuusinStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YuutaStage.h" />
