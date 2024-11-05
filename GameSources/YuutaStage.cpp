@@ -45,7 +45,7 @@ namespace basecross {
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
 		{
-			//AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
+			AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
 
 		}
 		
@@ -60,11 +60,16 @@ namespace basecross {
 		//マンホールの生成
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
-		//外壁生成
-		auto wall = AddGameObject<Wall>(Vec3(100.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(200.0f,30.0f,1.0f));
-		AddGameObject<Wall>(Vec3(-100.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(200.0f, 30.0f, 1.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, -100.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(200.0f, 30.0f, 1.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, 100.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(200.0f, 30.0f, 1.0f));
+		OutWallCreate(20);//外壁生成
+	}
+
+	void YuutaStage::OutWallCreate(int selLength)//←個々の引数はこのマップの直径はブロック何個ぶんかを聞いています
+	{
+
+		auto wall = AddGameObject<Wall>(Vec3((selLength*10.0f)/2 + 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+		AddGameObject<Wall>(Vec3(-(selLength*10.0f)/2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength*10)/2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength*10)/2+ 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
 
 	}
 

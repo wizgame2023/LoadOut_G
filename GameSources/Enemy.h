@@ -23,8 +23,7 @@ namespace basecross {
 
 	public:
 		//コンストラクタ・デストラクタ
-		Enemy(const shared_ptr<Stage>& StagePtr,
-			Vec3& pos,const Vec3& rot,const Vec3& scale);
+		Enemy(const shared_ptr<Stage>& StagePtr);
 		~Enemy();
 
 		//生成・更新・削除

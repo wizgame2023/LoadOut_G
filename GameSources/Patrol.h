@@ -11,25 +11,39 @@ namespace basecross {
 	class Patrol :public StateBase
 	{
 	private:
-		Vec3 m_pos;
-		Vec3 m_rot;
+		Vec3 m_ownerPos;
+		Vec3 m_ownerRot;
+		Vec3 m_destinationPos;
+		Vec3 m_right;
+		Vec3 m_forward;
 
 		int m_rnd;
+		int m_numbersX;
+		int m_numbersZ;
+
 		float m_time;
 		float m_distance;
-		float m_point;
+		const float m_point;
+
+		bool m_destinationDecision;
 
 		shared_ptr<Transform> m_trans;
-
 	public:
 		Patrol(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
-			m_pos(0, 0, 0),
-			m_rot(0, 0, 0),
-			m_rnd(rand() % 2 + 1),
+			m_ownerPos(0, 0, 0),
+			m_ownerRot(0, 0, 0),
+			m_destinationPos(0,0,0),
+			m_right(1, 0, 0),
+			m_forward(0, 0, 1),
+			m_rnd(1),
+			m_numbersX(0),
+			m_numbersZ(0),
 			m_time(0.0f),
-			m_distance(0),
-			m_point(30)
+			m_distance(0.0f),
+			m_point(70.0f),
+			m_destinationDecision(false)
+
 		{
 		}
 		virtual ~Patrol() {}
