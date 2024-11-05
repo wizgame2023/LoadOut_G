@@ -27,6 +27,52 @@ namespace basecross {
 		PtrMultiLight->SetDefaultLighting();
 	}
 
+	void YushinStage::CreateWall()
+	{
+		auto path = App::GetApp()->GetDataDirWString();
+		auto levelPath = path + L"Levels/";
+		vector<vector<int>> stageMap;
+
+		ifstream ifs(levelPath += L"DebugStage.csv");
+		if (ifs)
+		{
+			string line;
+			while (getline(ifs, line))
+			{
+				vector<int> mapData;
+
+				line += ",";
+				string data;
+				istringstream ss(line);
+				while (getline(ss, data, ','))
+				{
+					int cellData = atoi(data.c_str());
+					mapData.push_back(cellData);
+				}
+
+				stageMap.push_back(mapData);
+			}
+		}
+
+		for (int r = 0; r < stageMap.size(); r++)
+		{
+			for (int c = 0; c < stageMap[0].size(); c++)
+			{
+				Vec3 startPos((c * 10.0f) - 95, 0.05f, 95 - (r * 10.0f));
+				switch (stageMap[r][c])
+				{
+				case 1:
+					AddGameObject<Wall>(startPos, Vec3(0, 0, 0), Vec3(30.0, 10, 1.0));
+					break;
+				case 2:
+					AddGameObject<Wall>(startPos, Vec3(0, 0, 0), Vec3(1.0, 10, 30.0));
+					break;
+
+				}
+			}
+		}
+	}
+
 
 	void YushinStage::OnCreate() {
 		try {
@@ -36,7 +82,8 @@ namespace basecross {
 			//PlayerÇÃê∂ê¨
 			auto ptrPlayer = AddGameObject<Player>(Vec3(50.0f, 5.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
 			SetSharedGameObject(L"Player", ptrPlayer);
-
+			CreateWall();
+			AddGameObject<Ground>();
 			auto mapManager = AddGameObject<MapManager>();
 			SetSharedGameObject(L"MapManager", mapManager);
 
