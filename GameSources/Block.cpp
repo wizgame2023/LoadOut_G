@@ -11,7 +11,8 @@ namespace basecross {
 	Block::Block(const shared_ptr<Stage>& StagePtr, const Vec3& pos, const Vec3& rot) :
 		GameObject(StagePtr),
 		m_pos(pos),
-		m_rot(rot)
+		m_rot(rot),
+		m_oneBlock(10)
 	{
 	}
 	Block::~Block()
@@ -24,7 +25,7 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();//Transformæ“¾
 		ptr->SetPosition(m_pos);
 		ptr->SetRotation(m_rot);
-		ptr->SetScale(10.0f, 10.0f, 10.0f);
+		ptr->SetScale(m_oneBlock, m_oneBlock, m_oneBlock);
 
 		//Transform‚É‘Î‚µ‚Ä‚Ì“™·”—ñ
 		Mat4x4 spanMat;

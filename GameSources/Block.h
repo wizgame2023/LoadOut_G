@@ -6,7 +6,7 @@ namespace basecross {
 	{
 		Vec3 m_pos;//ポジション
 		Vec3 m_rot;//回転度
-		int OneBlock;//このゲームの単位(この数値をセル座標では１とする)
+		const int m_oneBlock;//このゲームの単位(この数値をセル座標では１とする)
 	public:
 
 		Block(const shared_ptr<Stage>& StagePtr, const Vec3& pos, const Vec3& rot);//コンストラクタ
