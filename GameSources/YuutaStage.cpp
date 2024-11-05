@@ -45,20 +45,24 @@ namespace basecross {
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
 		{
-			AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
+			//AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
 
 		}
 		
 		//アイテムの生成
-		AddGameObject<Item>(Vec3(15.0f,2.5f,0.0f),Vec3(0.0f,0.0f,0.0f));
+		AddGameObject<Item>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(30.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//Playerの生成
-		AddGameObject<Player>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Player>(Vec3(0.0f, 3.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 
 		//壁の生成
-		AddGameObject<Wall>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(20.0f,20.0f,20.0f));
+		//AddGameObject<Wall>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(20.0f,20.0f,20.0f));
 
 		//マンホールの生成
-		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
+		AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
 		OutWallCreate(20);//外壁生成
 	}
@@ -66,10 +70,10 @@ namespace basecross {
 	void YuutaStage::OutWallCreate(int selLength)//←個々の引数はこのマップの直径はブロック何個ぶんかを聞いています
 	{
 
-		auto wall = AddGameObject<Wall>(Vec3((selLength*10.0f)/2 + 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
-		AddGameObject<Wall>(Vec3(-(selLength*10.0f)/2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength*10)/2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength*10)/2+ 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 1.0f));
+		auto wall = AddGameObject<Wall>(Vec3((selLength*10.0f)/2 + 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+		AddGameObject<Wall>(Vec3(-(selLength*10.0f)/2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength*10)/2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength*10)/2+ 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
 
 	}
 

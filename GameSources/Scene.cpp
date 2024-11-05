@@ -88,5 +88,11 @@ namespace basecross{
 
 	}
 
+	//１つのブロックの基準の大きさ これがセルでいうところの1に当たる大きさ
+	int Scene::GetSelOneSize()
+	{
+		return m_OneBox;
+	}
+
 }
 //end basecross
