@@ -22,7 +22,7 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();
 		ptr->SetPosition(m_pos);
 		ptr->SetRotation(0.0f,0.0f,0.0f);
-		ptr->SetScale(3.0f, 1.0f, 3.0f);
+		ptr->SetScale(10.0f, 1.0f, 10.0f);
 
 		//Transformに対しての等差数列
 		Mat4x4 spanMat;
@@ -49,13 +49,20 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
-		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
+		//m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
 
 	}
 
 	void Manhole::OnUpdate()
 	{
+		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
+
 		//m_mapManager.lock()->MapDataUpdate(m_pos, 1);//今いるセル座標はマンホールのデータということを伝える
+
+		if (m_mapManager.lock()->SelMapNow(m_pos)==2)
+		{
+			GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+		}
 	}
 
 }
