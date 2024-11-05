@@ -49,6 +49,12 @@
     <Filter Include="Headers\Manager">
       <UniqueIdentifier>{869d3c38-f771-4b11-91da-7e3e4f1713a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\Tools">
+      <UniqueIdentifier>{52cf384f-5ab4-4bfb-a90d-ff0bc0f7d2b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Tools">
+      <UniqueIdentifier>{e746cdd8-4728-4fff-8651-ba27e313cf25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
@@ -123,6 +129,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameOverStage.h">
       <Filter>Headers\Stage</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h">
+      <Filter>Headers\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -196,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameOverStage.cpp">
       <Filter>Sources\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
