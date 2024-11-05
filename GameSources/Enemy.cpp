@@ -21,7 +21,8 @@ namespace basecross {
 
 	void Enemy::OnCreate()
 	{
-		GetComponent<Transform>()->SetScale(10,10,10);
+		GetComponent<Transform>()->SetScale(2.5f,2.5f,2.5f);
+		GetComponent<Transform>()->SetPosition(0, 2.0f, 0);
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		m_CurrentSt = make_shared<Tracking>(GetThis<Enemy>());
@@ -32,8 +33,12 @@ namespace basecross {
 			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f)
+			Vec3(0.0f, 5.0f, 0.0f)
 		);
+		auto ptrColl = AddComponent<CollisionObb>();
+		ptrColl->SetDrawActive(true);//ƒRƒŠƒWƒ‡ƒ“‚ðŒ©‚¦‚é‚æ‚¤‚É‚·‚é
+		ptrDraw->SetMeshToTransformMatrix(spanMat);
+
 		m_CurrentSt->OnStart();
 	}
 
