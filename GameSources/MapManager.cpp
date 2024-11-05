@@ -68,7 +68,27 @@ namespace basecross {
 			}
 		}
 
-		int a = 0;//デバック用
+		int a = m_stageMap[0].size();//デバック用
+
+		//csvファイルから読み取って床関係のオブジェクトの生成する
+		for (int i = 0; i < m_stageMap.size(); i++)
+		{
+			for (int j = 0; j < m_stageMap[0].size(); j++)
+			{
+				int y = m_stageMap.size();
+				int b = m_stageMap[0].size();
+				int test = 0;
+				switch (m_stageMap[i][j])
+				{
+				case 1://マンホール生成
+					GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f)-95, 0.05f, 95-(i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
 
 		
 	}
