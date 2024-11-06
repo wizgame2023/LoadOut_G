@@ -19,7 +19,6 @@ namespace basecross {
 	void MapManager::OnCreate()
 	{
 		StageMapLoad();
-		WallCreateKari();
 		
 	}
 
@@ -204,7 +203,7 @@ namespace basecross {
 				switch (test_walls_up[i][j])
 				{
 				case 1://横壁生成
-					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - 95, 5.0f, 100 - (i * 10.0f)), Vec3(0.0f, 0.0f, 0.0f), Vec3(9.975f, 5.0f, 1.0f));
+					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - 95, 5.0f, 100 - (i * 10.0f)), Vec3(0.0f, 0.0f, 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
@@ -252,7 +251,7 @@ namespace basecross {
 				switch (test_walls_right[i][j])
 				{
 				case 1://横壁生成
-					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - 100, 5.0f, 95 - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.975f, 5.0f, 1.0f));
+					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - 100, 5.0f, 95 - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
