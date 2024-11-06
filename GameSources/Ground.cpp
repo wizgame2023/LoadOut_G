@@ -20,7 +20,7 @@ namespace basecross {
 	{
 		//Transformì¬
 		auto ptr = GetComponent<Transform>();//Transformæ“¾
-		ptr->SetPosition(0.0f,0.0f,0.0f);
+		ptr->SetPosition(0.0f,-0.1f,0.0f);
 		ptr->SetRotation(0.0f,0.0f,0.0f);
 		ptr->SetScale(200.0f, 1.0f, 200.0f);
 
