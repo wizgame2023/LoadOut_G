@@ -26,6 +26,7 @@ namespace basecross {
 
 		void StageMapLoad();
 		void WallMapLoad();
+		void WallCreateKari();//‰¼‚Ì•Ç‚ğ¶¬‚µ‚æ‚¤
 	};
 
 
