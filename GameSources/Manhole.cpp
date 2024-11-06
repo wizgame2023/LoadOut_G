@@ -36,13 +36,13 @@ namespace basecross {
 		//メッシュ生成
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetTextureResource(L"Manhole");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		//コリジョン生成
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(true);
-		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
+		ptrColl->SetAfterCollision(AfterCollision::None);
 		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
@@ -58,10 +58,30 @@ namespace basecross {
 		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
 
 		//m_mapManager.lock()->MapDataUpdate(m_pos, 1);//今いるセル座標はマンホールのデータということを伝える
-
-		if (m_mapManager.lock()->SelMapNow(m_pos)==2)
+		//セル座標にアイテムを設置した情報があったら
+		auto test = m_charen;
+		auto a = 0;
+		if (m_mapManager.lock()->SelMapNow(m_pos)==2&&m_charen==0)
 		{
-			GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+			m_charen = 1;
+			GetComponent<PNTStaticDraw>()->SetTextureResource(L"Red");//自分自身にアイテムが置かれていると分かりやすくする
+		}
+	}
+
+	void Manhole::OnCollisionEnter(shared_ptr<GameObject>& other)
+	{
+		auto test = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
+		auto enemy = dynamic_pointer_cast<Enemy>(other);
+
+
+		if (test->SelMapNow(m_pos) == 2)
+		{//もし当たったオブジェクトが敵ならば
+			if (enemy)
+			{
+				GetStage()->RemoveGameObject<Enemy>(enemy);
+				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Prohibited");//自分自身にアイテムが置かれていると分かりやすくする
+			}
 		}
 	}
 
