@@ -18,14 +18,17 @@ namespace basecross {
 		Vec3 m_forward;
 
 		int m_rnd;
-		int m_numbersX;
-		int m_numbersZ;
+		int m_numbers;
 
 		float m_time;
+		float m_moveTime;
 		float m_distance;
 		const float m_point;
 
 		bool m_destinationDecision;
+		bool m_wallCheck;
+		bool m_rightCheck;
+		bool m_forwardCheck;
 
 		shared_ptr<Transform> m_trans;
 	public:
@@ -33,16 +36,19 @@ namespace basecross {
 			StateBase(ptrOwner),
 			m_ownerPos(0, 0, 0),
 			m_ownerRot(0, 0, 0),
-			m_destinationPos(0,0,0),
+			m_destinationPos(0, 0, 0),
 			m_right(1, 0, 0),
 			m_forward(0, 0, 1),
 			m_rnd(1),
-			m_numbersX(0),
-			m_numbersZ(0),
+			m_numbers(0),
 			m_time(0.0f),
+			m_moveTime(0.0f),
 			m_distance(0.0f),
 			m_point(70.0f),
-			m_destinationDecision(false)
+			m_destinationDecision(false),
+			m_wallCheck(false),
+			m_rightCheck(false),
+			m_forwardCheck(false)
 
 		{
 		}
