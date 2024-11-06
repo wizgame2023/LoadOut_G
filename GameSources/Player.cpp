@@ -102,6 +102,7 @@ namespace basecross{
 			<< L"\nCount " << m_count
 			<< L"\nSelNow " << selNow
 			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+			<<L"\nFPS:"<< 1.0f/Delta
 			<< endl;
 		//XMConvertToRadians(-90.0f)e
 
