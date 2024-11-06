@@ -43,7 +43,7 @@ namespace basecross{
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
 		if (event->m_MsgStr == L"ToGameStage") {
 			//最初のアクティブステージの設定
-			ResetActiveStage<YushinStage>();
+			ResetActiveStage<GameStage>();
 		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定
@@ -72,6 +72,12 @@ namespace basecross{
 		app->RegisterTexture(L"Title", strTexture);
 		strTexture = texPath + L"RordOutGameOver.png";//ゲームオーバー用のテクスチャ
 		app->RegisterTexture(L"GameOver", strTexture);
+		strTexture = texPath + L"Sand.jpg";//マンホール用の仮テクスチャ
+		app->RegisterTexture(L"Manhole", strTexture);
+		strTexture = texPath + L"Red.png";//マンホール用の仮テクスチャ設置したとき
+		app->RegisterTexture(L"Red", strTexture);
+		strTexture = texPath + L"Prohibited.png";//マンホール用の通れない仮テクスチャ設置したとき
+		app->RegisterTexture(L"Prohibited", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
