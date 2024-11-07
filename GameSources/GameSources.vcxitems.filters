@@ -63,9 +63,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Block.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TuabkiStage.h">
-      <Filter>Headers\PrivateStage</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)YuusinStage.h">
       <Filter>Headers\PrivateStage</Filter>
     </ClInclude>
@@ -131,6 +128,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h">
       <Filter>Headers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameClearStage.h">
+      <Filter>Headers\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h">
+      <Filter>Headers\PrivateStage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
       <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameClearStage.cpp">
+      <Filter>Sources\Stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
