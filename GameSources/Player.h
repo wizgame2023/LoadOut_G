@@ -36,6 +36,8 @@ namespace basecross{
 		void AddCount(int add);
 		void PlayerMove();
 		void ManholeSet(Vec3 pos);//マンホールの上にわなを仕掛ける
+
+		void OnCollisionEnter(shared_ptr<GameObject>& other);//当たり判定
 	};
 
 }

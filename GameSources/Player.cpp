@@ -79,10 +79,10 @@ namespace basecross{
 		ManholeSet(pos);//マンホールの上にわなを仕掛ける処理
 
 		//デバック用でhpを減らす
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_Y)//Yボタンでhpを減らす
-		{
-			m_hp -= 1;
-		}
+		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_Y)//Yボタンでhpを減らす
+		//{
+		//	m_hp -= 1;
+		//}
 		if (m_hp <= 0)//体力が0になったら
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバシーンに移動する
@@ -94,17 +94,17 @@ namespace basecross{
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
-		wss << L"デバッグ用文字列 "
+		wss /* << L"デバッグ用文字列 "*/
 			<< L"\n傾き " << m_deg
 			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
 			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<< L"\nCount " << m_count
+			<< L"\n電池の所持数：  " << m_count
 			<< L"\nSelNow " << selNow
 			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
 			<<L"\nFPS:"<< 1.0f/Delta
 			<< endl;
-		//XMConvertToRadians(-90.0f)e
+		//XMConvertToRadians(-90.0f)
 
 		scene->SetDebugString(wss.str());
 
@@ -182,6 +182,15 @@ namespace basecross{
 	void Player::AddCount(int add)
 	{
 		m_count += add;
+	}
+
+	void Player::OnCollisionEnter(shared_ptr<GameObject>& other)
+	{
+		auto enemy = dynamic_pointer_cast<Enemy>(other);//enemyクラスに変換
+		if (enemy)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームシーンに移動する
+		}
 	}
 
 }
