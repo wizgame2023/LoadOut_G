@@ -23,6 +23,8 @@ namespace basecross{
 		shared_ptr<InputDevice> m_Device;//コントローラー
 		CONTROLER_STATE m_controler;//コントローラー
 
+		//float m_time;//テスト用使わなくなったら消してください
+
 	public:
 		Player(const shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ
 		~Player();
