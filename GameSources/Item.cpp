@@ -38,6 +38,7 @@ namespace basecross {
 		//ƒƒbƒVƒ…¶¬
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetTextureResource(L"Bule");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
