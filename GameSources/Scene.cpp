@@ -53,6 +53,10 @@ namespace basecross{
 			//タイトルのアクティブステージの設定
 			ResetActiveStage<GameOverStage>();
 		}
+		if (event->m_MsgStr == L"ToGameClearStage") {
+			//タイトルのアクティブステージの設定
+			ResetActiveStage<GameOverStage>();
+		}
 	}
 
 	void Scene::GameResourses()
@@ -78,6 +82,10 @@ namespace basecross{
 		app->RegisterTexture(L"Red", strTexture);
 		strTexture = texPath + L"Prohibited.png";//マンホール用の通れない仮テクスチャ設置したとき
 		app->RegisterTexture(L"Prohibited", strTexture);
+		strTexture = texPath + L"Bule.png";//アイテムの仮の色
+		app->RegisterTexture(L"Bule", strTexture);
+		strTexture = texPath + L"RordOutGameClear.png";//アイテムの仮の色
+		app->RegisterTexture(L"GameClear", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
