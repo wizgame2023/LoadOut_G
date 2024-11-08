@@ -126,7 +126,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameOverStage.h">
       <Filter>Headers\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)RaySphere.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameClearStage.h">
@@ -134,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h">
       <Filter>Headers\PrivateStage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RayManager.h">
+      <Filter>Headers\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,11 +212,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameOverStage.cpp">
       <Filter>Sources\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)RaySphere.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameClearStage.cpp">
       <Filter>Sources\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RayManager.cpp">
+      <Filter>Sources\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
