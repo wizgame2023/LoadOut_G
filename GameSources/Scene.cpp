@@ -43,13 +43,17 @@ namespace basecross{
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
 		if (event->m_MsgStr == L"ToGameStage") {
 			//最初のアクティブステージの設定
-			ResetActiveStage<YushinStage>();
+			ResetActiveStage<GameStage>();
 		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定
 			ResetActiveStage<TilteStage>();
 		}
 		if (event->m_MsgStr == L"ToGameOverStage") {
+			//タイトルのアクティブステージの設定
+			ResetActiveStage<GameOverStage>();
+		}
+		if (event->m_MsgStr == L"ToGameClearStage") {
 			//タイトルのアクティブステージの設定
 			ResetActiveStage<GameOverStage>();
 		}
@@ -72,6 +76,16 @@ namespace basecross{
 		app->RegisterTexture(L"Title", strTexture);
 		strTexture = texPath + L"RordOutGameOver.png";//ゲームオーバー用のテクスチャ
 		app->RegisterTexture(L"GameOver", strTexture);
+		strTexture = texPath + L"Sand.jpg";//マンホール用の仮テクスチャ
+		app->RegisterTexture(L"Manhole", strTexture);
+		strTexture = texPath + L"Red.png";//マンホール用の仮テクスチャ設置したとき
+		app->RegisterTexture(L"Red", strTexture);
+		strTexture = texPath + L"Prohibited.png";//マンホール用の通れない仮テクスチャ設置したとき
+		app->RegisterTexture(L"Prohibited", strTexture);
+		strTexture = texPath + L"Bule.png";//アイテムの仮の色
+		app->RegisterTexture(L"Bule", strTexture);
+		strTexture = texPath + L"RordOutGameClear.png";//アイテムの仮の色
+		app->RegisterTexture(L"GameClear", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
@@ -86,6 +100,12 @@ namespace basecross{
 		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");//プレイヤー(仮)メッシュ
 		app->RegisterResource(L"Player_Mesh_Kari", boneMultiModelMesh);
 
+	}
+
+	//１つのブロックの基準の大きさ これがセルでいうところの1に当たる大きさ
+	int Scene::GetSelOneSize()
+	{
+		return m_OneBox;
 	}
 
 }

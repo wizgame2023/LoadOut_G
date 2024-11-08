@@ -5,6 +5,11 @@
 
 #pragma once
 
+//ツール用
+#include "RaySphere.h";//レイの当たり判定
+#include "Ray.h";//レイ
+
+
 //ステート用
 #include "State.h"//ステートの親クラス
 #include "Tracking.h"
@@ -19,7 +24,7 @@
 #include "Character.h"
 #include "Player.h"
 #include "Block.h"
-#include "TuabkiStage.h"
+#include "TubakiStage.h"
 #include "YuusinStage.h"
 #include "YuutaStage.h"
 #include "Ground.h"
@@ -31,6 +36,8 @@
 #include "Sprite.h"//スプライト用
 #include "TilteStage.h"//タイトルステージ
 #include "GameOverStage.h"//ゲームオーバーステージ
+#include "GameClearStage.h"//ゲームクリアステージ
+
 
 
 

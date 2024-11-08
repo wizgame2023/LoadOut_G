@@ -41,6 +41,11 @@ namespace basecross{
 		virtual void OnEvent(const shared_ptr<Event>& event) override;
 
 		void GameResourses();
+
+		int GetSelOneSize();//１つのセル座標がワールド座標ではどんな大きさかを返すゲッター
+
+	private:
+		int m_OneBox = 10;//１つのボックスの大きさ
 	};
 
 }

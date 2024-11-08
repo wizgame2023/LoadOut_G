@@ -1,6 +1,6 @@
 /*!
 @file Player.cpp
-@brief ƒvƒŒƒCƒ„[‚È‚ÇÀ‘Ì
+@brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãªã©å®Ÿä½“
 */
 
 #include "stdafx.h"
@@ -45,95 +45,99 @@ namespace basecross{
 
 		auto ptrColl = AddComponent<CollisionObb>();
 		//ptrColl->SetFixed(true);
-		//ptrColl->SetSleepActive(false);//‚Ô‚Â‚©‚ç‚È‚¢ŒÀ‚èƒXƒŠ[ƒvó‘Ô‚É‚È‚é
+		//ptrColl->SetSleepActive(false);//ã¶ã¤ã‹ã‚‰ãªã„é™ã‚Šã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã«ãªã‚‹
 		ptrColl->SetAfterCollision(AfterCollision::Auto);
 
-		ptrColl->SetDrawActive(true);//ƒRƒŠƒWƒ‡ƒ“‚ğŒ©‚¦‚é‚æ‚¤‚É‚·‚é
+		ptrColl->SetDrawActive(true);//ã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚’è¦‹ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹
 
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
-		AddTag(L"Player");//ƒ^ƒO’Ç‰Á
+		AddTag(L"Player");//ã‚¿ã‚°è¿½åŠ 
 	}
 
 	void Player::OnUpdate()
 	{
-		//ƒfƒ‹ƒ^ƒ^ƒCƒ€
+		//ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ 
 		auto Delta = App::GetApp()->GetElapsedTime();
 
-		// ƒCƒ“ƒvƒbƒgƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg
-		auto inputDevice = App::GetApp()->GetInputDevice(); // —lX‚È“ü—ÍƒfƒoƒCƒX‚ğŠÇ—‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚ğæ“¾
-		//ƒRƒ“ƒgƒ[ƒ‰[‚Ìæ“¾
+		// ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		auto inputDevice = App::GetApp()->GetInputDevice(); // æ§˜ã€…ãªå…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã‚’ç®¡ç†ã—ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
+		//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®å–å¾—
 		m_controler = inputDevice.GetControlerVec()[0];
-		auto pos = GetComponent<Transform>()->GetPosition();//ƒ|ƒWƒVƒ‡ƒ“æ“¾
+		auto pos = GetComponent<Transform>()->GetPosition();//ãƒã‚¸ã‚·ãƒ§ãƒ³å–å¾—
 
 
-		PlayerMove();//ƒvƒŒƒCƒ„[‚Ì“®‚«
+		PlayerMove();//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‹•ã
 
-		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//ƒ}ƒbƒvƒ}ƒl[ƒWƒƒ[æ“¾
-		Vec2 selPos = mapManager->ConvertSelMap(pos);//¡‚¢‚éƒZƒ‹À•W‚ğæ“¾
-		int selNow = mapManager->SelMapNow(pos);//Œ»İ‚¢‚éƒZƒ‹À•W‚É‰½‚ª‚ ‚é‚©‚ğæ“¾
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//ãƒãƒƒãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼å–å¾—
+		Vec2 selPos = mapManager->ConvertSelMap(pos);//ä»Šã„ã‚‹ã‚»ãƒ«åº§æ¨™ã‚’å–å¾—
+		int selNow = mapManager->SelMapNow(pos);//ç¾åœ¨ã„ã‚‹ã‚»ãƒ«åº§æ¨™ã«ä½•ãŒã‚ã‚‹ã‹ã‚’å–å¾—
 
-		ManholeSet(pos);//ƒ}ƒ“ƒz[ƒ‹‚Ìã‚É‚í‚È‚ğdŠ|‚¯‚éˆ—
+		ManholeSet(pos);//ãƒãƒ³ãƒ›ãƒ¼ãƒ«ã®ä¸Šã«ã‚ãªã‚’ä»•æ›ã‘ã‚‹å‡¦ç†
 
-		//ƒfƒoƒbƒN—p‚Åhp‚ğŒ¸‚ç‚·
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_Y)//Yƒ{ƒ^ƒ“‚Åhp‚ğŒ¸‚ç‚·
+		//ãƒ‡ãƒãƒƒã‚¯ç”¨ã§hpã‚’æ¸›ã‚‰ã™
+		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_Y)//Yãƒœã‚¿ãƒ³ã§hpã‚’æ¸›ã‚‰ã™
+		//{
+		//	m_hp -= 1;
+		//}
+		if (m_hp <= 0)//ä½“åŠ›ãŒ0ã«ãªã£ãŸã‚‰
 		{
-			m_hp -= 1;
-		}
-		if (m_hp <= 0)//‘Ì—Í‚ª0‚É‚È‚Á‚½‚ç
-		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ƒQ[ƒ€ƒI[ƒoƒV[ƒ“‚ÉˆÚ“®‚·‚é
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒã‚·ãƒ¼ãƒ³ã«ç§»å‹•ã™ã‚‹
 		}
 
-		auto rot = GetComponent<Transform>()->GetRotation();//‰ñ“]“x‚ğæ“¾
+		auto rot = GetComponent<Transform>()->GetRotation();//å›è»¢åº¦ã‚’å–å¾—
 
-		//ƒfƒoƒbƒN—p
+
+
+		//ãƒ‡ãƒãƒƒã‚¯ç”¨
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
-		//wss << L"ƒfƒoƒbƒO—p•¶š—ñ "
-		//	<< L"\nŒX‚« " << m_deg
-		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-		//	<< L"\nCount " << m_count
-		//	<< L"\nSelNow " << selNow
-		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-		//	<< endl;
-		////XMConvertToRadians(-90.0f)e
 
-		//scene->SetDebugString(wss.str());
+		wss /* << L"ãƒ‡ãƒãƒƒã‚°ç”¨æ–‡å­—åˆ— "*/
+			<< L"\nå‚¾ã " << m_deg
+			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<< L"\né›»æ± ã®æ‰€æŒæ•°ï¼š  " << m_count
+			<< L"\nSelNow " << selNow
+			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+			<<L"\nFPS:"<< 1.0f/Delta
+			<< endl;
+		//XMConvertToRadians(-90.0f)
+
+		scene->SetDebugString(wss.str());
 
 	}
 
-	void Player::PlayerMove()//ƒvƒŒƒCƒ„[‚ÌŒü‚«‚â“®‚«‚ğŠÇ—‚·‚éŠÖ”
+	void Player::PlayerMove()//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‘ãã‚„å‹•ãã‚’ç®¡ç†ã™ã‚‹é–¢æ•°
 	{
-		auto pos = GetComponent<Transform>()->GetPosition();//ƒ|ƒWƒVƒ‡ƒ“æ“¾
+		auto pos = GetComponent<Transform>()->GetPosition();//ãƒã‚¸ã‚·ãƒ§ãƒ³å–å¾—
 		auto Delta = App::GetApp()->GetElapsedTime();
 
-		//¶ƒXƒeƒbƒN‚ÌŒü‚«‚ÉƒvƒŒƒCƒ„[‚ªi‚Ş
+		//å·¦ã‚¹ãƒ†ãƒƒã‚¯ã®å‘ãã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒé€²ã‚€
 		if (m_controler.bConnected)
 		{
 
 			pos.x += (m_controler.fThumbLX * 10 * Delta) * 2;
 			pos.z += (m_controler.fThumbLY * 10 * Delta) * 2;
 
-			m_Trans->SetPosition(pos);//ƒ|ƒWƒVƒ‡ƒ“XV
+			m_Trans->SetPosition(pos);//ãƒã‚¸ã‚·ãƒ§ãƒ³æ›´æ–°
 		}
 
 		float deg = 0;
-		//¶ƒXƒeƒbƒN‚ÌŒü‚«‚ÉƒvƒŒƒCƒ„[‚àŒü‚­
+		//å·¦ã‚¹ãƒ†ãƒƒã‚¯ã®å‘ãã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚‚å‘ã
 		if (m_controler.bConnected)
 		{
-			//ƒXƒeƒBƒbƒN‚ÌŒX‚«‚ğƒ‰ƒWƒAƒ“‚É‚·‚é
+			//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ãã‚’ãƒ©ã‚¸ã‚¢ãƒ³ã«ã™ã‚‹
 			float rad = -atan2(m_controler.fThumbLY, m_controler.fThumbLX);
-			//ƒ‰ƒWƒAƒ“‚ÌŒX‚«‚ğƒfƒBƒOƒŠ[Šp‚É‚·‚é
+			//ãƒ©ã‚¸ã‚¢ãƒ³ã®å‚¾ãã‚’ãƒ‡ã‚£ã‚°ãƒªãƒ¼è§’ã«ã™ã‚‹
 			m_deg = rad * 180 / 3.14f;
 			m_Rot.y = rad;
-			//ƒQ[ƒ€ƒpƒbƒg‚ÌŒX‚«‚ª–³‚¯‚ê‚Î‰ñ“]“x‚ÍXV‚µ‚È‚¢
+			//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒˆã®å‚¾ããŒç„¡ã‘ã‚Œã°å›è»¢åº¦ã¯æ›´æ–°ã—ãªã„
 			if (m_controler.fThumbLY != 0.0f && m_controler.fThumbLX != 0.0f)
 			{
 				m_Trans->SetRotation(m_Rot);
@@ -141,22 +145,32 @@ namespace basecross{
 
 		}
 
+		//m_time += Delta;
+		//if(m_time >= 0.05f)//ãƒ¬ã‚¤ã®å‡¦ç†ã®å®Ÿé¨“ å®Ÿé¨“ã—ãªããªã£ãŸã‚‰æ¶ˆã—ã¦ãã ã•ã„
+		//{	
+		//	ãƒ‡ãƒãƒƒã‚¯ç”¨
+		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), atan2(m_controler.fThumbLY, m_controler.fThumbLX),GetThis<Player>());
+		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX), GetThis<Player>());
+		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX)-0.5f, GetThis<Player>());
+		//}
+
+
 	}
 
-	//ƒ}ƒ“ƒz[ƒ‹‚Ìã‚É‚í‚È‚ğdŠ|‚¯‚éˆ—
+	//ãƒãƒ³ãƒ›ãƒ¼ãƒ«ã®ä¸Šã«ã‚ãªã‚’ä»•æ›ã‘ã‚‹å‡¦ç†
 	void Player::ManholeSet(Vec3 pos)
 	{
-		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//ƒ}ƒbƒvƒ}ƒl[ƒWƒƒ[æ“¾
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//ãƒãƒƒãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼å–å¾—
 
-		if (m_count >= 1)//ƒJƒEƒ“ƒg‚ª‚PˆÈã‚È‚ç
+		if (m_count >= 1)//ã‚«ã‚¦ãƒ³ãƒˆãŒï¼‘ä»¥ä¸Šãªã‚‰
 		{
 			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
-			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«
+			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ã
 			{
-				if (mapManager->SelMapNow(pos) == 1)//‚à‚µAŒ»İ‚¢‚éƒZƒ‹À•W‚ªƒ}ƒ“ƒz[ƒ‹‚Ìã‚È‚ç‚Î
+				if (mapManager->SelMapNow(pos) == 1)//ã‚‚ã—ã€ç¾åœ¨ã„ã‚‹ã‚»ãƒ«åº§æ¨™ãŒãƒãƒ³ãƒ›ãƒ¼ãƒ«ã®ä¸Šãªã‚‰ã°
 				{
 					m_count--;
-					mapManager->MapDataUpdate(pos, 2);//ã©‚ğİ’u‚·‚é
+					mapManager->MapDataUpdate(pos, 2);//ç½ ã‚’è¨­ç½®ã™ã‚‹
 
 				}
 			}
@@ -167,20 +181,29 @@ namespace basecross{
 
 	void Player::SetUp()
 	{
-		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//ƒ}ƒbƒvƒ}ƒl[ƒWƒƒ[æ“¾
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//ãƒãƒƒãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼å–å¾—
 		auto pos = GetComponent<Transform>()->GetPosition();
 
-		//‚»‚ÌƒZƒ‹À•W‚ªƒ}ƒ“ƒz[ƒ‹‚Ìã‚È‚çã©‚ğ’u‚­ˆ—
+		//ãã®ã‚»ãƒ«åº§æ¨™ãŒãƒãƒ³ãƒ›ãƒ¼ãƒ«ã®ä¸Šãªã‚‰ç½ ã‚’ç½®ãå‡¦ç†
 		if (mapManager->SelMapNow(pos) == 1)
 		{
-			mapManager->MapDataUpdate(pos, 2);//Œ»İ‚ÌƒZƒ‹À•W‚Éã©‚ğ’u‚­ˆ—‚ğ‚·‚é
+			mapManager->MapDataUpdate(pos, 2);//ç¾åœ¨ã®ã‚»ãƒ«åº§æ¨™ã«ç½ ã‚’ç½®ãå‡¦ç†ã‚’ã™ã‚‹
 		}
 	}
 
-	//m_count‚É”’l‚ªƒvƒ‰ƒX‚³‚ê‚é
+	//m_countã«æ•°å€¤ãŒãƒ—ãƒ©ã‚¹ã•ã‚Œã‚‹
 	void Player::AddCount(int add)
 	{
 		m_count += add;
+	}
+
+	void Player::OnCollisionEnter(shared_ptr<GameObject>& other)
+	{
+		auto enemy = dynamic_pointer_cast<Enemy>(other);//enemyã‚¯ãƒ©ã‚¹ã«å¤‰æ›
+		if (enemy)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã«ç§»å‹•ã™ã‚‹
+		}
 	}
 
 }

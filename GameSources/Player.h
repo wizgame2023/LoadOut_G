@@ -23,6 +23,8 @@ namespace basecross{
 		shared_ptr<InputDevice> m_Device;//コントローラー
 		CONTROLER_STATE m_controler;//コントローラー
 
+		//float m_time;//テスト用使わなくなったら消してください
+
 	public:
 		Player(const shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ
 		~Player();
@@ -36,6 +38,8 @@ namespace basecross{
 		void AddCount(int add);
 		void PlayerMove();
 		void ManholeSet(Vec3 pos);//マンホールの上にわなを仕掛ける
+
+		void OnCollisionEnter(shared_ptr<GameObject>& other);//当たり判定
 	};
 
 }
