@@ -7,9 +7,10 @@
 #include "Project.h"
 
 namespace basecross {
-	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Enemy> parentObj) :
+	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Enemy> parentObj,float range) :
 		GameObject(stagePtr),
-		m_parentObj(parentObj)
+		m_parentObj(parentObj),
+		m_range(range)
 	{
 
 	}
@@ -33,7 +34,7 @@ namespace basecross {
 		if (m_countTime >= 0.5f)
 		{	
 			m_countTime = 0;//リセット
-			GetStage()->AddGameObject<RaySphere>(m_parentObj.lock()->GetComponent<Transform>()->GetPosition(), -angle, GetThis<Ray>());//レイスフィア生成
+			GetStage()->AddGameObject<RaySphere>(m_parentObj.lock()->GetComponent<Transform>()->GetPosition(), -angle, GetThis<Ray>(),m_range);//レイスフィア生成
 		}
 
 		//デバック用

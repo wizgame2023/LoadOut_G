@@ -7,11 +7,13 @@
 #include "Project.h"
 
 namespace basecross {
-	RaySphere::RaySphere(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<Ray> parentObj) :
+	RaySphere::RaySphere(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<Ray> parentObj,float range) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rad(angle),
 		m_parentObj(parentObj),
+		m_range(range),
+		m_originPos(pos),
 		m_discoveryObj(NULL)
 	{
 
@@ -66,6 +68,16 @@ namespace basecross {
 		pos.x += cos(m_rad) * speed * delta;
 		pos.z += sin(m_rad) * speed * delta;
 		ptr->SetPosition(pos);
+
+		m_moveVec = Vec3((m_originPos.x - pos.x), (m_originPos.y - pos.y), (m_originPos.z - pos.z));
+		float move = RemoveMinus(m_moveVec.x) + RemoveMinus(m_moveVec.y) + RemoveMinus(m_moveVec.z);
+		
+		//Œ´“_‚©‚çˆê’è‹——£—£‚ê‚½ê‡©•ª‚ªÁ‚¦‚é
+		if (move >= m_range)
+		{
+			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());//©•ª©g‚ªÁ‚¦‚é
+		}
+		
 	}
 
 	void RaySphere::OnCollisionEnter(shared_ptr<GameObject>& other)
@@ -94,6 +106,17 @@ namespace basecross {
 	vector<weak_ptr<GameObject>> RaySphere::GetDisObj()
 	{
 		return m_discoveryObj;
+	}
+
+	float RaySphere::RemoveMinus(float num)
+	{
+		//num‚ª0‚æ‚è¬‚³‚©‚Á‚½‚ç0‚æ‚è‚à‘å‚«‚­‚·‚é
+		if (num <= 0)
+		{
+			num = -num;
+		}
+
+		return num;
 	}
 
 }
