@@ -34,6 +34,7 @@
 #include "TilteStage.h"//タイトルステージ
 #include "GameOverStage.h"//ゲームオーバーステージ
 #include "GameClearStage.h"//ゲームクリアステージ
+#include "Sky_base.h"
 
 
 //ツール用
