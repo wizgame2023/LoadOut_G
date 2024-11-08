@@ -1,5 +1,5 @@
 /*!
-@file Ray.h
+@file RaySphere.h
 @brief レイ　視界
 */
 
@@ -7,7 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross {
-	class Ray :public GameObject
+	class RaySphere :public GameObject
 	{
 	private:
 		vector<weak_ptr<GameObject>> m_discoveryObj;//ぶつかったオブジェクトのアドレスを取る 出来れば静的変数にしたい
@@ -20,8 +20,8 @@ namespace basecross {
 		float m_rad;//角度
 
 	public:
-		Ray(shared_ptr<Stage>& stagePtr, Vec3 pos, float angle,weak_ptr<GameObject> parentObj);//コンストラクタ
-		~Ray();//デストラクタ
+		RaySphere(shared_ptr<Stage>& stagePtr, Vec3 pos, float angle,weak_ptr<GameObject> parentObj);//コンストラクタ
+		~RaySphere();//デストラクタ
 
 		void OnCreate()override;//作成
 		void OnUpdate()override;//更新

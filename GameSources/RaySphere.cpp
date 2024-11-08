@@ -1,5 +1,5 @@
 /*!
-@file Ray.cpp
+@file RaySphere.cpp
 @brief レイ
 */
 //現在の処理だと重い状態になる可能性がとても高いので修正必須だと思います
@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	Ray::Ray(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<GameObject> parentObj) :
+	RaySphere::RaySphere(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<GameObject> parentObj) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rad(angle),
@@ -17,11 +17,11 @@ namespace basecross {
 
 	}
 
-	Ray::~Ray()
+	RaySphere::~RaySphere()
 	{
 	}
 
-	void Ray::OnCreate()
+	void RaySphere::OnCreate()
 	{
 		//Transform作成
 		auto ptr = GetComponent<Transform>();//Transform取得
@@ -57,7 +57,7 @@ namespace basecross {
 
 	}
 
-	void Ray::OnUpdate()
+	void RaySphere::OnUpdate()
 	{
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム取得
 		auto ptr = GetComponent<Transform>();//Transform取得
@@ -68,7 +68,7 @@ namespace basecross {
 		ptr->SetPosition(pos);
 	}
 
-	void Ray::OnCollisionEnter(shared_ptr<GameObject>& other)
+	void RaySphere::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
 		//ぶつかったオブジェクトが今までぶつかったことのないオブジェクトなら配列に入れる
 		for (auto a : m_discoveryObj)
@@ -83,12 +83,12 @@ namespace basecross {
 		auto enemy = dynamic_pointer_cast<Wall>(other);
 		if (enemy)
 		{
-			GetStage()->RemoveGameObject<Ray>(GetThis<Ray>());//自分自身を消す
+			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());//自分自身を消す
 		}
 	}
 
 	//取得したオブジェクトを渡す
-	vector<weak_ptr<GameObject>> Ray::GetDisObj()
+	vector<weak_ptr<GameObject>> RaySphere::GetDisObj()
 	{
 		return m_discoveryObj;
 	}
