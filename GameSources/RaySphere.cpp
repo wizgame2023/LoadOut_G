@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	RaySphere::RaySphere(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<GameObject> parentObj) :
+	RaySphere::RaySphere(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<Ray> parentObj) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rad(angle),
@@ -71,18 +71,21 @@ namespace basecross {
 	void RaySphere::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
 		//ぶつかったオブジェクトが今までぶつかったことのないオブジェクトなら配列に入れる
-		for (auto a : m_discoveryObj)
-		{
-			if (a.lock() != other)//オブジェクトが前覚えている物でないとき
-			{
-				m_discoveryObj.push_back(other);//記憶する
-			}
-			GetDisObj();//取得したオブジェクトを渡したい
-		}
+		//for (auto a : m_discoveryObj)
+		//{
+		//	if (a.lock() != other)//オブジェクトが前覚えている物でないとき
+		//	{
+				//m_discoveryObj.push_back(other);//記憶する
+			//}
+			//m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
+		//}
 		
 		auto enemy = dynamic_pointer_cast<Wall>(other);
 		if (enemy)
 		{
+			m_discoveryObj.push_back(other);//記憶する
+			m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
+
 			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());//自分自身を消す
 		}
 	}

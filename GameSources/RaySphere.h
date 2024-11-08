@@ -5,6 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include "Ray.h"
 
 namespace basecross {
 	class RaySphere :public GameObject
@@ -14,13 +15,13 @@ namespace basecross {
 
 		float m_range;//視界の射程
 		float m_move;//元居た地点からどれくらい移動したか測る変数
-		weak_ptr<GameObject> m_parentObj;//親オブジェクト
+		weak_ptr<Ray> m_parentObj;//親オブジェクト
 
 		Vec3 m_pos;//位置
 		float m_rad;//角度
 
 	public:
-		RaySphere(shared_ptr<Stage>& stagePtr, Vec3 pos, float angle,weak_ptr<GameObject> parentObj);//コンストラクタ
+		RaySphere(shared_ptr<Stage>& stagePtr, Vec3 pos, float angle,weak_ptr<Ray> parentObj);//コンストラクタ
 		~RaySphere();//デストラクタ
 
 		void OnCreate()override;//作成
