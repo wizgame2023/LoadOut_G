@@ -44,9 +44,11 @@ namespace basecross {
 
 		//コリジョン生成
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(false);
-		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
-		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetAfterCollision(AfterCollision::None);
+
+		//ptrColl->SetFixed(false);
+		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
+		//ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
