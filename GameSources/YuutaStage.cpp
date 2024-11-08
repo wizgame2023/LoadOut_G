@@ -52,6 +52,8 @@ namespace basecross {
 		
 		//アイテムの生成
 		AddGameObject<Item>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
@@ -65,7 +67,7 @@ namespace basecross {
 		//マンホールの生成
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
-		//AddGameObject<Ray>();
+		//AddGameObject<RaySphere>();
 
 		OutWallCreate(20);//外壁生成
 	}

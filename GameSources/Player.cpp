@@ -144,14 +144,13 @@ namespace basecross{
 
 		}
 
-		//auto Delta = App::GetApp()->GetElapsedTime();
 		//m_time += Delta;
 		//if(m_time >= 0.05f)//レイの処理の実験 実験しなくなったら消してください
 		//{	
-		//	//デバック用
-		//	GetStage()->AddGameObject<Ray>(GetComponent<Transform>()->GetPosition(), atan2(m_controler.fThumbLY, m_controler.fThumbLX),GetThis<Player>());
-		//	GetStage()->AddGameObject<Ray>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX), GetThis<Player>());
-		//	GetStage()->AddGameObject<Ray>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX)-0.5f, GetThis<Player>());
+		//	デバック用
+		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), atan2(m_controler.fThumbLY, m_controler.fThumbLX),GetThis<Player>());
+		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX), GetThis<Player>());
+		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX)-0.5f, GetThis<Player>());
 		//}
 
 
