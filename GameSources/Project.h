@@ -5,9 +5,6 @@
 
 #pragma once
 
-//ツール用
-#include "RaySphere.h";//レイの当たり判定
-#include "Ray.h";//レイ
 
 
 //ステート用
@@ -39,6 +36,9 @@
 #include "GameClearStage.h"//ゲームクリアステージ
 
 
+//ツール用
+#include "RaySphere.h";//レイの当たり判定
+#include "Ray.h";//レイ
 
 
 
