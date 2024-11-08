@@ -94,18 +94,18 @@ namespace basecross{
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
-		wss << L"デバッグ用文字列 "
-			<< L"\n傾き " << m_deg
-			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<< L"\nCount " << m_count
-			<< L"\nSelNow " << selNow
-			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-			<< endl;
-		//XMConvertToRadians(-90.0f)e
+		//wss << L"デバッグ用文字列 "
+		//	<< L"\n傾き " << m_deg
+		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+		//	<< L"\nCount " << m_count
+		//	<< L"\nSelNow " << selNow
+		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+		//	<< endl;
+		////XMConvertToRadians(-90.0f)e
 
-		scene->SetDebugString(wss.str());
+		//scene->SetDebugString(wss.str());
 
 	}
 

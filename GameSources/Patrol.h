@@ -29,6 +29,7 @@ namespace basecross {
 		bool m_wallCheck;
 		bool m_rightCheck;
 		bool m_forwardCheck;
+		bool m_minus;
 
 		shared_ptr<Transform> m_trans;
 	public:
@@ -48,7 +49,8 @@ namespace basecross {
 			m_destinationDecision(false),
 			m_wallCheck(false),
 			m_rightCheck(false),
-			m_forwardCheck(false)
+			m_forwardCheck(false),
+			m_minus(false)
 
 		{
 		}

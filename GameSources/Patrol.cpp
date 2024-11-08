@@ -48,39 +48,59 @@ namespace basecross {
 				{
 					m_destinationPos.x -= m_point;
 					m_destinationDecision = true;
+					m_minus = true;
 
 				}
 				else if(m_numbers == 3 )
 				{
 					m_destinationPos.z -= m_point;
 					m_destinationDecision = true;
+					m_minus = true;
 				}
 
-				else if (m_numbers >= 4)
-				{
-					m_numbers = 0;
-				}
 			}
 			if (m_wallCheck)
 			{
-				if (m_rightCheck)
+				if (m_numbers == 0)
 				{
-					m_destinationPos.x= 0;
-					m_destinationPos.z -= m_point;
+					m_destinationPos.x += m_point;
+					m_destinationPos.z = m_ownerPos.z;
+					m_wallCheck = false;
+					m_destinationDecision = true;
+					m_rightCheck = false;
+				}
+				else if (m_numbers == 1)
+				{
+					m_destinationPos.z += m_point;
+					m_destinationPos.x = m_ownerPos.x;
 					m_wallCheck = false;
 					m_destinationDecision = true;
 					m_forwardCheck = false;
 				}
-				else if (m_forwardCheck)
+				if (m_numbers == 2)
 				{
-					m_destinationPos.z = 0;
-					m_destinationPos.x -= m_point;
+					m_destinationPos.x-= m_point;
+					m_destinationPos.z = m_ownerPos.z;
+					m_wallCheck = false;
+					m_destinationDecision = true;
+					m_rightCheck = false;
+					m_minus = true;
+				}
+				else if (m_numbers == 3)
+				{
+					m_destinationPos.z -= m_point;
+					m_destinationPos.x = m_ownerPos.x;
 					m_wallCheck = false;
 					m_destinationDecision = true;
 					m_forwardCheck = false;
-
+					m_minus = true;
 				}
 			}
+			if (m_numbers >= 4)
+			{
+				m_numbers = 0;
+			}
+
 
 		}
 		else if (m_destinationDecision)
@@ -92,44 +112,89 @@ namespace basecross {
 				m_moveTime +=app()->GetElapsedTime();
 				m_rightCheck = true;
 			}
-			else if (m_numbers % 2 == 1 <= m_point && m_time >= 3)
+			else if (m_numbers % 2 == 1 && m_time >= 3)
 			{
 				m_ownerPos += -forward * m_Owner->GetSpeed() * app()->GetElapsedTime();
 				m_moveTime += app()->GetElapsedTime();
 				m_forwardCheck=true;
 			}
-			if (m_moveTime > 5)
+			if (m_moveTime > 4.0f)
+			{
+				if (m_rightCheck)
+				{
+					if (m_ownerPos.x >= m_destinationPos.x - 1 && m_ownerPos.z == m_destinationPos.z && !m_minus)
+					{
+						m_numbers++;
+						m_ownerPos.x = m_destinationPos.x;
+						m_moveTime = 0;
+						m_time = 0;
+						m_destinationDecision = false;
+					}
+					else if (m_ownerPos.x <= m_destinationPos.x + 1 && m_ownerPos.z == m_destinationPos.z && m_minus)
+					{
+						m_numbers++;
+						m_ownerPos.x = m_destinationPos.x;
+						m_moveTime = 0;
+						m_time = 0;
+						m_destinationDecision = false;
+						if (m_minus)
+						{
+							m_minus = false;
+						}
+
+					}
+					//m_destinationDecision = false;
+				}
+				else if (m_forwardCheck)
+				{
+					if (m_ownerPos.z >= m_destinationPos.z - 1 && m_ownerPos.x == m_destinationPos.x && !m_minus)
+					{
+						m_numbers++;
+						m_ownerPos.z = m_destinationPos.z;
+						m_moveTime = 0;
+						m_time = 0;
+						m_destinationDecision = false;
+					}
+					else if (m_ownerPos.z <= m_destinationPos.z + 1 && m_ownerPos.x == m_destinationPos.x && m_minus)
+					{
+						m_numbers++;
+						m_ownerPos.z = m_destinationPos.z;
+						m_moveTime = 0;
+						m_time = 0;
+						m_destinationDecision = false;
+
+						if (m_minus)
+						{
+							m_minus = false;
+						}
+
+					}
+					//m_wallCheck = true;
+				}
+			}
+			if (m_moveTime > 5.0f)
 			{
 				m_numbers++;
 				m_time = 0;
 				m_moveTime = 0;
+				m_wallCheck = true;
 				m_destinationDecision = false;
-
-				if ( m_rightCheck)
-				{
-					m_wallCheck = true;
-					m_destinationDecision = false;
-				}
-				else if (m_forwardCheck)
-				{
-					m_wallCheck = true;
-					m_destinationDecision = false;
-
-				}
 			}
+
 		}
 
 		m_trans->SetRotation(m_ownerRot);
 		m_trans->SetPosition(m_ownerPos);
 
 		float deg = rad * 180 / XM_PI;
-
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		wss << L"–Ú“I’n_x : " << m_destinationPos.x
-			<< L"\n–Ú“I’n_z : " << m_destinationPos.z 
-			<<L"\n“G‚Ì‰ñ“].y : "<<m_ownerRot.y 
-			<<L"\n“G‚Ì‰ñ“]idegj"<<deg
+			<< L"\n–Ú“I’n_z : " << m_destinationPos.z
+			<< L"\n“G‚Ì‰ñ“].y : " << m_ownerRot.y
+			<< L"\n“G‚Ì‰ñ“]idegj" << deg
+			<< L"\nright.x" << right.x
+			<< L"\nforward.z" << forward.z
 			<<L"\n“G‚ÌPos.x : "<<m_ownerPos.x 
 			<<L"\n“G‚ÌPos.z : "<< m_ownerPos.z
 			<<L"\nˆÚ“®‹——£ : "<<m_distance
