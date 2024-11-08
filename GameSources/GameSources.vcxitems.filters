@@ -55,6 +55,12 @@
     <Filter Include="Sources\Tools">
       <UniqueIdentifier>{e746cdd8-4728-4fff-8651-ba27e313cf25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\Skyblock">
+      <UniqueIdentifier>{2c239ac5-25ed-43ca-844f-fcd1bc0d493e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Skyblock">
+      <UniqueIdentifier>{7543a69c-ac4b-4444-a737-8679efc5e1a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
@@ -138,6 +144,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h">
+      <Filter>Headers\Skyblock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -220,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
       <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sky_base.cpp">
+      <Filter>Sources\Skyblock</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

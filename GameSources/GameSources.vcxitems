@@ -26,6 +26,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
@@ -61,6 +62,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)RaySphere.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sky_base.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
