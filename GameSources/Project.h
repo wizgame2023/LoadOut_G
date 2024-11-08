@@ -6,7 +6,9 @@
 #pragma once
 
 //ツール用
+#include "RaySphere.h";//レイの当たり判定
 #include "Ray.h";//レイ
+
 
 //ステート用
 #include "State.h"//ステートの親クラス
