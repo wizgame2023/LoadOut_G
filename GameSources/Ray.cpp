@@ -1,6 +1,6 @@
 /*!
-@file Ray.cpp
-@brief レイ
+@file Character.cpp
+@brief キャラクターなど実体
 */
 
 #include "stdafx.h"

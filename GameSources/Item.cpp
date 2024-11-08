@@ -38,14 +38,17 @@ namespace basecross {
 		//メッシュ生成
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetTextureResource(L"Bule");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		//コリジョン生成
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(false);
-		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
-		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetAfterCollision(AfterCollision::None);
+
+		//ptrColl->SetFixed(false);
+		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
+		//ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);

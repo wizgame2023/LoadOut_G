@@ -39,7 +39,7 @@ namespace basecross {
 		//マップマネージャーの生成
 		auto mapManager = AddGameObject<MapManager>();
 		SetSharedGameObject(L"MapManager", mapManager);
-		mapManager->WallCreateKari();//仮の内壁を生成する
+		//mapManager->WallCreateKari();//仮の内壁を生成する
 
 		//床の作成
 		AddGameObject<Ground>();
@@ -51,7 +51,9 @@ namespace basecross {
 		}
 		
 		//アイテムの生成
-		//AddGameObject<Item>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
@@ -65,7 +67,9 @@ namespace basecross {
 		//マンホールの生成
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
-		//OutWallCreate(20);//外壁生成
+		//AddGameObject<RaySphere>();
+
+		OutWallCreate(20);//外壁生成
 	}
 
 	void YuutaStage::OutWallCreate(int selLength)//←個々の引数はこのマップの直径はブロック何個ぶんかを聞いています

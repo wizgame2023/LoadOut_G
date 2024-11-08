@@ -1,6 +1,6 @@
 /*!
-@file Ray.h
-@brief レイ
+@file Character.h
+@brief キャラクターなど
 */
 
 #pragma once

@@ -81,6 +81,9 @@ namespace basecross {
 				GetStage()->RemoveGameObject<Enemy>(enemy);
 				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Prohibited");//自分自身にアイテムが置かれていると分かりやすくする
+
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する(仮で敵は1人しかないから)
+
 			}
 		}
 	}
