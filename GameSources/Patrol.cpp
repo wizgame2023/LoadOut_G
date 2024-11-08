@@ -118,7 +118,7 @@ namespace basecross {
 				m_moveTime += app()->GetElapsedTime();
 				m_forwardCheck=true;
 			}
-			if (m_moveTime > 4.0f)
+			if (m_moveTime > 4.6f)
 			{
 				if (m_rightCheck)
 				{
@@ -129,6 +129,7 @@ namespace basecross {
 						m_moveTime = 0;
 						m_time = 0;
 						m_destinationDecision = false;
+						m_rightCheck = false;
 					}
 					else if (m_ownerPos.x <= m_destinationPos.x + 1 && m_ownerPos.z == m_destinationPos.z && m_minus)
 					{
@@ -141,11 +142,10 @@ namespace basecross {
 						{
 							m_minus = false;
 						}
-
+						m_rightCheck = false;
 					}
-					//m_destinationDecision = false;
 				}
-				else if (m_forwardCheck)
+				if (m_forwardCheck)
 				{
 					if (m_ownerPos.z >= m_destinationPos.z - 1 && m_ownerPos.x == m_destinationPos.x && !m_minus)
 					{
@@ -154,6 +154,7 @@ namespace basecross {
 						m_moveTime = 0;
 						m_time = 0;
 						m_destinationDecision = false;
+						m_forwardCheck = false;
 					}
 					else if (m_ownerPos.z <= m_destinationPos.z + 1 && m_ownerPos.x == m_destinationPos.x && m_minus)
 					{
@@ -167,9 +168,8 @@ namespace basecross {
 						{
 							m_minus = false;
 						}
-
+						m_forwardCheck = false;
 					}
-					//m_wallCheck = true;
 				}
 			}
 			if (m_moveTime > 5.0f)
@@ -198,9 +198,13 @@ namespace basecross {
 			<<L"\n敵のPos.x : "<<m_ownerPos.x 
 			<<L"\n敵のPos.z : "<< m_ownerPos.z
 			<<L"\n移動距離 : "<<m_distance
-			<<L"\n移動クールタイム : "<<m_moveTime
+			<<L"ムーブタイム : "<<m_moveTime
+			<<L"\n移動クールタイム : "<<m_time
 			<<L"\n数字X : "<< m_numbers
-			<<L"\n壁 : "<<m_wallCheck << endl;
+			<<L"\n壁 : "<<m_wallCheck 
+			<<L"\n右 : "<<m_rightCheck
+			<<L"\n前 : "<<m_forwardCheck
+			<< endl;
 		scene->SetDebugString(wss.str());
 
 	}
