@@ -56,6 +56,8 @@ namespace basecross{
 		GetStage()->SetDrawPerformanceActive(true);
 
 		AddTag(L"Player");//タグ追加
+
+		//GetStage()->AddGameObject<Ray>(GetThis<Player>(), 30.0f);//レイ生成
 	}
 
 	void Player::OnUpdate()
@@ -204,6 +206,16 @@ namespace basecross{
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームシーンに移動する
 		}
+	}
+
+	float Player::GetAngle()
+	{
+		auto pos = GetComponent<Transform>()->GetPosition();//ポジション取得
+		auto Delta = App::GetApp()->GetElapsedTime();
+		//スティックの傾きをラジアンにする
+		float rad = -atan2(m_controler.fThumbLY, m_controler.fThumbLX);
+
+		return rad;
 	}
 
 }
