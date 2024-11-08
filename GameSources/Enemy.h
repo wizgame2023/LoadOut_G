@@ -40,6 +40,8 @@ namespace basecross {
 			m_NextSt = makeShared<NextState>(GetThis<Enemy>());
 		}
 		float GetSpeed();
+
+		float GetAngle();
 	};
 
 }

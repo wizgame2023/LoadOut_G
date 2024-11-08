@@ -82,5 +82,10 @@ namespace basecross {
 	{
 		return m_speed;
 	}
+
+	float Enemy::GetAngle()
+	{
+		return  GetComponent<Transform>()->GetRotation().y;
+	}
 }
 //end basecross
