@@ -37,6 +37,7 @@
 #include "TilteStage.h"//タイトルステージ
 #include "GameOverStage.h"//ゲームオーバーステージ
 #include "GameClearStage.h"//ゲームクリアステージ
+#include "ClearObject.h"//透明な物理オブジェクト
 
 
 //ツール用
