@@ -58,5 +58,13 @@ namespace basecross {
 		auto a = 0;//デバック用
 	}
 
+	vector<weak_ptr<GameObject>> Ray::GetDisObj()
+	{
+		//当たったオブジェクトの情報の配列を渡す
+		return m_discoveryObj;
+	}
+
+
+
 }
 //end basecross

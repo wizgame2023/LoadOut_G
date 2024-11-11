@@ -26,6 +26,8 @@ namespace basecross {
 		void OnUpdate()override;//更新
 
 		void SetDisObj(vector<weak_ptr<GameObject>> discoveryObj);//レイスフィアが取得したオブジェクトを受け取るセッター
+		vector<weak_ptr<GameObject>> GetDisObj();//取得したオブジェクトを渡す
+
 	};
 
 }
