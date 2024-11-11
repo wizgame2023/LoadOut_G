@@ -204,7 +204,7 @@ namespace basecross{
 		auto enemy = dynamic_pointer_cast<Enemy>(other);//enemyクラスに変換
 		if (enemy)
 		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームシーンに移動する
+			//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームシーンに移動する
 		}
 	}
 
