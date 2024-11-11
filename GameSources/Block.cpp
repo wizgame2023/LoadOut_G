@@ -52,6 +52,8 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"Block");//ブロック用のタグこれが基礎のオブジェクト
+
 	}
 
 }
