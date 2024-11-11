@@ -9,7 +9,7 @@
 namespace basecross {
 	class happysky : public GameObject
 	{
-
+	public :
 	};
 }
 //end basecross
