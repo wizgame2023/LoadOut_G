@@ -39,6 +39,8 @@ namespace basecross {
 		ptrColl->SetDrawActive(true);//ƒRƒŠƒWƒ‡ƒ“‚ðŒ©‚¦‚é‚æ‚¤‚É‚·‚é
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
+		AddTag(L"Enemy");
+
 		m_CurrentSt->OnStart();
 	}
 
