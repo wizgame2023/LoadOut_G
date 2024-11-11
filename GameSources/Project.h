@@ -5,7 +5,7 @@
 
 #pragma once
 
-
+#include "Actor.h"//動くオブジェクトの親クラス
 
 //ステート用
 #include "State.h"//ステートの親クラス
