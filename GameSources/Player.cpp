@@ -7,8 +7,8 @@
 #include "Project.h"
 
 namespace basecross{
-	Player::Player(const shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
-		GameObject(StagePtr),
+	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
+		Actor(StagePtr),
 		m_Pos(pos),
 		m_Rot(rot)
 	{
