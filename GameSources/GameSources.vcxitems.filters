@@ -138,6 +138,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -221,5 +222,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actor.cpp" />
   </ItemGroup>
 </Project>
