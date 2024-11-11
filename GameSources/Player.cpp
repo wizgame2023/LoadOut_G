@@ -55,7 +55,7 @@ namespace basecross{
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
-		AddTag(L"Player");//タグ追加
+		AddTag(L"Player");//Player用のタグ
 
 		//GetStage()->AddGameObject<Ray>(GetThis<Player>(), 30.0f);//レイ生成
 	}

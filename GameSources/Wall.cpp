@@ -54,6 +54,8 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"Wall");//•Ç—p‚Ìƒ^ƒO
+
 	}
 
 }

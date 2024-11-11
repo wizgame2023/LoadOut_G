@@ -51,6 +51,8 @@ namespace basecross {
 
 		//m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
 
+		AddTag(L"Manhole");//マンホール用のタグ
+
 	}
 
 	void Manhole::OnUpdate()
