@@ -58,6 +58,8 @@ namespace basecross {
 	void Manhole::OnUpdate()
 	{
 		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
+		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
+		auto stage = GetStage();//ステージ取得
 
 		//m_mapManager.lock()->MapDataUpdate(m_pos, 1);//今いるセル座標はマンホールのデータということを伝える
 		//セル座標にアイテムを設置した情報があったら
@@ -68,6 +70,42 @@ namespace basecross {
 			m_charen = 1;
 			GetComponent<PNTStaticDraw>()->SetTextureResource(L"Red");//自分自身にアイテムが置かれていると分かりやすくする
 		}
+
+		//通行禁止になる時の処理
+		if (m_mapManager.lock()->SelMapNow(m_pos) == 3 && m_charen == 1)
+		{
+			m_charen = 2;
+			Vec3 clearPos = m_pos;
+			clearPos.y += 5.0f;
+			m_clearObject = GetStage()->AddGameObject<ClearObject>(clearPos, Vec3(0.0f, 0.0f, 0.0f));
+
+
+
+		}
+
+		//通行禁止の時の際の処理
+		if (m_charen == 2)
+		{
+			//クールタイム過ぎたら通れるようにする
+			m_time += delta;
+			if (m_time > 3.0f)//時間が過ぎたら
+			{
+				m_time = 0;//クールタイムリセット
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//自分自身にアイテムが置かれていると分かりやすくする
+				m_mapManager.lock()->MapDataUpdate(m_pos, 2);//マップマネージャー通れる状態というのを表す
+				stage->RemoveGameObject<ClearObject>(m_clearObject);//前生成した透明なオブジェクトを消す
+				m_charen = 1;
+			}
+
+		}
+
+
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//wss << L"時間 : " << m_time
+		//	<< endl;
+		//scene->SetDebugString(wss.str());
+
 	}
 
 	void Manhole::OnCollisionEnter(shared_ptr<GameObject>& other)
@@ -82,7 +120,7 @@ namespace basecross {
 			{
 				GetStage()->RemoveGameObject<Enemy>(enemy);
 				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Prohibited");//自分自身にアイテムが置かれていると分かりやすくする
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Prohibited");
 
 				//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する(仮で敵は1人しかないから)
 
