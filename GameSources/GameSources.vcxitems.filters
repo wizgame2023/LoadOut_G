@@ -147,6 +147,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h">
       <Filter>Headers\Skyblock</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)happysky.h">
+      <Filter>Headers\Skyblock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -231,6 +234,9 @@
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sky_base.cpp">
+      <Filter>Sources\Skyblock</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)happysky.cpp">
       <Filter>Sources\Skyblock</Filter>
     </ClCompile>
   </ItemGroup>

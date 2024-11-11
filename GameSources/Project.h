@@ -35,6 +35,7 @@
 #include "GameOverStage.h"//ゲームオーバーステージ
 #include "GameClearStage.h"//ゲームクリアステージ
 #include "Sky_base.h"
+#include "happysky.h"
 
 
 //ツール用
