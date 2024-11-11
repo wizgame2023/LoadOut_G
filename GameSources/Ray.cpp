@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Enemy> parentObj,float range) :
+	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Actor> parentObj,float range) :
 		GameObject(stagePtr),
 		m_parentObj(parentObj),
 		m_range(range)
