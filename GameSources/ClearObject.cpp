@@ -1,6 +1,6 @@
 /*!
 @file Character.cpp
-@brief キャラクターなど実体
+@brief 透明な障害物
 */
 
 #include "stdafx.h"
@@ -23,12 +23,12 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();
 		ptr->SetPosition(m_pos);
 		ptr->SetRotation(m_rot);
-		ptr->SetScale(3.0f, 3.0f, 3.0f);
+		ptr->SetScale(10.0f, 10.0f, 10.0f);
 
 		//Transformに対しての等差数列
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
@@ -37,17 +37,17 @@ namespace basecross {
 		//メッシュ生成
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"Bule");
+		//ptrDraw->SetTextureResource(L"Bule");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		//コリジョン生成
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetAfterCollision(AfterCollision::None);
+		//ptrColl->SetAfterCollision(AfterCollision::None);
 
-		//ptrColl->SetFixed(false);
-		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
-		//ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetFixed(true);
+		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
+		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
