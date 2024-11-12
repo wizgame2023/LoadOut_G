@@ -38,6 +38,10 @@
 #include "GameOverStage.h"//ゲームオーバーステージ
 #include "GameClearStage.h"//ゲームクリアステージ
 #include "ClearObject.h"//透明な物理オブジェクト
+#include "SpriteNum.h"//数字のスプライト
+
+//カメラ用
+#include "MyCamera.h"//追尾カメラ用
 
 
 //ツール用
