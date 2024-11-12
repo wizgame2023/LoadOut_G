@@ -41,5 +41,18 @@ namespace basecross {
 			m_skybase.push_back(sky_base);
 		}
 	}
+
+	void happysky::OnUpdate()
+	{
+
+	}
+
+	void happysky::OnDraw()
+	{
+		for (auto& sky_base : m_skybase)
+		{
+			sky_base->OnDraw();
+		}
+	}
 }
 //end basecross

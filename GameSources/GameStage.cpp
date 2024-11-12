@@ -29,9 +29,24 @@ namespace basecross {
 
 
 	void GameStage::OnCreate() {
-		try {
+		try 
+		{
+			//背景の作成
+			auto& app = App::GetApp();
+			auto path = app->GetDataDirWString();
+
+			auto happyskyPath = path + L"happysky/";
+			for (const auto& keyName : happysky::pairs)
+			{
+				app->RegisterTexture(keyName.first, happyskyPath + keyName.first + L".png");
+			}
+
 			//ビューとライトの作成
 			CreateViewLight();
+
+			//ボックス
+			AddGameObject<happysky>();
+
 		}
 		catch (...) {
 			throw;
@@ -41,7 +56,6 @@ namespace basecross {
 		auto mapManager = AddGameObject<MapManager>();
 		SetSharedGameObject(L"MapManager", mapManager);
 		mapManager->WallCreateKari();//仮の内壁を生成する
-
 
 		//床の作成
 		AddGameObject<Ground>();
