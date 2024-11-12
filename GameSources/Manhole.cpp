@@ -80,9 +80,7 @@ namespace basecross {
 			m_clearObject = GetStage()->AddGameObject<ClearObject>(clearPos, Vec3(0.0f, 0.0f, 0.0f));
 
 			//水柱が発生する
-			GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f),Vec3(10.0f,10.0f,10.0f));
-
-
+			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f),Vec3(10.0f,10.0f,10.0f));
 		}
 
 		//通行禁止の時の際の処理
@@ -96,6 +94,7 @@ namespace basecross {
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//自分自身にアイテムが置かれていると分かりやすくする
 				m_mapManager.lock()->MapDataUpdate(m_pos, 2);//マップマネージャーに通れる状態だと返す
 				stage->RemoveGameObject<ClearObject>(m_clearObject);//前生成した透明なオブジェクトを消す
+				stage->RemoveGameObject<WaterPillar>(m_waterPillar);//前生成した水柱を消す
 				m_charen = 1;
 			}
 
@@ -122,7 +121,7 @@ namespace basecross {
 			{
 				GetStage()->RemoveGameObject<Enemy>(enemy);
 				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Prohibited");
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 
 				//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する(仮で敵は1人しかないから)
 
