@@ -54,6 +54,8 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"Item");//アイテム用のタグ
+
 	}
 
 	void Item::OnUpdate()

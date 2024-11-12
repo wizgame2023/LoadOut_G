@@ -7,9 +7,10 @@
 #include "Project.h"
 
 namespace basecross {
-	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Enemy> parentObj) :
+	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Enemy> parentObj,float range) :
 		GameObject(stagePtr),
-		m_parentObj(parentObj)
+		m_parentObj(parentObj),
+		m_range(range)
 	{
 
 	}
@@ -27,13 +28,26 @@ namespace basecross {
 	{
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		m_countTime += delta;
-		//もし、レイスフィアがが前受け取ったオブジェクトを取得していなかったらそのオブジェクトは配列から消す
-		if (m_countTime >= 0.5f)
-		{
-			//GetStage()->AddGameObject<RaySphere>()
-			//GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), atan2(m_controler.fThumbLY, m_controler.fThumbLX),GetThis<Ray>());
+		auto angle = m_parentObj.lock()->GetAngle();//角度を取得
 
+		//レイの判定となるレイスフィアを生成する
+		if (m_countTime >= 0.5f)
+		{	
+			m_countTime = 0;//リセット
+			GetStage()->AddGameObject<RaySphere>(m_parentObj.lock()->GetComponent<Transform>()->GetPosition(), -angle, GetThis<Ray>(),m_range);//レイスフィア生成
 		}
+
+		//デバック用
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		////auto gameStage = scene->GetGameStage();
+
+		//wss /* << L"デバッグ用文字列 "*/
+		//	<< L"\n傾き " << XMConvertToDegrees(-angle)
+		//	<< endl;
+
+		//scene->SetDebugString(wss.str());
+
 	}
 
 	//レイスフィアが取得したオブジェクトを受け取るセッター
@@ -41,14 +55,16 @@ namespace basecross {
 	{
 		m_discoveryObj.clear();//前の配列全削除
 		m_discoveryObj.swap(discoveryObj);//新しい配列の中身にする
-		
-		//for (auto test : m_discoveryObj)
-		//{
-		//	
-		//}
-		//m_discoveryObj[0].lock();
-		////m_discoveryObj = discoveryObj;//受け取る
+		auto a = 0;//デバック用
 	}
+
+	vector<weak_ptr<GameObject>> Ray::GetDisObj()
+	{
+		//当たったオブジェクトの情報の配列を渡す
+		return m_discoveryObj;
+	}
+
+
 
 }
 //end basecross

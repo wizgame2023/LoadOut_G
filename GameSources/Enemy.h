@@ -5,6 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include "Ray.h"
 
 namespace basecross {
 
@@ -12,14 +13,18 @@ namespace basecross {
 	{
 	private:
 		Vec3 m_pos;
-		Vec3 m_rot;
-		Vec3 m_scale;
 		float m_speed;
+		float m_angle;
+
 		// 現在のステートを入れておく
 		shared_ptr<StateBase> m_CurrentSt;
 
 		// 次のステートを入れておく、ステートが入ると即座に切り替わる
 		shared_ptr<StateBase> m_NextSt;
+
+		shared_ptr<Ray>m_forwardRay;
+		//shared_ptr<Ray>m_leftRay;
+		//shared_ptr<Ray>m_playerRay;
 
 	public:
 		//コンストラクタ・デストラクタ
@@ -42,6 +47,9 @@ namespace basecross {
 		float GetSpeed();
 
 		float GetAngle();
+		void SetAngle(float angle);
+
+		shared_ptr<Ray> GetForwardRay();
 	};
 
 }

@@ -59,7 +59,8 @@ namespace basecross {
 		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(30.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//PlayerÇÃê∂ê¨
-		AddGameObject<Player>(Vec3(0.0f, 3.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		auto player = AddGameObject<Player>(Vec3(0.0f, 3.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		SetSharedGameObject(L"Player", player);
 
 		//ï«ÇÃê∂ê¨
 		//AddGameObject<Wall>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(20.0f,20.0f,20.0f));
@@ -68,6 +69,8 @@ namespace basecross {
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
 		//AddGameObject<RaySphere>();
+
+		AddGameObject<Enemy>();
 
 		OutWallCreate(20);//äOï«ê∂ê¨
 	}

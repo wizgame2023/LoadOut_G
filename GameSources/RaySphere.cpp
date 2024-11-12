@@ -7,11 +7,13 @@
 #include "Project.h"
 
 namespace basecross {
-	RaySphere::RaySphere(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<GameObject> parentObj) :
+	RaySphere::RaySphere(shared_ptr<Stage>& stagePtr,Vec3 pos,float angle,weak_ptr<Ray> parentObj,float range) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rad(angle),
 		m_parentObj(parentObj),
+		m_range(range),
+		m_originPos(pos),
 		m_discoveryObj(NULL)
 	{
 
@@ -66,23 +68,36 @@ namespace basecross {
 		pos.x += cos(m_rad) * speed * delta;
 		pos.z += sin(m_rad) * speed * delta;
 		ptr->SetPosition(pos);
+
+		m_moveVec = Vec3((m_originPos.x - pos.x), (m_originPos.y - pos.y), (m_originPos.z - pos.z));
+		float move = RemoveMinus(m_moveVec.x) + RemoveMinus(m_moveVec.y) + RemoveMinus(m_moveVec.z);
+		
+		//原点から一定距離離れた場合自分が消える
+		if (move >= m_range)
+		{
+			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());//自分自身が消える
+		}
+		
 	}
 
 	void RaySphere::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
 		//ぶつかったオブジェクトが今までぶつかったことのないオブジェクトなら配列に入れる
-		for (auto a : m_discoveryObj)
-		{
-			if (a.lock() != other)//オブジェクトが前覚えている物でないとき
-			{
-				m_discoveryObj.push_back(other);//記憶する
-			}
-			GetDisObj();//取得したオブジェクトを渡したい
-		}
+		//for (auto a : m_discoveryObj)
+		//{
+		//	if (a.lock() != other)//オブジェクトが前覚えている物でないとき
+		//	{
+				//m_discoveryObj.push_back(other);//記憶する
+			//}
+			//m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
+		//}
 		
 		auto enemy = dynamic_pointer_cast<Wall>(other);
 		if (enemy)
 		{
+			m_discoveryObj.push_back(other);//記憶する
+			m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
+
 			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());//自分自身を消す
 		}
 	}
@@ -91,6 +106,17 @@ namespace basecross {
 	vector<weak_ptr<GameObject>> RaySphere::GetDisObj()
 	{
 		return m_discoveryObj;
+	}
+
+	float RaySphere::RemoveMinus(float num)
+	{
+		//numが0より小さかったら0よりも大きくする
+		if (num <= 0)
+		{
+			num = -num;
+		}
+
+		return num;
 	}
 
 }

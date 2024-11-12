@@ -5,6 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include "Ray.h"
 
 namespace basecross {
 
@@ -32,6 +33,8 @@ namespace basecross {
 		bool m_minus;
 
 		shared_ptr<Transform> m_trans;
+
+		weak_ptr<Ray> m_forwardRay;
 	public:
 		Patrol(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
@@ -59,6 +62,8 @@ namespace basecross {
 		void OnStart();
 		void OnUpdate();
 		void OnExit();
+
+
 	};
 }
 //end basecross

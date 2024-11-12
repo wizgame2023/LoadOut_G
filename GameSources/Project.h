@@ -14,6 +14,9 @@
 #include "Patrol.h"
 #include "Attack.h"
 
+//親クラス用
+#include "Actor.h"
+
 #include "ProjectShader.h"
 #include "ProjectBehavior.h"
 #include "Scene.h"

@@ -50,6 +50,8 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"Ground");//地面用のタグ
+
 	}
 
 }
