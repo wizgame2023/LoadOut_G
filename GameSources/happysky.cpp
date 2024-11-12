@@ -27,6 +27,18 @@ namespace basecross {
 			planeDrawComp->SetTextureResource(pair.first);
 			planeDrawComp->SetDepthStencilState(DepthStencilState::None);
 			planeDrawComp->SetSamplerState(SamplerState::LinearClamp);
+
+			auto planeTransComp = sky_base->GetComponent<Transform>();
+			float rotX = XMConvertToRadians(std::stof(pair.first.substr(0, 3)));
+			float rotY = XMConvertToRadians(std::stof(pair.first.substr(4, 3)));
+			float rotZ = XMConvertToRadians(std::stof(pair.first.substr(8, 3)));
+			const float scale = 707.0f;
+			planeTransComp->SetPosition(pair.second * scale);
+			planeTransComp->SetRotation(rotX, rotY, rotZ);
+			planeTransComp->SetScale(Vec3(scale));
+			planeTransComp->SetParent(GetThis<GameObject>());
+
+			m_skybase.push_back(sky_base);
 		}
 	}
 }
