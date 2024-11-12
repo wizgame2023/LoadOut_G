@@ -14,6 +14,8 @@ namespace basecross {
 	private:
 		Vec3 m_pos;
 		float m_speed;
+		float m_angle;
+
 		// 現在のステートを入れておく
 		shared_ptr<StateBase> m_CurrentSt;
 
@@ -21,8 +23,9 @@ namespace basecross {
 		shared_ptr<StateBase> m_NextSt;
 
 		shared_ptr<Ray>m_forwardRay;
-		shared_ptr<Ray>m_leftRay;
-		shared_ptr<Ray>m_playerRay;
+		//shared_ptr<Ray>m_leftRay;
+		//shared_ptr<Ray>m_playerRay;
+
 	public:
 		//コンストラクタ・デストラクタ
 		Enemy(const shared_ptr<Stage>& StagePtr);
@@ -44,6 +47,9 @@ namespace basecross {
 		float GetSpeed();
 
 		float GetAngle();
+		void SetAngle(float angle);
+
+		shared_ptr<Ray> GetForwardRay();
 	};
 
 }

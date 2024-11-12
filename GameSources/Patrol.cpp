@@ -21,12 +21,16 @@ namespace basecross {
 		auto app = App::GetApp;
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();
-		
+		m_forwardRay = m_Owner->GetForwardRay();
+
 		m_time += app()->GetElapsedTime();
 
 		float rad = atan2f((m_ownerPos.x - m_destinationPos.x), (m_ownerPos.z - m_destinationPos.z));
 		auto right = m_right * sin(rad);
 		auto forward = m_forward * cos(rad);
+		m_ownerRot.y = rad;
+		m_trans->SetRotation(m_ownerRot);
+
 		if (!m_destinationDecision)
 		{
 
@@ -65,7 +69,6 @@ namespace basecross {
 				{
 					m_destinationPos.x += m_point;
 					m_destinationPos.z = m_ownerPos.z;
-					m_wallCheck = false;
 					m_destinationDecision = true;
 					m_rightCheck = false;
 				}
@@ -73,7 +76,6 @@ namespace basecross {
 				{
 					m_destinationPos.z += m_point;
 					m_destinationPos.x = m_ownerPos.x;
-					m_wallCheck = false;
 					m_destinationDecision = true;
 					m_forwardCheck = false;
 				}
@@ -81,7 +83,6 @@ namespace basecross {
 				{
 					m_destinationPos.x-= m_point;
 					m_destinationPos.z = m_ownerPos.z;
-					m_wallCheck = false;
 					m_destinationDecision = true;
 					m_rightCheck = false;
 					m_minus = true;
@@ -90,35 +91,34 @@ namespace basecross {
 				{
 					m_destinationPos.z -= m_point;
 					m_destinationPos.x = m_ownerPos.x;
-					m_wallCheck = false;
 					m_destinationDecision = true;
 					m_forwardCheck = false;
 					m_minus = true;
 				}
+				m_wallCheck = false;
 			}
 			if (m_numbers >= 4)
 			{
 				m_numbers = 0;
 			}
-
-
 		}
 		else if (m_destinationDecision)
 		{
-			m_ownerRot.y = rad;
-			if (m_numbers%2==0  && m_time >= 3)
+			if (m_numbers % 2 == 0 && m_time >= 3)
 			{
 				m_ownerPos += -right * m_Owner->GetSpeed() * app()->GetElapsedTime();
+				m_distance += m_Owner->GetSpeed() * app()->GetElapsedTime();
 				m_moveTime +=app()->GetElapsedTime();
 				m_rightCheck = true;
 			}
 			else if (m_numbers % 2 == 1 && m_time >= 3)
 			{
 				m_ownerPos += -forward * m_Owner->GetSpeed() * app()->GetElapsedTime();
+				m_distance += m_Owner->GetSpeed() * app()->GetElapsedTime();
 				m_moveTime += app()->GetElapsedTime();
-				m_forwardCheck=true;
+				m_forwardCheck = true;
 			}
-			if (m_moveTime > 4.6f)
+			if (m_distance >= m_point - 1)
 			{
 				if (m_rightCheck)
 				{
@@ -126,6 +126,7 @@ namespace basecross {
 					{
 						m_numbers++;
 						m_ownerPos.x = m_destinationPos.x;
+						m_distance = 0;
 						m_moveTime = 0;
 						m_time = 0;
 						m_destinationDecision = false;
@@ -135,6 +136,7 @@ namespace basecross {
 					{
 						m_numbers++;
 						m_ownerPos.x = m_destinationPos.x;
+						m_distance = 0;
 						m_moveTime = 0;
 						m_time = 0;
 						m_destinationDecision = false;
@@ -151,6 +153,7 @@ namespace basecross {
 					{
 						m_numbers++;
 						m_ownerPos.z = m_destinationPos.z;
+						m_distance = 0;
 						m_moveTime = 0;
 						m_time = 0;
 						m_destinationDecision = false;
@@ -160,6 +163,7 @@ namespace basecross {
 					{
 						m_numbers++;
 						m_ownerPos.z = m_destinationPos.z;
+						m_distance = 0;
 						m_moveTime = 0;
 						m_time = 0;
 						m_destinationDecision = false;
@@ -172,19 +176,30 @@ namespace basecross {
 					}
 				}
 			}
-			if (m_moveTime > 5.0f)
+			if (m_forwardRay.lock()->GetDisObj().size() >0&& !m_wallCheck)
 			{
 				m_numbers++;
+				m_distance = 0;
 				m_time = 0;
 				m_moveTime = 0;
 				m_wallCheck = true;
 				m_destinationDecision = false;
+
+				if (m_rightCheck)
+				{
+					m_rightCheck=false;
+				}
+				if (m_forwardCheck)
+				{
+					m_forwardCheck = false;
+				}
 			}
 
 		}
 
-		m_trans->SetRotation(m_ownerRot);
 		m_trans->SetPosition(m_ownerPos);
+		m_Owner->SetAngle(rad + XM_PI * 0.5f);
+
 
 		float deg = rad * 180 / XM_PI;
 		wstringstream wss(L"");
@@ -198,7 +213,7 @@ namespace basecross {
 			<<L"\n敵のPos.x : "<<m_ownerPos.x 
 			<<L"\n敵のPos.z : "<< m_ownerPos.z
 			<<L"\n移動距離 : "<<m_distance
-			<<L"ムーブタイム : "<<m_moveTime
+			<<L"\nムーブタイム : "<<m_moveTime
 			<<L"\n移動クールタイム : "<<m_time
 			<<L"\n数字X : "<< m_numbers
 			<<L"\n壁 : "<<m_wallCheck 

@@ -11,8 +11,9 @@ namespace basecross {
 	//コンストラクタの宣言・デストラクタ
 	Enemy::Enemy(const shared_ptr<Stage>& StagePtr) :
 		GameObject(StagePtr),
-		m_pos(0,2.0f,0),
-		m_speed(15)
+		m_pos(0, 2.0f, 0),
+		m_speed(15),
+		m_angle(0)
 	{
 	}
 	Enemy::~Enemy()
@@ -43,6 +44,10 @@ namespace basecross {
 		AddTag(L"Enemy");
 
 		m_CurrentSt->OnStart();
+
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
+		//m_leftRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
+		//m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
 	}
 
 	void Enemy::OnUpdate()
@@ -75,9 +80,17 @@ namespace basecross {
 		auto player = app()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
 		auto playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
 		float PlayerVec = atan2f((m_pos.x - playerPos.x), (m_pos.z - playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 100.0f);
-		//m_leftRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
-		//m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
+
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//wss << L"\n敵の回転.x : " << rot.x
+		//<< L"\n敵の回転.y : " << rot.y
+		//<< L"\n敵の回転.z : " << rot.z
+		//<< L"\nアングル : "<<m_angle
+		//<< endl;
+
+		//scene->SetDebugString(wss.str());
+
 	}
 	void Enemy::OnDestroy()
 	{
@@ -94,7 +107,17 @@ namespace basecross {
 
 	float Enemy::GetAngle()
 	{
-		return  GetComponent<Transform>()->GetRotation().y;
+		return  m_angle;
+	}
+
+	void Enemy::SetAngle(float angle)
+	{
+		m_angle = angle;
+	}
+
+	shared_ptr<Ray> Enemy::GetForwardRay()
+	{
+		return m_forwardRay;
 	}
 }
 //end basecross
