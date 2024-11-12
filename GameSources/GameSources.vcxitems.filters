@@ -142,6 +142,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ClearObject.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SpriteNum.h">
+      <Filter>Headers\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -228,6 +234,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Actor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ClearObject.cpp">
       <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SpriteNum.cpp">
+      <Filter>Sources\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -27,6 +27,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Item.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SpriteNum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
@@ -58,6 +60,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
@@ -66,6 +69,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SpriteNum.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
