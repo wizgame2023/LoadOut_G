@@ -61,30 +61,50 @@ namespace basecross {
 
 		AddTag(L"WaterPillar");//ブロック用のタグこれが基礎のオブジェクト
 
+		//吹っ飛ぶマンホール作成
+		m_manhole =  GetStage()->AddGameObject<Block>(m_pos-Vec3(0.0f,-m_pos.y,0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		m_manhole->GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//マンホールテクスチャに変更
+		m_manhole->GetComponent<Transform>()->SetScale(10.0f, 1.0f, 10.0f);//サイズ変更
 
 	}
 
 	void WaterPillar::OnUpdate()
 	{
-
+		auto stage = GetStage();
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto ptr = GetComponent<Transform>();//Transform取得
 		//ptr->SetScale()
 		//Transform作成
 
+		//吹っ飛び用のマンホールのTransformとPos取得
+		auto manholeTrans = m_manhole->GetComponent<Transform>();
+		auto manholePos = manholeTrans->GetPosition();
+
+		//吹っ飛び用のマンホールが一定の高さまで行ったら削除する
+		if (manholePos.y >= 300.0f && m_manhole)
+		{
+			stage->RemoveGameObject<Block>(m_manhole);
+		}
+		else if(m_manhole)
+		{
+			//吹っ飛び用のマンホールを上に上げる
+			manholePos.y += 200 * delta;
+			manholeTrans->SetPosition(manholePos);
+		}
+
 		//高さが一定になるまで伸ばす
 		if (m_count == 0)
 		{
-			m_scale.y += 50*delta;//大きさをyを１づつ増やす
+			m_scale.y += 100*delta;//大きさをyを１づつ増やす
 			ptr->SetScale(m_scale);
 			m_pos.y = m_originPos.y + (m_scale.y / 2);//オブジェクトの半分ずらすことで
 			ptr->SetPosition(m_pos);
-			if (m_scale.y >= 20)
+			if (m_scale.y >= 30)
 			{
 				m_count = 1;//柱を伸ばす段階を終了
 
 				//伸ばしたい長さぴったりにする
-				m_scale.y = 20.0f;
+				m_scale.y = 30.0f;
 				ptr->SetScale(m_scale);
 				m_pos.y = m_originPos.y + (m_scale.y / 2);//オブジェクトの半分ずらすことで
 				ptr->SetPosition(m_pos);
@@ -96,7 +116,7 @@ namespace basecross {
 		//一定の長さになるまで縮ませる
 		if (m_count == 1)
 		{
-			m_scale.y -= 50 * delta;//大きさをyを１づつ増やす
+			m_scale.y -= 100 * delta;//大きさをyを１づつ増やす
 			ptr->SetScale(m_scale);
 			m_pos.y = m_originPos.y + (m_scale.y / 2);//オブジェクトの半分ずらすことで
 			ptr->SetPosition(m_pos);

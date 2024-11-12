@@ -13,6 +13,8 @@ namespace basecross {
 		int shape;//形をどうするかの変数
 
 		int m_count;//進行度
+
+		shared_ptr<Block> m_manhole;//マンホール用のポインタ変数
 	public:
 
 		WaterPillar(const shared_ptr<Stage>& StagePtr, const Vec3& pos, const Vec3& rot,Vec3 scale);//コンストラクタ
