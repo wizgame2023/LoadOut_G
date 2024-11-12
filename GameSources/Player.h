@@ -42,6 +42,7 @@ namespace basecross{
 		void OnCollisionEnter(shared_ptr<GameObject>& other);//“–‚½‚è”»’è
 
 		float GetAngle()override;//Šp“x‚ð“n‚·
+		void AddBatteryUI();//“d’r‚ð‚Ç‚ê‚­‚ç‚¢Žæ“¾‚µ‚Ä‚¢‚é‚©‚ÌUI
 	};
 
 }

@@ -58,6 +58,7 @@ namespace basecross{
 		AddTag(L"Player");//Player用のタグ
 
 		//GetStage()->AddGameObject<Ray>(GetThis<Player>(), 30.0f);//レイ生成
+		//AddBatteryUI();//デバック用
 	}
 
 	void Player::OnUpdate()
@@ -179,6 +180,16 @@ namespace basecross{
 
 
 		}
+	}
+
+	void Player::AddBatteryUI()
+	{
+		auto stage = GetStage();
+
+		stage->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(500.0f, 0.0f, 0.0f));//数字のスプライト生成
+		stage->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f));
+
+
 	}
 
 	void Player::SetUp()
