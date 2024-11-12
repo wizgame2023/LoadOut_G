@@ -10,8 +10,9 @@ namespace basecross {
 	class MyCamera :public Camera
 	{
 	private:
+		Vec3 m_Pos;//ˆÊ’u
 	public:
-		MyCamera();
+		MyCamera(Vec3 pos);
 		~MyCamera();
 
 		void OnCreate()override;
