@@ -29,6 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapPlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapPlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
