@@ -48,7 +48,7 @@ namespace basecross {
 			m_time(0.0f),
 			m_moveTime(0.0f),
 			m_distance(0.0f),
-			m_point(70.0f),
+			m_point(110.0f),
 			m_destinationDecision(false),
 			m_wallCheck(false),
 			m_rightCheck(false),
