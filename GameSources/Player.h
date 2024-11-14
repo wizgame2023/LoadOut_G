@@ -7,7 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross{
-	class Player :public GameObject
+	class Player :public Actor
 	{
 	private:
 		Vec3 m_Pos;//ポジション
@@ -26,7 +26,7 @@ namespace basecross{
 		//float m_time;//テスト用使わなくなったら消してください
 
 	public:
-		Player(const shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ
+		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ
 		~Player();
 
 		virtual void OnCreate()override;
@@ -41,7 +41,8 @@ namespace basecross{
 
 		void OnCollisionEnter(shared_ptr<GameObject>& other);//当たり判定
 
-		float GetAngle();//角度を渡す
+		float GetAngle()override;//角度を渡す
+		void AddBatteryUI();//電池をどれくらい取得しているかのUI
 	};
 
 }

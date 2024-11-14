@@ -86,6 +86,14 @@ namespace basecross{
 		app->RegisterTexture(L"Bule", strTexture);
 		strTexture = texPath + L"RordOutGameClear.png";//アイテムの仮の色
 		app->RegisterTexture(L"GameClear", strTexture);
+		strTexture = texPath + L"Number.png";//数字のテクスチャ
+		app->RegisterTexture(L"Number", strTexture);
+		strTexture = texPath + L"Cross.png";//数字のテクスチャ
+		app->RegisterTexture(L"Cross", strTexture);
+		strTexture = texPath + L"water_texture.jpg";//水のテクスチャ
+		app->RegisterTexture(L"Water", strTexture);
+		strTexture = texPath + L"StoneRoad.jpg";//地面のテクスチャ
+		app->RegisterTexture(L"StoneRoad", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ

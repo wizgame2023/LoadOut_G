@@ -151,6 +151,18 @@
       <Filter>Headers\Skyblock</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Actor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ClearObject.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SpriteNum.h">
+      <Filter>Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WaterPillar.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -241,5 +253,17 @@
       <Filter>Sources\Skyblock</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Actor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ClearObject.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SpriteNum.cpp">
+      <Filter>Sources\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WaterPillar.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

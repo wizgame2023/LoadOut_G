@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Enemy> parentObj,float range) :
+	Ray::Ray(shared_ptr<Stage>& stagePtr, shared_ptr<Actor> parentObj,float range) :
 		GameObject(stagePtr),
 		m_parentObj(parentObj),
 		m_range(range)
@@ -62,6 +62,18 @@ namespace basecross {
 	{
 		//当たったオブジェクトの情報の配列を渡す
 		return m_discoveryObj;
+
+		//情報の配列を渡したのでいらなくなった配列を削除
+		m_discoveryObj.clear();//前の配列全削除
+
+	}
+
+	//当たったオブジェクトのポインター配列を削除する
+	void Ray::ResetDisObj()
+	{
+		//使わない配列を削除
+		m_discoveryObj.clear();//前の配列全削除
+
 	}
 
 
