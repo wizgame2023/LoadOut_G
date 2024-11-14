@@ -43,6 +43,9 @@
 #include "SpriteNum.h"//数字のスプライト
 #include "WaterPillar.h"//水柱
 
+//マネージャー用
+#include "MiniMapManager.h"//ミニマップ生成
+
 //カメラ用
 #include "MyCamera.h"//追尾カメラ用
 
