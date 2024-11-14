@@ -57,6 +57,8 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
+		AddTag(L"RaySphere");//レイスフィア用のタグ
+
 	}
 
 	void RaySphere::OnUpdate()
@@ -76,6 +78,8 @@ namespace basecross {
 		if (move >= m_range)
 		{
 			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());//自分自身が消える
+			m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
+
 		}
 		
 	}
@@ -92,8 +96,8 @@ namespace basecross {
 			//m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
 		//}
 		
-		auto enemy = dynamic_pointer_cast<Wall>(other);
-		if (enemy)
+		auto wall = dynamic_pointer_cast<Wall>(other);
+		if (wall)
 		{
 			m_discoveryObj.push_back(other);//記憶する
 			m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す

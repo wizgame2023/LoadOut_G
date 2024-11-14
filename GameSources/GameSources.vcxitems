@@ -18,6 +18,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Block.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ClearObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Enemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameClearStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameOverStage.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Item.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
@@ -37,11 +39,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SpriteNum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Wall.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WaterPillar.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YuusinStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YuutaStage.h" />
   </ItemGroup>
@@ -50,6 +54,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Block.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ClearObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameClearStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameOverStage.cpp" />
@@ -59,6 +64,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
@@ -68,11 +74,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sky_base.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SpriteNum.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Wall.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WaterPillar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)YushinStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)YuutaStage.cpp" />

@@ -5,7 +5,7 @@
 
 #pragma once
 
-
+#include "Actor.h"//動くオブジェクトの親クラス
 
 //ステート用
 #include "State.h"//ステートの親クラス
@@ -39,6 +39,12 @@
 #include "GameClearStage.h"//ゲームクリアステージ
 #include "Sky_base.h"
 #include "happysky.h"
+#include "ClearObject.h"//透明な物理オブジェクト
+#include "SpriteNum.h"//数字のスプライト
+#include "WaterPillar.h"//水柱
+
+//カメラ用
+#include "MyCamera.h"//追尾カメラ用
 
 
 //ツール用
