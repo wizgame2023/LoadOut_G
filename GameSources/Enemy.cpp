@@ -11,7 +11,7 @@ namespace basecross {
 	//コンストラクタの宣言・デストラクタ
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
 		Actor(StagePtr),
-		m_pos(0, 2.0f, 0),
+		m_pos(-95, 2.0f, 95),
 		m_speed(15),
 		m_angle(0)
 	{
@@ -23,7 +23,7 @@ namespace basecross {
 
 	void Enemy::OnCreate()
 	{
-		GetComponent<Transform>()->SetScale(2.5f,2.5f,2.5f);
+		GetComponent<Transform>()->SetScale(1.5f,1.5f,1.5f);
 		GetComponent<Transform>()->SetPosition(m_pos);
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
@@ -45,7 +45,7 @@ namespace basecross {
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);//Enemyの親クラスをGameObjectからActorにしてください
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 20.0f);//Enemyの親クラスをGameObjectからActorにしてください
 		//m_leftRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
 		//m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
 	}
