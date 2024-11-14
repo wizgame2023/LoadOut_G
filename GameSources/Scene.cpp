@@ -94,6 +94,12 @@ namespace basecross{
 		app->RegisterTexture(L"Water", strTexture);
 		strTexture = texPath + L"StoneRoad.jpg";//地面のテクスチャ
 		app->RegisterTexture(L"StoneRoad", strTexture);
+		strTexture = texPath + L"Gray.png";//ミニマップの背景のテクスチャ
+		app->RegisterTexture(L"Gray", strTexture);
+		strTexture = texPath + L"White.png";//ミニマップの背景のテクスチャ
+		app->RegisterTexture(L"White", strTexture);
+		strTexture = texPath + L"MiniMapPlayer.png";//ミニマップのPlayerのテクスチャ
+		app->RegisterTexture(L"MiniPlayer", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
