@@ -25,6 +25,8 @@ namespace basecross {
 		void OnCreate()override;//作成
 		void OnUpdate()override;//更新
 
+		void ResetDisObj();//リセット
+
 		void SetDisObj(vector<weak_ptr<GameObject>> discoveryObj);//レイスフィアが取得したオブジェクトを受け取るセッター
 		vector<weak_ptr<GameObject>> GetDisObj();//取得したオブジェクトを渡す
 

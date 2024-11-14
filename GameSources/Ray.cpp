@@ -65,8 +65,14 @@ namespace basecross {
 
 		//情報の配列を渡したのでいらなくなった配列を削除
 		m_discoveryObj.clear();//前の配列全削除
-		vector<weak_ptr<GameObject>> discoveryObj;//新しい空の配列を生成
-		m_discoveryObj.swap(discoveryObj);//新しい配列の中身にする
+
+	}
+
+	//当たったオブジェクトのポインター配列を削除する
+	void Ray::ResetDisObj()
+	{
+		//使わない配列を削除
+		m_discoveryObj.clear();//前の配列全削除
 
 	}
 
