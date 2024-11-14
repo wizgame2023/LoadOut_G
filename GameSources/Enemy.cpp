@@ -9,8 +9,8 @@
 
 namespace basecross {
 	//コンストラクタの宣言・デストラクタ
-	Enemy::Enemy(const shared_ptr<Stage>& StagePtr) :
-		GameObject(StagePtr),
+	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
+		Actor(StagePtr),
 		m_pos(0, 2.0f, 0),
 		m_speed(15),
 		m_angle(0)

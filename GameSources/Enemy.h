@@ -9,7 +9,7 @@
 
 namespace basecross {
 
-	class Enemy :public GameObject
+	class Enemy :public Actor
 	{
 	private:
 		Vec3 m_pos;
@@ -28,7 +28,7 @@ namespace basecross {
 
 	public:
 		//コンストラクタ・デストラクタ
-		Enemy(const shared_ptr<Stage>& StagePtr);
+		Enemy(shared_ptr<Stage>& StagePtr);
 		~Enemy();
 
 		//生成・更新・削除
