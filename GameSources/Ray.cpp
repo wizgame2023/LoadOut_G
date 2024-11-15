@@ -28,14 +28,38 @@ namespace basecross {
 	{
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		m_countTime += delta;
-		auto angle = m_parentObj.lock()->GetAngle();//角度を取得
 
 		//レイの判定となるレイスフィアを生成する
-		if (m_countTime >= 0.5f)
+		if (m_countTime >= 0.1f)
 		{	
 			m_countTime = 0;//リセット
-			GetStage()->AddGameObject<RaySphere>(m_parentObj.lock()->GetComponent<Transform>()->GetPosition(), -angle, GetThis<Ray>(),m_range);//レイスフィア生成
+			auto raySphere = GetStage()->AddGameObject<RaySphere>(m_parentObj.lock()->GetComponent<Transform>()->GetPosition(), -m_angle, GetThis<Ray>(),m_range);//レイスフィア生成
+			//m_raySphere.push_back(raySphere);
+			//auto a = 0;//デバック用
 		}
+
+		////デバック用
+		//// インプットデバイスオブジェクト
+		//auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
+		////コントローラーの取得
+		//auto m_controler = inputDevice.GetControlerVec()[0];
+
+		////生成したレイスフィアを削除する 作成途中
+		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_X)
+		//{
+		//	//for (auto a : m_raySphere)
+		//	//{
+		//	//	GetStage()->RemoveGameObject<RaySphere>(a.lock());
+		//	//	auto test = m_raySphere;
+		//	//}
+		//	//ステージ上のオブジェクトをすべて見て特定のタグのオブジェクトを取得する
+		//	//GetStage()->GetUsedTagObjectVec(L"RaySphere", shared_ptr<RaySphere>)
+		//	//weak_ptr<RaySphere> obj[] = 
+
+		//}
+
+		
+		
 
 		//デバック用
 		//wstringstream wss(L"");
@@ -74,6 +98,18 @@ namespace basecross {
 		//使わない配列を削除
 		m_discoveryObj.clear();//前の配列全削除
 
+	}
+
+	//角度のセッター
+	void Ray::SetAngle(float angle)
+	{
+		m_angle = angle;
+	}
+
+	//角度のゲッター
+	float Ray::GetAngle()
+	{
+		return m_angle;
 	}
 
 
