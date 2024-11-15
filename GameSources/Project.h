@@ -42,7 +42,8 @@
 #include "ClearObject.h"//透明な物理オブジェクト
 #include "SpriteNum.h"//数字のスプライト
 #include "WaterPillar.h"//水柱
-#include "MiniMapPlayer.h"//ミニマップのPlayer
+#include "MiniMapActor.h"//ミニマップのPlayerやEnemy　オブジェクトで動くもの
+#include "MiniMapItem.h"//ミニマップのItem
 
 //マネージャー用
 #include "MiniMapManager.h"//ミニマップ生成
