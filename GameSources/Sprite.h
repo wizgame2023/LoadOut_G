@@ -9,13 +9,12 @@
 namespace basecross {
 	class Sprite :public GameObject
 	{
-	private:
+	protected:
 		//画像の表示サイズ
 		float m_width;
 		float m_heigth;
 		int m_layer;
 		Vec2 m_size;//画像の大きさ
-
 
 		//vector<VertexPositionColorTexture> m_vertices;
 		//vector<uint16_t> m_indices;
@@ -30,11 +29,11 @@ namespace basecross {
 
 
 	public:
-		Sprite(shared_ptr<Stage>& stagePtr,wstring textureName,Vec2 size,Vec3 pos = Vec3(0.0f,0.0f,0.0f), Vec3 rot = Vec3(0.0f,0.0f,0.0f), Col4 color = Col4(1.0f,1.0f,1.0f,1.0f));//コンストラクタ
-		~Sprite();//デストラクタ
+		Sprite(shared_ptr<Stage>& stagePtr,wstring textureName,Vec2 size,Vec3 pos = Vec3(0.0f,0.0f,0.0f), Vec3 rot = Vec3(0.0f,0.0f,0.0f),Col4 color = Col4(1.0f,1.0f,1.0f,1.0f), int layer = 1);//コンストラクタ
+		virtual ~Sprite();//デストラクタ
 
-		void OnCreate()override;//作成
-		void OnUpdate()override;//更新
+		virtual void OnCreate()override;//作成
+		virtual void OnUpdate()override;//更新
 
 	};
 
