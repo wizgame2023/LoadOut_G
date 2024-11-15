@@ -13,7 +13,8 @@ namespace basecross {
 		Sprite(stagePtr, textureName, size, pos, rot, color),
 		m_miniMapStartPos(miniMapStartPos),
 		m_mapSize(mapSize),
-		m_miniMapSize(miniMapSize)
+		m_miniMapSize(miniMapSize),
+		m_mapMagnification(m_miniMapSize / m_mapSize)
 	{
 
 	}
@@ -34,10 +35,13 @@ namespace basecross {
 		playerPos.y = playerPos.z;
 		playerPos.z = 5.0f;
 
-		m_pos = m_miniMapStartPos+(playerPos * (m_mapSize / m_miniMapSize));
+
+		m_pos =Vec3((playerPos.x*m_mapMagnification)+m_miniMapStartPos.x,(playerPos.y*m_mapMagnification)+m_miniMapStartPos.y,0.0f);
+		//m_pos = 
 
 		trans->SetPosition(m_pos);
 
+		SetDrawLayer(m_miniMapStartPos.z);
 	}
 
 

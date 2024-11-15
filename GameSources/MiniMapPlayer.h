@@ -14,6 +14,7 @@ namespace basecross {
 		Vec3 m_miniMapStartPos;//ミニマップの初期位置
 		float m_mapSize;//マップの大きさ(直径)
 		float m_miniMapSize;//ミニマップの大きさ(直径)
+		float m_mapMagnification;//ミニマップ用の倍率
 		//Vec3 m_miniMapPos;
 	public:
 		MiniMapPlayer(shared_ptr<Stage>& stagePtr, wstring textureName, Vec2 size,
