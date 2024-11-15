@@ -24,8 +24,8 @@ namespace basecross {
 		shared_ptr<StateBase> m_NextSt;
 
 		shared_ptr<Ray>m_forwardRay;
-		//shared_ptr<Ray>m_leftRay;
-		//shared_ptr<Ray>m_playerRay;
+		shared_ptr<Ray>m_leftRay;
+		shared_ptr<Ray>m_playerRay;
 
 	public:
 		//コンストラクタ・デストラクタ

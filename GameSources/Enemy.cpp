@@ -11,7 +11,7 @@ namespace basecross {
 	//コンストラクタの宣言・デストラクタ
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
 		Actor(StagePtr),
-		m_pos(-95, 2.0f, 95),
+		m_pos(-0, 2.0f, 0),
 		m_playerPos(0,0,0),
 		m_speed(15),
 		m_angle(0)
@@ -46,9 +46,9 @@ namespace basecross {
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 20.0f);//Enemyの親クラスをGameObjectからActorにしてください
-		//m_leftRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
-		//m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
+		//m_leftRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
+		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 50.0f);
 	}
 
 	void Enemy::OnUpdate()
@@ -56,7 +56,7 @@ namespace basecross {
 		auto trans = GetComponent<Transform>();
 		auto app = App::GetApp;
 		m_CurrentSt->OnUpdate();//現在のステート更新処理
-
+		m_pos = trans->GetPosition();
 		//次のステート用変数に何かしらのステートが代入されたら
 		if(m_NextSt)
 		{
@@ -80,17 +80,23 @@ namespace basecross {
 		auto rot = GetComponent<Transform>()->GetRotation();
 		auto player = GetStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
-		//float PlayerVec = atan2f((m_pos.x - m_playerPos.x), (m_pos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
+		float playerVec = atan2f((m_pos.x - m_playerPos.x), (m_pos.z - m_playerPos.z)) + XM_PI * 0.5;//所有者(Enemy)を中心にplayerの方向を計算
 
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		//wss << L"\n敵の回転.x : " << rot.x
-		//<< L"\n敵の回転.y : " << rot.y
-		//<< L"\n敵の回転.z : " << rot.z
-		//<< L"\nアングル : "<<m_angle
-		//<< endl;
+		m_forwardRay->SetAngle(m_angle);
+		//m_leftRay->SetAngle(m_angle - XM_PI * 0.5f);
+		m_playerRay->SetAngle(playerVec);
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		wss << L"\n敵の回転.x : " << rot.x
+			<< L"\n敵の回転.y : " << rot.y
+			<< L"\n敵の回転.z : " << rot.z
+			<< L"\nplayerPOs.x : " << m_playerPos.x
+			<< L"\nplayerPOs.z : " << m_playerPos.z
+			<< L"\nアングル : " << m_angle
+			<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
+		<< endl;
 
-		//scene->SetDebugString(wss.str());
+		scene->SetDebugString(wss.str());
 
 	}
 	void Enemy::OnDestroy()
