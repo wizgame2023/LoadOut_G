@@ -13,6 +13,7 @@ namespace basecross {
 	{
 	private:
 		Vec3 m_pos;
+		Vec3 m_playerPos;
 		float m_speed;
 		float m_angle;
 
@@ -47,10 +48,10 @@ namespace basecross {
 		float GetSpeed();
 
 		float GetAngle();
+		float GetDistance(Vec3 a, Vec3 b);
 		void SetAngle(float angle);
-
+		Vec3 GetPlayerPos();
 		shared_ptr<Ray> GetForwardRay();
 	};
-
 }
 //end basecross
