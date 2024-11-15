@@ -43,7 +43,7 @@ namespace basecross{
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
 		if (event->m_MsgStr == L"ToGameStage") {
 			//最初のアクティブステージの設定
-			ResetActiveStage<GameStage>();
+			ResetActiveStage<YuutaStage>();
 		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定

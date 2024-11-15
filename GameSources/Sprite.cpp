@@ -7,12 +7,13 @@
 #include "Project.h"
 
 namespace basecross {
-	Sprite::Sprite(shared_ptr<Stage>& stagePtr,wstring textureName,Vec2 size,Vec3 pos,Vec3 rot, Col4 color) :
+	Sprite::Sprite(shared_ptr<Stage>& stagePtr,wstring textureName,Vec2 size,Vec3 pos,Vec3 rot, Col4 color,int layer) :
 		GameObject(stagePtr),
 		m_textureName(textureName),
 		m_size(size),
 		m_pos(pos),
-		m_color(color)
+		m_color(color),
+		m_layer(layer)
 	{
 
 	}
@@ -53,6 +54,7 @@ namespace basecross {
 		// アルファブレンド(透過処理)を有効にする
 		SetAlphaActive(true); // true:透過を有効、false:透過を無効
 
+		SetDrawLayer(m_layer);
 
 	}
 
