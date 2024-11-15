@@ -12,6 +12,7 @@ namespace basecross {
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
 		Actor(StagePtr),
 		m_pos(-95, 2.0f, 95),
+		m_playerPos(0,0,0),
 		m_speed(15),
 		m_angle(0)
 	{
@@ -77,9 +78,9 @@ namespace basecross {
 		//	GetStage()->RemoveGameObject<Enemy>(GetThis<Enemy>());
 		//}
 		auto rot = GetComponent<Transform>()->GetRotation();
-		auto player = app()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
-		auto playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
-		float PlayerVec = atan2f((m_pos.x - playerPos.x), (m_pos.z - playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
+		auto player = GetStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
+		m_playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
+		//float PlayerVec = atan2f((m_pos.x - m_playerPos.x), (m_pos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
 
 		//wstringstream wss(L"");
 		//auto scene = App::GetApp()->GetScene<Scene>();
@@ -115,6 +116,20 @@ namespace basecross {
 		m_angle = angle;
 	}
 
+	float Enemy::GetDistance(Vec3 a, Vec3 b)
+	{ 
+		float numX = a.x - b.z;
+		float numY = a.y - b.y;
+		float numZ = a.z - b.z;
+
+		return  sqrtf(numX * numX + numY * numY + numZ * numZ);
+
+	}
+
+	Vec3 Enemy::GetPlayerPos()
+	{
+		return m_playerPos;
+	}
 	shared_ptr<Ray> Enemy::GetForwardRay()
 	{
 		return m_forwardRay;
