@@ -23,6 +23,7 @@ namespace basecross {
 
 		void CreateWall();//ミニマップの壁を生成する
 		void CreateItem();//ミニマップのアイテムを生成する
+		void CreateManhole();//ミニマップのマンホールを生成する
 
 		Vec3 GetStartPos();//ミニマップの原点を渡す
 	};
