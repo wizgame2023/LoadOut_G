@@ -43,7 +43,7 @@ namespace basecross {
 		{
 			m_NextSt.reset();
 
-			m_NextSt = makeShared<NextState>(GetThis<Enemy>());
+			m_NextSt = make_shared<NextState>(GetThis<Enemy>());
 		}
 		float GetSpeed();
 
@@ -52,6 +52,7 @@ namespace basecross {
 		void SetAngle(float angle);
 		Vec3 GetPlayerPos();
 		shared_ptr<Ray> GetForwardRay();
+		shared_ptr<Ray> GetPlayerRay();
 	};
 }
 //end basecross

@@ -21,7 +21,9 @@ namespace basecross {
 		auto app = App::GetApp;
 		m_trans = m_Owner->GetComponent<Transform>();//Š—LŽÒ(Enemy)‚ÌTransform‚ðŽæ“¾
 		m_ownerPos = m_trans->GetPosition();
+
 		m_forwardRay = m_Owner->GetForwardRay();
+		m_playerRay = m_Owner->GetPlayerRay();
 
 		m_time += app()->GetElapsedTime();
 
@@ -192,6 +194,17 @@ namespace basecross {
 				}
 			}
 
+		}
+
+		if (m_playerRay.lock()->GetDisObj().size() > 0)
+		{
+			for (auto obj: m_playerRay.lock()->GetDisObj())
+			{
+				if (obj.lock()->FindTag(L"Player"))
+				{
+					m_Owner->ChangeState<Tracking>();
+				}
+			}
 		}
 
 		m_trans->SetPosition(m_ownerPos);

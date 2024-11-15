@@ -47,7 +47,6 @@ namespace basecross {
 		m_CurrentSt->OnStart();
 
 		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
-		//m_leftRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
 		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 50.0f);
 	}
 
@@ -139,6 +138,11 @@ namespace basecross {
 	shared_ptr<Ray> Enemy::GetForwardRay()
 	{
 		return m_forwardRay;
+	}
+
+	shared_ptr<Ray> Enemy::GetPlayerRay()
+	{
+		return m_playerRay;
 	}
 }
 //end basecross

@@ -35,6 +35,7 @@ namespace basecross {
 		shared_ptr<Transform> m_trans;
 
 		weak_ptr<Ray> m_forwardRay;
+		weak_ptr<Ray>m_playerRay;
 	public:
 		Patrol(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
