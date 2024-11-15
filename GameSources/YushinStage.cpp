@@ -93,7 +93,7 @@ namespace basecross {
 			AddGameObject<Ground>();
 			auto mapManager = AddGameObject<MapManager>();
 			SetSharedGameObject(L"MapManager", mapManager);
-			//mapManager->WallCreateKari();//‰¼‚Ì“à•Ç‚ğ¶¬‚·‚é
+			mapManager->WallCreateKari();//‰¼‚Ì“à•Ç‚ğ¶¬‚·‚é
 
 
 		}

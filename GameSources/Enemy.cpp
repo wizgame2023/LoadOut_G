@@ -11,7 +11,7 @@ namespace basecross {
 	//コンストラクタの宣言・デストラクタ
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
 		Actor(StagePtr),
-		m_pos(-0, 2.0f, 0),
+		m_pos(-95.0f, 2.5f, 95.0f),
 		m_playerPos(0,0,0),
 		m_speed(15),
 		m_angle(0)
@@ -24,7 +24,7 @@ namespace basecross {
 
 	void Enemy::OnCreate()
 	{
-		GetComponent<Transform>()->SetScale(1.5f,1.5f,1.5f);
+		GetComponent<Transform>()->SetScale(5.0f,5.0f,5.0f);
 		GetComponent<Transform>()->SetPosition(m_pos);
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
@@ -33,10 +33,10 @@ namespace basecross {
 		Mat4x4 spanMat;
 		spanMat.affineTransformation
 		(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.2f, 0.2f, 0.2f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 5.0f, 0.0f)
+			Vec3(0.0f, 1.0f, 0.0f)
 		);
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
@@ -46,8 +46,8 @@ namespace basecross {
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
-		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 50.0f);
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
+		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
 	}
 
 	void Enemy::OnUpdate()
@@ -89,8 +89,8 @@ namespace basecross {
 		wss << L"\n敵の回転.x : " << rot.x
 			<< L"\n敵の回転.y : " << rot.y
 			<< L"\n敵の回転.z : " << rot.z
-			<< L"\nplayerPOs.x : " << m_playerPos.x
-			<< L"\nplayerPOs.z : " << m_playerPos.z
+			<< L"\nplayerPos.x : " << m_playerPos.x
+			<< L"\nplayerPos.z : " << m_playerPos.z
 			<< L"\nアングル : " << m_angle
 			<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
 		<< endl;
