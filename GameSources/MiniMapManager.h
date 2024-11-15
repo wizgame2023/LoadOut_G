@@ -11,6 +11,9 @@ namespace basecross {
 	{
 	private:
 		Vec3 m_startPos;//初期位置(ピポット)
+
+		float m_mapSize;//マップの直径
+		float m_mapMagnification;//マップの倍率
 	public:
 		MiniMapManager(shared_ptr<Stage>& stage);
 		~MiniMapManager();
@@ -19,6 +22,7 @@ namespace basecross {
 		void OnUpdate()override;//更新
 
 		void CreateWall();//ミニマップの壁を生成する
+		void CreateItem();//ミニマップのアイテムを生成する
 
 		Vec3 GetStartPos();//ミニマップの原点を渡す
 	};
