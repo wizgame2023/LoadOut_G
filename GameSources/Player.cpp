@@ -62,7 +62,7 @@ namespace basecross{
 		auto test = miniMapPos;
 		//Vec2 b = Vec2(0.0f, 0.0f);
 		//Vec2 a = Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f));
-		GetStage()->AddGameObject<MiniMapPlayer>(L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
+		GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
 
 		//GetStage()->AddGameObject<Ray>(GetThis<Player>(), 50.0f);//レイ生成
 		//AddBatteryUI();//デバック用
