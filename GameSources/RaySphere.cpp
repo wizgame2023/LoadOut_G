@@ -63,6 +63,15 @@ namespace basecross {
 
 	void RaySphere::OnUpdate()
 	{
+		//元となるオブジェクトが消えた場合、自分も消える
+		if (!m_parentObj.lock())
+		{
+			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());
+			return;
+
+		}
+
+
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム取得
 		auto ptr = GetComponent<Transform>();//Transform取得
 		auto pos = ptr->GetPosition();
@@ -81,6 +90,8 @@ namespace basecross {
 			m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
 
 		}
+
+
 		
 	}
 

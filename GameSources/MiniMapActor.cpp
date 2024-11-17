@@ -27,6 +27,14 @@ namespace basecross {
 
 	void MiniMapActor::OnUpdate()
 	{
+		//元となるオブジェクトが消えた場合、自分も消える
+		if (!m_parentObj.lock())
+		{
+			GetStage()->RemoveGameObject<MiniMapActor>(GetThis<MiniMapActor>());
+			return;
+		}
+
+
 		//auto player = GetStage()->GetSharedGameObject<Player>(L"Player");
 		//auto playerPos = player->GetComponent<Transform>()->GetPosition();
 		auto actorPos = m_parentObj.lock()->GetComponent<Transform>()->GetPosition();
@@ -43,6 +51,7 @@ namespace basecross {
 		trans->SetPosition(m_pos);
 
 		SetDrawLayer(m_miniMapStartPos.z);
+
 	}
 
 
