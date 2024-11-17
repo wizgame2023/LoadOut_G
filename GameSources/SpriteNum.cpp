@@ -79,20 +79,7 @@ namespace basecross {
 			{Vec3(+m_size.x * 0.5f, -m_size.y * 0.5f, 0), color, Vec2(0.1f * m_num, 1.0f)}, // 3
 		};
 
-		//for (int i = 0; i < m_vertices.size(); i++)
-		//{
-
-		//}
-		GetComponent<PCTSpriteDraw>()->UpdateVertices(m_vertices);
-		//Vec2 uv = m_vertices[0].textureCoordinate;
-		//auto test = uv;
-
-		auto a = 0;//デバック用
-
-		//m_drawComp->
-
-		//AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
-		//auto a = GetComponent<PCTSpriteDraw>();
+		GetComponent<PCTSpriteDraw>()->UpdateVertices(m_vertices);//頂点データ更新
 
 	}
 
