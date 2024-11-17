@@ -5,6 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include "SpriteNum.h"
 
 namespace basecross{
 	class Player :public Actor
@@ -22,7 +23,7 @@ namespace basecross{
 
 		shared_ptr<InputDevice> m_Device;//コントローラー
 		CONTROLER_STATE m_controler;//コントローラー
-
+		shared_ptr<SpriteNum> m_spriteNum;//数字のスプライト
 		//float m_time;//テスト用使わなくなったら消してください
 
 	public:
@@ -40,6 +41,7 @@ namespace basecross{
 		void ManholeSet(Vec3 pos);//マンホールの上にわなを仕掛ける
 
 		void OnCollisionEnter(shared_ptr<GameObject>& other);//当たり判定
+		void KeyBoardMove();
 
 		float GetAngle()override;//角度を渡す
 		void AddBatteryUI();//電池をどれくらい取得しているかのUI

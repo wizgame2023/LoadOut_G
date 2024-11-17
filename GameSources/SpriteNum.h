@@ -30,6 +30,11 @@ namespace basecross {
 		Vec3 m_rot;
 		Col4 m_color;
 
+		shared_ptr<PCTSpriteDraw> m_drawComp;//ドローコンポーネント
+
+		vector<uint16_t> m_indices;
+		vector<VertexPositionColorTexture> m_vertices;
+
 
 	public:
 		SpriteNum(shared_ptr<Stage>& stagePtr, wstring textureName, Vec2 size,int num,Vec3 pos=Vec3(0.0f,0.0f,0.0f), Vec3 rot=Vec3(0.0f,0.0f,0.0f));//コンストラクタ
@@ -37,6 +42,8 @@ namespace basecross {
 
 		void OnCreate()override;//作成
 		void OnUpdate()override;//更新
+
+		void SetNum(int num);//数字の更新
 
 	};
 

@@ -100,6 +100,8 @@ namespace basecross{
 		app->RegisterTexture(L"White", strTexture);
 		strTexture = texPath + L"MiniMapPlayer.png";//ミニマップのPlayerのテクスチャ
 		app->RegisterTexture(L"MiniPlayer", strTexture);
+		strTexture = texPath + L"MiniMapEnemy.png";//ミニマップのPlayerのテクスチャ
+		app->RegisterTexture(L"MiniEnemy", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ

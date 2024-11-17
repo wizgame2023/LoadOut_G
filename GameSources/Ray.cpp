@@ -26,6 +26,13 @@ namespace basecross {
 
 	void Ray::OnUpdate()
 	{
+		//元となるオブジェクトが消えた場合、自分も消える
+		if (!m_parentObj.lock())
+		{
+			GetStage()->RemoveGameObject<Ray>(GetThis<Ray>());
+			return;
+		}
+
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		m_countTime += delta;
 
@@ -37,6 +44,8 @@ namespace basecross {
 			//m_raySphere.push_back(raySphere);
 			//auto a = 0;//デバック用
 		}
+
+
 
 		////デバック用
 		//// インプットデバイスオブジェクト

@@ -29,7 +29,7 @@ namespace basecross {
 		Col4 color(1, 1, 1, 1); // ポリゴンの色
 		const float w = 200.0f; // ポリゴンの幅
 		const float h = 100.0f; // ポリゴンの高さ
-		vector<VertexPositionColorTexture> m_vertices = { // 頂点データ
+		m_vertices = { // 頂点データ
 
 			//             座標                          ,頂点色,     UV座標
 			{Vec3(-m_size.x * 0.5f, +m_size.y * 0.5f, 0), color, Vec2(0.1f*(m_num-1), 0.0f)}, // 0
@@ -38,15 +38,15 @@ namespace basecross {
 			{Vec3(+m_size.x * 0.5f, -m_size.y * 0.5f, 0), color, Vec2(0.1f*m_num, 1.0f)}, // 3
 		};
 
-		vector<uint16_t> m_indices = { // 頂点インデックス（頂点のつなげ順）
+		m_indices = { // 頂点インデックス（頂点のつなげ順）
 			0, 1, 2, // ←これで一つのポリゴン(三角形)
 			2, 1, 3  // ←こっちも
 		};
 
-		auto drawComp = AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
-		drawComp->SetTextureResource(m_textureName);//テクスチャの名前指定
-		drawComp->SetSamplerState(SamplerState::LinearWrap); // テクスチャを繰り返して貼り付ける設定
-		drawComp->SetDiffuse(Col4(1, 1, 1, 1.0f)); // ポリゴンを色を設定する
+		m_drawComp = AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
+		m_drawComp->SetTextureResource(m_textureName);//テクスチャの名前指定
+		m_drawComp->SetSamplerState(SamplerState::LinearWrap); // テクスチャを繰り返して貼り付ける設定
+		m_drawComp->SetDiffuse(Col4(1, 1, 1, 1.0f)); // ポリゴンを色を設定する
 
 		auto trans = GetComponent<Transform>();
 		trans->SetPosition(m_pos);
@@ -68,6 +68,37 @@ namespace basecross {
 
 	void SpriteNum::OnUpdate()
 	{
+		Col4 color(1, 1, 1, 1); // ポリゴンの色
+
+		m_vertices = { // 頂点データ
+
+			//             座標                          ,頂点色,     UV座標
+			{Vec3(-m_size.x * 0.5f, +m_size.y * 0.5f, 0), color, Vec2(0.1f * (m_num - 1), 0.0f)}, // 0
+			{Vec3(+m_size.x * 0.5f, +m_size.y * 0.5f, 0), color, Vec2(0.1f * m_num, 0.0f)}, // 1
+			{Vec3(-m_size.x * 0.5f, -m_size.y * 0.5f, 0), color, Vec2(0.1f * (m_num - 1), 1.0f)}, // 2
+			{Vec3(+m_size.x * 0.5f, -m_size.y * 0.5f, 0), color, Vec2(0.1f * m_num, 1.0f)}, // 3
+		};
+
+		//for (int i = 0; i < m_vertices.size(); i++)
+		//{
+
+		//}
+		GetComponent<PCTSpriteDraw>()->UpdateVertices(m_vertices);
+		//Vec2 uv = m_vertices[0].textureCoordinate;
+		//auto test = uv;
+
+		auto a = 0;//デバック用
+
+		//m_drawComp->
+
+		//AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
+		//auto a = GetComponent<PCTSpriteDraw>();
+
+	}
+
+	void SpriteNum::SetNum(int num)
+	{
+		m_num = num;
 	}
 
 }
