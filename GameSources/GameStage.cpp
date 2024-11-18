@@ -90,8 +90,7 @@ namespace basecross {
 
 		//BGM
 		auto BGM = App::GetApp()->GetXAudio2Manager();
-		BGM->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
-
+		m_BGM = BGM->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
 
 		OutWallCreate(20);//外壁生成
 
@@ -142,8 +141,18 @@ namespace basecross {
 
 		//敵生成
 		AddGameObject<Enemy>();
+		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
+		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
+		AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
+		miniMapManager->CreateEnemy();	
+}
 
+	void GameStage::OnDestroy()
+	{
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		BGM->Stop(m_BGM);
 	}
+
 
 	void GameStage::OutWallCreate(int selLength)//←個々の引数はこのマップの直径はブロック何個ぶんかを聞いています
 	{
