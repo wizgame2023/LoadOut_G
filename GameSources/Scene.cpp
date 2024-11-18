@@ -118,7 +118,7 @@ namespace basecross{
 
 
 		//ボーンモデル
-		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"test.bmf");//敵(仮)のメッシュ
+		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_new_test.bmf");//敵(仮)のメッシュ
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
 
 		//ボーンマルチメッシュ
