@@ -41,10 +41,10 @@ namespace basecross {
 		Mat4x4 spanMat;
 		spanMat.affineTransformation
 		(
-			Vec3(0.2f, 0.2f, 0.2f),
+			Vec3(0.5f, 0.5f, 0.5f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 1.0f, 0.0f)
+			Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
 		);
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetDrawActive(true);//ƒRƒŠƒWƒ‡ƒ“‚ðŒ©‚¦‚é‚æ‚¤‚É‚·‚é
