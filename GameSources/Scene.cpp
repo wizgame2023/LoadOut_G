@@ -110,7 +110,8 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"StageBGM", soundWav);
 		soundWav = SoundPath + L"ItemGet.wav";
 		App::GetApp()->RegisterWav(L"ItemGet", soundWav);
-
+		soundWav = SoundPath + L"GameOver.wav";
+		App::GetApp()->RegisterWav(L"GameOver", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
