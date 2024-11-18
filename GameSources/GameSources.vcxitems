@@ -47,6 +47,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Wall.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WaterPillar.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YuusinStage.h" />
@@ -85,6 +86,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Wall.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WaterPillar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
