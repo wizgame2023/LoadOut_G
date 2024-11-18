@@ -13,6 +13,7 @@ namespace basecross {
 	private:
 		vector<weak_ptr<GameObject>> m_discoveryObj;//ぶつかったオブジェクトのアドレスを取る 出来れば静的変数にしたい
 
+		bool m_remove;//自分自身を消すかどうかのフラグ
 		float m_range;//視界の射程
 		Vec3 m_moveVec;//元居た地点からどれくらい移動したか測る変数
 		Vec3 m_originPos;//生成されたときのポジション
@@ -35,6 +36,8 @@ namespace basecross {
 
 		//引数の数値にあるマイナスを消す
 		float RemoveMinus(float num);
+
+		void SetRemove(bool onOff);//自分自身を消す
 
 	};
 

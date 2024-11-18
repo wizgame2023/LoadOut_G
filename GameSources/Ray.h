@@ -29,7 +29,9 @@ namespace basecross {
 		void OnCreate()override;//作成
 		void OnUpdate()override;//更新
 
-		void ResetDisObj();//リセット
+		void ResetDisObj();//レイスフィアの当たったオブジェクトのポインタ配列のリセット
+		void ResetRaySphere();//出ているレイスフィアを全て削除
+
 
 
 		void SetAngle(float angle);//角度を入れるセッター

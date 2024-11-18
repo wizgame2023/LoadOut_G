@@ -29,7 +29,7 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();//Transform取得
 		ptr->SetPosition(m_pos);
 		ptr->SetRotation(Vec3(0.0f,0.0f,0.0f));
-		ptr->SetScale(Vec3(3.0f,3.0f,3.0f));
+		ptr->SetScale(Vec3(1.0f,1.0f,1.0f));
 
 		//Transformに対しての等差数列
 		//Mat4x4 spanMat;
@@ -64,7 +64,7 @@ namespace basecross {
 	void RaySphere::OnUpdate()
 	{
 		//元となるオブジェクトが消えた場合、自分も消える
-		if (!m_parentObj.lock())
+		if (!m_parentObj.lock()||m_remove)
 		{
 			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());
 			return;
@@ -75,7 +75,7 @@ namespace basecross {
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム取得
 		auto ptr = GetComponent<Transform>();//Transform取得
 		auto pos = ptr->GetPosition();
-		float speed = 100;
+		float speed = 80;
 		pos.x += cos(m_rad) * speed * delta;
 		pos.z += sin(m_rad) * speed * delta;
 		ptr->SetPosition(pos);
@@ -97,15 +97,6 @@ namespace basecross {
 
 	void RaySphere::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
-		//ぶつかったオブジェクトが今までぶつかったことのないオブジェクトなら配列に入れる
-		//for (auto a : m_discoveryObj)
-		//{
-		//	if (a.lock() != other)//オブジェクトが前覚えている物でないとき
-		//	{
-				//m_discoveryObj.push_back(other);//記憶する
-			//}
-			//m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
-		//}
 		
 		auto wall = dynamic_pointer_cast<Wall>(other);
 		auto player = dynamic_pointer_cast<Player>(other);
@@ -133,6 +124,12 @@ namespace basecross {
 		}
 
 		return num;
+	}
+
+	//自身を消すフラグ管理
+	void RaySphere::SetRemove(bool onOff)
+	{
+		m_remove = onOff;
 	}
 
 }

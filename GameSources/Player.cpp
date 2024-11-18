@@ -32,7 +32,7 @@ namespace basecross{
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
-
+		//ドローメッシュの設定
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMultiMeshResource(L"Player_Mesh_Kari");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
@@ -57,17 +57,17 @@ namespace basecross{
 
 		AddTag(L"Player");//Player用のタグ
 
-		auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");
+		auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");//ミニマップマネージャーの取得
 		auto miniMapPos = miniMapManager->GetStartPos();
 		auto test = miniMapPos;
-		//Vec2 b = Vec2(0.0f, 0.0f);
-		//Vec2 a = Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f));
+
+		//ミニマップにPlayerを表示させる
 		GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
 
-		//GetStage()->AddGameObject<Ray>(GetThis<Player>(), 50.0f);//レイ生成
-		//AddBatteryUI();//デバック用
-
-		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//電池をどれくらい持っているかを表す
+		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
+		GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
+		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
 	}
 
 	void Player::OnUpdate()

@@ -63,6 +63,7 @@ namespace basecross {
 
 		//吹っ飛ぶマンホール作成
 		m_manhole =  GetStage()->AddGameObject<Block>(m_pos-Vec3(0.0f,-m_pos.y,0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//m_manhole->GetComponent<CollisionObb>()->SetAfterCollision(AfterCollision::None);
 		m_manhole->GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//マンホールテクスチャに変更
 		m_manhole->GetComponent<Transform>()->SetScale(10.0f, 1.0f, 10.0f);//サイズ変更
 

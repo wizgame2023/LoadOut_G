@@ -43,7 +43,7 @@ namespace basecross{
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
 		if (event->m_MsgStr == L"ToGameStage") {
 			//最初のアクティブステージの設定
-			ResetActiveStage<YuutaStage>();
+			ResetActiveStage<GameStage>();
 		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定
@@ -102,6 +102,8 @@ namespace basecross{
 		app->RegisterTexture(L"MiniPlayer", strTexture);
 		strTexture = texPath + L"MiniMapEnemy.png";//ミニマップのPlayerのテクスチャ
 		app->RegisterTexture(L"MiniEnemy", strTexture);
+		strTexture = texPath + L"battery_tan1.png";//乾電池(単一)のテクスチャ
+		app->RegisterTexture(L"Battery1", strTexture);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
