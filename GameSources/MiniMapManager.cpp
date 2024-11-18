@@ -108,8 +108,7 @@ namespace basecross {
 				auto itemPos = itemTrans->GetPosition();
 				auto itemScale = itemTrans->GetScale();
 
-				stage->AddGameObject<MiniMapActor>(castEnemy,L"MiniEnemy", Vec2((itemScale.x * m_mapMagnification)*10, (itemScale.z * m_mapMagnification)*10),
-					Vec3(m_startPos.x + (itemPos.x * m_mapMagnification), m_startPos.y + (itemPos.z * m_mapMagnification), 6.0f),m_mapSize,Lenght, Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f));
+				stage->AddGameObject<MiniMapActor>(castEnemy, L"MiniEnemy", Vec2((itemScale.x / m_mapMagnification) * 3, (itemScale.z / m_mapMagnification) * 3), m_startPos, m_mapSize, Lenght);
 			}
 		}
 
