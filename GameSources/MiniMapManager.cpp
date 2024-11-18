@@ -20,18 +20,18 @@ namespace basecross {
 
 	void MiniMapManager::OnCreate()
 	{
-		//auto stage = GetStage();//ステージ取得
-		//float Lenght = 225.0f;//ミニマップの直径
-		//stage->AddGameObject<Sprite>(L"Gray", Vec2(Lenght, Lenght), Vec3(-640+(Lenght/2.0f), 400.0f - (Lenght / 2.0f), 0.0f));
+		auto stage = GetStage();//ステージ取得
+		float Lenght = 225.0f;//ミニマップの直径
+		stage->AddGameObject<Sprite>(L"Gray", Vec2(Lenght, Lenght), Vec3(-640+(Lenght/2.0f), 400.0f - (Lenght / 2.0f), 0.0f));
 
-		//m_startPos = Vec3(-640 + (Lenght / 2.0f), 400.0f - (Lenght / 2.0f),5.0f);//スタートポジション
-		//auto test = m_startPos;
-		//auto a = 0;
-		//m_mapSize = 200;//mapの直径
-		//m_mapMagnification = Lenght / m_mapSize;//マップの倍率
+		m_startPos = Vec3(-640 + (Lenght / 2.0f), 400.0f - (Lenght / 2.0f),5.0f);//スタートポジション
+		auto test = m_startPos;
+		auto a = 0;
+		m_mapSize = 200;//mapの直径
+		m_mapMagnification = Lenght / m_mapSize;//マップの倍率
 
-		//CreateManhole();//マンホールを生成//もしかしたらエラーでる？
-		//CreateEnemy();
+		CreateManhole();//マンホールを生成//もしかしたらエラーでる？
+		CreateEnemy();
 	}
 
 	void MiniMapManager::OnUpdate()
