@@ -73,6 +73,10 @@ namespace basecross {
 		{
 			if (other->FindTag(L"Player"))//もし、タグがPlayerなら
 			{
+				//SE
+				auto SE = App::GetApp()->GetXAudio2Manager();
+				SE->Start(L"ItemGet", 0, 0.9f);
+
 				player->AddCount(1);//カウントをプラスする
 				stage->RemoveGameObject<Item>(GetThis<Item>());//自分自身を削除
 			}
