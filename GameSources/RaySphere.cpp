@@ -97,15 +97,6 @@ namespace basecross {
 
 	void RaySphere::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
-		//ぶつかったオブジェクトが今までぶつかったことのないオブジェクトなら配列に入れる
-		//for (auto a : m_discoveryObj)
-		//{
-		//	if (a.lock() != other)//オブジェクトが前覚えている物でないとき
-		//	{
-				//m_discoveryObj.push_back(other);//記憶する
-			//}
-			//m_parentObj.lock()->SetDisObj(m_discoveryObj);//取得したオブジェクトを渡す
-		//}
 		
 		auto wall = dynamic_pointer_cast<Wall>(other);
 		auto player = dynamic_pointer_cast<Player>(other);
