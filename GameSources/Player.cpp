@@ -26,15 +26,15 @@ namespace basecross{
 
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
-			Vec3(0.5f, 0.5f, 0.5f),
+			Vec3(0.25f, 0.25f, 0.25f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, XMConvertToRadians(-90.0f), 0.0f),
+			Vec3(0.0f, XMConvertToRadians(0.0f), 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		//ドローメッシュの設定
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
-		ptrDraw->SetMultiMeshResource(L"Player_Mesh_Kari");
+		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 
 		//ptrDraw->SetTextureResource(L"");
@@ -48,7 +48,7 @@ namespace basecross{
 		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
 		ptrColl->SetAfterCollision(AfterCollision::Auto);
 
-		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 
 
 		GetStage()->SetCollisionPerformanceActive(true);

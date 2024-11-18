@@ -41,20 +41,20 @@ namespace basecross {
 		Mat4x4 spanMat;
 		spanMat.affineTransformation
 		(
-			Vec3(0.2f, 0.2f, 0.2f),
+			Vec3(0.5f, 0.5f, 0.5f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 1.0f, 0.0f)
+			Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
 		);
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		AddTag(L"Enemy");
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 12.0f);
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
 		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 30.0f);
 	}
 

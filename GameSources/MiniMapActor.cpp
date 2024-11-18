@@ -50,7 +50,7 @@ namespace basecross {
 
 		trans->SetPosition(m_pos);
 
-		SetDrawLayer(m_miniMapStartPos.z);
+		SetDrawLayer(6);
 
 	}
 
