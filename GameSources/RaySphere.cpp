@@ -29,7 +29,7 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();//Transform取得
 		ptr->SetPosition(m_pos);
 		ptr->SetRotation(Vec3(0.0f,0.0f,0.0f));
-		ptr->SetScale(Vec3(3.0f,3.0f,3.0f));
+		ptr->SetScale(Vec3(1.0f,1.0f,1.0f));
 
 		//Transformに対しての等差数列
 		//Mat4x4 spanMat;
@@ -75,7 +75,7 @@ namespace basecross {
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム取得
 		auto ptr = GetComponent<Transform>();//Transform取得
 		auto pos = ptr->GetPosition();
-		float speed = 100;
+		float speed = 80;
 		pos.x += cos(m_rad) * speed * delta;
 		pos.z += sin(m_rad) * speed * delta;
 		ptr->SetPosition(pos);
