@@ -37,7 +37,14 @@ namespace basecross {
 		catch (...) {
 			throw;
 		}
+
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		BGM->Start(L"GameOver", 0, 0.9f);
+
+
 	}
+
+
 
 	void GameOverStage::OnUpdate()
 	{
