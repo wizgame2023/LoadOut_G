@@ -85,7 +85,8 @@ namespace basecross {
 			CreateViewLight();
 			auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
 			SetSharedGameObject(L"MiniMapManager", miniMapManager);
-			AddGameObject<Enemy>();
+			AddGameObject<Enemy>(Vec3(-95.0f,2.5,95.0f));
+			AddGameObject<Enemy>(Vec3(95.0f, 2.5, -90.0f));
 			//Playerの生成
 			auto ptrPlayer = AddGameObject<Player>(Vec3(50.0f, 3.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
 			SetSharedGameObject(L"Player", ptrPlayer);

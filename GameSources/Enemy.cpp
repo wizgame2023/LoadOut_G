@@ -11,8 +11,16 @@ namespace basecross {
 	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÌéŒ¾EƒfƒXƒgƒ‰ƒNƒ^
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
 		Actor(StagePtr),
-		m_pos(-95.0f, 2.5f, 95.0f),
+		m_pos(-95.0f,2.5f,95.0f),
 		m_playerPos(0,0,0),
+		m_speed(15),
+		m_angle(0)
+	{
+	}
+	Enemy::Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos) :
+		Actor(StagePtr),
+		m_pos(pos),
+		m_playerPos(0, 0, 0),
 		m_speed(15),
 		m_angle(0)
 	{
@@ -46,8 +54,8 @@ namespace basecross {
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
-		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 5.0f);
+		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 30.0f);
 	}
 
 	void Enemy::OnUpdate()
@@ -84,18 +92,18 @@ namespace basecross {
 		m_forwardRay->SetAngle(m_angle);
 		//m_leftRay->SetAngle(m_angle - XM_PI * 0.5f);
 		m_playerRay->SetAngle(playerVec);
-		wstringstream wss(L"");
-		auto scene = App::GetApp()->GetScene<Scene>();
-		wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
-			<< L"\n“G‚Ì‰ñ“].y : " << rot.y
-			<< L"\n“G‚Ì‰ñ“].z : " << rot.z
-			<< L"\nplayerPos.x : " << m_playerPos.x
-			<< L"\nplayerPos.z : " << m_playerPos.z
-			<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
-			<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
-		<< endl;
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
+		//	<< L"\n“G‚Ì‰ñ“].y : " << rot.y
+		//	<< L"\n“G‚Ì‰ñ“].z : " << rot.z
+		//	<< L"\nplayerPos.x : " << m_playerPos.x
+		//	<< L"\nplayerPos.z : " << m_playerPos.z
+		//	<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
+		//	<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
+		//<< endl;
 
-		scene->SetDebugString(wss.str());
+		//scene->SetDebugString(wss.str());
 
 	}
 	void Enemy::OnDestroy()
@@ -123,12 +131,11 @@ namespace basecross {
 
 	float Enemy::GetDistance(Vec3 a, Vec3 b)
 	{ 
-		float numX = a.x - b.z;
+		float numX = a.x - b.x;
 		float numY = a.y - b.y;
 		float numZ = a.z - b.z;
 
 		return  sqrtf(numX * numX + numY * numY + numZ * numZ);
-
 	}
 
 	Vec3 Enemy::GetPlayerPos()
@@ -143,6 +150,10 @@ namespace basecross {
 	shared_ptr<Ray> Enemy::GetPlayerRay()
 	{
 		return m_playerRay;
+	}
+	void Enemy::GetGameOverScene()
+	{
+		return PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ƒQ[ƒ€ƒI[ƒoƒV[ƒ“‚ÉˆÚ“®‚·‚é
 	}
 }
 //end basecross

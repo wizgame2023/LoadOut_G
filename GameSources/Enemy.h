@@ -30,6 +30,8 @@ namespace basecross {
 	public:
 		//コンストラクタ・デストラクタ
 		Enemy(shared_ptr<Stage>& StagePtr);
+		Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos);
+
 		~Enemy();
 
 		//生成・更新・削除
@@ -50,6 +52,7 @@ namespace basecross {
 		float GetAngle();
 		float GetDistance(Vec3 a, Vec3 b);
 		void SetAngle(float angle);
+		void GetGameOverScene();
 		Vec3 GetPlayerPos();
 		shared_ptr<Ray> GetForwardRay();
 		shared_ptr<Ray> GetPlayerRay();

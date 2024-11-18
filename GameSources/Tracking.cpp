@@ -46,10 +46,12 @@ namespace basecross {
 				}
 			}
 		}
-		if (m_Owner->GetDistance(m_ownerPos, m_playerPos) < 3)
+		if (m_Owner->GetDistance(m_ownerPos, m_playerPos) < 7)
 		{
 			m_Owner->ChangeState<Attack>();
 		}
+		auto d=m_Owner->GetDistance(m_ownerPos, m_playerPos);
+
 		//デバックログ
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
@@ -58,7 +60,9 @@ namespace basecross {
 			<< L"\n敵の回転.y : " << m_ownerRot.y
 			<< L"\n敵の回転（deg）" << deg
 			<< L"\n敵のPos.x : " << m_ownerPos.x
-			<< L"\n敵のPos.z : " << m_ownerPos.z<< endl;
+			<< L"\n敵のPos.z : " << m_ownerPos.z
+			<< L"\nd :  " << d
+			<< endl;
 		scene->SetDebugString(wss.str());
 	}
 //追跡ステートの最後の処理
