@@ -48,7 +48,7 @@ namespace basecross {
 		ptrColl->SetFixed(true);
 		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
 
-		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 
 
 		GetStage()->SetCollisionPerformanceActive(true);

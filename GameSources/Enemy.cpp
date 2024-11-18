@@ -47,14 +47,14 @@ namespace basecross {
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		AddTag(L"Enemy");
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
 		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 30.0f);
 	}
 
