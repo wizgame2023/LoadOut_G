@@ -11,7 +11,7 @@ namespace basecross {
 //巡回ステートの最初の処理
 	void Patrol::OnStart()
 	{
-
+		m_rnd = rand()%2+1;
 	}
 
 //巡回ステートの更新処理
@@ -34,80 +34,157 @@ namespace basecross {
 		auto forward = m_forward * cos(rad);//垂直方向のベクトル
 		m_ownerRot.y = rad;//
 
-		if (!m_destinationDecision)
+		if (m_rnd==1)
 		{
-
-			if (!m_wallCheck)
+			if (!m_destinationDecision)
 			{
+				if (!m_wallCheck)
+				{
 
-				if (m_numbers == 0)
-				{
-					m_destinationPos.x += m_point;
-					m_destinationDecision = true;
-				}
-				else if (m_numbers == 1)
-				{
-					m_destinationPos.z += m_point;
-					m_destinationDecision = true;
-				}
-				else if (m_numbers == 2)
-				{
-					m_destinationPos.x -= m_point;
-					m_destinationDecision = true;
-					m_minus = true;
+					if (m_numbers == 0)
+					{
+						m_destinationPos.x += m_point;
+						m_destinationDecision = true;
+					}
+					else if (m_numbers == 1)
+					{
+						m_destinationPos.z += m_point;
+						m_destinationDecision = true;
+					}
+					else if (m_numbers == 2)
+					{
+						m_destinationPos.x -= m_point;
+						m_destinationDecision = true;
+						m_minus = true;
 
+					}
+					else if (m_numbers == 3)
+					{
+						m_destinationPos.z -= m_point;
+						m_destinationDecision = true;
+						m_minus = true;
+					}
+					else if (m_numbers >= 4)
+					{
+						m_numbers = 0;
+					}
 				}
-				else if(m_numbers == 3 )
+				if (m_wallCheck)
 				{
-					m_destinationPos.z -= m_point;
-					m_destinationDecision = true;
-					m_minus = true;
-				}
-				else if (m_numbers >= 4)
-				{
-					m_numbers = 0;
-				}
-			}
-			if (m_wallCheck)
-			{
-				if (m_numbers == 0)
-				{
-					m_destinationPos.x += m_point;
-					m_destinationPos.z = m_ownerPos.z;
-					m_destinationDecision = true;
-					m_wallCheck = false;
-				}
-				if (m_numbers == 1)
-				{
-					m_destinationPos.z += m_point;
-					m_destinationPos.x = m_ownerPos.x;
-					m_destinationDecision = true;
-					m_wallCheck = false;
-				}
-				else if (m_numbers == 2)
-				{
-					m_destinationPos.x-= m_point;
-					m_destinationPos.z = m_ownerPos.z;
-					m_destinationDecision = true;
-					m_minus = true;
-					m_wallCheck = false;
-				}
-				else if (m_numbers == 3)
-				{
-					m_destinationPos.z -= m_point;
-					m_destinationPos.x = m_ownerPos.x;
-					m_destinationDecision = true;
-					m_minus = true;
-					m_wallCheck = false;
-				}
+					if (m_numbers == 0)
+					{
+						m_destinationPos.x += m_point;
+						m_destinationPos.z = m_ownerPos.z;
+						m_destinationDecision = true;
+						m_wallCheck = false;
+					}
+					if (m_numbers == 1)
+					{
+						m_destinationPos.z += m_point;
+						m_destinationPos.x = m_ownerPos.x;
+						m_destinationDecision = true;
+						m_wallCheck = false;
+					}
+					else if (m_numbers == 2)
+					{
+						m_destinationPos.x -= m_point;
+						m_destinationPos.z = m_ownerPos.z;
+						m_destinationDecision = true;
+						m_minus = true;
+						m_wallCheck = false;
+					}
+					else if (m_numbers == 3)
+					{
+						m_destinationPos.z -= m_point;
+						m_destinationPos.x = m_ownerPos.x;
+						m_destinationDecision = true;
+						m_minus = true;
+						m_wallCheck = false;
+					}
 
-				else if (m_numbers >= 4)
-				{
-					m_numbers = 0;
+					else if (m_numbers >= 4)
+					{
+						m_numbers = 0;
+					}
 				}
 			}
 		}
-		else if (m_destinationDecision)
+		else if(m_rnd==2)
+		{
+			if (!m_destinationDecision)
+			{
+				if (!m_wallCheck)
+				{
+
+					if (m_numbers == 0)
+					{
+						m_destinationPos.x -= m_point;
+						m_destinationDecision = true;
+					}
+					else if (m_numbers == 1)
+					{
+						m_destinationPos.z -= m_point;
+						m_destinationDecision = true;
+					}
+					else if (m_numbers == 2)
+					{
+						m_destinationPos.x += m_point;
+						m_destinationDecision = true;
+						m_minus = true;
+
+					}
+					else if (m_numbers == 3)
+					{
+						m_destinationPos.z += m_point;
+						m_destinationDecision = true;
+						m_minus = true;
+					}
+					else if (m_numbers >= 4)
+					{
+						m_numbers = 0;
+					}
+				}
+				if (m_wallCheck)
+				{
+					if (m_numbers == 0)
+					{
+						m_destinationPos.x -= m_point;
+						m_destinationPos.z = m_ownerPos.z;
+						m_destinationDecision = true;
+						m_wallCheck = false;
+					}
+					if (m_numbers == 1)
+					{
+						m_destinationPos.z -= m_point;
+						m_destinationPos.x = m_ownerPos.x;
+						m_destinationDecision = true;
+						m_wallCheck = false;
+					}
+					else if (m_numbers == 2)
+					{
+						m_destinationPos.x += m_point;
+						m_destinationPos.z = m_ownerPos.z;
+						m_destinationDecision = true;
+						m_minus = true;
+						m_wallCheck = false;
+					}
+					else if (m_numbers == 3)
+					{
+						m_destinationPos.z += m_point;
+						m_destinationPos.x = m_ownerPos.x;
+						m_destinationDecision = true;
+						m_minus = true;
+						m_wallCheck = false;
+					}
+
+					else if (m_numbers >= 4)
+					{
+						m_numbers = 0;
+					}
+				}
+			}
+		}
+		if (m_destinationDecision)
 		{
 			if (m_numbers % 2 == 0 && m_time >= 3)
 			{
@@ -125,6 +202,7 @@ namespace basecross {
 			{
 				if (m_rightCheck)
 				{
+					m_rnd = rand() % 2 + 1;
 					if (m_ownerPos.x >= m_destinationPos.x - 1 && m_ownerPos.z == m_destinationPos.z && !m_minus)
 					{
 						m_numbers++;
@@ -178,6 +256,7 @@ namespace basecross {
 			if (m_forwardRay.lock()->GetDisObj().size() > 0)
 			{
 				m_forwardRay.lock()->ResetDisObj();
+				m_rnd = rand() % 2 + 1;
 				m_numbers++;
 				m_distance = 0;
 				m_time = 0;
