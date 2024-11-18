@@ -88,6 +88,11 @@ namespace basecross {
 		//マンホールの生成
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
+		//BGM
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		BGM->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+
+
 		OutWallCreate(20);//外壁生成
 
 		////中壁作成

@@ -105,6 +105,13 @@ namespace basecross{
 		strTexture = texPath + L"battery_tan1.png";//乾電池(単一)のテクスチャ
 		app->RegisterTexture(L"Battery1", strTexture);
 
+		//BGMSE
+		wstring soundWav = SoundPath + L"StageBGM.wav";
+		App::GetApp()->RegisterWav(L"StageBGM", soundWav);
+		soundWav = SoundPath + L"ItemGet.wav";
+		App::GetApp()->RegisterWav(L"ItemGet", soundWav);
+
+
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
 		app->RegisterTexture(L"Boss_Texture", strTexture);
