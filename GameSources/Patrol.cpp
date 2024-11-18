@@ -20,17 +20,19 @@ namespace basecross {
 	//所有者(Enemy)の移動処理
 		auto app = App::GetApp;
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
-		m_ownerPos = m_trans->GetPosition();
+		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のPositionを取得
 
-		m_forwardRay = m_Owner->GetForwardRay();
-		m_playerRay = m_Owner->GetPlayerRay();
+		//Rayの取得
+		m_forwardRay = m_Owner->GetForwardRay();//所有者(Enemy)の前方向のRay
+		m_playerRay = m_Owner->GetPlayerRay();//所有者(Enemy)からplayerの方向のRay
 
-		m_time += app()->GetElapsedTime();
+		m_time += app()->GetElapsedTime();//デルタタイム
 
-		float rad = atan2f((m_ownerPos.x - m_destinationPos.x), (m_ownerPos.z - m_destinationPos.z));
-		auto right = m_right * sin(rad);
-		auto forward = m_forward * cos(rad);
-		m_ownerRot.y = rad;
+		//ベクトルの生成
+		float rad = atan2f((m_ownerPos.x - m_destinationPos.x), (m_ownerPos.z - m_destinationPos.z));//所有者(Enemy)からplayerの方向の角度
+		auto right = m_right * sin(rad);//平行方向のベクトル
+		auto forward = m_forward * cos(rad);//垂直方向のベクトル
+		m_ownerRot.y = rad;//
 
 		if (!m_destinationDecision)
 		{
