@@ -13,7 +13,7 @@ namespace basecross {
 		Actor(StagePtr),
 		m_pos(-95.0f,2.5f,95.0f),
 		m_playerPos(0,0,0),
-		m_speed(15),
+		m_speed(10),
 		m_angle(0)
 	{
 	}
@@ -21,7 +21,7 @@ namespace basecross {
 		Actor(StagePtr),
 		m_pos(pos),
 		m_playerPos(0, 0, 0),
-		m_speed(15),
+		m_speed(10),
 		m_angle(0)
 	{
 	}
@@ -54,7 +54,7 @@ namespace basecross {
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 5.0f);
+		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 10.0f);
 		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 30.0f);
 	}
 
