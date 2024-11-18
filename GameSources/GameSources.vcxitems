@@ -28,6 +28,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Item.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MIniMapItem.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapActor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h" />
@@ -44,6 +47,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Wall.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WaterPillar.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YuusinStage.h" />
@@ -64,6 +68,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapItem.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapActor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
@@ -79,6 +86,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Wall.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WaterPillar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />

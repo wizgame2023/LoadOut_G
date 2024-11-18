@@ -7,33 +7,33 @@
 #include "Project.h"
 
 namespace basecross {
-	Sprite::Sprite(shared_ptr<Stage>& stagePtr,wstring textureName,Vec2 size,Vec3 pos,Vec3 rot, Col4 color,int layer) :
+	MiniMapItem::MiniMapItem(shared_ptr<Stage>& stagePtr,weak_ptr<Item> parentObj, wstring textureName, Vec2 size,int layer, Vec3 pos,  Vec3 rot) :
 		GameObject(stagePtr),
 		m_textureName(textureName),
+		m_parentObj(parentObj),
 		m_size(size),
 		m_pos(pos),
-		m_color(color),
 		m_layer(layer)
 	{
 
 	}
 
-	Sprite::~Sprite()
+	MiniMapItem::~MiniMapItem()
 	{
 	}
 
-	void Sprite::OnCreate()
+	void MiniMapItem::OnCreate()
 	{
 		// ポリゴンの自作
-		Col4 color(1, 1, 1, 1); // ポリゴンの色
+		m_color = Col4(1, 1, 1, 1); // ポリゴンの色
 		const float w = 200.0f; // ポリゴンの幅
 		const float h = 100.0f; // ポリゴンの高さ
 		vector<VertexPositionColorTexture> m_vertices = { // 頂点データ
 			//             座標                          ,頂点色,     UV座標
-			{Vec3(-m_size.x * 0.5f, +m_size.y * 0.5f, 0), color, Vec2(0.0f, 0.0f)}, // 0
-			{Vec3(+m_size.x * 0.5f, +m_size.y * 0.5f, 0), color, Vec2(1.0f, 0.0f)}, // 1
-			{Vec3(-m_size.x * 0.5f, -m_size.y * 0.5f, 0), color, Vec2(0.0f, 1.0f)}, // 2
-			{Vec3(+m_size.x * 0.5f, -m_size.y * 0.5f, 0), color, Vec2(1.0f, 1.0f)}, // 3
+			{Vec3(-m_size.x * 0.5f, +m_size.y * 0.5f, 0), m_color, Vec2(0.0f, 0.0f)}, // 0
+			{Vec3(+m_size.x * 0.5f, +m_size.y * 0.5f, 0), m_color, Vec2(1.0f, 0.0f)}, // 1
+			{Vec3(-m_size.x * 0.5f, -m_size.y * 0.5f, 0), m_color, Vec2(0.0f, 1.0f)}, // 2
+			{Vec3(+m_size.x * 0.5f, -m_size.y * 0.5f, 0), m_color, Vec2(1.0f, 1.0f)}, // 3
 		};
 
 		vector<uint16_t> m_indices = { // 頂点インデックス（頂点のつなげ順）
@@ -58,9 +58,13 @@ namespace basecross {
 
 	}
 
-	void Sprite::OnUpdate()
+	void MiniMapItem::OnUpdate()
 	{
-
+		//元となるオブジェクトが消えた場合、自分も消える
+		if (!m_parentObj.lock())
+		{
+			GetStage()->RemoveGameObject<MiniMapItem>(GetThis<MiniMapItem>());
+		}
 	}
 
 }

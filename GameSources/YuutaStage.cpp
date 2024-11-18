@@ -16,7 +16,7 @@ namespace basecross {
 		const Vec3 at(0.0f);
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
-		auto PtrCamera = ObjectFactory::Create<Camera>();
+		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 80.0f, -60.0f));
 		PtrView->SetCamera(PtrCamera);
 		PtrCamera->SetEye(eye);
 		PtrCamera->SetAt(at);
@@ -46,14 +46,21 @@ namespace basecross {
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
 		{
-			//AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
+			AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
 
 		}
+		AddGameObject<Enemy>();
+
+		auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
+		SetSharedGameObject(L"MiniMapManager", miniMapManager);
 		
 		//アイテムの生成
 		AddGameObject<Item>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(-50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-10.0f, 2.5f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-10.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-10.0f, 2.5f, -50.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
@@ -70,7 +77,13 @@ namespace basecross {
 
 		//AddGameObject<RaySphere>();
 
-		AddGameObject<Enemy>();
+
+		AddGameObject<ClearObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//透明壁生成
+
+
+		//AddGameObject<SpriteNum>(L"Number",Vec2(30.0f,30.0f),10,Vec3(500.0f,0.0f,0.0f));//数字のスプライト生成
+
+		miniMapManager->CreateItem();
 
 		OutWallCreate(20);//外壁生成
 	}
@@ -78,10 +91,10 @@ namespace basecross {
 	void YuutaStage::OutWallCreate(int selLength)//←個々の引数はこのマップの直径はブロック何個ぶんかを聞いています
 	{
 
-		auto wall = AddGameObject<Wall>(Vec3((selLength*10.0f)/2 + 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
-		AddGameObject<Wall>(Vec3(-(selLength*10.0f)/2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength*10)/2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
-		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength*10)/2+ 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+		auto wall = AddGameObject<Wall>(Vec3((selLength*10.0f)/2 + 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(0.0f,0.0f,0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+		AddGameObject<Wall>(Vec3(-(selLength*10.0f)/2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength*10)/2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength*10)/2+ 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
 
 	}
 

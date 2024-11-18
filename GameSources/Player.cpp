@@ -32,7 +32,7 @@ namespace basecross{
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
-
+		//ドローメッシュの設定
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMultiMeshResource(L"Player_Mesh_Kari");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
@@ -57,12 +57,22 @@ namespace basecross{
 
 		AddTag(L"Player");//Player用のタグ
 
-		//GetStage()->AddGameObject<Ray>(GetThis<Player>(), 30.0f);//レイ生成
-		//AddBatteryUI();//デバック用
+		auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");//ミニマップマネージャーの取得
+		auto miniMapPos = miniMapManager->GetStartPos();
+		auto test = miniMapPos;
+
+		//ミニマップにPlayerを表示させる
+		GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
+
+		//電池をどれくらい持っているかを表す
+		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
+		GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
+		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
 	}
 
 	void Player::OnUpdate()
 	{
+		KeyBoardMove();//キーボードでのPlayerの動きデバック用
 		//デルタタイム
 		auto Delta = App::GetApp()->GetElapsedTime();
 
@@ -93,7 +103,7 @@ namespace basecross{
 
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
-
+		m_spriteNum->SetNum(m_count);//表示する数字を更新する
 
 		//デバック用
 		wstringstream wss(L"");
@@ -105,7 +115,7 @@ namespace basecross{
 			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
 			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<< L"\n電池の所持数：  " << m_count
+			<< L"\nm_count：  " << m_count
 			<< L"\nSelNow " << selNow
 			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
 			<<L"\nFPS:"<< 1.0f/Delta
@@ -216,6 +226,38 @@ namespace basecross{
 		if (enemy)
 		{
 			//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームシーンに移動する
+		}
+	}
+
+	//キーボード操作(デバック用)
+	void Player::KeyBoardMove()
+	{
+		float speed = 30.0f;
+		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();
+		if (keyState.m_bPushKeyTbl['W'])
+		{
+			auto pos = GetComponent<Transform>()->GetPosition();
+			pos.z += speed * delta;
+			GetComponent<Transform>()->SetPosition(pos);
+		}
+		if (keyState.m_bPushKeyTbl['A'])
+		{
+			auto pos = GetComponent<Transform>()->GetPosition();
+			pos.x += -speed * delta;
+			GetComponent<Transform>()->SetPosition(pos);
+		}
+		if (keyState.m_bPushKeyTbl['S'])
+		{
+			auto pos = GetComponent<Transform>()->GetPosition();
+			pos.z += -speed * delta;
+			GetComponent<Transform>()->SetPosition(pos);
+		}
+		if (keyState.m_bPushKeyTbl['D'])
+		{
+			auto pos = GetComponent<Transform>()->GetPosition();
+			pos.x += speed * delta;
+			GetComponent<Transform>()->SetPosition(pos);
 		}
 	}
 

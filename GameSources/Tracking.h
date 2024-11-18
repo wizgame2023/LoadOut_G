@@ -5,7 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
-
+#include"Ray.h"
 namespace basecross {
 
 	class Tracking :public StateBase
@@ -16,7 +16,11 @@ namespace basecross {
 		Vec3 m_playerPos;
 		Vec3 m_forward;
 		Vec3 m_right;
+
 		shared_ptr<Transform> m_trans;
+
+		weak_ptr<Ray>m_playerRay;
+
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
