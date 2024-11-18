@@ -17,6 +17,8 @@ namespace basecross {
 		Vec3 m_forward;
 		Vec3 m_right;
 
+		float m_time;
+
 		shared_ptr<Transform> m_trans;
 
 		weak_ptr<Ray>m_playerRay;
@@ -28,7 +30,8 @@ namespace basecross {
 			m_ownerRot(0, 0, 0),
 			m_playerPos(0, 0, 0),
 			m_forward(0, 0, 1),
-			m_right(1, 0, 0)
+			m_right(1, 0, 0),
+			m_time(0)
 		{
 		}
 

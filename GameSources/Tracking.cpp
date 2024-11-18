@@ -24,7 +24,7 @@ namespace basecross {
 		auto player = app()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
 		m_playerRay = m_Owner->GetPlayerRay();
-
+		m_time += app()->GetElapsedTime();
 		float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
 		m_ownerRot.y = rad;//playerの方向に向く
 		float deg = rad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
@@ -40,9 +40,13 @@ namespace basecross {
 		{
 			for (auto obj : m_playerRay.lock()->GetDisObj())
 			{
-				if (obj.lock()->FindTag(L"Wall"))
+				if (obj.lock()->FindTag(L"Wall") && m_time > 3)
 				{
 					m_Owner->ChangeState<Patrol>();
+				}
+				if (obj.lock()->FindTag(L"Player"))
+				{
+					m_time = 0;
 				}
 			}
 		}
