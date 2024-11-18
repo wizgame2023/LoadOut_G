@@ -64,7 +64,7 @@ namespace basecross {
 	void RaySphere::OnUpdate()
 	{
 		//元となるオブジェクトが消えた場合、自分も消える
-		if (!m_parentObj.lock())
+		if (!m_parentObj.lock()||m_remove)
 		{
 			GetStage()->RemoveGameObject<RaySphere>(GetThis<RaySphere>());
 			return;
@@ -133,6 +133,12 @@ namespace basecross {
 		}
 
 		return num;
+	}
+
+	//自身を消すフラグ管理
+	void RaySphere::SetRemove(bool onOff)
+	{
+		m_remove = onOff;
 	}
 
 }
