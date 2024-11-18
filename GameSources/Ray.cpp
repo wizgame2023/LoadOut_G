@@ -37,7 +37,7 @@ namespace basecross {
 		m_countTime += delta;
 
 		//レイの判定となるレイスフィアを生成する
-		if (m_countTime >= 0.1f)
+		if (m_countTime >= 1.1f)
 		{	
 			m_countTime = 0;//リセット
 			auto raySphere = GetStage()->AddGameObject<RaySphere>(m_parentObj.lock()->GetComponent<Transform>()->GetPosition(), -m_angle, GetThis<Ray>(),m_range);//レイスフィア生成
@@ -49,21 +49,33 @@ namespace basecross {
 
 		////デバック用
 		//// インプットデバイスオブジェクト
-		//auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
-		////コントローラーの取得
-		//auto m_controler = inputDevice.GetControlerVec()[0];
+		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
+		//コントローラーの取得
+		
+		auto m_controler = inputDevice.GetControlerVec()[0];
 
-		////生成したレイスフィアを削除する 作成途中
+		////生成したレイスフィアを削除する
 		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_X)
 		//{
-		//	//for (auto a : m_raySphere)
-		//	//{
-		//	//	GetStage()->RemoveGameObject<RaySphere>(a.lock());
-		//	//	auto test = m_raySphere;
-		//	//}
-		//	//ステージ上のオブジェクトをすべて見て特定のタグのオブジェクトを取得する
-		//	//GetStage()->GetUsedTagObjectVec(L"RaySphere", shared_ptr<RaySphere>)
-		//	//weak_ptr<RaySphere> obj[] = 
+
+		//	auto stage = GetStage();//ステージ取得
+		//	//ステージのオブジェクトを全て取得
+		//	auto obj = stage->GetGameObjectVec();
+		//	//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		//	for (auto raySphere : obj)
+		//	{
+		//		if (dynamic_pointer_cast<RaySphere>(raySphere))//レイスフィア型にキャストする
+		//		{
+		//			auto castRaySphere = dynamic_pointer_cast<RaySphere>(raySphere);
+		//			auto itemTrans = raySphere->GetComponent<Transform>();
+		//			auto itemPos = itemTrans->GetPosition();
+		//			auto itemScale = itemTrans->GetScale();
+
+		//			GetStage()->RemoveGameObject<RaySphere>(raySphere);//削除フラグを立てる
+		//			castRaySphere->SetRemove(true);//消えるフラグを渡す
+		//		}
+		//	}
+
 
 		//}
 
@@ -108,6 +120,31 @@ namespace basecross {
 		m_discoveryObj.clear();//前の配列全削除
 
 	}
+
+	//出ているレイスフィアを全て削除
+	void Ray::ResetRaySphere()
+	{
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto obj = stage->GetGameObjectVec();
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto raySphere : obj)
+		{
+			if (dynamic_pointer_cast<RaySphere>(raySphere))//レイスフィア型にキャストする
+			{
+				auto castRaySphere = dynamic_pointer_cast<RaySphere>(raySphere);
+				auto itemTrans = raySphere->GetComponent<Transform>();
+				auto itemPos = itemTrans->GetPosition();
+				auto itemScale = itemTrans->GetScale();
+
+				GetStage()->RemoveGameObject<RaySphere>(raySphere);//削除フラグを立てる
+				castRaySphere->SetRemove(true);//消えるフラグを渡す
+			}
+		}
+
+	}
+
+	
 
 	//角度のセッター
 	void Ray::SetAngle(float angle)
