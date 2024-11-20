@@ -9,8 +9,8 @@ using namespace basecross;
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 
 //定数
-const wchar_t* pClassName = L"Heatroid";
-const wchar_t* pWndTitle = L"Heatroid";
+const wchar_t* pClassName = L"RodeOut";
+const wchar_t* pWndTitle = L"RodeOut";
 //ウィンドウモードの時の幅と高さ
 int g_ClientWidth = 1280;
 int g_ClientHeight = 800;
