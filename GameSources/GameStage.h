@@ -21,8 +21,14 @@ namespace basecross {
 		virtual ~GameStage() {}
 		//初期化
 		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
 		void OnDestroy()override;
 		void OutWallCreate(int selLength);//外壁を作る関数
+		void GameManager();//ステージの進行度を管理する
+		int EnemyNow = 0;
+
+		void SetEnemy(int num);
+
 	};
 
 

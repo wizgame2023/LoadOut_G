@@ -141,11 +141,51 @@ namespace basecross {
 
 		//敵生成
 		AddGameObject<Enemy>();
-		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
+		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
+
 		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
-		AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
+
+		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
+
 		miniMapManager->CreateEnemy();	
+
+
+		
+
 }
+
+	void GameStage::OnUpdate()
+	{
+		GameManager();//ゲーム進行を管理する
+	}
+
+	//ゲームの進行を管理する後々関数ではなくクラスにします
+	void GameStage::GameManager()
+	{
+		//ゲームクリアの条件
+		//ステージのオブジェクトを全て取得
+		auto obj = GetGameObjectVec();
+		EnemyNow = 0;
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto manhole : obj)
+		{
+
+			if (dynamic_pointer_cast<Enemy>(manhole))//アイテム型にキャストする
+			{
+
+				auto a = 0;
+				a++;
+				EnemyNow = a;
+
+			}
+		}
+
+		if (EnemyNow == 0)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
+		}
+
+	}
 
 	void GameStage::OnDestroy()
 	{
@@ -160,6 +200,11 @@ namespace basecross {
 		AddGameObject<Wall>(Vec3(-(selLength * 10.0f) / 2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
 		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength * 10) / 2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
 		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength * 10) / 2 + 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+	}
+
+	void GameStage::SetEnemy(int num)
+	{
+		EnemyNow -= num;
 	}
 
 
