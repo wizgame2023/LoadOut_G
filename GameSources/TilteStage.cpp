@@ -37,6 +37,17 @@ namespace basecross {
 		catch (...) {
 			throw;
 		}
+
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		m_BGM = BGM->Start(L"TIlteStage", 0, 0.9f);
+
+	}
+
+	void TilteStage::OnDestroy()
+	{
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		BGM->Stop(m_BGM);
+
 	}
 
 	void TilteStage::OnUpdate()
