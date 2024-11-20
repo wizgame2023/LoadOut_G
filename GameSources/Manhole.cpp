@@ -92,10 +92,10 @@ namespace basecross {
 			{
 				m_time = 0;//クールタイムリセット
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//自分自身にアイテムが置かれていると分かりやすくする
-				m_mapManager.lock()->MapDataUpdate(m_pos, 2);//マップマネージャーに通れる状態だと返す
+				m_mapManager.lock()->MapDataUpdate(m_pos, 1);//マップマネージャーに通れる状態だと返す
 				stage->RemoveGameObject<ClearObject>(m_clearObject);//前生成した透明なオブジェクトを消す
 				stage->RemoveGameObject<WaterPillar>(m_waterPillar);//前生成した水柱を消す
-				m_charen = 1;
+				m_charen = 0;
 			}
 
 		}
