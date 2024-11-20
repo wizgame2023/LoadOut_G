@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
 
 			GameResourses();
 
@@ -55,7 +55,7 @@ namespace basecross{
 		}
 		if (event->m_MsgStr == L"ToGameClearStage") {
 			//タイトルのアクティブステージの設定
-			ResetActiveStage<GameOverStage>();
+			ResetActiveStage<GameClearStage>();
 		}
 	}
 
@@ -110,8 +110,15 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"StageBGM", soundWav);
 		soundWav = SoundPath + L"ItemGet.wav";
 		App::GetApp()->RegisterWav(L"ItemGet", soundWav);
-		soundWav = SoundPath + L"GameOver.wav";
-		App::GetApp()->RegisterWav(L"GameOver", soundWav);
+		soundWav = SoundPath + L"GameClrear.wav";
+		App::GetApp()->RegisterWav(L"GameClrear", soundWav);
+		//soundWav = SoundPath + L"GameOver.wav";
+		//App::GetApp()->RegisterWav(L"GameOver", soundWav);
+	
+		soundWav = SoundPath + L"Enemyded.wav";
+		App::GetApp()->RegisterWav(L"EnemyDed", soundWav);
+		soundWav = SoundPath + L"TIlteStage.wav";
+		App::GetApp()->RegisterWav(L"TIlteStage", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
