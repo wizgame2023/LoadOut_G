@@ -38,8 +38,8 @@ namespace basecross {
 			throw;
 		}
 
-		auto BGM = App::GetApp()->GetXAudio2Manager();
-		BGM->Start(L"GameOver", 0, 0.9f);
+		//auto BGM = App::GetApp()->GetXAudio2Manager();
+		//BGM->Start(L"GameOver", 0, 0.9f);
 
 
 	}

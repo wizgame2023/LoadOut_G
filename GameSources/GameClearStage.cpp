@@ -37,6 +37,10 @@ namespace basecross {
 		catch (...) {
 			throw;
 		}
+
+		//auto BGM = App::GetApp()->GetXAudio2Manager();
+		//BGM->Start(L"GameClear", 0, 0.9f);
+
 	}
 
 	void GameClearStage::OnUpdate()
