@@ -168,7 +168,7 @@ namespace basecross {
 	}
 
 	void MapManager::WallCreateKari()
-	{
+	{//â°
 		vector<vector<int>> test_walls_up =
 		{
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -214,7 +214,8 @@ namespace basecross {
 		}
 
 		
-
+		
+		//èc
 		vector<vector<int>> test_walls_right =
 		{
 			{0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0},
