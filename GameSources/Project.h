@@ -7,6 +7,11 @@
 
 #include "Actor.h"//動くオブジェクトの親クラス
 
+//ツール用
+#include "RaySphere.h";//レイの当たり判定
+#include "Ray.h";//レイ
+#include "Math.h";//数学計算用ツール
+
 //ステート用
 #include "State.h"//ステートの親クラス
 #include "Tracking.h"
@@ -53,9 +58,6 @@
 #include "MyCamera.h"//追尾カメラ用
 
 
-//ツール用
-#include "RaySphere.h";//レイの当たり判定
-#include "Ray.h";//レイ
 
 
 
