@@ -21,7 +21,7 @@ namespace basecross {
 		Actor(StagePtr),
 		m_pos(pos),
 		m_playerPos(0, 0, 0),
-		m_speed(10),
+		m_speed(0),
 		m_angle(0)
 	{
 	}
@@ -55,7 +55,7 @@ namespace basecross {
 		m_CurrentSt->OnStart();
 
 		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
-		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 30.0f);
+		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 60.0f);
 	}
 
 	void Enemy::OnUpdate()
@@ -89,21 +89,28 @@ namespace basecross {
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//player‚Ìƒ|ƒWƒVƒ‡ƒ“‚ðŽæ“¾
 		float playerVec = atan2f((m_pos.x - m_playerPos.x), (m_pos.z - m_playerPos.z)) + XM_PI * 0.5;//Š—LŽÒ(Enemy)‚ð’†S‚Éplayer‚Ì•ûŒü‚ðŒvŽZ
 
+		float angle = playerVec - m_angle;
+		//Ž‹ŠE‚Ìì¬
+		if (angle > m_angle + XM_PI * 0.25 || angle < m_angle-XM_PI*0.25)
+		{
+			angle = m_angle;
+		}
 		m_forwardRay->SetAngle(m_angle);
 		//m_leftRay->SetAngle(m_angle - XM_PI * 0.5f);
-		m_playerRay->SetAngle(playerVec);
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		//wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
-		//	<< L"\n“G‚Ì‰ñ“].y : " << rot.y
-		//	<< L"\n“G‚Ì‰ñ“].z : " << rot.z
-		//	<< L"\nplayerPos.x : " << m_playerPos.x
-		//	<< L"\nplayerPos.z : " << m_playerPos.z
-		//	<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
-		//	<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
-		//<< endl;
+		m_playerRay->SetAngle(angle);
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
+			<< L"\n“G‚Ì‰ñ“].y : " << rot.y
+			<< L"\n“G‚Ì‰ñ“].z : " << rot.z
+			<< L"\nplayerPos.x : " << m_playerPos.x
+			<< L"\nplayerPos.z : " << m_playerPos.z
+			<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
+			<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
+			<< L"\nangle : " << XMConvertToDegrees(angle)
+		<< endl;
 
-		//scene->SetDebugString(wss.str());
+		scene->SetDebugString(wss.str());
 
 	}
 	void Enemy::OnDestroy()
