@@ -104,6 +104,8 @@ namespace basecross{
 		app->RegisterTexture(L"MiniEnemy", strTexture);
 		strTexture = texPath + L"battery_tan1.png";//乾電池(単一)のテクスチャ
 		app->RegisterTexture(L"Battery1", strTexture);
+		strTexture = texPath + L"StoneWall.jpg";//石壁のテクスチャ
+		app->RegisterTexture(L"StoneWall", strTexture);
 
 		//BGMSE
 		wstring soundWav = SoundPath + L"StageBGM.wav";
