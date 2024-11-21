@@ -214,7 +214,6 @@ namespace basecross {
 		}
 
 		
-		
 		//c
 		vector<vector<int>> test_walls_right =
 		{
@@ -262,6 +261,48 @@ namespace basecross {
 			}
 		}
 
+
+		auto test1 = 0;
+		auto test2 = 0;
+		//A*—pƒ}ƒbƒvì»
+		test_walls_up;//‰¡
+		test_walls_right;//c
+		for (int tate=0; tate < m_stageMap[0].size() * 2; tate++)
+		{
+			test1++;
+			for (int yoko=0; yoko < m_stageMap.size() * 2; yoko++)
+			{
+				bool tatekisu;//c‚ªŠï”‚©‚Ç‚¤‚©
+				bool yokokisu;//‰¡‚ªŠï”‚©‚Ç‚¤‚©
+
+				test2++;
+				switch (tate%2)//c‚ÌÀ•W‚ªŠï”‚©‹ô”‚©Œ©‚é
+				{
+				case 0://‹ô”‚È‚ç
+					tatekisu = false;
+					break;
+				case 1://Šï”‚È‚ç
+					tatekisu = true;
+					break;
+				default:
+					break;
+				}
+
+				switch (yoko%2)//‰¡‚ÌÀ•W‚ªŠï”‚©‹ô”‚©Œ©‚é
+				{
+				case 0://‹ô”‚È‚ç
+					yokokisu = false;
+					break;
+				case 1://Šï”‚È‚ç
+					yokokisu = true;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		test2 /= 40;
+		auto c = 0;
 
 	}
 
