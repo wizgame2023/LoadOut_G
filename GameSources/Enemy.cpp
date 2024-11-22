@@ -161,6 +161,12 @@ namespace basecross {
 	{
 		return m_playerRay;
 	}
+
+	shared_ptr<StateBase> Enemy::GetNowState()
+	{
+		return m_CurrentSt;
+	}
+
 	void Enemy::GetGameOverScene()
 	{
 		return PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバシーンに移動する

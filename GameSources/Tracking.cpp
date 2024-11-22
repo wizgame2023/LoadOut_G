@@ -33,11 +33,8 @@ namespace basecross {
 		m_ownerPos.y = 2.5f;
 	
 		Math math;
-		auto cr= math.GetCircleRange(60, m_ownerPos, m_playerPos);
-		auto x = (m_ownerPos.x - m_playerPos.x) * (m_ownerPos.x - m_playerPos.x);
-		auto y = (m_ownerPos.y - m_playerPos.y) * (m_ownerPos.y - m_playerPos.y);
-		auto z = (m_ownerPos.z - m_playerPos.z) * (m_ownerPos.z - m_playerPos.z);
-		if (sqrtf(x + y + z) <= 60)
+		auto CircleRange= math.GetCircleRange(60, m_ownerPos, m_playerPos);
+		if (CircleRange)
 		{
 			m_time = 0;
 		}
@@ -56,7 +53,7 @@ namespace basecross {
 		{
 			m_Owner->ChangeState<Attack>();
 		}
-		 auto a = cr;
+		 auto a = CircleRange;
 
 
 		m_trans->SetRotation(m_ownerRot);//所有者(Enemy)のローテーションの更新
