@@ -110,10 +110,16 @@ namespace basecross{
 		//BGMSE
 		wstring soundWav = SoundPath + L"StageBGM.wav";
 		App::GetApp()->RegisterWav(L"StageBGM", soundWav);
+		soundWav = SoundPath + L"StageBGMEscape.wav";//ステージBGM追いかけられているとき
+		App::GetApp()->RegisterWav(L"StageBGMEscape", soundWav);
 		soundWav = SoundPath + L"ItemGet.wav";
 		App::GetApp()->RegisterWav(L"ItemGet", soundWav);
 		soundWav = SoundPath + L"GameClrear.wav";
 		App::GetApp()->RegisterWav(L"GameClrear", soundWav);
+		soundWav = SoundPath + L"Scream.wav";//叫び声のSE
+		App::GetApp()->RegisterWav(L"Scream", soundWav);
+		soundWav = SoundPath + L"SetManhole.wav";//叫び声のSE
+		App::GetApp()->RegisterWav(L"SetManhole", soundWav);
 		//soundWav = SoundPath + L"GameOver.wav";
 		//App::GetApp()->RegisterWav(L"GameOver", soundWav);
 	
