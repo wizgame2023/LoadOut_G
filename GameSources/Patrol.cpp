@@ -41,70 +41,66 @@ namespace basecross {
 				if (!m_wallCheck)
 				{
 
-					if (m_numbers == 0)
+					switch (m_numbers)
 					{
+					case 0:
 						m_destinationPos.x += m_point;
 						m_destinationDecision = true;
-					}
-					else if (m_numbers == 1)
-					{
+						break;
+					case 1:
 						m_destinationPos.z += m_point;
 						m_destinationDecision = true;
-					}
-					else if (m_numbers == 2)
-					{
+
+						break;
+					case 2:
 						m_destinationPos.x -= m_point;
 						m_destinationDecision = true;
 						m_minus = true;
-
-					}
-					else if (m_numbers == 3)
-					{
+						break;
+					case 3:
 						m_destinationPos.z -= m_point;
 						m_destinationDecision = true;
 						m_minus = true;
-					}
-					else if (m_numbers >= 4)
-					{
+						break;
+					case 4:
 						m_numbers = 0;
+						break;
 					}
 				}
 				if (m_wallCheck)
 				{
-					if (m_numbers == 0)
+					switch (m_numbers)
 					{
+					case 0:
 						m_destinationPos.x += m_point;
 						m_destinationPos.z = m_ownerPos.z;
 						m_destinationDecision = true;
 						m_wallCheck = false;
-					}
-					if (m_numbers == 1)
-					{
+						break;
+					case 1:
 						m_destinationPos.z += m_point;
 						m_destinationPos.x = m_ownerPos.x;
 						m_destinationDecision = true;
 						m_wallCheck = false;
-					}
-					else if (m_numbers == 2)
-					{
+
+						break;
+					case 2:
 						m_destinationPos.x -= m_point;
 						m_destinationPos.z = m_ownerPos.z;
 						m_destinationDecision = true;
 						m_minus = true;
 						m_wallCheck = false;
-					}
-					else if (m_numbers == 3)
-					{
+						break;
+					case 3:
 						m_destinationPos.z -= m_point;
 						m_destinationPos.x = m_ownerPos.x;
 						m_destinationDecision = true;
 						m_minus = true;
 						m_wallCheck = false;
-					}
-
-					else if (m_numbers >= 4)
-					{
+						break;
+					case 4:
 						m_numbers = 0;
+						break;
 					}
 				}
 			}
@@ -115,71 +111,66 @@ namespace basecross {
 			{
 				if (!m_wallCheck)
 				{
-
-					if (m_numbers == 0)
+					switch (m_numbers)
 					{
+					case 0:
 						m_destinationPos.x -= m_point;
 						m_destinationDecision = true;
-					}
-					else if (m_numbers == 1)
-					{
+						break;
+					case 1:
 						m_destinationPos.z -= m_point;
 						m_destinationDecision = true;
-					}
-					else if (m_numbers == 2)
-					{
+
+						break;
+					case 2:
 						m_destinationPos.x += m_point;
 						m_destinationDecision = true;
 						m_minus = true;
-
-					}
-					else if (m_numbers == 3)
-					{
+						break;
+					case 3:
 						m_destinationPos.z += m_point;
 						m_destinationDecision = true;
 						m_minus = true;
-					}
-					else if (m_numbers >= 4)
-					{
+						break;
+					case 4:
 						m_numbers = 0;
+						break;
 					}
 				}
 				if (m_wallCheck)
 				{
-					if (m_numbers == 0)
+					switch (m_numbers)
 					{
+					case 0:
 						m_destinationPos.x -= m_point;
 						m_destinationPos.z = m_ownerPos.z;
 						m_destinationDecision = true;
 						m_wallCheck = false;
-					}
-					if (m_numbers == 1)
-					{
+						break;
+					case 1:
 						m_destinationPos.z -= m_point;
 						m_destinationPos.x = m_ownerPos.x;
 						m_destinationDecision = true;
 						m_wallCheck = false;
-					}
-					else if (m_numbers == 2)
-					{
+
+						break;
+					case 2:
 						m_destinationPos.x += m_point;
 						m_destinationPos.z = m_ownerPos.z;
 						m_destinationDecision = true;
 						m_minus = true;
 						m_wallCheck = false;
-					}
-					else if (m_numbers == 3)
-					{
+						break;
+					case 3:
 						m_destinationPos.z += m_point;
 						m_destinationPos.x = m_ownerPos.x;
 						m_destinationDecision = true;
 						m_minus = true;
 						m_wallCheck = false;
-					}
-
-					else if (m_numbers >= 4)
-					{
+						break;
+					case 4:
 						m_numbers = 0;
+						break;
 					}
 				}
 			}
