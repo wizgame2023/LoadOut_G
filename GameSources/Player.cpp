@@ -183,6 +183,12 @@ namespace basecross{
 				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
 				{
 					m_count--;
+
+					//SE生成マンホールにわなを仕掛ける音
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"SetManhole", 0, 0.9f);
+
+
 					mapManager->MapDataUpdate(pos, 2);//罠を設置する
 
 				}

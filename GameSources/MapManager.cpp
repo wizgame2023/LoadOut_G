@@ -214,7 +214,6 @@ namespace basecross {
 		}
 
 		
-		
 		//縦
 		vector<vector<int>> test_walls_right =
 		{
@@ -242,6 +241,9 @@ namespace basecross {
 
 		};
 
+		//Math masu;
+		//masu->Get
+
 		for (int i = 0; i < test_walls_right.size(); i++)
 		{
 			for (int j = 0; j < test_walls_right[0].size(); j++)
@@ -262,6 +264,78 @@ namespace basecross {
 			}
 		}
 
+
+		//auto test1 = 0;
+		//auto test2 = 0;
+		////A*用マップ作製
+		//test_walls_up;//横
+		//test_walls_right;//縦
+
+		//auto a = m_stageMap.size();
+		//for (int tate=0; tate < m_stageMap.size() * 2; tate++)
+		//{
+		//	test1++;
+		//	for (int yoko=0; yoko < m_stageMap[0].size() * 2; yoko++)
+		//	{
+		//		bool xkisu;//縦が奇数かどうか
+		//		bool ykisu;//横が奇数かどうか
+
+		//		test2++;
+		//		switch (tate%2)//縦の座標が奇数か偶数か見る
+		//		{
+		//		case 0://偶数なら
+		//			xkisu = false;
+		//			break;
+		//		case 1://奇数なら
+		//			xkisu = true;
+		//			break;
+		//		default:
+		//			break;
+		//		}
+
+		//		//縦と横が奇数か偶数の数値かを確認する
+		//		xkisu = tate % 2 == 0 ? false : true;
+		//		ykisu = yoko % 2 == 0 ? false : true;
+
+		//		switch (yoko%2)//横の座標が奇数か偶数か見る
+		//		{
+		//		case 0://偶数なら
+		//			ykisu = false;
+		//			break;
+		//		case 1://奇数なら
+		//			ykisu = true;
+		//			break;
+		//		default:
+		//			break;
+		//		}
+
+		//		vector<vector<int>> aStarMap;//Aスター用のマップ
+
+		//		//xとyが奇数なら空白
+		//		if (xkisu && ykisu)
+		//		{
+		//			aStarMap[tate].push_back(0);
+		//		}
+		//		//xが奇数yが偶数なら縦壁
+		//		if (xkisu && !ykisu)
+		//		{
+		//			
+		//		}
+		//		//xが偶数yが奇数なら横壁
+		//		if (!xkisu && ykisu)
+		//		{
+
+		//		}
+		//		//xとyが偶数なら地面
+		//		if (!xkisu && !ykisu)
+		//		{
+
+		//		}
+
+		//	}
+		//}
+		//test2 /= 40;
+		//auto c = 0;
 
 	}
 
