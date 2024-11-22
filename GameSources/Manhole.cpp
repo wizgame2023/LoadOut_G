@@ -22,12 +22,12 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();
 		ptr->SetPosition(m_pos);
 		ptr->SetRotation(0.0f,0.0f,0.0f);
-		ptr->SetScale(10.0f, 1.0f, 10.0f);
+		ptr->SetScale(10.0f*0.5f, 1.0f, 10.0f*0.5f);
 
 		//Transform‚É‘Î‚µ‚Ä‚Ì“™·”—ñ
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(2.0f, 1.0f, 2.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
