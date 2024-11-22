@@ -111,6 +111,9 @@ namespace basecross {
 		// オブジェクト自体が破棄される時に現在と次のステート用の変数を空にする
 		m_CurrentSt.reset();
 		m_NextSt.reset();
+		//SE生成 敵の叫び声
+		auto SEManager = App::GetApp()->GetXAudio2Manager();
+		auto SE = SEManager->Start(L"Scream", 0, 0.9f);
 
 	}
 
