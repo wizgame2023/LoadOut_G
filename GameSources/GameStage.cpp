@@ -89,8 +89,10 @@ namespace basecross {
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
 		//BGM
-		auto BGM = App::GetApp()->GetXAudio2Manager();
-		m_BGM = BGM->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+		m_bgmManager = App::GetApp()->GetXAudio2Manager();
+		m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+
+		
 
 		OutWallCreate(20);//外壁生成
 
@@ -157,6 +159,23 @@ namespace basecross {
 	void GameStage::OnUpdate()
 	{
 		GameManager();//ゲーム進行を管理する
+	}
+
+	void GameStage::GameEnemyState()
+	{
+		auto obj = GetGameObjectVec();
+		EnemyNow = 0;
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto enemy : obj)
+		{
+			auto enemycast = dynamic_pointer_cast<Enemy>(enemy);
+
+			if (enemycast)//Enemy型にキャストに成功したら
+			{
+				//enemycast
+
+			}
+		}
 	}
 
 	//ゲームの進行を管理する後々関数ではなくクラスにします
