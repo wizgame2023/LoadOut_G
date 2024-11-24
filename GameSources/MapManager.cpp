@@ -265,78 +265,81 @@ namespace basecross {
 		}
 
 
-		//auto test1 = 0;
-		//auto test2 = 0;
-		////A*用マップ作製
-		//test_walls_up;//横
-		//test_walls_right;//縦
+		//A*用マップ作製
+		test_walls_up;//横
+		test_walls_right;//縦
 
-		//auto a = m_stageMap.size();
-		//for (int tate=0; tate < m_stageMap.size() * 2; tate++)
-		//{
-		//	test1++;
-		//	for (int yoko=0; yoko < m_stageMap[0].size() * 2; yoko++)
-		//	{
-		//		bool xkisu;//縦が奇数かどうか
-		//		bool ykisu;//横が奇数かどうか
+		vector<vector<int>> aStarMap;//Aスター用のマップ
 
-		//		test2++;
-		//		switch (tate%2)//縦の座標が奇数か偶数か見る
-		//		{
-		//		case 0://偶数なら
-		//			xkisu = false;
-		//			break;
-		//		case 1://奇数なら
-		//			xkisu = true;
-		//			break;
-		//		default:
-		//			break;
-		//		}
+		for (int tate=0; tate < m_stageMap.size() * 2; tate++)
+		{
+			vector<int> aStarLine;//A＊の一行配列
 
-		//		//縦と横が奇数か偶数の数値かを確認する
-		//		xkisu = tate % 2 == 0 ? false : true;
-		//		ykisu = yoko % 2 == 0 ? false : true;
+			for (int yoko=0; yoko < m_stageMap[0].size() * 2; yoko++)
+			{
+				bool xkisu;//縦が奇数かどうか
+				bool ykisu;//横が奇数かどうか	
+				
+				//tate += 1;
+				//yoko += 1;
 
-		//		switch (yoko%2)//横の座標が奇数か偶数か見る
-		//		{
-		//		case 0://偶数なら
-		//			ykisu = false;
-		//			break;
-		//		case 1://奇数なら
-		//			ykisu = true;
-		//			break;
-		//		default:
-		//			break;
-		//		}
 
-		//		vector<vector<int>> aStarMap;//Aスター用のマップ
+				////縦と横が奇数か偶数の数値かを確認する
+				xkisu = yoko % 2 == 0 ? false : true;
+				ykisu = tate % 2 == 0 ? false : true;
 
-		//		//xとyが奇数なら空白
-		//		if (xkisu && ykisu)
-		//		{
-		//			aStarMap[tate].push_back(0);
-		//		}
-		//		//xが奇数yが偶数なら縦壁
-		//		if (xkisu && !ykisu)
-		//		{
-		//			
-		//		}
-		//		//xが偶数yが奇数なら横壁
-		//		if (!xkisu && ykisu)
-		//		{
+				//int hikutate = tate / 2;//小数点以下切り捨て
+				//int hikuyoko = yoko / 2;
+				//int end = 0;
 
-		//		}
-		//		//xとyが偶数なら地面
-		//		if (!xkisu && !ykisu)
-		//		{
 
-		//		}
+				//xとyが奇数なら空白
+				if (!xkisu && !ykisu)
+				{
+					aStarLine.push_back(0);
+				}
+				//xが奇数yが偶数なら縦壁
+				if (!xkisu && ykisu)
+				{
 
-		//	}
-		//}
-		//test2 /= 40;
-		//auto c = 0;
+					int hikutate = tate / 2;//小数点以下切り捨て
+					int hikuyoko = yoko / 2;
+					auto a = hikutate;
+					auto b = hikuyoko;
 
+					aStarLine.push_back(test_walls_right[hikutate][hikuyoko]);
+				}
+				//xが偶数yが奇数なら横壁
+				if (xkisu && !ykisu)
+				{
+
+					int hikutate = tate / 2;//小数点以下切り捨て
+					int hikuyoko = yoko / 2;
+					auto a = hikutate;
+					auto b = hikuyoko;
+					aStarLine.push_back(test_walls_up[hikutate][hikuyoko]);
+				}
+				//xとyが偶数なら地面
+				if (xkisu && ykisu)
+				{
+
+					int hikutate = tate / 2;//小数点以下切り捨て
+					int hikuyoko = yoko / 2;
+					//auto a = test_walls_up[tate - hikutate][yoko - hikuyoko];
+					auto a = hikutate;
+					auto b = hikuyoko;
+
+					aStarLine.push_back(test_walls_up[hikutate][hikuyoko]);
+					int test=0;
+				}
+			}
+
+			//aStarMapにA＊の一行ずつ配列を入れる
+			aStarMap.push_back(aStarLine);
+			auto a = 0;
+
+		}
+		aStarMap;
 	}
 
 }
