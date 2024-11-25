@@ -10,7 +10,7 @@
 //ツール用
 #include "RaySphere.h";//レイの当たり判定
 #include "Ray.h";//レイ
-#include "Math.h";//数学計算用ツール
+#include "MathTools.h";//数学計算用ツール
 
 //ステート用
 #include "State.h"//ステートの親クラス

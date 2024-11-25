@@ -177,7 +177,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UIManager.h">
       <Filter>Headers\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Math.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathTools.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
   </ItemGroup>
@@ -296,7 +296,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Math.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)MathTools.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
