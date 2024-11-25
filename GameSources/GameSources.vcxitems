@@ -45,6 +45,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteNum.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Sky_base.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteNum.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StageManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />

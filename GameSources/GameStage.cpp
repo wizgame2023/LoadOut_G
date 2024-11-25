@@ -106,20 +106,25 @@ namespace basecross {
 
 		//miniMapManager->CreateEnemy();	
 
+		////もし、Playerを追いかけているのが1人以上ならBGMを変える
+		//if (GameEnemyState() < 1)
+		//{
+
+		//}
 
 		
 
-}
+	}
 
 	void GameStage::OnUpdate()
 	{
 		GameManager();//ゲーム進行を管理する
 	}
 
-	void GameStage::GameEnemyState()
+	int GameStage::GameEnemyState()
 	{
 		auto obj = GetGameObjectVec();
-		EnemyNow = 0;
+		auto EnemyTracking = 0;
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto enemy : obj)
 		{
@@ -127,10 +132,16 @@ namespace basecross {
 
 			if (enemycast)//Enemy型にキャストに成功したら
 			{
-				//enemycast
-
+				auto State = enemycast->GetNowState();//現在のステートを受け取る
+				auto trackcast = dynamic_pointer_cast<Tracking>(State);
+				if (trackcast)//現在のステートがトラッキング(追いかける処理)の時
+				{
+					EnemyTracking++;
+				}
 			}
 		}
+
+		return EnemyTracking;//どのくらいの数の敵が追いかける処理をしているのか渡す
 	}
 
 	//ゲームの進行を管理する後々関数ではなくクラスにします
