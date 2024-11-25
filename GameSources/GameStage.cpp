@@ -16,7 +16,7 @@ namespace basecross {
 		const Vec3 at(0.0f);
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
-		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 80.0f, -60.0f));
+		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 50.0f, -30.0f));
 		PtrView->SetCamera(PtrCamera);
 		PtrCamera->SetEye(eye);
 		PtrCamera->SetAt(at);
@@ -60,8 +60,8 @@ namespace basecross {
 		//床の作成
 		AddGameObject<Ground>();
 
-		auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
-		SetSharedGameObject(L"MiniMapManager", miniMapManager);
+		//auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
+		//SetSharedGameObject(L"MiniMapManager", miniMapManager);
 
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
@@ -77,7 +77,7 @@ namespace basecross {
 		AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
-		miniMapManager->CreateItem();
+		//miniMapManager->CreateItem();
 		//Playerの生成
 		auto player = AddGameObject<Player>(Vec3(35.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
@@ -96,51 +96,6 @@ namespace basecross {
 
 		OutWallCreate(20);//外壁生成
 
-		////中壁作成
-		//{
-		//	auto path = App::GetApp()->GetDataDirWString();
-		//	auto levelPath = path + L"Levels/";
-		//	vector<vector<int>> stageMap;
-
-		//	ifstream ifs(levelPath += L"DebugStage.csv");
-		//	if (ifs)
-		//	{
-		//		string line;
-		//		while (getline(ifs, line))
-		//		{
-		//			vector<int> mapData;
-
-		//			line += ",";
-		//			string data;
-		//			istringstream ss(line);
-		//			while (getline(ss, data, ','))
-		//			{
-		//				int cellData = atoi(data.c_str());
-		//				mapData.push_back(cellData);
-		//			}
-
-		//			stageMap.push_back(mapData);
-		//		}
-		//	}
-
-		//	for (int r = 0; r < stageMap.size(); r++)
-		//	{
-		//		for (int c = 0; c < stageMap[0].size(); c++)
-		//		{
-		//			Vec3 startPos((c * 10.0f) - 95, 0.05f, 95 - (r * 10.0f));
-		//			switch (stageMap[r][c])
-		//			{
-		//			case 1:
-		//				AddGameObject<Wall>(startPos, Vec3(0, 0, 0), Vec3(30.0, 10, 1.0));
-		//				break;
-		//			case 2:
-		//				AddGameObject<Wall>(startPos, Vec3(0, 0, 0), Vec3(1.0, 10, 30.0));
-		//				break;
-		//			}
-		//		}
-		//	}
-		//}
-
 		//敵生成
 		AddGameObject<Enemy>();
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
@@ -149,7 +104,7 @@ namespace basecross {
 
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
 
-		miniMapManager->CreateEnemy();	
+		//miniMapManager->CreateEnemy();	
 
 
 		
