@@ -17,7 +17,7 @@ namespace basecross {
 			float numY = a.y - b.y;
 			float numZ = a.z - b.z;
 
-			return  sqrtf(numX * numX + numY * numY + numZ * numZ);
+			return  sqrt(numX * numX + numY * numY + numZ * numZ);
 		}
 
 		float GetCircleRange(float r, Vec3 a, Vec3 b)
