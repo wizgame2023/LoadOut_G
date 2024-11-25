@@ -49,6 +49,7 @@
 #include "WaterPillar.h"//水柱
 #include "MiniMapActor.h"//ミニマップのPlayerやEnemy　オブジェクトで動くもの
 #include "MiniMapItem.h"//ミニマップのItem
+#include"NumberSquare.h"
 
 //マネージャー用
 #include "MiniMapManager.h"//ミニマップ生成

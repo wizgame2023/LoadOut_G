@@ -180,6 +180,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MathTools.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NumberSquare.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MathTools.cpp">
       <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NumberSquare.cpp">
+      <Filter>Sources\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
