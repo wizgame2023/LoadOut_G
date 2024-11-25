@@ -266,80 +266,116 @@ namespace basecross {
 
 
 		//A*用マップ作製
-		test_walls_up;//横
-		test_walls_right;//縦
+		AddExctraAStar(2);//Aスターに余分に配列を入れる
 
-		vector<vector<int>> aStarMap;//Aスター用のマップ
-
-		for (int tate=0; tate < m_stageMap.size() * 2; tate++)
+		for (int y=0; y < m_stageMap.size() * 2; y++)
 		{
-			vector<int> aStarLine;//A＊の一行配列
 
-			for (int yoko=0; yoko < m_stageMap[0].size() * 2; yoko++)
+			int count = 0;
+			//余分に配列を入れる
+			while (count < 2)
 			{
-				bool xkisu;//縦が奇数かどうか
-				bool ykisu;//横が奇数かどうか	
-				
-				//tate += 1;
-				//yoko += 1;
+				count++;
+				m_aStarLine.push_back(9);
+			}
+			count = 0;//リセット
 
+			for (int x=0; x < m_stageMap[0].size() * 2; x++)
+			{
+				bool evenX;//縦が偶数かどうか
+				bool evenY;//横が偶数かどうか
 
 				////縦と横が奇数か偶数の数値かを確認する
-				xkisu = yoko % 2 == 0 ? false : true;
-				ykisu = tate % 2 == 0 ? false : true;
-
-				//int hikutate = tate / 2;//小数点以下切り捨て
-				//int hikuyoko = yoko / 2;
-				//int end = 0;
-
+				evenX = x % 2 == 0 ? false : true;
+				evenY = y % 2 == 0 ? false : true;
 
 				//xとyが奇数なら空白
-				if (!xkisu && !ykisu)
+				if (!evenX && !evenY)
 				{
-					aStarLine.push_back(0);
+					m_aStarLine.push_back(0);
 				}
 				//xが奇数yが偶数なら縦壁
-				if (!xkisu && ykisu)
+				if (!evenX && evenY)
 				{
+					int originY = y / 2;//小数点以下切り捨て
+					int originX = x / 2;
 
-					int hikutate = tate / 2;//小数点以下切り捨て
-					int hikuyoko = yoko / 2;
-					auto a = hikutate;
-					auto b = hikuyoko;
-
-					aStarLine.push_back(test_walls_right[hikutate][hikuyoko]);
+					m_aStarLine.push_back(test_walls_right[originY][originX]);
 				}
 				//xが偶数yが奇数なら横壁
-				if (xkisu && !ykisu)
+				if (evenX && !evenY)
 				{
+					int originY = y / 2;//小数点以下切り捨て
+					int originX = x / 2;
 
-					int hikutate = tate / 2;//小数点以下切り捨て
-					int hikuyoko = yoko / 2;
-					auto a = hikutate;
-					auto b = hikuyoko;
-					aStarLine.push_back(test_walls_up[hikutate][hikuyoko]);
+					m_aStarLine.push_back(test_walls_right[originY][originX]);
 				}
 				//xとyが偶数なら地面
-				if (xkisu && ykisu)
+				if (evenX && evenY)
 				{
+					int originY = y / 2;//小数点以下切り捨て
+					int originX = x / 2;
 
-					int hikutate = tate / 2;//小数点以下切り捨て
-					int hikuyoko = yoko / 2;
-					//auto a = test_walls_up[tate - hikutate][yoko - hikuyoko];
-					auto a = hikutate;
-					auto b = hikuyoko;
-
-					aStarLine.push_back(test_walls_up[hikutate][hikuyoko]);
-					int test=0;
+					m_aStarLine.push_back(test_walls_right[originY][originX]);
 				}
 			}
 
+			//余分に配列を入れる
+			while (count < 2)
+			{
+				count++;
+				m_aStarLine.push_back(1);
+			}
+			count = 0;//リセット
+
+
 			//aStarMapにA＊の一行ずつ配列を入れる
-			aStarMap.push_back(aStarLine);
+			m_aStarMap.push_back(m_aStarLine);
+			m_aStarLine.clear();//使わない配列は削除
 			auto a = 0;
 
 		}
-		aStarMap;
+
+		AddExctraAStar(2);//Aスターに余分に配列を入れる
+	}
+
+	//配列に数値を入れる処理
+	void MapManager::AddArray(int loop, int num)
+	{
+		int count = 0;
+		//余分に配列を入れる
+		while (count < 2)
+		{
+			count++;
+			m_aStarLine.push_back(9);
+		}
+		count = 0;//リセット
+	}
+
+	//Aスターにある程度余分に配列を入れる処理
+	void MapManager::AddExctraAStar(int addArray)
+	{
+		//範囲外の配列を指定してエラーはかないようにある程度余分に配列を入れておく
+		vector<int> extra;//余分に入れる配列
+		for (int i = 0; i < m_stageMap.size() * 2; i++)
+		{
+			extra.push_back(9);//A*のｘ配列ぶん入れておく
+		}
+
+		int count = 0;//何個ほど配列を入れているか数える変数
+		while (count < addArray)
+		{
+			count++;
+			m_aStarMap.push_back(extra);//配列を余分に入れておく
+		}
+		m_aStarMap;
+
+	}
+
+	//A*マップを渡す
+	vector<vector<int>> MapManager::GetAStarMap()
+	{
+		return m_aStarMap;
 	}
 
 }
