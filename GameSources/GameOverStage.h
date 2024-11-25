@@ -12,8 +12,11 @@ namespace basecross {
 	//	ゲームステージクラス
 	//--------------------------------------------------------------------------------------
 	class GameOverStage : public Stage {
+	private:
 		//ビューの作成
 		void CreateViewLight();
+		shared_ptr<SoundItem> m_BGM;
+
 	public:
 		//構築と破棄
 		GameOverStage() :Stage() {}
@@ -21,6 +24,8 @@ namespace basecross {
 		//初期化
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
+		void OnDestroy()override;
+
 	};
 
 

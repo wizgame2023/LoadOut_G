@@ -14,6 +14,8 @@ namespace basecross {
 	class GameClearStage : public Stage {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
+		shared_ptr<SoundItem> m_BGM;
+
 	public:
 		//\’z‚Æ”jŠü
 		GameClearStage() :Stage() {}
@@ -21,6 +23,8 @@ namespace basecross {
 		//‰Šú‰»
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
+		void OnDestroy()override;
+
 	};
 
 
