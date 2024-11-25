@@ -54,9 +54,9 @@ namespace basecross {
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto item : obj)
 		{
-			if (dynamic_pointer_cast<Item>(item))//アイテム型にキャストする
+			auto castitem = dynamic_pointer_cast<Item>(item);
+			if (castitem)//アイテム型にキャストする
 			{
-				auto castitem = dynamic_pointer_cast<Item>(item);
 				auto itemTrans = item->GetComponent<Transform>();
 				auto itemPos = itemTrans->GetPosition();
 				auto itemScale = itemTrans->GetScale();
@@ -75,10 +75,10 @@ namespace basecross {
 		auto obj = stage->GetGameObjectVec();
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto manhole : obj)
-		{
-			if (dynamic_pointer_cast<Manhole>(manhole))//アイテム型にキャストする
+		{	
+			auto castManhole = dynamic_pointer_cast<Manhole>(manhole);
+			if (castManhole)//アイテム型にキャストする
 			{
-				auto castManhole = dynamic_pointer_cast<Manhole>(manhole);
 				auto itemTrans = manhole->GetComponent<Transform>();
 				auto itemPos = itemTrans->GetPosition();
 				auto itemScale = itemTrans->GetScale();
@@ -99,11 +99,11 @@ namespace basecross {
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto manhole : obj)
 		{
-			if (dynamic_pointer_cast<Enemy>(manhole))//アイテム型にキャストする
+			auto castEnemy = dynamic_pointer_cast<Actor>(manhole);
+			if (castEnemy)//Enemy型にキャストする
 			{
 				float Lenght = 225.0f;//ミニマップの直径
 
-				auto castEnemy = dynamic_pointer_cast<Actor>(manhole);
 				auto itemTrans = manhole->GetComponent<Transform>();
 				auto itemPos = itemTrans->GetPosition();
 				auto itemScale = itemTrans->GetScale();
