@@ -84,7 +84,7 @@ namespace basecross {
 
 	float Tracking::MoveCost()
 	{
-
+		return 0;
 	}
 
 }
