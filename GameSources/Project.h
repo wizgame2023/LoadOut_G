@@ -50,6 +50,7 @@
 #include "MiniMapActor.h"//ミニマップのPlayerやEnemy　オブジェクトで動くもの
 #include "MiniMapItem.h"//ミニマップのItem
 #include"NumberSquare.h"
+#include"Hatch.h"//脱出用のハッチ
 
 //マネージャー用
 #include "MiniMapManager.h"//ミニマップ生成
@@ -58,7 +59,6 @@
 
 //カメラ用
 #include "MyCamera.h"//追尾カメラ用
-
 
 
 
