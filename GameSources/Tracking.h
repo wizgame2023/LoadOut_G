@@ -49,7 +49,7 @@ namespace basecross {
 		void OnUpdate();
 		void OnExit();
 
-		float MoveCost();
+		float MoveCost(Vec3 vec);
 	};
 
 }

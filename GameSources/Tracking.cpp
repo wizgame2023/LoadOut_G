@@ -81,21 +81,44 @@ namespace basecross {
 
 	}
 
-	float Tracking::MoveCost()
+	float Tracking::MoveCost(Vec3 vec)
 	{
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		auto pos = m_ownerPos;
-		Vec3 direction[] =
+		auto numVec = vec;
+		auto AStar = mapMgr->GetAStarMap();
+		auto sellPos = mapMgr->ConvertSelMap(pos);
+		auto AStarPos = mapMgr->ConvertAStarMap(sellPos);
+
+		auto rightAStar = AStar[AStarPos.y + 1][AStarPos.x];
+		auto leftAStar = AStar[AStarPos.y - 1][AStarPos.x];
+		auto fodAStar = AStar[AStarPos.y][AStarPos.x + 1];
+		auto downAStar = AStar[AStarPos.y][AStarPos.x + 1];
+
+		auto rightPos = mapMgr->ConvertWorldMap(Vec2(AStarPos.x + 1 , AStarPos.y));
+		auto leftPos = mapMgr->ConvertWorldMap(Vec2(AStarPos.x + 1 , AStarPos.y));
+		auto fodPos = mapMgr->ConvertWorldMap(Vec2(AStarPos.x, AStarPos.y-1));
+		auto downPos = mapMgr->ConvertWorldMap(Vec2(AStarPos.x, AStarPos.y-1));
+
+
+
+		if (rightAStar == 1)
 		{
-			{pos.x + 1,pos.y,pos.z},//右+1
-			{pos.x + 1,pos.y,pos.z},//左+1
-			{pos.x,pos.y,pos.z + 1},//前+1
-			{pos.x,pos.y,pos.z + 1},//後+1
-			{pos.x + 2,pos.y,pos.z},//右+2
-			{pos.x + 2,pos.y,pos.z},//左+2
-			{pos.x,pos.y,pos.z + 2},//前+2
-			{pos.x,pos.y,pos.z + 2},//後+2
-		};
+			m_costRight += 100;
+		}
+		if (leftAStar == 1)
+		{
+			m_costLeft += 100;
+		}
+		if (fodAStar == 1)
+		{
+			m_costFod += 100;
+		}
+		if (downAStar)
+		{
+			m_costDown += 100;
+		}
+
 		return 0;
 
 		 
