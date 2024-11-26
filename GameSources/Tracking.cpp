@@ -23,7 +23,6 @@ namespace basecross {
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のポジションを取得
 		auto player = app()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
-		auto mapManager= app()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
 		m_playerRay = m_Owner->GetPlayerRay();
 		float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
@@ -31,9 +30,9 @@ namespace basecross {
 		float deg = rad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
 
-		m_ownerPos.x += -sin(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
-		m_ownerPos.z+=-cos(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
-		m_ownerPos.y = 2.5f;
+		//m_ownerPos.x += -sin(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
+		//m_ownerPos.z+=-cos(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
+		//m_ownerPos.y = 2.5f;
 	
 		Math math;
 		auto CircleRange= math.GetCircleRange(60, m_ownerPos, m_playerPos);
@@ -84,7 +83,22 @@ namespace basecross {
 
 	float Tracking::MoveCost()
 	{
+		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		auto pos = m_ownerPos;
+		Vec3 direction[] =
+		{
+			{pos.x + 1,pos.y,pos.z},//右+1
+			{pos.x + 1,pos.y,pos.z},//左+1
+			{pos.x,pos.y,pos.z + 1},//前+1
+			{pos.x,pos.y,pos.z + 1},//後+1
+			{pos.x + 2,pos.y,pos.z},//右+2
+			{pos.x + 2,pos.y,pos.z},//左+2
+			{pos.x,pos.y,pos.z + 2},//前+2
+			{pos.x,pos.y,pos.z + 2},//後+2
+		};
 		return 0;
+
+		 
 	}
 
 }

@@ -19,6 +19,11 @@ namespace basecross {
 
 		float m_time;
 
+		int m_costRight;
+		int m_costLeft;
+		int m_costFod;
+		int m_costDown;
+
 		shared_ptr<Transform> m_trans;
 
 		weak_ptr<Ray>m_playerRay;
@@ -31,7 +36,11 @@ namespace basecross {
 			m_playerPos(0, 0, 0),
 			m_forward(0, 0, 1),
 			m_right(1, 0, 0),
-			m_time(0)
+			m_time(0),
+			m_costRight(0),
+			m_costLeft(0),
+			m_costFod(0),
+			m_costDown(0)
 		{
 		}
 
