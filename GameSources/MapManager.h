@@ -22,6 +22,7 @@ namespace basecross {
 		void OnUpdate()override;//更新
 
 		Vec2 ConvertSelMap(Vec3 worldPosition);
+		Vec3 ConvertWorldMap(Vec2 selPosition);
 
 		void MapDataUpdate(Vec3 worldPosition,int change);
 		int SelMapNow(Vec3 worldPosition);//今のセル座標に何があるのかを返す
