@@ -171,5 +171,7 @@ namespace basecross {
 	{
 		return PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバシーンに移動する
 	}
+
+
 }
 //end basecross
