@@ -14,7 +14,7 @@ namespace basecross{
 		Vec3 m_Pos;//ポジション
 		Vec3 m_Rot;//回転度
 
-		int m_count;//アイテムの所持数、この数の分だけマンホールを上げれる
+		int m_itemCount;//アイテムの所持数、この数の分だけマンホールを上げれる
 		int m_hp = 3;//Playerの体力
 
 		float m_deg;//角度
@@ -24,7 +24,6 @@ namespace basecross{
 		shared_ptr<InputDevice> m_Device;//コントローラー
 		CONTROLER_STATE m_controler;//コントローラー
 		shared_ptr<SpriteNum> m_spriteNum;//数字のスプライト
-		//float m_time;//テスト用使わなくなったら消してください
 
 	public:
 		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ

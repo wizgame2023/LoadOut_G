@@ -121,6 +121,12 @@ namespace basecross {
 		//SE¶¬ “G‚Ì‹©‚Ñº
 		auto SEManager = App::GetApp()->GetXAudio2Manager();
 		auto SE = SEManager->Start(L"Scream", 0, 0.9f);
+		//Ž©•ª‚ªŒ®‚ðŽ‚Á‚Ä‚¢‚é‚Æ‚«
+		if (this->FindTag(L"Key"))
+		{	
+			//Œ®‚ðPlayer‚É“n‚·
+			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
+		}
 
 	}
 

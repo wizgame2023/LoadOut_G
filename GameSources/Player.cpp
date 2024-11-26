@@ -67,7 +67,7 @@ namespace basecross{
 		//電池をどれくらい持っているかを表す
 		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
 		GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
-		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
+		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
 	}
 
 	void Player::OnUpdate()
@@ -103,7 +103,13 @@ namespace basecross{
 
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
-		m_spriteNum->SetNum(m_count);//表示する数字を更新する
+		//もし鍵を持っているなら脱出できる
+		if (m_key)
+		{
+			int test = 0;
+		}
+
+		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
 		//デバック用
 		wstringstream wss(L"");
@@ -115,7 +121,7 @@ namespace basecross{
 			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
 			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<< L"\nm_count：  " << m_count
+			<< L"\nm_count：  " << m_itemCount
 			<< L"\nSelNow " << selNow
 			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
 			<<L"\nFPS:"<< 1.0f/Delta
@@ -175,14 +181,14 @@ namespace basecross{
 	{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 
-		if (m_count >= 1)//カウントが１以上なら
+		if (m_itemCount >= 1)//カウントが１以上なら
 		{
 			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
 			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
 			{
 				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
 				{
-					m_count--;
+					m_itemCount--;
 
 					//SE生成マンホールにわなを仕掛ける音
 					auto SEManager = App::GetApp()->GetXAudio2Manager();
@@ -202,7 +208,7 @@ namespace basecross{
 	{
 		auto stage = GetStage();
 
-		stage->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(500.0f, 0.0f, 0.0f));//数字のスプライト生成
+		stage->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(500.0f, 0.0f, 0.0f));//数字のスプライト生成
 		stage->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f));
 
 
@@ -223,7 +229,7 @@ namespace basecross{
 	//m_countに数値がプラスされる
 	void Player::AddCount(int add)
 	{
-		m_count += add;
+		m_itemCount += add;
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other)
@@ -275,6 +281,12 @@ namespace basecross{
 		float rad = -atan2(m_controler.fThumbLY, m_controler.fThumbLX);
 
 		return rad;
+	}
+
+	//鍵を持っているかのセッター
+	void Player::SetKey(bool key)
+	{
+		m_key = key;
 	}
 
 }
