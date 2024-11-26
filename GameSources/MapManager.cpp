@@ -37,6 +37,14 @@ namespace basecross {
 
 	}
 
+	Vec3 MapManager::ConvertWorldMap(Vec2 selPosition)
+	{
+		float w_length = (selPosition.x * 10.0f) - 95.0f;
+		float w_height = 95.0f - (selPosition.y * 10.0f);
+
+		return Vec3(w_length, 0, w_height);
+	}
+
 	//csvファイルをセルマップデータとして変換する
 	void MapManager::StageMapLoad()
 	{
