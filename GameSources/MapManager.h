@@ -23,6 +23,7 @@ namespace basecross {
 
 		Vec2 ConvertSelMap(Vec3 worldPosition);
 		Vec3 ConvertWorldMap(Vec2 selPosition);
+		Vec2 ConvertAStarMap(Vec2 selPosition);
 
 		void MapDataUpdate(Vec3 worldPosition,int change);
 		int SelMapNow(Vec3 worldPosition);//¡‚ÌƒZƒ‹À•W‚É‰½‚ª‚ ‚é‚Ì‚©‚ğ•Ô‚·

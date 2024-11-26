@@ -45,6 +45,14 @@ namespace basecross {
 		return Vec3(w_length, 0, w_height);
 	}
 
+	Vec2 MapManager::ConvertAStarMap(Vec2 selPosition)
+	{
+		float AStarLength = selPosition.x * 2 + 1 + 2;
+		float AStarHeight = selPosition.y * 2 + 1 + 2;
+
+		return Vec2(AStarLength, AStarHeight);
+	}
+
 	//csvファイルをセルマップデータとして変換する
 	void MapManager::StageMapLoad()
 	{
