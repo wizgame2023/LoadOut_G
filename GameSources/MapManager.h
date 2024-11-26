@@ -24,6 +24,7 @@ namespace basecross {
 		Vec2 ConvertSelMap(Vec3 worldPosition);
 		Vec3 ConvertWorldMap(Vec2 selPosition);
 		Vec2 ConvertAStarMap(Vec2 selPosition);
+		Vec2 ConvertA_S(Vec2 AStarPosition);//AStarからセルマップに変える
 
 		void MapDataUpdate(Vec3 worldPosition,int change);
 		int SelMapNow(Vec3 worldPosition);//今のセル座標に何があるのかを返す

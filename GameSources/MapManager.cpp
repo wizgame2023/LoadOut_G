@@ -47,10 +47,20 @@ namespace basecross {
 
 	Vec2 MapManager::ConvertAStarMap(Vec2 selPosition)
 	{
-		float AStarLength = selPosition.x * 2 + 1 + 2;
-		float AStarHeight = selPosition.y * 2 + 1 + 2;
+		int AStarLength = selPosition.x * 2 + 1 + 2;
+		int AStarHeight = selPosition.y * 2 + 1 + 2;
 
 		return Vec2(AStarLength, AStarHeight);
+	}
+
+	//AStar座標からセル座標へ
+	Vec2 MapManager::ConvertA_S(Vec2 aStarPosition)
+	{
+		int Length = (aStarPosition.x - 1 - 2) / 2 ;
+		int Height = (aStarPosition.y - 1 - 2) / 2 ;
+
+		return Vec2(Length, Height);
+
 	}
 
 	//csvファイルをセルマップデータとして変換する

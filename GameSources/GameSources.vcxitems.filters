@@ -186,6 +186,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StageManager.h">
       <Filter>Headers\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hatch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -308,5 +309,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StageManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hatch.cpp" />
   </ItemGroup>
 </Project>
