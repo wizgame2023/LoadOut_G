@@ -10,6 +10,11 @@ namespace basecross {
 	class StageManager :public GameObject
 	{
 	private:
+		bool m_BGMChase;//’Ç‚¢‚©‚¯‚ç‚ê‚Ä‚¢‚é‚©•Û‘¶‚·‚é•Ï”
+		int m_BGMhow;//¡‚È‚É‚ÌBGM‚ğ—¬‚ê‚Ä‚¢‚é‚©•Û‘¶‚·‚é•Ï”
+
+		shared_ptr<SoundItem> m_BGM;
+		shared_ptr<XAudio2Manager> m_bgmManager;
 
 	public:
 		StageManager(shared_ptr<Stage>& stagePtr);
@@ -17,6 +22,9 @@ namespace basecross {
 
 		void OnCreate()override;
 		void OnUpdate()override;
+
+		void BGMChange();//BGM‚Ì•ÏXˆ—
+		void OnDestroy()override;
 	};
 
 }
