@@ -19,6 +19,8 @@ namespace basecross{
 
 		float m_deg;//角度
 
+		bool m_key;//鍵を持っているかどうか
+
 		shared_ptr<Transform> m_Trans;//トランスフォーム
 
 		shared_ptr<InputDevice> m_Device;//コントローラー
@@ -44,6 +46,8 @@ namespace basecross{
 
 		float GetAngle()override;//角度を渡す
 		void AddBatteryUI();//電池をどれくらい取得しているかのUI
+
+		void SetKey(bool key);//鍵を持っているかどうか渡す
 	};
 
 }
