@@ -39,6 +39,8 @@ namespace basecross {
 		void OnStart();
 		void OnUpdate();
 		void OnExit();
+
+		float MoveCost();
 	};
 
 }
