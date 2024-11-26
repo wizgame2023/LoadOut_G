@@ -71,7 +71,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MathTools.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapItem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapActor.cpp" />
