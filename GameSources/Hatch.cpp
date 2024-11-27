@@ -7,8 +7,9 @@
 #include "Project.h"
 
 namespace basecross {
-	Hatch::Hatch(shared_ptr<Stage>& stagePtr) :
-		GameObject(stagePtr)
+	Hatch::Hatch(shared_ptr<Stage>& stagePtr,Vec3 pos) :
+		GameObject(stagePtr),
+		m_pos(pos)
 	{
 
 	}
@@ -37,7 +38,7 @@ namespace basecross {
 		//メッシュ生成
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"Manhole");
+		ptrDraw->SetTextureResource(L"Gray");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
@@ -56,7 +57,22 @@ namespace basecross {
 
 	void Hatch::OnUpdate()
 	{
+		//もしハッチが空いている状態ならステージマネージャーにゲームクリアだというフラグを渡す
+		auto stage = GetStage();
+		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
+		auto pos = GetComponent<Transform>()->GetPosition();
+		auto nowYuka = mapManager->SelMapNow(pos);//今のセル座標はどの状態かを見る
+		if (nowYuka == 5)//ハッチが開かれている状態であれば
+		{
+			//色を変える
+			auto ptrDraw = GetComponent<PNTStaticDraw>();
+			ptrDraw->SetTextureResource(L"Black");
 
+
+			//ステージマネージャーにゲームクリアのフラグを渡す
+			auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+			stageManager->SetClearFlag(true);
+		}
 	}
 
 
