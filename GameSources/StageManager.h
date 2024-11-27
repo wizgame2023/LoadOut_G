@@ -13,6 +13,8 @@ namespace basecross {
 		bool m_BGMChase;//追いかけられているか保存する変数
 		int m_BGMhow;//今なにのBGMを流れているか保存する変数
 
+		bool m_ClearFlag;//クリアのフラグ判定
+
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
 
@@ -24,7 +26,9 @@ namespace basecross {
 		void OnUpdate()override;
 
 		void BGMChange();//BGMの変更処理
-		void OnDestroy()override;
+		void OnDestroy()override;//削除されたときの処理
+
+		void SetClearFlag(bool flag);//セッター
 	};
 
 }

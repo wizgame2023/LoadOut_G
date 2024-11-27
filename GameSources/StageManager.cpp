@@ -53,6 +53,12 @@ namespace basecross {
 			m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
 
 		}
+
+		//ゲームクリアのフラグが立ったら
+		if (m_ClearFlag)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
+		}
 	}
 
 	void StageManager::BGMChange()
@@ -86,11 +92,18 @@ namespace basecross {
 		}
 
 		
+		
 	}
 
 	void StageManager::OnDestroy()
 	{
 
+	}
+
+	//ClearFlagのセッター
+	void StageManager::SetClearFlag(bool flag)
+	{
+		m_ClearFlag = flag;
 	}
 
 
