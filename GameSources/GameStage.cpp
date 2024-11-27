@@ -89,31 +89,23 @@ namespace basecross {
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
 		//BGM
-		m_bgmManager = App::GetApp()->GetXAudio2Manager();
-		m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
-
-		
+		//m_bgmManager = App::GetApp()->GetXAudio2Manager();
+		//m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+		auto stageManager = AddGameObject<StageManager>();
+		SetSharedGameObject(L"StageManager", stageManager);
 
 		OutWallCreate(20);//ŠO•Ç¶¬
 
 		//“G¶¬
-		AddGameObject<Enemy>();
+		auto enemy = AddGameObject<Enemy>();
+		enemy->AddTag(L"Key");//Œ®‚ğ‚Á‚Ä‚¢‚é‚±‚Æ‚É‚·‚é
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
 
 		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
 
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
 
-		//miniMapManager->CreateEnemy();	
-
-		////‚à‚µAPlayer‚ğ’Ç‚¢‚©‚¯‚Ä‚¢‚é‚Ì‚ª1lˆÈã‚È‚çBGM‚ğ•Ï‚¦‚é
-		//if (GameEnemyState() < 1)
-		//{
-
-		//}
-
-		
-
+		//miniMapManager->CreateEnemy();			
 	}
 
 	void GameStage::OnUpdate()
