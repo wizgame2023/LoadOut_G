@@ -51,6 +51,7 @@
 #include "MiniMapItem.h"//ミニマップのItem
 #include"NumberSquare.h"
 #include"Hatch.h"//脱出用のハッチ
+#include"Movie.h"//ムービー用の親クラス
 
 //マネージャー用
 #include "MiniMapManager.h"//ミニマップ生成
