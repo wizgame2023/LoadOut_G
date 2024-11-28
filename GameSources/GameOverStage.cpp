@@ -42,7 +42,7 @@ namespace basecross {
 		//auto bgm = BGM->Start(L"GameOver", 0, 0.9f);
 
 		auto BGM = App::GetApp()->GetXAudio2Manager();
-		m_BGM = BGM->Start(L"GameOver4", 0, 0.9f);
+		m_BGM = BGM->Start(L"GameOverBGM", 0, 0.9f);
 
 
 		//SE生成マンホールにわなを仕掛ける音

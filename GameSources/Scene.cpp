@@ -110,8 +110,8 @@ namespace basecross{
 		//BGMSE
 		wstring soundWav = SoundPath + L"StageBGM.wav";
 		App::GetApp()->RegisterWav(L"StageBGM", soundWav);
-		//soundWav = SoundPath + L"StageBGMEscape.wav";//ステージBGM追いかけられているとき
-		//App::GetApp()->RegisterWav(L"StageBGMEscape", soundWav);
+		soundWav = SoundPath + L"StageBGMEscape.wav";//ステージBGM追いかけられているとき
+		App::GetApp()->RegisterWav(L"StageBGMEscape", soundWav);
 		soundWav = SoundPath + L"ItemGet.wav";
 		App::GetApp()->RegisterWav(L"ItemGet", soundWav);
 		soundWav = SoundPath + L"GameClrear.wav";
@@ -127,8 +127,8 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"TIlteStage", soundWav);
 		soundWav = SoundPath + L"GameClear2.wav";//ゲームクリア
 		App::GetApp()->RegisterWav(L"GameClear2", soundWav);
-		soundWav = SoundPath + L"GameOver4.wav";
-		App::GetApp()->RegisterWav(L"GameOver4", soundWav);
+		soundWav = SoundPath + L"GameOver.wav";
+		App::GetApp()->RegisterWav(L"GameOverBGM", soundWav);
 		//soundWav = SoundPath + L"Enemyded.wav";なぜかダメ
 		//App::GetApp()->RegisterWav(L"GameOver", soundWav);
 
