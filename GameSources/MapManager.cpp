@@ -109,6 +109,9 @@ namespace basecross {
 					GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f)-95, 0.05f, 95-(i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
+				case 4://ハッチ作成
+					GetStage()->AddGameObject<Hatch>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					break;
 				default:
 					break;
 				}
@@ -334,7 +337,7 @@ namespace basecross {
 					int originY = y / 2;//小数点以下切り捨て
 					int originX = x / 2;
 
-					m_aStarLine.push_back(test_walls_right[originY][originX]);
+					m_aStarLine.push_back(test_walls_up[originY][originX]);
 				}
 				//xとyが偶数なら地面
 				if (evenX && evenY)
@@ -342,7 +345,7 @@ namespace basecross {
 					int originY = y / 2;//小数点以下切り捨て
 					int originX = x / 2;
 
-					m_aStarLine.push_back(test_walls_right[originY][originX]);
+					m_aStarLine.push_back(m_stageMap[originY][originX]);
 				}
 			}
 
@@ -350,7 +353,7 @@ namespace basecross {
 			while (count < 2)
 			{
 				count++;
-				m_aStarLine.push_back(1);
+				m_aStarLine.push_back(9);
 			}
 			count = 0;//リセット
 
@@ -361,8 +364,9 @@ namespace basecross {
 			auto a = 0;
 
 		}
-
+		m_aStarMap;
 		AddExctraAStar(2);//Aスターに余分に配列を入れる
+		auto test=0;
 	}
 
 	//配列に数値を入れる処理

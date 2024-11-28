@@ -21,7 +21,7 @@ namespace basecross {
 		float m_time;//ŽžŠÔ‚ð‘ª‚é‚½‚ß‚É•K—v
 
 	public:
-		Hatch(shared_ptr<Stage>& stagePtr);
+		Hatch(shared_ptr<Stage>& stagePtr,Vec3 pos);
 		~Hatch();
 
 		void OnCreate()override;

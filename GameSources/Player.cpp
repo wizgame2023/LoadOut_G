@@ -104,9 +104,17 @@ namespace basecross{
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
 		//もし鍵を持っているなら脱出できる
+		m_key = true;//デバック用
 		if (m_key)
 		{
-			int test = 0;
+			if (selNow == 4)//今いる床がハッチなら
+			{
+				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+				{
+					mapManager->MapDataUpdate(pos, 5);//脱出状態にする
+
+				}
+			}
 		}
 
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
@@ -125,6 +133,7 @@ namespace basecross{
 			<< L"\nSelNow " << selNow
 			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
 			<<L"\nFPS:"<< 1.0f/Delta
+			<<L"\nKey"<<m_key
 			<< endl;
 		//XMConvertToRadians(-90.0f)
 
