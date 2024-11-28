@@ -12,6 +12,8 @@ namespace basecross {
 	{
 	private:
 		int m_count;//ムービーの進行度
+		weak_ptr<ViewBase> m_StageView;//ステージのビュー(ゲームプレイ用)
+
 	public:
 		MovieGameStart(shared_ptr<Stage>& stagePtr);
 		~MovieGameStart();

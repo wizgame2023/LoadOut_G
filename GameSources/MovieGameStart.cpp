@@ -48,6 +48,16 @@ namespace basecross {
 
 		}
 
+		if (m_count == 1)//処理②
+		{
+			auto View = GetStage()->CreateView<SingleView>();//ビュー作成
+			auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 50.0f, -30.0f));
+
+			View->SetCamera(PtrCamera);//カメラを戻す
+			GetStage()->SetView(View);
+			GetStage()->RemoveGameObject<MovieGameStart>(GetThis<MovieGameStart>());//自分自身を削除
+		}
+
 	}
 
 	//ムービー用のカメラに変更させる
@@ -55,7 +65,7 @@ namespace basecross {
 	{
 		float stageLenght = 200.0f;//ステージの直径
 		auto startPos = Vec3(0.0f, stageLenght, -stageLenght);//初期位置
-
+		m_StageView = GetStage()->GetView();
 		m_stageCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());//ステージ用のカメラを取得
 		auto a = m_stageCamera.lock()->GetEye();
 		m_movieCamera = ObjectFactory::Create<Camera>();//カメラ作成
