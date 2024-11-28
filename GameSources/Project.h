@@ -52,6 +52,7 @@
 #include"NumberSquare.h"
 #include"Hatch.h"//脱出用のハッチ
 #include"Movie.h"//ムービー用の親クラス
+#include"MovieGameStart.h"//ゲーム開始時のムービ
 
 //マネージャー用
 #include "MiniMapManager.h"//ミニマップ生成
