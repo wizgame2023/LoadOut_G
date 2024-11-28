@@ -18,6 +18,7 @@ namespace basecross {
 		Vec3 m_right;
 
 		float m_time;
+		float m_directionRad;
 
 		int m_costRight;
 		int m_costLeft;
@@ -37,6 +38,7 @@ namespace basecross {
 			m_forward(0, 0, 1),
 			m_right(1, 0, 0),
 			m_time(0),
+			m_directionRad(0),
 			m_costRight(0),
 			m_costLeft(0),
 			m_costFod(0),
@@ -49,7 +51,7 @@ namespace basecross {
 		void OnUpdate();
 		void OnExit();
 
-		float MoveCost(Vec3 vec);
+		float DirectionCost();
 	};
 
 }

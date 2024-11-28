@@ -28,6 +28,14 @@ namespace basecross {
 
 			return numX * numX + numY * numY + numZ * numZ <= r * r;
 		}
+
+		float GetAngle(Vec3 a,Vec3 b)
+		{
+			float numX = a.x - b.x;
+			float numZ = a.z - b.z;
+
+			return atan2f(numX, numZ);
+		}
 	};
 }
 //end basecross

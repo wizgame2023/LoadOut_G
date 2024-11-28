@@ -87,7 +87,7 @@ namespace basecross {
 		auto group = CreateSharedObjectGroup(L"SeekGroup");
 		//配列の初期化
 		vector<Vec3> vec = {
-			{ 0.0f, 2.5f, 0.0f },
+			{ -95.0f, 2.5f, 95.0f },
 		};
 
 		//配置オブジェクトの作成
@@ -105,7 +105,6 @@ namespace basecross {
 			CreateViewLight();
 			auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
 			SetSharedGameObject(L"MiniMapManager", miniMapManager);
-			CreateEnemy();
 			//Playerの生成
 			auto ptrPlayer = AddGameObject<Player>(Vec3(50.0f, 3.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
 			SetSharedGameObject(L"Player", ptrPlayer);
@@ -115,6 +114,7 @@ namespace basecross {
 			SetSharedGameObject(L"MapManager", mapManager);
 			//mapManager->WallCreateKari();//仮の内壁を生成する
 
+			CreateEnemy();
 
 		}
 		catch (...) {
