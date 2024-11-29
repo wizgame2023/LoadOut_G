@@ -14,6 +14,7 @@ namespace basecross {
 		shared_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
 		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら
 		Vec3 testPos;
+		int m_count;
 	public:
 		Movie(shared_ptr<Stage>& stagePtr);
 		~Movie();
