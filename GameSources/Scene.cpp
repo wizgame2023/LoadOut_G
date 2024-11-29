@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameOverStage");
 
 			GameResourses();
 
@@ -55,7 +55,7 @@ namespace basecross{
 		}
 		if (event->m_MsgStr == L"ToGameClearStage") {
 			//タイトルのアクティブステージの設定
-			ResetActiveStage<GameOverStage>();
+			ResetActiveStage<GameClearStage>();
 		}
 	}
 
@@ -104,14 +104,33 @@ namespace basecross{
 		app->RegisterTexture(L"MiniEnemy", strTexture);
 		strTexture = texPath + L"battery_tan1.png";//乾電池(単一)のテクスチャ
 		app->RegisterTexture(L"Battery1", strTexture);
+		strTexture = texPath + L"StoneWall.jpg";//石壁のテクスチャ
+		app->RegisterTexture(L"StoneWall", strTexture);
 
 		//BGMSE
 		wstring soundWav = SoundPath + L"StageBGM.wav";
 		App::GetApp()->RegisterWav(L"StageBGM", soundWav);
+		soundWav = SoundPath + L"StageBGMEscape.wav";//ステージBGM追いかけられているとき
+		App::GetApp()->RegisterWav(L"StageBGMEscape", soundWav);
 		soundWav = SoundPath + L"ItemGet.wav";
 		App::GetApp()->RegisterWav(L"ItemGet", soundWav);
+		soundWav = SoundPath + L"GameClrear.wav";
+		App::GetApp()->RegisterWav(L"GameClrear", soundWav);
+		soundWav = SoundPath + L"Scream.wav";//叫び声のSE
+		App::GetApp()->RegisterWav(L"Scream", soundWav);
+		soundWav = SoundPath + L"SetManhole.wav";//罠をセットするSE
+		App::GetApp()->RegisterWav(L"SetManhole", soundWav);
+	
+		soundWav = SoundPath + L"Enemyded.wav";
+		App::GetApp()->RegisterWav(L"EnemyDed", soundWav);
+		soundWav = SoundPath + L"TIlteStage.wav";
+		App::GetApp()->RegisterWav(L"TIlteStage", soundWav);
+		soundWav = SoundPath + L"GameClear2.wav";//ゲームクリア
+		App::GetApp()->RegisterWav(L"GameClear2", soundWav);
 		soundWav = SoundPath + L"GameOver.wav";
-		App::GetApp()->RegisterWav(L"GameOver", soundWav);
+		App::GetApp()->RegisterWav(L"GameOverBGM", soundWav);
+		//soundWav = SoundPath + L"Enemyded.wav";なぜかダメ
+		//App::GetApp()->RegisterWav(L"GameOver", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ

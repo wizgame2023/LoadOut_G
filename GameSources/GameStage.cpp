@@ -16,7 +16,7 @@ namespace basecross {
 		const Vec3 at(0.0f);
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
-		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 80.0f, -60.0f));
+		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 50.0f, -30.0f));
 		PtrView->SetCamera(PtrCamera);
 		PtrCamera->SetEye(eye);
 		PtrCamera->SetAt(at);
@@ -60,8 +60,8 @@ namespace basecross {
 		//床の作成
 		AddGameObject<Ground>();
 
-		auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
-		SetSharedGameObject(L"MiniMapManager", miniMapManager);
+		//auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
+		//SetSharedGameObject(L"MiniMapManager", miniMapManager);
 
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
@@ -77,7 +77,7 @@ namespace basecross {
 		AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
-		miniMapManager->CreateItem();
+		//miniMapManager->CreateItem();
 		//Playerの生成
 		auto player = AddGameObject<Player>(Vec3(35.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
@@ -89,63 +89,80 @@ namespace basecross {
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
 		//BGM
-		auto BGM = App::GetApp()->GetXAudio2Manager();
-		m_BGM = BGM->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+		//m_bgmManager = App::GetApp()->GetXAudio2Manager();
+		//m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+		auto stageManager = AddGameObject<StageManager>();
+		SetSharedGameObject(L"StageManager", stageManager);
 
 		OutWallCreate(20);//外壁生成
 
-		////中壁作成
-		//{
-		//	auto path = App::GetApp()->GetDataDirWString();
-		//	auto levelPath = path + L"Levels/";
-		//	vector<vector<int>> stageMap;
-
-		//	ifstream ifs(levelPath += L"DebugStage.csv");
-		//	if (ifs)
-		//	{
-		//		string line;
-		//		while (getline(ifs, line))
-		//		{
-		//			vector<int> mapData;
-
-		//			line += ",";
-		//			string data;
-		//			istringstream ss(line);
-		//			while (getline(ss, data, ','))
-		//			{
-		//				int cellData = atoi(data.c_str());
-		//				mapData.push_back(cellData);
-		//			}
-
-		//			stageMap.push_back(mapData);
-		//		}
-		//	}
-
-		//	for (int r = 0; r < stageMap.size(); r++)
-		//	{
-		//		for (int c = 0; c < stageMap[0].size(); c++)
-		//		{
-		//			Vec3 startPos((c * 10.0f) - 95, 0.05f, 95 - (r * 10.0f));
-		//			switch (stageMap[r][c])
-		//			{
-		//			case 1:
-		//				AddGameObject<Wall>(startPos, Vec3(0, 0, 0), Vec3(30.0, 10, 1.0));
-		//				break;
-		//			case 2:
-		//				AddGameObject<Wall>(startPos, Vec3(0, 0, 0), Vec3(1.0, 10, 30.0));
-		//				break;
-		//			}
-		//		}
-		//	}
-		//}
-
 		//敵生成
-		AddGameObject<Enemy>();
-		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
+		auto enemy = AddGameObject<Enemy>();
+		enemy->AddTag(L"Key");//鍵を持っていることにする
+		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
+
 		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
-		AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
-		miniMapManager->CreateEnemy();	
-}
+
+		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
+
+		//miniMapManager->CreateEnemy();			
+	}
+
+	void GameStage::OnUpdate()
+	{
+		GameManager();//ゲーム進行を管理する
+	}
+
+	int GameStage::GameEnemyState()
+	{
+		auto obj = GetGameObjectVec();
+		auto EnemyTracking = 0;
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto enemy : obj)
+		{
+			auto enemycast = dynamic_pointer_cast<Enemy>(enemy);
+
+			if (enemycast)//Enemy型にキャストに成功したら
+			{
+				auto State = enemycast->GetNowState();//現在のステートを受け取る
+				auto trackcast = dynamic_pointer_cast<Tracking>(State);
+				if (trackcast)//現在のステートがトラッキング(追いかける処理)の時
+				{
+					EnemyTracking++;
+				}
+			}
+		}
+
+		return EnemyTracking;//どのくらいの数の敵が追いかける処理をしているのか渡す
+	}
+
+	//ゲームの進行を管理する後々関数ではなくクラスにします
+	void GameStage::GameManager()
+	{
+		//ゲームクリアの条件
+		//ステージのオブジェクトを全て取得
+		auto obj = GetGameObjectVec();
+		EnemyNow = 0;
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto manhole : obj)
+		{
+
+			if (dynamic_pointer_cast<Enemy>(manhole))//アイテム型にキャストする
+			{
+
+				auto a = 0;
+				a++;
+				EnemyNow = a;
+
+			}
+		}
+
+		if (EnemyNow == 0)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
+		}
+
+	}
 
 	void GameStage::OnDestroy()
 	{
@@ -160,6 +177,11 @@ namespace basecross {
 		AddGameObject<Wall>(Vec3(-(selLength * 10.0f) / 2 - 1.0f, 0.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
 		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (-selLength * 10) / 2 - 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
 		AddGameObject<Wall>(Vec3(0.0f, 0.0f, (selLength * 10) / 2 + 1.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3((selLength * 10.0f), 30.0f, 2.0f));
+	}
+
+	void GameStage::SetEnemy(int num)
+	{
+		EnemyNow -= num;
 	}
 
 

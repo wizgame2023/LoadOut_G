@@ -55,7 +55,7 @@ namespace basecross {
 		m_CurrentSt->OnStart();
 
 		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
-		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 30.0f);
+		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 60.0f);
 	}
 
 	void Enemy::OnUpdate()
@@ -89,21 +89,28 @@ namespace basecross {
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//player‚Ìƒ|ƒWƒVƒ‡ƒ“‚ğæ“¾
 		float playerVec = atan2f((m_pos.x - m_playerPos.x), (m_pos.z - m_playerPos.z)) + XM_PI * 0.5;//Š—LÒ(Enemy)‚ğ’†S‚Éplayer‚Ì•ûŒü‚ğŒvZ
 
+		float angle = playerVec - m_angle;
+		//‹ŠE‚Ìì¬
+		if (angle > m_angle + XM_PI * 0.25 || angle < m_angle-XM_PI*0.25)
+		{
+			angle = m_angle;
+		}
 		m_forwardRay->SetAngle(m_angle);
 		//m_leftRay->SetAngle(m_angle - XM_PI * 0.5f);
-		m_playerRay->SetAngle(playerVec);
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		//wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
-		//	<< L"\n“G‚Ì‰ñ“].y : " << rot.y
-		//	<< L"\n“G‚Ì‰ñ“].z : " << rot.z
-		//	<< L"\nplayerPos.x : " << m_playerPos.x
-		//	<< L"\nplayerPos.z : " << m_playerPos.z
-		//	<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
-		//	<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
-		//<< endl;
+		m_playerRay->SetAngle(angle);
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
+			<< L"\n“G‚Ì‰ñ“].y : " << rot.y
+			<< L"\n“G‚Ì‰ñ“].z : " << rot.z
+			<< L"\nplayerPos.x : " << m_playerPos.x
+			<< L"\nplayerPos.z : " << m_playerPos.z
+			<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
+			<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
+			<< L"\nangle : " << XMConvertToDegrees(angle)
+		<< endl;
 
-		//scene->SetDebugString(wss.str());
+		scene->SetDebugString(wss.str());
 
 	}
 	void Enemy::OnDestroy()
@@ -111,6 +118,15 @@ namespace basecross {
 		// ƒIƒuƒWƒFƒNƒg©‘Ì‚ª”jŠü‚³‚ê‚é‚ÉŒ»İ‚ÆŸ‚ÌƒXƒe[ƒg—p‚Ì•Ï”‚ğ‹ó‚É‚·‚é
 		m_CurrentSt.reset();
 		m_NextSt.reset();
+		//SE¶¬ “G‚Ì‹©‚Ñº
+		auto SEManager = App::GetApp()->GetXAudio2Manager();
+		auto SE = SEManager->Start(L"Scream", 0, 0.9f);
+		//©•ª‚ªŒ®‚ğ‚Á‚Ä‚¢‚é‚Æ‚«
+		if (this->FindTag(L"Key"))
+		{	
+			//Œ®‚ğPlayer‚É“n‚·
+			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
+		}
 
 	}
 
@@ -151,9 +167,17 @@ namespace basecross {
 	{
 		return m_playerRay;
 	}
+
+	shared_ptr<StateBase> Enemy::GetNowState()
+	{
+		return m_CurrentSt;
+	}
+
 	void Enemy::GetGameOverScene()
 	{
 		return PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ƒQ[ƒ€ƒI[ƒoƒV[ƒ“‚ÉˆÚ“®‚·‚é
 	}
+
+
 }
 //end basecross

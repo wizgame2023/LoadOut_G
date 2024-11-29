@@ -38,8 +38,17 @@ namespace basecross {
 			throw;
 		}
 
+		//auto BGM = App::GetApp()->GetXAudio2Manager();
+		//auto bgm = BGM->Start(L"GameOver", 0, 0.9f);
+
 		auto BGM = App::GetApp()->GetXAudio2Manager();
-		BGM->Start(L"GameOver", 0, 0.9f);
+		m_BGM = BGM->Start(L"GameOverBGM", 0, 0.9f);
+
+
+		//SE生成マンホールにわなを仕掛ける音
+		//auto SEManager = App::GetApp()->GetXAudio2Manager();
+		//auto SE = SEManager->Start(L"SetManhole", 0, 0.9f);
+
 
 
 	}
@@ -61,6 +70,14 @@ namespace basecross {
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}
+	}
+
+	void GameOverStage::OnDestroy()
+	{
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		BGM->Stop(m_BGM);
+
+
 	}
 
 }

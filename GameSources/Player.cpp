@@ -10,7 +10,8 @@ namespace basecross{
 	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
 		Actor(StagePtr),
 		m_Pos(pos),
-		m_Rot(rot)
+		m_Rot(rot),
+		m_move(true)
 	{
 	}
 	Player::~Player()
@@ -57,21 +58,26 @@ namespace basecross{
 
 		AddTag(L"Player");//Player用のタグ
 
-		auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");//ミニマップマネージャーの取得
-		auto miniMapPos = miniMapManager->GetStartPos();
-		auto test = miniMapPos;
+		//auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");//ミニマップマネージャーの取得
+		//auto miniMapPos = miniMapManager->GetStartPos();
+		//auto test = miniMapPos;
 
 		//ミニマップにPlayerを表示させる
-		GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
+		//GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
 
 		//電池をどれくらい持っているかを表す
 		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
 		GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
-		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
+		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
 	}
 
 	void Player::OnUpdate()
 	{
+		if (!m_move)//フラグがオンになったら動ける
+		{
+			return;
+		}
+
 		KeyBoardMove();//キーボードでのPlayerの動きデバック用
 		//デルタタイム
 		auto Delta = App::GetApp()->GetElapsedTime();
@@ -103,7 +109,21 @@ namespace basecross{
 
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
-		m_spriteNum->SetNum(m_count);//表示する数字を更新する
+		//もし鍵を持っているなら脱出できる
+		m_key = true;//デバック用
+		if (m_key)
+		{
+			if (selNow == 4)//今いる床がハッチなら
+			{
+				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+				{
+					mapManager->MapDataUpdate(pos, 5);//脱出状態にする
+
+				}
+			}
+		}
+
+		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
 		//デバック用
 		wstringstream wss(L"");
@@ -115,10 +135,11 @@ namespace basecross{
 			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
 			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
 			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<< L"\nm_count：  " << m_count
+			<< L"\nm_count：  " << m_itemCount
 			<< L"\nSelNow " << selNow
 			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
 			<<L"\nFPS:"<< 1.0f/Delta
+			<<L"\nKey"<<m_key
 			<< endl;
 		//XMConvertToRadians(-90.0f)
 
@@ -175,14 +196,20 @@ namespace basecross{
 	{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 
-		if (m_count >= 1)//カウントが１以上なら
+		if (m_itemCount >= 1)//カウントが１以上なら
 		{
 			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
 			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
 			{
 				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
 				{
-					m_count--;
+					m_itemCount--;
+
+					//SE生成マンホールにわなを仕掛ける音
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"SetManhole", 0, 0.9f);
+
+
 					mapManager->MapDataUpdate(pos, 2);//罠を設置する
 
 				}
@@ -196,7 +223,7 @@ namespace basecross{
 	{
 		auto stage = GetStage();
 
-		stage->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_count, Vec3(500.0f, 0.0f, 0.0f));//数字のスプライト生成
+		stage->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(500.0f, 0.0f, 0.0f));//数字のスプライト生成
 		stage->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f));
 
 
@@ -217,7 +244,7 @@ namespace basecross{
 	//m_countに数値がプラスされる
 	void Player::AddCount(int add)
 	{
-		m_count += add;
+		m_itemCount += add;
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other)
@@ -269,6 +296,12 @@ namespace basecross{
 		float rad = -atan2(m_controler.fThumbLY, m_controler.fThumbLX);
 
 		return rad;
+	}
+
+	//鍵を持っているかのセッター
+	void Player::SetKey(bool key)
+	{
+		m_key = key;
 	}
 
 }

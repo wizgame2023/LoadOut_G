@@ -37,6 +37,10 @@ namespace basecross {
 		catch (...) {
 			throw;
 		}
+
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		m_BGM = BGM->Start(L"GameClear2", 0, 0.9f);
+
 	}
 
 	void GameClearStage::OnUpdate()
@@ -54,6 +58,15 @@ namespace basecross {
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}
+	}
+
+
+	void GameClearStage::OnDestroy()
+	{
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		BGM->Stop(m_BGM);
+
+
 	}
 
 }

@@ -37,6 +37,32 @@ namespace basecross {
 
 	}
 
+	Vec3 MapManager::ConvertWorldMap(Vec2 selPosition)
+	{
+		float w_length = (selPosition.x * 10.0f) - 95.0f;
+		float w_height = 95.0f - (selPosition.y * 10.0f);
+
+		return Vec3(w_length, 0, w_height);
+	}
+
+	Vec2 MapManager::ConvertAStarMap(Vec2 selPosition)
+	{
+		int AStarLength = selPosition.x * 2 + 1 + 2;
+		int AStarHeight = selPosition.y * 2 + 1 + 2;
+
+		return Vec2(AStarLength, AStarHeight);
+	}
+
+	//AStar座標からセル座標へ
+	Vec2 MapManager::ConvertA_S(Vec2 aStarPosition)
+	{
+		int Length = (aStarPosition.x - 1 - 2) / 2 ;
+		int Height = (aStarPosition.y - 1 - 2) / 2 ;
+
+		return Vec2(Length, Height);
+
+	}
+
 	//csvファイルをセルマップデータとして変換する
 	void MapManager::StageMapLoad()
 	{
@@ -83,6 +109,9 @@ namespace basecross {
 					GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f)-95, 0.05f, 95-(i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
+				case 4://ハッチ作成
+					GetStage()->AddGameObject<Hatch>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					break;
 				default:
 					break;
 				}
@@ -168,7 +197,7 @@ namespace basecross {
 	}
 
 	void MapManager::WallCreateKari()
-	{
+	{//横
 		vector<vector<int>> test_walls_up =
 		{
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -214,7 +243,7 @@ namespace basecross {
 		}
 
 		
-
+		//縦
 		vector<vector<int>> test_walls_right =
 		{
 			{0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0},
@@ -241,6 +270,9 @@ namespace basecross {
 
 		};
 
+		//Math masu;
+		//masu->Get
+
 		for (int i = 0; i < test_walls_right.size(); i++)
 		{
 			for (int j = 0; j < test_walls_right[0].size(); j++)
@@ -262,6 +294,118 @@ namespace basecross {
 		}
 
 
+		//A*用マップ作製
+		AddExctraAStar(2);//Aスターに余分に配列を入れる
+
+		for (int y=0; y < m_stageMap.size() * 2; y++)
+		{
+
+			int count = 0;
+			//余分に配列を入れる
+			while (count < 2)
+			{
+				count++;
+				m_aStarLine.push_back(9);
+			}
+			count = 0;//リセット
+
+			for (int x=0; x < m_stageMap[0].size() * 2; x++)
+			{
+				bool evenX;//縦が偶数かどうか
+				bool evenY;//横が偶数かどうか
+
+				////縦と横が奇数か偶数の数値かを確認する
+				evenX = x % 2 == 0 ? false : true;
+				evenY = y % 2 == 0 ? false : true;
+
+				//xとyが奇数なら空白
+				if (!evenX && !evenY)
+				{
+					m_aStarLine.push_back(0);
+				}
+				//xが奇数yが偶数なら縦壁
+				if (!evenX && evenY)
+				{
+					int originY = y / 2;//小数点以下切り捨て
+					int originX = x / 2;
+
+					m_aStarLine.push_back(test_walls_right[originY][originX]);
+				}
+				//xが偶数yが奇数なら横壁
+				if (evenX && !evenY)
+				{
+					int originY = y / 2;//小数点以下切り捨て
+					int originX = x / 2;
+
+					m_aStarLine.push_back(test_walls_up[originY][originX]);
+				}
+				//xとyが偶数なら地面
+				if (evenX && evenY)
+				{
+					int originY = y / 2;//小数点以下切り捨て
+					int originX = x / 2;
+
+					m_aStarLine.push_back(m_stageMap[originY][originX]);
+				}
+			}
+
+			//余分に配列を入れる
+			while (count < 2)
+			{
+				count++;
+				m_aStarLine.push_back(9);
+			}
+			count = 0;//リセット
+
+
+			//aStarMapにA＊の一行ずつ配列を入れる
+			m_aStarMap.push_back(m_aStarLine);
+			m_aStarLine.clear();//使わない配列は削除
+			auto a = 0;
+
+		}
+		m_aStarMap;
+		AddExctraAStar(2);//Aスターに余分に配列を入れる
+		auto test=0;
+	}
+
+	//配列に数値を入れる処理
+	void MapManager::AddArray(int loop, int num)
+	{
+		int count = 0;
+		//余分に配列を入れる
+		while (count < 2)
+		{
+			count++;
+			m_aStarLine.push_back(9);
+		}
+		count = 0;//リセット
+	}
+
+	//Aスターにある程度余分に配列を入れる処理
+	void MapManager::AddExctraAStar(int addArray)
+	{
+		//範囲外の配列を指定してエラーはかないようにある程度余分に配列を入れておく
+		vector<int> extra;//余分に入れる配列
+		for (int i = 0; i < m_stageMap.size() * 2; i++)
+		{
+			extra.push_back(9);//A*のｘ配列ぶん入れておく
+		}
+
+		int count = 0;//何個ほど配列を入れているか数える変数
+		while (count < addArray)
+		{
+			count++;
+			m_aStarMap.push_back(extra);//配列を余分に入れておく
+		}
+		m_aStarMap;
+
+	}
+
+	//A*マップを渡す
+	vector<vector<int>> MapManager::GetAStarMap()
+	{
+		return m_aStarMap;
 	}
 
 }

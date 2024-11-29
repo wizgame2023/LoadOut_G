@@ -14,17 +14,18 @@ namespace basecross{
 		Vec3 m_Pos;//ポジション
 		Vec3 m_Rot;//回転度
 
-		int m_count;//アイテムの所持数、この数の分だけマンホールを上げれる
+		int m_itemCount;//アイテムの所持数、この数の分だけマンホールを上げれる
 		int m_hp = 3;//Playerの体力
 
 		float m_deg;//角度
+
+		bool m_key;//鍵を持っているかどうか
 
 		shared_ptr<Transform> m_Trans;//トランスフォーム
 
 		shared_ptr<InputDevice> m_Device;//コントローラー
 		CONTROLER_STATE m_controler;//コントローラー
 		shared_ptr<SpriteNum> m_spriteNum;//数字のスプライト
-		//float m_time;//テスト用使わなくなったら消してください
 
 	public:
 		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ
@@ -45,6 +46,11 @@ namespace basecross{
 
 		float GetAngle()override;//角度を渡す
 		void AddBatteryUI();//電池をどれくらい取得しているかのUI
+
+		void SetKey(bool key);//鍵を持っているかどうか渡す
+
+		bool m_move;//動くか動かないかのフラグ
+
 	};
 
 }

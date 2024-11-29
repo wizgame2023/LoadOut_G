@@ -78,18 +78,33 @@ namespace basecross {
 
 	}
 
+	void YushinStage::CreateEnemy()
+	{
+		//AddGameObject<Enemy>(Vec3(0.0f, 2.5f, 0.0f));
+		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
+		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
+		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
+		auto group = CreateSharedObjectGroup(L"SeekGroup");
+		//配列の初期化
+		vector<Vec3> vec = {
+			{ -95.0f, 2.5f, 95.0f },
+		};
 
+		//配置オブジェクトの作成
+		for (size_t count = 0; count < vec.size(); count++) {
+			auto ptr = AddGameObject<Enemy>(vec[count]);
+			//ナンバースクエアを作成して関連させる
+			AddGameObject<NumberSquare>(ptr, count);
+		}
+
+
+	}
 	void YushinStage::OnCreate() {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
 			auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
 			SetSharedGameObject(L"MiniMapManager", miniMapManager);
-			AddGameObject<Enemy>(Vec3(-95.0f,2.5f,95.0f));
-			AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
-			AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
-			AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
-
 			//Playerの生成
 			auto ptrPlayer = AddGameObject<Player>(Vec3(50.0f, 3.0f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
 			SetSharedGameObject(L"Player", ptrPlayer);
@@ -97,8 +112,9 @@ namespace basecross {
 			AddGameObject<Ground>();
 			auto mapManager = AddGameObject<MapManager>();
 			SetSharedGameObject(L"MapManager", mapManager);
-			mapManager->WallCreateKari();//仮の内壁を生成する
+			//mapManager->WallCreateKari();//仮の内壁を生成する
 
+			CreateEnemy();
 
 		}
 		catch (...) {

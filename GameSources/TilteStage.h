@@ -14,6 +14,8 @@ namespace basecross {
 	class TilteStage : public Stage {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
+		shared_ptr<SoundItem> m_BGM;
+
 	public:
 		//\’z‚Æ”jŠü
 		TilteStage() :Stage() {}
@@ -21,6 +23,9 @@ namespace basecross {
 		//‰Šú‰»
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
+
+		void OnDestroy()override;
+
 	};
 
 

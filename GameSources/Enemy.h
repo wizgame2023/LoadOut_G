@@ -56,6 +56,7 @@ namespace basecross {
 		Vec3 GetPlayerPos();
 		shared_ptr<Ray> GetForwardRay();
 		shared_ptr<Ray> GetPlayerRay();
+		shared_ptr<StateBase> GetNowState();
 	};
 }
 //end basecross
