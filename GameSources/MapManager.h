@@ -32,6 +32,7 @@ namespace basecross {
 		void StageMapLoad();
 		void WallMapLoad();
 		void WallCreateKari();//仮の壁を生成しよう
+		void WallCreate();//壁を生成
 		void AddExctraAStar(int addArray);//余分にA*に配列を入れる処理
 		void AddArray(int loop,int num);//配列に数値を入れる処理
 
