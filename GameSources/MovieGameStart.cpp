@@ -19,7 +19,7 @@ namespace basecross {
 
 	void MovieGameStart::OnCreate()
 	{
-		CameraChange();
+		CameraChange();//カメラを変更
 	}
 
 	void MovieGameStart::OnUpdate()
@@ -66,11 +66,11 @@ namespace basecross {
 		float stageLenght = 200.0f;//ステージの直径
 		auto startPos = Vec3(0.0f, stageLenght, -stageLenght);//初期位置
 		m_StageView = GetStage()->GetView();
-		m_stageCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());//ステージ用のカメラを取得
-		auto a = m_stageCamera.lock()->GetEye();
+		m_stageCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());//ステージ用のカメラを取得 なぜかこの関数が終わるとこの変数の中身が消えます
+
 		m_movieCamera = ObjectFactory::Create<Camera>();//カメラ作成
 		m_movieCamera->SetEye(startPos);//初期位置
-		m_movieCamera->SetAt(m_stageCamera.lock()->GetAt());//初期中心点
+		m_movieCamera->SetAt(m_stageCamera->GetAt());//初期中心点
 		auto movieView = GetStage()->CreateView<SingleView>();//ビュー作成
 		movieView->SetCamera(m_movieCamera);//ビューにムービー用のカメラ設置
 		GetStage()->SetView(movieView);//ステージにムービー用のビューを設置する
