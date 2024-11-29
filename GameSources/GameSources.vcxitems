@@ -34,7 +34,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapActor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Movie.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameClear.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameStart.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpPlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NumberSquare.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
@@ -79,7 +81,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapActor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Movie.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameClear.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameStart.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpPlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NumberSquare.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
