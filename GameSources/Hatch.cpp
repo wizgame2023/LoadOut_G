@@ -68,10 +68,19 @@ namespace basecross {
 			auto ptrDraw = GetComponent<PNTStaticDraw>();
 			ptrDraw->SetTextureResource(L"Black");
 
+			if (m_count == 0)
+			{
+				m_count = 1;
+				stage->AddGameObject<MovieGameClear>();//デバック用
+
+			}
+
+
+			
 
 			//ステージマネージャーにゲームクリアのフラグを渡す
-			auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
-			stageManager->SetClearFlag(true);
+			//auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+			//stageManager->SetClearFlag(true);
 		}
 	}
 

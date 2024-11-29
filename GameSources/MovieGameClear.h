@@ -11,7 +11,7 @@ namespace basecross {
 	class MovieGameClear :public Movie
 	{
 	private:
-
+		Vec3 m_tagetPos;//–Ú“I’n
 	public:
 		MovieGameClear(shared_ptr<Stage>& stagePtr);
 		~MovieGameClear();
