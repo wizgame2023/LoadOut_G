@@ -34,7 +34,7 @@ namespace basecross {
 		auto stage = GetStage();
 		auto player = stage->GetSharedGameObject<Player>(L"Player");
 		auto playerPos = player->GetComponent<Transform>()->GetPosition();
-		player->m_move = false;
+		player->MoveSwich(false);//‘€ìŒø‚©‚È‚¢‚æ‚¤‚É‚·‚é
 		
 		playerPos.y += 100.0f*delta;
 		player->GetComponent<Transform>()->SetPosition(playerPos);
