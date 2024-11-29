@@ -15,6 +15,7 @@ namespace basecross {
 		float m_heigth;
 		int m_layer;
 		Vec2 m_size;//画像の大きさ
+		shared_ptr<PCTSpriteDraw> m_drawComp;//ドローコンポーネント
 
 		//vector<VertexPositionColorTexture> m_vertices;
 		//vector<uint16_t> m_indices;
@@ -34,6 +35,9 @@ namespace basecross {
 
 		virtual void OnCreate()override;//作成
 		virtual void OnUpdate()override;//更新
+
+		void SetColor(Col4 coler);//セッター
+		Col4 GetColor();//ゲッター
 
 	};
 

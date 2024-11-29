@@ -41,10 +41,10 @@ namespace basecross {
 			2, 1, 3  // ←こっちも
 		};
 
-		auto drawComp = AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
-		drawComp->SetTextureResource(m_textureName);//テクスチャの名前指定
-		drawComp->SetSamplerState(SamplerState::LinearWrap); // テクスチャを繰り返して貼り付ける設定
-		drawComp->SetDiffuse(Col4(1, 1, 1, 1.0f)); // ポリゴンを色を設定する
+		m_drawComp = AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
+		m_drawComp->SetTextureResource(m_textureName);//テクスチャの名前指定
+		m_drawComp->SetSamplerState(SamplerState::LinearWrap); // テクスチャを繰り返して貼り付ける設定
+		m_drawComp->SetDiffuse(Col4(1, 1, 1, 1.0f)); // ポリゴンを色を設定する
 
 		auto trans = GetComponent<Transform>();
 		trans->SetPosition(m_pos);
@@ -60,7 +60,19 @@ namespace basecross {
 
 	void Sprite::OnUpdate()
 	{
+		
+	}
 
+	//カラーの数値を変更する
+	void Sprite::SetColor(Col4 color)
+	{
+		m_color = color;
+		m_drawComp->SetDiffuse(color);
+	}
+	//カラーの数値を取得させる
+	Col4 Sprite::GetColor()
+	{
+		return m_color;
 	}
 
 }
