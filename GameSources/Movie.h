@@ -10,8 +10,8 @@
 namespace basecross {
 	class Movie :public GameObject
 	{
-	private:
-		weak_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
+	protected:
+		shared_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
 		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら
 		Vec3 testPos;
 	public:
