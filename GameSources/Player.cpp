@@ -10,7 +10,8 @@ namespace basecross{
 	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
 		Actor(StagePtr),
 		m_Pos(pos),
-		m_Rot(rot)
+		m_Rot(rot),
+		m_move(true)
 	{
 	}
 	Player::~Player()
@@ -72,6 +73,11 @@ namespace basecross{
 
 	void Player::OnUpdate()
 	{
+		if (!m_move)//フラグがオンになったら動ける
+		{
+			return;
+		}
+
 		KeyBoardMove();//キーボードでのPlayerの動きデバック用
 		//デルタタイム
 		auto Delta = App::GetApp()->GetElapsedTime();

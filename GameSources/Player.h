@@ -48,6 +48,9 @@ namespace basecross{
 		void AddBatteryUI();//“d’r‚ğ‚Ç‚ê‚­‚ç‚¢æ“¾‚µ‚Ä‚¢‚é‚©‚ÌUI
 
 		void SetKey(bool key);//Œ®‚ğ‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©“n‚·
+
+		bool m_move;//“®‚­‚©“®‚©‚È‚¢‚©‚Ìƒtƒ‰ƒO
+
 	};
 
 }
