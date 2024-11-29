@@ -196,6 +196,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Movie.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameStart.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpPlayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameClear.h">
+      <Filter>Headers\Movie</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -320,6 +325,11 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Hatch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Movie.cpp">
+      <Filter>Sources\Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameStart.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpPlayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameClear.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
   </ItemGroup>
