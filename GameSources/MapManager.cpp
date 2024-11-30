@@ -7,8 +7,9 @@
 #include "Project.h"
 
 namespace basecross {
-	MapManager::MapManager(shared_ptr<Stage>& stagePtr):
-		GameObject(stagePtr)
+	MapManager::MapManager(shared_ptr<Stage>& stagePtr,wstring stageName):
+		GameObject(stagePtr),
+		m_stageName(stageName)
 	{
 
 	}
@@ -67,10 +68,10 @@ namespace basecross {
 	void MapManager::StageMapLoad()
 	{
 		auto path = App::GetApp()->GetDataDirWString();
-		auto levelPath = path + L"Levels/";
+		auto levelPath = path + L"Levels/"+m_stageName;
 
 		//csvファイルからデータを読み込む
-		ifstream ifs(levelPath + L"Stage1.csv");
+		ifstream ifs(levelPath + L"GroundMap.csv");
 		if (ifs)
 		{
 			string line;
@@ -132,7 +133,7 @@ namespace basecross {
 		vector<vector<int>> upWallMap;
 
 		//csvファイルからデータを読み込む
-		ifstream ifs(levelPath + L"UpWallMap_Stage01.csv");
+		ifstream ifs(levelPath + L"UpWallMap.csv");
 		if (ifs)
 		{
 			string line;
@@ -178,7 +179,7 @@ namespace basecross {
 		vector<vector<int>> RightWallMap;
 
 		//csvファイルからデータを読み込む
-		ifstream ifs2(levelPath + L"RightWallMap_Stage01.csv");
+		ifstream ifs2(levelPath + L"RightWallMap.csv");
 		if (ifs2)
 		{
 			string line;
@@ -245,7 +246,7 @@ namespace basecross {
 
 	}
 
-	void MapManager::WallCreateKari()
+	void MapManager::WallCreateKari()//この処理はもう使わない
 	{//横
 		vector<vector<int>> test_walls_up =
 		{
