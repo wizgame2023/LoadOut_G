@@ -29,10 +29,13 @@ namespace basecross {
 		//float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
 		//m_ownerRot.y = rad;//playerの方向に向く
 
-		auto cost = MoveCost();
-		m_directionRad = math.GetAngle(m_ownerPos,cost);
 
-		m_ownerRot.y = m_directionRad;
+		MoveCost();
+		//auto cost = MoveCost();
+		//m_directionRad = math.GetAngle(m_ownerPos,cost);
+		m_directionRad = math.GetAngle(m_ownerPos,m_tagetPos);
+
+		//m_ownerRot.y = m_directionRad;
 
 		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
 		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
@@ -58,7 +61,7 @@ namespace basecross {
 		{
 			m_Owner->ChangeState<Attack>();
 		}
-		auto a = m_posVec[m_count-1];
+		//auto a = m_posVec[m_count-1];
 
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		Vec3 pos = m_ownerPos;
@@ -74,24 +77,24 @@ namespace basecross {
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
 		//デバックログ
-		auto scene = App::GetApp()->GetScene<Scene>();
-		wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
-			<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
-			<< L"\n敵の回転.y : " << m_ownerRot.y
-			<< L"\n敵の回転（deg）" << deg
-			<< L"\n敵のPos.x : " << m_ownerPos.x
-			<< L"\n敵のPos.z : " << m_ownerPos.z
-			<< L"\n右コスト : " << m_costRight
-			<< L"\n左コスト : " << m_costLeft
-			<< L"\n前コスト : " << m_costFod
-			<< L"\n後コスト : " << m_costDown
-			<< L"\nAStarPos.x : " << AStarPos.x
-			<< L"\nAStarPos.y : " << AStarPos.y
-			<< L"\na.x : " << a.x
-			<< L"\na.y : "<<a.y
-			<<L"\na.z : "<<a.z
-			<< endl;
-		scene->SetDebugString(wss.str());
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
+			//<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
+			//<< L"\n敵の回転.y : " << m_ownerRot.y
+			//<< L"\n敵の回転（deg）" << deg
+			//<< L"\n敵のPos.x : " << m_ownerPos.x
+			//<< L"\n敵のPos.z : " << m_ownerPos.z
+			//<< L"\n右コスト : " << m_costRight
+			//<< L"\n左コスト : " << m_costLeft
+			//<< L"\n前コスト : " << m_costFod
+			//<< L"\n後コスト : " << m_costDown
+			//<< L"\nAStarPos.x : " << AStarPos.x
+			//<< L"\nAStarPos.y : " << AStarPos.y
+			//<< L"\na.x : " << a.x
+			//<< L"\na.y : "<<a.y
+			//<<L"\na.z : "<<a.z
+			//<< endl;
+		//scene->SetDebugString(wss.str());
 	}
 	//追跡ステートの最後の処理
 	void Tracking::OnExit()
@@ -99,181 +102,370 @@ namespace basecross {
 
 	}
 
+	////ここでA*の処理をします
 	Vec3 Tracking::MoveCost()
 	{
-		Math math;
-		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		auto stage = App::GetApp()->GetScene<Scene>()->GetActiveStage();
+		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		Vec3 pos = m_ownerPos;
 		Vec3 playerPos = m_playerPos;
-		Vec3 direction;
-		auto AStar = mapMgr->GetAStarMap();
-		auto sellPos = mapMgr->ConvertSelMap(pos);
-		auto AStarPos = mapMgr->ConvertAStarMap(sellPos);
 
-		auto rightAStar = AStar[AStarPos.y][AStarPos.x + 1];
-		auto leftAStar = AStar[AStarPos.y][AStarPos.x - 1];
-		auto fodAStar = AStar[AStarPos.y - 1][AStarPos.x];
-		auto downAStar = AStar[AStarPos.y + 1][AStarPos.x];
+		auto aStarMap = mapManager->GetAStarMap();//Aスター取得
+		//if()
+
+		//自分自身の位置をAStarの座標にする
+		auto EnemySelPos = mapManager->ConvertSelMap(m_ownerPos);
+		auto EnemyAStarPos = mapManager->ConvertAStarMap(EnemySelPos);
+
+		auto test = mapManager->ConvertA_S(EnemyAStarPos);
+		auto test2 = mapManager->ConvertWorldMap(test);
+
+		//Playerの位置をAStarの座標にする
+		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
+		auto playerAStarPos = mapManager->ConvertAStarMap(playerSelPos);//A*の座標に変える
+
+		aStarMap[playerAStarPos.y][playerAStarPos.x] = 2;//AMapにここが目的地と伝える
+		auto a = 0;
+
+		//チェックする配列
+		//vector<Vec2> charkVec;
+		//vector<Vec2> direction;//方向
+
+		////右の座標
+		auto right = aStarMap[EnemyAStarPos.y][EnemyAStarPos.x + 1];//後々、個々の引数はEnemyStarPosではなく調べたい座標の変数に変える
+		//direction.push_back(Vec2(EnemyAStarPos.y, EnemyAStarPos.x + 1));//AStarの座標を取得
+		////左の座標
+		auto left = aStarMap[EnemyAStarPos.y][EnemyAStarPos.x - 1];
+		//direction.push_back(Vec2(EnemyAStarPos.y, EnemyAStarPos.x - 1));//AStarの座標を取得
+		////下の座標
+		auto down = aStarMap[EnemyAStarPos.y + 1][EnemyAStarPos.x];
+		//direction.push_back(Vec2(EnemyAStarPos.y+1, EnemyAStarPos.x));//AStarの座標を取得
+		////上の座標
+		auto up = aStarMap[EnemyAStarPos.y - 1][EnemyAStarPos.x];
+		//direction.push_back(Vec2(EnemyAStarPos.y - 1, EnemyAStarPos.x));//AStarの座標を取得
 
 
-		auto rightASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x + 2, AStarPos.y));
-		auto leftASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x - 2, AStarPos.y));
-		auto fodASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y - 2));
-		auto downASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y + 2));
+		auto m_rightWall = false;
+		auto m_leftWall = false;
+		auto m_downWall = false;
+		auto m_upWall = false;
 
-
-		auto rightWPos = mapMgr->ConvertWorldMap(rightASPos);
-		auto leftWPos = mapMgr->ConvertWorldMap(leftASPos);
-		auto fodWPos = mapMgr->ConvertWorldMap(fodASPos);
-		auto downWPos = mapMgr->ConvertWorldMap(downASPos);
-
-
-		auto rightVec = math.GetDistance(rightWPos, m_playerPos);
-		auto liftVec = math.GetDistance(leftWPos, m_playerPos);
-		auto fodVec = math.GetDistance(fodWPos, m_playerPos);
-		auto downVec = math.GetDistance(downWPos, m_playerPos);
-
-
-		if (rightAStar == 1)
+		//隣の座標が1(つまり壁があれば通らない)
+		if (right == 1)
 		{
-			m_costRWall += 1000;
+			m_rightWall = true;//隣に壁があったら処理をしない
+			m_costRWall = 999;
 		}
-		else if(rightAStar == 0)
+		//壁がなければ処理をする
+		if (right == 0)
 		{
-			m_costRWall = 0;
-		}
-		if (leftAStar == 1)
-		{
-			m_costLWall = 1000;
-		}
-		else if (leftAStar == 0)
-		{
-			m_costLWall = 0;
-		}
-		if (fodAStar == 1)
-		{
-			m_costFWall += 1000;
-		}
-		else if (fodAStar == 0)
-		{
-			m_costFWall = 0;
-		}
-		if (downAStar == 1)
-		{
-			m_costDWall += 1000;
-		}
-		else if (downAStar == 0)
-		{
-			m_costDWall = 0;
+			m_rightWall = false;
+			//右に行ってからのEnemyとPlayerの距離を測る
+			auto distance = abs((EnemyAStarPos.x+1) - playerAStarPos.x) + abs(EnemyAStarPos.y - playerAStarPos.y);
+			auto addDistance = 1;//進んだ距離
+			m_costRWall = distance;//コストを入れる
+
 		}
 
-
-
-		int min_value[] =
+		if (left == 1)
 		{
-			{rightVec + m_costRight+m_costRWall},
-			{liftVec + m_costLeft+m_costLWall},
-			{fodVec + m_costFod+m_costFWall},
-			{downVec + m_costDown+m_costDWall},
+			m_leftWall = true;
+			m_costLWall = 999;
+		}
+		if (left == 0)
+		{
+			m_leftWall = false;
+			//左に行ってからのEnemyとPlayerの距離を測る
+			auto distance = abs((EnemyAStarPos.x-1) - playerAStarPos.x) + abs(EnemyAStarPos.y - playerAStarPos.y);
+			auto addDistance = 1;//進んだ距離
+			m_costLWall = distance;//コストを入れる
+		}
+
+		if (up == 1)
+		{
+			m_upWall = true;
+			m_costFWall = 999;//コストを入れる
+		}
+		if (up == 0)
+		{
+			m_upWall = false;
+			//上に行ってからのEnemyとPlayerの距離を測る
+			auto distance = abs(EnemyAStarPos.x - playerAStarPos.x) + abs((EnemyAStarPos.y-1) - playerAStarPos.y);
+			auto addDistance = 1;//進んだ距離
+			m_costFWall = distance;//コストを入れる
+		}
+
+		if (down == 1)
+		{
+			m_downWall = true;
+			m_costDWall = 999;//コストを入れる
+		}
+		if (down == 0)
+		{
+			m_downWall = false;
+			//上に行ってからのEnemyとPlayerの距離を測る
+			auto distance = abs(EnemyAStarPos.x - playerAStarPos.x) + abs((EnemyAStarPos.y + 1) - playerAStarPos.y);
+			auto addDistance = 1;//進んだ距離
+			m_costDWall = distance;//コストを入れる
+		}
+
+		vector<int> cost =
+		{
+			m_costLWall,//左
+			m_costRWall,//右
+			m_costFWall,//上
+			m_costDWall//下
 		};
-		int min = min_value[0];
-		for (int i = 0; i < 4; i++)
+
+		auto minCost = 999;//一番低いコストを保管する
+		vector<int> minDirection;//方向を管理する変数
+		//コストが一番低い方向を調べる
+		for (int i = 0; i < cost.size(); i++)
 		{
-			if (min_value[i] < min)
+			auto nowCost = cost[i];//現在のコスト
+			if (minCost > nowCost)//今のコストが最小のコストよりも低いとき
 			{
-				min = min_value[i];
+				minCost = nowCost;//最小コストを更新する
+				minDirection.clear();//最小コストが更新されたので配列リセット
+				minDirection.push_back(i);//これで一番低いコストの方向を確認する
+			}
+			else if (minCost == nowCost)//今のコストが最小のコストと同じ時
+			{
+				minDirection.push_back(i);//一番低いコストの方向を追加する
 			}
 		}
 
-		if (min == min_value[0])
+		//その後に一番低いコストの方向に進む処理をかく、もし一番低いコストの方向方向が複数あれば同時にやる
+		//まずは一番低いコストの方向が１つだけの処理を書く、その後に関数化させて複数処理をする 複数処理できそう
+		for (int i = 0; i < minDirection.size(); i++)
 		{
-			direction = rightWPos;
-		}
-		if (min == min_value[1])
-		{
-			direction = leftWPos;
-		}
-		if (min == min_value[2])
-		{
-			direction = fodWPos;
-		}
-		if (min == min_value[3])
-		{
-			direction = downWPos;
-		}
-		while (direction != m_playerPos)
-		{
-			if (m_count >= 0)
+			//もし、方向が左だったら
+			if (minDirection[i] == 0)
 			{
-				//m_posVec[m_count] = direction;
-				m_posVec.push_back(direction);
+				auto AStarPos(Vec2(EnemyAStarPos.x-2, EnemyAStarPos.y));//AStarの座標を取得
+				auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
+				m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
+				auto a = 0;
 
 			}
+			//もし、方向が右だったら
+			if (minDirection[i] == 1)
+			{
+				auto AStarPos(Vec2(EnemyAStarPos.x+2, EnemyAStarPos.y));//AStarの座標を取得
+				auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
+				m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
+				auto a = 0;
+			}
+			//もし、方向が上だったら
+			if (minDirection[i] == 2)
+			{
+				auto AStarPos(Vec2(EnemyAStarPos.x, EnemyAStarPos.y-2));//AStarの座標を取得
+				auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
+				m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
+				auto a = 0;
 
-			if (m_count > 0)
-			{
-				if (playerPos==m_playerPos)
-				{
-					if (rightWPos == m_posVec[m_count - 1])
-					{
-						m_costLeft += 100;
-						m_costRight = 0;
-					}
-					if (leftWPos == m_posVec[m_count - 1])
-					{
-						m_costRight += 100;
-						m_costLeft = 0;
-					}
-					if (fodWPos == m_posVec[m_count - 1])
-					{
-						m_costDown += 1;
-						m_costFod = 0;
-					}
-					if (downWPos == m_posVec[m_count - 1])
-					{
-						m_costFod += 1;
-						m_costDown = 0;
-					}
-				}
 			}
-			if (m_costRight < 0)
+			//もし、方向が下だったら
+			if (minDirection[i] == 3)
 			{
-				m_costRight = 0;
+				auto AStarPos(Vec2(EnemyAStarPos.x, EnemyAStarPos.y+2));//AStarの座標を取得
+				auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
+				m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
+				auto a = 0;
+
 			}
-			if (m_costRight > 100)
-			{
-				m_costRight = 100;
-			}
-			if (m_costLeft < 0)
-			{
-				m_costLeft = 0;
-			}
-			if (m_costLeft > 100)
-			{
-				m_costLeft = 100;
-			}
-			if(m_costFod < 0)
-			{
-				m_costFod = 0;
-			}
-			if (m_costFod > 100)
-			{
-				m_costFod = 100;
-			}
-			if (m_costDown < 0)
-			{
-				m_costDown = 0;
-			}
-			if (m_costDown > 100)
-			{
-				m_costDown = 100;
-			}
-			m_count++;
-			
-			return m_posVec[m_count - 1];
 		}
 
+
+
+
+
+		//隣のマスが壁があるかどうか確認する
+		//for (int i = -1; i <= 1; i += 2)
+		//{
+		//	//m_rightCost = 0;
+		//}
+
+		return Vec3(0,0,0);
 	}
+
+	//Vec3 Tracking::MoveCost()
+	//{
+	//	Math math;
+	//	auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+	//	Vec3 pos = m_ownerPos;
+	//	Vec3 playerPos = m_playerPos;
+	//	Vec3 direction;
+	//	auto AStar = mapMgr->GetAStarMap();//A*のマップ配列取得
+	//	auto sellPos = mapMgr->ConvertSelMap(pos);//Enemyの位置をセル座標に変更
+	//	auto AStarPos = mapMgr->ConvertAStarMap(sellPos);//セル座標からAStar座標に変更
+
+	//	auto rightAStar = AStar[AStarPos.y][AStarPos.x + 1];
+	//	auto leftAStar = AStar[AStarPos.y][AStarPos.x - 1];
+	//	auto fodAStar = AStar[AStarPos.y - 1][AStarPos.x];
+	//	auto downAStar = AStar[AStarPos.y + 1][AStarPos.x];
+
+
+	//	auto rightASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x + 2, AStarPos.y));
+	//	auto leftASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x - 2, AStarPos.y));
+	//	auto fodASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y - 2));
+	//	auto downASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y + 2));
+
+
+	//	auto rightWPos = mapMgr->ConvertWorldMap(rightASPos);
+	//	auto leftWPos = mapMgr->ConvertWorldMap(leftASPos);
+	//	auto fodWPos = mapMgr->ConvertWorldMap(fodASPos);
+	//	auto downWPos = mapMgr->ConvertWorldMap(downASPos);
+
+
+	//	auto rightVec = math.GetDistance(rightWPos, m_playerPos);
+	//	auto liftVec = math.GetDistance(leftWPos, m_playerPos);
+	//	auto fodVec = math.GetDistance(fodWPos, m_playerPos);
+	//	auto downVec = math.GetDistance(downWPos, m_playerPos);
+
+
+	//	if (rightAStar == 1)
+	//	{
+	//		m_costRWall += 1000;
+	//	}
+	//	else if(rightAStar == 0)
+	//	{
+	//		m_costRWall = 0;
+	//	}
+	//	if (leftAStar == 1)
+	//	{
+	//		m_costLWall = 1000;
+	//	}
+	//	else if (leftAStar == 0)
+	//	{
+	//		m_costLWall = 0;
+	//	}
+	//	if (fodAStar == 1)
+	//	{
+	//		m_costFWall += 1000;
+	//	}
+	//	else if (fodAStar == 0)
+	//	{
+	//		m_costFWall = 0;
+	//	}
+	//	if (downAStar == 1)
+	//	{
+	//		m_costDWall += 1000;
+	//	}
+	//	else if (downAStar == 0)
+	//	{
+	//		m_costDWall = 0;
+	//	}
+
+
+
+	//	int min_value[] =
+	//	{
+	//		{rightVec + m_costRight+m_costRWall},
+	//		{liftVec + m_costLeft+m_costLWall},
+	//		{fodVec + m_costFod+m_costFWall},
+	//		{downVec + m_costDown+m_costDWall},
+	//	};
+	//	int min = min_value[0];
+	//	for (int i = 0; i < 4; i++)
+	//	{
+	//		if (min_value[i] < min)
+	//		{
+	//			min = min_value[i];
+	//		}
+	//	}
+
+	//	if (min == min_value[0])
+	//	{
+	//		direction = rightWPos;
+	//	}
+	//	if (min == min_value[1])
+	//	{
+	//		direction = leftWPos;
+	//	}
+	//	if (min == min_value[2])
+	//	{
+	//		direction = fodWPos;
+	//	}
+	//	if (min == min_value[3])
+	//	{
+	//		direction = downWPos;
+	//	}
+	//	while (direction != m_playerPos)
+	//	{
+	//		if (m_count >= 0)
+	//		{
+	//			//m_posVec[m_count] = direction;
+	//			m_posVec.push_back(direction);
+
+	//		}
+
+	//		if (m_count > 0)
+	//		{
+	//			if (playerPos==m_playerPos)
+	//			{
+	//				if (rightWPos == m_posVec[m_count - 1])
+	//				{
+	//					m_costLeft += 100;
+	//					m_costRight = 0;
+	//				}
+	//				if (leftWPos == m_posVec[m_count - 1])
+	//				{
+	//					m_costRight += 100;
+	//					m_costLeft = 0;
+	//				}
+	//				if (fodWPos == m_posVec[m_count - 1])
+	//				{
+	//					m_costDown += 1;
+	//					m_costFod = 0;
+	//				}
+	//				if (downWPos == m_posVec[m_count - 1])
+	//				{
+	//					m_costFod += 1;
+	//					m_costDown = 0;
+	//				}
+	//			}
+	//		}
+	//		if (m_costRight < 0)
+	//		{
+	//			m_costRight = 0;
+	//		}
+	//		if (m_costRight > 100)
+	//		{
+	//			m_costRight = 100;
+	//		}
+	//		if (m_costLeft < 0)
+	//		{
+	//			m_costLeft = 0;
+	//		}
+	//		if (m_costLeft > 100)
+	//		{
+	//			m_costLeft = 100;
+	//		}
+	//		if(m_costFod < 0)
+	//		{
+	//			m_costFod = 0;
+	//		}
+	//		if (m_costFod > 100)
+	//		{
+	//			m_costFod = 100;
+	//		}
+	//		if (m_costDown < 0)
+	//		{
+	//			m_costDown = 0;
+	//		}
+	//		if (m_costDown > 100)
+	//		{
+	//			m_costDown = 100;
+	//		}
+	//		m_count++;
+	//		
+	//		return m_posVec[m_count - 1];
+	//	}
+
+	//}
+
+	
 
 }
 

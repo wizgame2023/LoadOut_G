@@ -38,6 +38,7 @@ namespace basecross {
 		weak_ptr<Ray>m_playerRay;
 
 		vector<Vec3>m_posVec;
+		Vec3 m_tagetPos;//目的地のワールド座標
 
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
