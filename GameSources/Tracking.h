@@ -8,6 +8,7 @@
 //#include"Ray.h"
 namespace basecross {
 	class Ray;
+	class VecAStarIndex;
 	class Tracking :public StateBase
 	{
 	private:
@@ -32,13 +33,23 @@ namespace basecross {
 		int m_count;
 		int m_directionCount;
 
+		bool m_rightFlag;
+		bool m_leftFlag;
+		bool m_upFlag;
+		bool m_downFlag;
+
 
 		shared_ptr<Transform> m_trans;
 
 		weak_ptr<Ray>m_playerRay;
 
 		vector<Vec3>m_posVec;
+		vector<Vec3> m_tagetRootPos;//通る道の配列
 		Vec3 m_tagetPos;//目的地のワールド座標
+
+
+		//AStarMapの情報を入れる配列
+		vector<vector<VecAStarIndex>> m_aStarMapDeta;
 
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
@@ -69,9 +80,33 @@ namespace basecross {
 		void OnExit();
 
 		Vec3 MoveCost();
+		void nextSelLook(int right,int left,int up, int down,Vec2 enemyAStarPos,Vec2 playerAStarPos);//隣に壁か上げているマンホールがあるか確認する
 
 		void Navi();
 	};
+
+
+	//AStar管理用の専用配列
+	class VecAStarIndex
+	{
+	public:
+		int addLenght;//さしているマスに行くには現在地点からどのくらい進むのか
+		int toTagetLenght;//その地点から目的地への距離
+		int totalLenght;//そこを経由すると目的地に最短どれくらいで着くか
+		bool use;//今まで通ったことのある所か
+
+		VecAStarIndex(int addLenght, int toTagetLenght, int totalLenght, bool use) :
+			addLenght(addLenght),
+			toTagetLenght(toTagetLenght),
+			totalLenght(totalLenght),
+			use(use)
+		{
+		}
+		~VecAStarIndex()
+		{
+		}
+	};
+
 
 }
 //end basecross
