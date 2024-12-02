@@ -13,6 +13,7 @@ RightWallMap_Stage○○とxlsx,RightWallMap_Stage○○.csv
 
 ③一マスの床の状態マンホールがあるかハッチがあるかなど(Ground)
 GroundMap_Stage○○.xlsxとGroundWallMap_Stage○○.csv
+0:地面　1:マンホール　4:脱出
 
 
 最初にxlsxデータでマップを作成してください
