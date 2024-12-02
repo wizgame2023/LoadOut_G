@@ -49,7 +49,7 @@ namespace basecross{
 
 		void SetKey(bool key);//鍵を持っているかどうか渡す
 
-		bool m_move;//動くか動かないかのフラグ
+		//bool m_move;//動くか動かないかのフラグ
 
 	};
 

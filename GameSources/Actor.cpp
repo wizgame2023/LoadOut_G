@@ -28,6 +28,11 @@ namespace basecross {
 		m_angle = angle;
 	}
 
+	void Actor::MoveSwich(bool onoff)
+	{
+		m_move = onoff;
+	}
+
 
 }
 //end basecross

@@ -55,7 +55,7 @@ namespace basecross {
 		//マップマネージャーの生成
 		auto mapManager = AddGameObject<MapManager>();
 		SetSharedGameObject(L"MapManager", mapManager);
-		mapManager->WallCreateKari();//仮の内壁を生成する
+		//mapManager->WallCreateKari();//仮の内壁を生成する
 
 		//床の作成
 		AddGameObject<Ground>();
@@ -94,7 +94,7 @@ namespace basecross {
 		auto stageManager = AddGameObject<StageManager>();
 		SetSharedGameObject(L"StageManager", stageManager);
 
-		OutWallCreate(20);//外壁生成
+		//OutWallCreate(20);//外壁生成
 
 		//敵生成
 		auto enemy = AddGameObject<Enemy>();

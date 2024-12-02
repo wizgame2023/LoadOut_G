@@ -10,8 +10,8 @@ namespace basecross{
 	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
 		Actor(StagePtr),
 		m_Pos(pos),
-		m_Rot(rot),
-		m_move(true)
+		m_Rot(rot)
+		//m_move(true)
 	{
 	}
 	Player::~Player()
@@ -69,6 +69,8 @@ namespace basecross{
 		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
 		GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
 		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
+		MoveSwich(true);
+
 	}
 
 	void Player::OnUpdate()

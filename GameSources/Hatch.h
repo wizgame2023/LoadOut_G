@@ -17,6 +17,7 @@ namespace basecross {
 		//shared_ptr<WaterPillar> m_waterPillar;//水柱
 
 		int m_charen;//テクスチャを変えるフラグ
+		int m_count;
 
 		float m_time;//時間を測るために必要
 

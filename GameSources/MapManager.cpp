@@ -7,8 +7,9 @@
 #include "Project.h"
 
 namespace basecross {
-	MapManager::MapManager(shared_ptr<Stage>& stagePtr):
-		GameObject(stagePtr)
+	MapManager::MapManager(shared_ptr<Stage>& stagePtr,wstring stageName):
+		GameObject(stagePtr),
+		m_stageName(stageName)
 	{
 
 	}
@@ -19,7 +20,7 @@ namespace basecross {
 	void MapManager::OnCreate()
 	{
 		StageMapLoad();
-		
+		WallMapLoad();
 	}
 
 	void MapManager::OnUpdate()
@@ -67,10 +68,10 @@ namespace basecross {
 	void MapManager::StageMapLoad()
 	{
 		auto path = App::GetApp()->GetDataDirWString();
-		auto levelPath = path + L"Levels/";
+		auto levelPath = path + L"Levels/"+m_stageName;
 
 		//csvファイルからデータを読み込む
-		ifstream ifs(levelPath + L"Stage1.csv");
+		ifstream ifs(levelPath + L"GroundMap.csv");
 		if (ifs)
 		{
 			string line;
@@ -125,13 +126,14 @@ namespace basecross {
 	void MapManager::WallMapLoad()
 	{
 		auto path = App::GetApp()->GetDataDirWString();
-		auto levelPath = path + L"Levels/";
+		wstring stage = L"Stage01/";
+		auto levelPath = path + L"Levels/"+stage;
 
 		//マップデータ
-		vector<vector<int>> wallMap;
+		vector<vector<int>> upWallMap;
 
 		//csvファイルからデータを読み込む
-		ifstream ifs(levelPath + L"Stage1.csv");
+		ifstream ifs(levelPath + L"UpWallMap.csv");
 		if (ifs)
 		{
 			string line;
@@ -146,35 +148,78 @@ namespace basecross {
 				while (getline(ss, data, ','))
 				{
 					int cellData = atoi(data.c_str());//string型からint型に変更
-					if (cellData != 0)//もし、そのセルデータが壁に関係ない物であれば壁生成用のの配列に入れない
-					{
-						datas.push_back(cellData);
-					}
+					datas.push_back(cellData);
 				}
 				//一番最初の行列だけ消えている
-				wallMap.push_back(datas);//一行ずつマップデータを入れている
+				upWallMap.push_back(datas);//一行ずつマップデータを入れている
 			}
 		}
 
 		int a = 0;//デバック用
 
-		for (int h = 0; h < wallMap.size(); h++)
+		for (int h = 0; h < upWallMap.size(); h++)
 		{
-			for (int w = 0; w < wallMap[0].size(); w++)
+			for (int w = 0; w < upWallMap[0].size(); w++)
 			{
-				switch (wallMap[h][w])
+				switch (upWallMap[h][w])
 				{
-				case 1://左右壁生成
+				case 1://横壁生成
 					//GetStage()->AddGameObject<Block>();
-					break;
-				case 2://上下壁生成
-					//GetStage()->AddGameObject<Block>();
+					GetStage()->AddGameObject<Wall>(Vec3((w * 10.0f) - 95, 5.0f, 100 - (h * 10.0f)), Vec3(0.0f, 0.0f, 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					break;
 				default:
 					break;
 				}
 			}
 		}
+
+
+
+		//マップデータ
+		vector<vector<int>> RightWallMap;
+
+		//csvファイルからデータを読み込む
+		ifstream ifs2(levelPath + L"RightWallMap.csv");
+		if (ifs2)
+		{
+			string line;
+			while (getline(ifs2,line))
+			{
+				vector<int> datas;
+				line += ",";
+
+				string data;
+				istringstream ss(line);//読み取った内容をストリームに変換する
+				//一行ずつ変換
+				while (getline(ss, data, ','))
+				{
+					int cellData = atoi(data.c_str());//string型からint型に変更
+					datas.push_back(cellData);
+				}
+
+				//一番最初の行列だけ消えている
+				RightWallMap.push_back(datas);//一行ずつマップデータを入れている
+			}
+		}
+
+		for (int i = 0; i < RightWallMap.size(); i++)
+		{
+			for (int j = 0; j < RightWallMap[0].size(); j++)
+			{
+				switch (RightWallMap[i][j])
+				{
+				case 1://縦壁生成
+					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - 100, 5.0f, 95 - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
+					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+
+
 
 	}
 
@@ -196,11 +241,16 @@ namespace basecross {
 		return m_stageMap[SelPos.y][SelPos.x];
 	}
 
-	void MapManager::WallCreateKari()
+	void MapManager::WallCreate()
+	{
+
+	}
+
+	void MapManager::WallCreateKari()//この処理はもう使わない
 	{//横
 		vector<vector<int>> test_walls_up =
 		{
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 			{0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0},
 			{0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0},
 			{0,1,0,0,0,0,0,1,1,1,1,1,0,1,1,1,0,0,0,0},
@@ -219,7 +269,9 @@ namespace basecross {
 			{0,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,1,0},
 			{0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0},
 			{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,1,1,0,1,0,0,1,0,1,1,1,1,1,1,0,0,0,0}
+			{0,0,1,1,0,1,0,0,1,0,1,1,1,1,1,1,0,0,0,0},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+
 		};
 		//csvファイルから読み取って床関係のオブジェクトの生成する
 		for (int i = 0; i < test_walls_up.size(); i++)
@@ -246,26 +298,26 @@ namespace basecross {
 		//縦
 		vector<vector<int>> test_walls_right =
 		{
-			{0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0},
-			{0,1,0,1,0,0,0,0,1,0,1,1,0,0,0,0,1,1,1,1},
-			{0,0,1,1,1,0,1,0,0,0,1,0,1,0,0,0,1,1,1,1},
-			{0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1},
-			{0,1,1,1,1,1,1,1,0,0,0,0,1,0,1,1,0,1,1,1},
-			{0,0,1,0,1,1,0,0,0,0,1,0,1,1,1,1,1,0,0,0},
-			{0,0,1,0,0,0,0,0,1,0,1,0,0,1,1,1,1,0,0,1},
-			{0,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,1,0,1,1},
-			{0,1,0,1,1,1,1,0,1,1,0,0,0,0,0,1,0,0,0,1},
-			{0,1,0,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0,0},
-			{0,1,0,1,0,1,0,1,1,1,1,0,1,1,1,1,1,0,0,0},
-			{0,0,0,0,0,0,1,1,0,1,1,1,0,1,1,1,1,1,1,0},
-			{0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1},
-			{0,1,0,0,1,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0},
-			{0,0,0,1,1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,1},
-			{0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,1,1,0,1},
-			{0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1,0,0},
-			{0,1,0,1,0,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0},
-			{0,1,1,0,1,0,1,1,0,1,1,0,1,0,0,0,1,1,1,1},
-			{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0}
+			{1,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,1},
+			{1,1,0,1,0,0,0,0,1,0,1,1,0,0,0,0,1,1,1,1,1},
+			{1,0,1,1,1,0,1,0,0,0,1,0,1,0,0,0,1,1,1,1,1},
+			{1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+			{1,1,1,1,1,1,1,1,0,0,0,0,1,0,1,1,0,1,1,1,1},
+			{1,0,1,0,1,1,0,0,0,0,1,0,1,1,1,1,1,0,0,0,1},
+			{1,0,1,0,0,0,0,0,1,0,1,0,0,1,1,1,1,0,0,1,1},
+			{1,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,1,0,1,1,1},
+			{1,1,0,1,1,1,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1},
+			{1,1,0,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,1},
+			{1,1,0,1,0,1,0,1,1,1,1,0,1,1,1,1,1,0,0,0,1},
+			{1,0,0,0,0,0,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1},
+			{1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1,1},
+			{1,1,0,0,1,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0,1},
+			{1,0,0,1,1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,1,1},
+			{1,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,1,1,0,1,1},
+			{1,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1,0,0,1},
+			{1,1,0,1,0,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,1},
+			{1,1,1,0,1,0,1,1,0,1,1,0,1,0,0,0,1,1,1,1,1},
+			{1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1}
 
 
 		};
@@ -282,7 +334,7 @@ namespace basecross {
 				int test = 0;
 				switch (test_walls_right[i][j])
 				{
-				case 1://横壁生成
+				case 1://縦壁生成
 					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - 100, 5.0f, 95 - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
