@@ -26,16 +26,16 @@ namespace basecross {
 		auto player = app()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
 		m_playerRay = m_Owner->GetPlayerRay();
-		//float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
-		//m_ownerRot.y = rad;//playerの方向に向く
+		float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
+		m_ownerRot.y = rad;//playerの方向に向く
 
-		auto cost = MoveCost();
-		m_directionRad = math.GetAngle(m_ownerPos,cost);
+		//auto cost = MoveCost();
+		//m_directionRad = math.GetAngle(m_ownerPos,cost);
 
-		m_ownerRot.y = m_directionRad;
+		//m_ownerRot.y = m_directionRad;
 
-		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
-		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
+		m_ownerPos.x += -sin(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
+		m_ownerPos.z += -cos(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
 		m_ownerPos.y = 2.5f;
 		
 		auto CircleRange = math.GetCircleRange(60, m_ownerPos, m_playerPos);
@@ -58,7 +58,7 @@ namespace basecross {
 		{
 			m_Owner->ChangeState<Attack>();
 		}
-		auto a = m_posVec[m_count-1];
+		//auto a = m_posVec[m_count-1];
 
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		Vec3 pos = m_ownerPos;
@@ -87,9 +87,9 @@ namespace basecross {
 			<< L"\n後コスト : " << m_costDown
 			<< L"\nAStarPos.x : " << AStarPos.x
 			<< L"\nAStarPos.y : " << AStarPos.y
-			<< L"\na.x : " << a.x
-			<< L"\na.y : "<<a.y
-			<<L"\na.z : "<<a.z
+			//<< L"\na.x : " << a.x
+			//<< L"\na.y : "<<a.y
+			//<<L"\na.z : "<<a.z
 			<< endl;
 		scene->SetDebugString(wss.str());
 	}
