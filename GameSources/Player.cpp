@@ -127,25 +127,25 @@ namespace basecross{
 
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
-		//デバック用
-		wstringstream wss(L"");
-		auto scene = App::GetApp()->GetScene<Scene>();
-		//auto gameStage = scene->GetGameStage();
+		////デバック用
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		////auto gameStage = scene->GetGameStage();
 
-		wss /* << L"デバッグ用文字列 "*/
-			<< L"\n傾き " << m_deg
-			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<< L"\nm_count：  " << m_itemCount
-			<< L"\nSelNow " << selNow
-			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-			<<L"\nFPS:"<< 1.0f/Delta
-			<<L"\nKey"<<m_key
-			<< endl;
-		//XMConvertToRadians(-90.0f)
+		//wss /* << L"デバッグ用文字列 "*/
+		//	<< L"\n傾き " << m_deg
+		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+		//	<< L"\nm_count：  " << m_itemCount
+		//	<< L"\nSelNow " << selNow
+		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+		//	<<L"\nFPS:"<< 1.0f/Delta
+		//	<<L"\nKey"<<m_key
+		//	<< endl;
+		////XMConvertToRadians(-90.0f)
 
-		scene->SetDebugString(wss.str());
+		//scene->SetDebugString(wss.str());
 
 	}
 

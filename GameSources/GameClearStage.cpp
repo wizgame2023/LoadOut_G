@@ -50,11 +50,11 @@ namespace basecross {
 		//コントローラーのアナログスティックの向き
 		auto m_controler = inputDevice.GetControlerVec()[0];
 
+		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
+		//{
+		//	PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+		//}
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
-		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
-		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}

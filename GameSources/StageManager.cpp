@@ -97,6 +97,8 @@ namespace basecross {
 
 	void StageManager::OnDestroy()
 	{
+		auto BGM = App::GetApp()->GetXAudio2Manager();
+		BGM->Stop(m_BGM);
 
 	}
 

@@ -98,19 +98,19 @@ namespace basecross {
 		m_forwardRay->SetAngle(m_angle);
 		//m_leftRay->SetAngle(m_angle - XM_PI * 0.5f);
 		m_playerRay->SetAngle(angle);
-		wstringstream wss(L"");
-		auto scene = App::GetApp()->GetScene<Scene>();
-		wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
-			<< L"\n“G‚Ì‰ñ“].y : " << rot.y
-			<< L"\n“G‚Ì‰ñ“].z : " << rot.z
-			<< L"\nplayerPos.x : " << m_playerPos.x
-			<< L"\nplayerPos.z : " << m_playerPos.z
-			<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
-			<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
-			<< L"\nangle : " << XMConvertToDegrees(angle)
-		<< endl;
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
+		//	<< L"\n“G‚Ì‰ñ“].y : " << rot.y
+		//	<< L"\n“G‚Ì‰ñ“].z : " << rot.z
+		//	<< L"\nplayerPos.x : " << m_playerPos.x
+		//	<< L"\nplayerPos.z : " << m_playerPos.z
+		//	<< L"\nƒAƒ“ƒOƒ‹ : " << m_angle
+		//	<< L"\nplayerRay : " << XMConvertToDegrees(playerVec)
+		//	<< L"\nangle : " << XMConvertToDegrees(angle)
+		//<< endl;
 
-		scene->SetDebugString(wss.str());
+		//scene->SetDebugString(wss.str());
 
 	}
 	void Enemy::OnDestroy()

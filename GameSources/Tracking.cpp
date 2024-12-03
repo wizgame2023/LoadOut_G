@@ -45,7 +45,7 @@ namespace basecross {
 		}
 		else
 		{
-			//m_time += app()->GetElapsedTime();
+			m_time += app()->GetElapsedTime();
 		}
 
 
@@ -75,23 +75,23 @@ namespace basecross {
 
 		//デバックログ
 		auto scene = App::GetApp()->GetScene<Scene>();
-		wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
-			<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
-			<< L"\n敵の回転.y : " << m_ownerRot.y
-			<< L"\n敵の回転（deg）" << deg
-			<< L"\n敵のPos.x : " << m_ownerPos.x
-			<< L"\n敵のPos.z : " << m_ownerPos.z
-			<< L"\n右コスト : " << m_costRight
-			<< L"\n左コスト : " << m_costLeft
-			<< L"\n前コスト : " << m_costFod
-			<< L"\n後コスト : " << m_costDown
-			<< L"\nAStarPos.x : " << AStarPos.x
-			<< L"\nAStarPos.y : " << AStarPos.y
-			//<< L"\na.x : " << a.x
-			//<< L"\na.y : "<<a.y
-			//<<L"\na.z : "<<a.z
-			<< endl;
-		scene->SetDebugString(wss.str());
+		//wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
+		//	<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
+		//	<< L"\n敵の回転.y : " << m_ownerRot.y
+		//	<< L"\n敵の回転（deg）" << deg
+		//	<< L"\n敵のPos.x : " << m_ownerPos.x
+		//	<< L"\n敵のPos.z : " << m_ownerPos.z
+		//	<< L"\n右コスト : " << m_costRight
+		//	<< L"\n左コスト : " << m_costLeft
+		//	<< L"\n前コスト : " << m_costFod
+		//	<< L"\n後コスト : " << m_costDown
+		//	<< L"\nAStarPos.x : " << AStarPos.x
+		//	<< L"\nAStarPos.y : " << AStarPos.y
+		//	//<< L"\na.x : " << a.x
+		//	//<< L"\na.y : "<<a.y
+		//	//<<L"\na.z : "<<a.z
+		//	<< endl;
+		//scene->SetDebugString(wss.str());
 	}
 	//追跡ステートの最後の処理
 	void Tracking::OnExit()
