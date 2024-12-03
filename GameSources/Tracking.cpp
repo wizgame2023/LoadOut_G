@@ -28,11 +28,30 @@ namespace basecross {
 		//float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
 		//m_ownerRot.y = rad;//playerの方向に向く
 
+		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		//Playerの位置をAStarの座標にする
+		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
+		auto playerAStarPos = mapManager->ConvertAStarMap(playerSelPos);//A*の座標に変える
 
-		MoveCost();
+		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
+		if (playerAStarPos != m_beforPlayerAStar)
+		{
+			m_beforPlayerAStar = playerAStarPos;
+			MoveCost();
+		}
 		//auto cost = MoveCost();
 		//m_directionRad = math.GetAngle(m_ownerPos,cost);
-		m_directionRad = math.GetAngle(m_ownerPos,m_tagetPos);
+		//目的地に移動したとみなす
+		if (abs(m_ownerPos.x - m_tagetRootPos[m_roodCount].x) <= 2.0f && abs(m_ownerPos.z - m_tagetRootPos[m_roodCount].z) <= 2.0f)
+		{
+			m_ownerPos = m_tagetRootPos[m_roodCount];
+			m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
+			if (m_roodCount < m_tagetRootPos.size())//この先に進まないといけない先がある場合
+			{
+				m_roodCount++;//目的地を変える
+			}
+		}
+		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
 
 		//m_ownerRot.y = m_directionRad;
 
@@ -76,13 +95,16 @@ namespace basecross {
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
 		//デバックログ
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		//wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
-			//<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
-			//<< L"\n敵の回転.y : " << m_ownerRot.y
-			//<< L"\n敵の回転（deg）" << deg
-			//<< L"\n敵のPos.x : " << m_ownerPos.x
-			//<< L"\n敵のPos.z : " << m_ownerPos.z
+		auto scene = App::GetApp()->GetScene<Scene>();
+		wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
+			<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
+			<< L"\n敵の回転.y : " << m_ownerRot.y
+			<< L"\n敵の回転（deg）" << deg
+			<< L"\n敵のPos.x : " << m_ownerPos.x
+			<< L"\n敵のPos.z : " << m_ownerPos.z
+			<< L"\n次の移動場所.x" << m_tagetRootPos[m_roodCount].x
+			<< L"\n次の移動場所.z" << m_tagetRootPos[m_roodCount].z
+			<< L"\n移動回数" << m_tagetRootPos.size()
 			//<< L"\n右コスト : " << m_costRight
 			//<< L"\n左コスト : " << m_costLeft
 			//<< L"\n前コスト : " << m_costFod
@@ -92,8 +114,21 @@ namespace basecross {
 			//<< L"\na.x : " << a.x
 			//<< L"\na.y : "<<a.y
 			//<<L"\na.z : "<<a.z
-			//<< endl;
-		//scene->SetDebugString(wss.str());
+			<< endl;
+		scene->SetDebugString(wss.str());
+
+		//デバック用/////////////////////////////////////////////////////////////
+		// インプットデバイスオブジェクト
+		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
+		//コントローラーの取得
+		auto m_controler = inputDevice.GetControlerVec()[0];
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+		{
+			mapManager->MapDataUpdate(pos, 5);//脱出状態にする
+
+		}
+		////////////////////////////////////////////////////////////////////////
+
 	}
 	//追跡ステートの最後の処理
 	void Tracking::OnExit()
@@ -109,10 +144,14 @@ namespace basecross {
 		Vec3 pos = m_ownerPos;
 		Vec3 playerPos = m_playerPos;
 
+		m_tagetRootPos.clear();//行き先を更新するために初期化
+		m_roodCount = 0;//行き先を更新するために初期化
+
 		auto aStarMap = mapManager->GetAStarMap();//Aスター取得
 
 		//m_AStarMapDetaの配列の長さをaStarMapとと同じにする
 		vector<VecAStarIndex> lineAStarMapDeta;//一行配列
+		m_aStarMapDeta.clear();//A*マップデータをリセット
 		for (int i = 0; i < aStarMap.size(); i++)
 		{
 			for (int j = 0; j < aStarMap[0].size(); j++)
@@ -127,28 +166,53 @@ namespace basecross {
 		auto EnemySelPos = mapManager->ConvertSelMap(m_ownerPos);
 		auto EnemyAStarPos = mapManager->ConvertAStarMap(EnemySelPos);
 
-		auto test = mapManager->ConvertA_S(EnemyAStarPos);
-		auto test2 = mapManager->ConvertWorldMap(test);
+		auto test = mapManager->ConvertA_S(EnemyAStarPos);//デバック用
+		auto test2 = mapManager->ConvertWorldMap(test);//デバック用
 
 		//Playerの位置をAStarの座標にする
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
 		auto playerAStarPos = mapManager->ConvertAStarMap(playerSelPos);//A*の座標に変える
 
+		if (aStarMap.size() <= playerAStarPos.y || aStarMap[playerAStarPos.y].size() <= playerAStarPos.x)
+		{
+			int a = 0;
+		}
 		aStarMap[playerAStarPos.y][playerAStarPos.x] = 2;//AMapにここが目的地と伝える
 		auto a = 0;
 
-		auto kyori = 999;
+		vector<int> kyori = {999,999,999,999};
+		int minKyori = 999;
 		Vec2 searchAStar = EnemyAStarPos;//座標のデータを取得するための中心のセル座標
-		while (kyori > 0)//どう行けばいいか決まったらが決まったらループを終わる
+		while (minKyori > 0)//どう行けばいいか決まったらが決まったらループを終わる
 		{
+			//デバック用
+			if (aStarMap.size() <= searchAStar.y || aStarMap[0].size() <= searchAStar.x + 1)
+			{
+				int a = 0;
+			}
 			////右の座標
-			auto right = aStarMap[EnemyAStarPos.y][EnemyAStarPos.x + 1];//後々、個々の引数はEnemyStarPosではなく調べたい座標の変数に変える
+			auto right = aStarMap[searchAStar.y][searchAStar.x + 1];//後々、個々の引数はEnemyStarPosではなく調べたい座標の変数に変える
+			//デバック用
+			if (aStarMap.size() <= searchAStar.y || aStarMap[0].size() <= searchAStar.x - 1)
+			{
+				int a = 0;
+			}
 			////左の座標
-			auto left = aStarMap[EnemyAStarPos.y][EnemyAStarPos.x - 1];
+			auto left = aStarMap[searchAStar.y][searchAStar.x - 1];
+			//デバック用
+			if (aStarMap.size() <= searchAStar.y+1 || aStarMap[playerAStarPos.y].size() <= searchAStar.x)
+			{
+				int a = 0;
+			}
 			////下の座標
-			auto down = aStarMap[EnemyAStarPos.y + 1][EnemyAStarPos.x];
+			auto down = aStarMap[searchAStar.y + 1][searchAStar.x];
+			//デバック用
+			if (aStarMap.size() <= searchAStar.y-1 || aStarMap[playerAStarPos.y].size() <= searchAStar.x)
+			{
+				int a = 0;
+			}
 			////上の座標
-			auto up = aStarMap[EnemyAStarPos.y - 1][EnemyAStarPos.x];
+			auto up = aStarMap[searchAStar.y - 1][searchAStar.x];
 
 			//auto m_rightWall = false;
 			//auto m_leftWall = false;
@@ -156,7 +220,7 @@ namespace basecross {
 			//auto m_upWall = false;
 
 			//隣の座標が1(つまり壁があれば通らない)処理を書く
-			nextSelLook(right, left, up, down, EnemyAStarPos, playerAStarPos);
+			nextSelLook(right, left, up, down, searchAStar, playerAStarPos);
 
 			//コストの初期化
 			m_costLWall = 999;
@@ -168,58 +232,87 @@ namespace basecross {
 			//まずは一番低いコストの方向が１つだけの処理を書く、その後に関数化させて複数処理をする 複数処理できそう
 			// 隣のマスに情報を入れる
 			//左に壁がなかったらとその座標が使われていないなら
-			if (m_leftFlag && m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x - 2].use == false)
+			
+			//デバック用
+			if (m_aStarMapDeta.size() <= searchAStar.y || m_aStarMapDeta[0].size() <= (searchAStar.x-2))
 			{
-				auto distance = abs((EnemyAStarPos.x - 2) - playerAStarPos.x) + abs(EnemyAStarPos.y - playerAStarPos.y);
+				int a = 0;
+			}
+			if (m_leftFlag && m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].use == false)
+			{
+				auto distance = abs((searchAStar.x - 2) - playerAStarPos.x) + abs(searchAStar.y - playerAStarPos.y);
 				m_costLWall = distance;//コストを入れる
 
-				auto addLenght = m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x - 2].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori=m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x - 2].toTagetLenght = distance;//その地点から目的地への距離
-				m_costLWall = m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x - 2].totalLenght = distance+addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x - 2].use = true;//そのマスを使ったか
+				auto addLenght = m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
+				kyori[0] = m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].toTagetLenght = distance;//その地点から目的地への距離
+				m_costLWall = m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].totalLenght = distance+addLenght;//そこを経由すると目的地に最短どれくらいで着くか
+				m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].use = true;//そのマスを使ったか
 
 
 
 				auto a = 0;
+			}
+
+			//デバック用
+			if (m_aStarMapDeta.size() <= searchAStar.y || m_aStarMapDeta[0].size() <= (searchAStar.x + 2))
+			{
+				int a = 0;
 			}
 			//右に壁がなかったらとその座標が使われていないなら
-			if (m_rightFlag&& m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x + 2].use==false)
+			if (m_rightFlag&& m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].use==false)
 			{
-				auto distance = abs((EnemyAStarPos.x + 2) - playerAStarPos.x) + abs(EnemyAStarPos.y - playerAStarPos.y);
+				auto distance = abs((searchAStar.x + 2) - playerAStarPos.x) + abs(searchAStar.y - playerAStarPos.y);
 				m_costRWall = distance;//コストを入れる
 
-				auto addLenght = m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x + 2].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori = m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x + 2].toTagetLenght = distance;//その地点から目的地への距離
-				m_costRWall = m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x + 2].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[EnemyAStarPos.y][EnemyAStarPos.x + 2].use = true;//そのマスを使ったか
+				auto addLenght = m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
+				kyori[1] = m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].toTagetLenght = distance;//その地点から目的地への距離
+				m_costRWall = m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
+				m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].use = true;//そのマスを使ったか
 
 				auto a = 0;
+			}
+
+			//デバック用
+			if (m_aStarMapDeta.size() <= searchAStar.y-2 || m_aStarMapDeta[0].size() <= (searchAStar.x))
+			{
+				int a = 0;
 			}
 			//上に壁がなかったらとその座標が使われていないなら
-			if (m_upFlag&& m_aStarMapDeta[EnemyAStarPos.y - 2][EnemyAStarPos.x].use==false)
+			if (m_upFlag&& m_aStarMapDeta[searchAStar.y - 2][searchAStar.x].use==false)
 			{
-				auto distance = abs(EnemyAStarPos.x - playerAStarPos.x) + abs((EnemyAStarPos.y-2) - playerAStarPos.y);
+				auto distance = abs(searchAStar.x - playerAStarPos.x) + abs((searchAStar.y-2) - playerAStarPos.y);
 				m_costFWall = distance;//コストを入れる
 
-				auto addLenght = m_aStarMapDeta[EnemyAStarPos.y-2][EnemyAStarPos.x].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori = m_aStarMapDeta[EnemyAStarPos.y-2][EnemyAStarPos.x].toTagetLenght = distance;//その地点から目的地への距離
-				m_costFWall = m_aStarMapDeta[EnemyAStarPos.y-2][EnemyAStarPos.x].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[EnemyAStarPos.y-2][EnemyAStarPos.x].use = true;//そのマスを使ったか
+				auto addLenght = m_aStarMapDeta[searchAStar.y-2][searchAStar.x].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
+				kyori[2] = m_aStarMapDeta[searchAStar.y - 2][searchAStar.x].toTagetLenght = distance;//その地点から目的地への距離
+				m_costFWall = m_aStarMapDeta[searchAStar.y-2][searchAStar.x].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
+				m_aStarMapDeta[searchAStar.y-2][searchAStar.x].use = true;//そのマスを使ったか
 
 				auto a = 0;
 
 			}
-			//下に壁がなかったらとその座標が使われていないなら
-			if (m_downFlag&& m_aStarMapDeta[EnemyAStarPos.y + 2][EnemyAStarPos.x].use==false)
+
+			//デバック用
+			if (m_aStarMapDeta.size() <= searchAStar.y + 2 || m_aStarMapDeta[0].size() <= (searchAStar.x))
 			{
-				auto distance = abs(EnemyAStarPos.x - playerAStarPos.x) + abs((EnemyAStarPos.y + 2) - playerAStarPos.y);
+				int a = 0;
+			}
+			//下に壁がなかったらとその座標が使われていないなら
+			if (m_downFlag&& m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].use==false)
+			{
+				auto distance = abs(searchAStar.x - playerAStarPos.x) + abs((searchAStar.y + 2) - playerAStarPos.y);
 				m_costDWall = distance;//コストを入れる
 
-				auto addLenght = m_aStarMapDeta[EnemyAStarPos.y + 2][EnemyAStarPos.x].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori = m_aStarMapDeta[EnemyAStarPos.y + 2][EnemyAStarPos.x].toTagetLenght = distance;//その地点から目的地への距離
-				m_costDWall = m_aStarMapDeta[EnemyAStarPos.y + 2][EnemyAStarPos.x].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[EnemyAStarPos.y + 2][EnemyAStarPos.x].use = true;//そのマスを使ったか
+				auto addLenght = m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
+				kyori[3] = m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].toTagetLenght = distance;//その地点から目的地への距離
+				m_costDWall = m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
+				m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].use = true;//そのマスを使ったか
 
+				auto a = 0;
+			}
+			m_aStarMapDeta;//デバック用
+			if (m_costLWall == 999 && m_costRWall == 999 && m_costFWall == 999 && m_costDWall == 999)
+			{
 				auto a = 0;
 			}
 
@@ -242,6 +335,7 @@ namespace basecross {
 					minCost = nowCost;//最小コストを更新する
 					minDirection.clear();//最小コストが更新されたので配列リセット
 					minDirection.push_back(i);//これで一番低いコストの方向を確認する
+					minKyori = kyori[i];
 				}
 				else if (minCost == nowCost)//今のコストが最小のコストと同じ時
 				{
@@ -253,7 +347,7 @@ namespace basecross {
 			{
 				if (minDirection[i] ==0)
 				{
-					auto AStarPos(Vec2(EnemyAStarPos.x - 2, EnemyAStarPos.y));//AStarの座標を取得
+					auto AStarPos(Vec2(searchAStar.x - 2, searchAStar.y));//AStarの座標を取得
 					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
 					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
 					auto a = 0;
@@ -261,7 +355,7 @@ namespace basecross {
 				//右に壁がなかったら
 				if (minDirection[i] == 1)
 				{
-					auto AStarPos(Vec2(EnemyAStarPos.x + 2, EnemyAStarPos.y));//AStarの座標を取得
+					auto AStarPos(Vec2(searchAStar.x + 2, searchAStar.y));//AStarの座標を取得
 					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
 					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
 					auto a = 0;
@@ -269,7 +363,7 @@ namespace basecross {
 				//上に壁がなかったら
 				if (minDirection[i] == 2)
 				{
-					auto AStarPos(Vec2(EnemyAStarPos.x, EnemyAStarPos.y - 2));//AStarの座標を取得
+					auto AStarPos(Vec2(searchAStar.x, searchAStar.y - 2));//AStarの座標を取得
 					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
 					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
 					auto a = 0;
@@ -278,7 +372,7 @@ namespace basecross {
 				//下に壁がなかったら
 				if (minDirection[i] == 3)
 				{
-					auto AStarPos(Vec2(EnemyAStarPos.x, EnemyAStarPos.y + 2));//AStarの座標を取得
+					auto AStarPos(Vec2(searchAStar.x, searchAStar.y + 2));//AStarの座標を取得
 					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
 					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
 					auto a = 0;
@@ -287,7 +381,12 @@ namespace basecross {
 			}
 
 			m_tagetRootPos.push_back(m_tagetPos);//一番低いコストの場所に移動することにする
-
+			auto a = mapManager->ConvertSelMap(m_tagetPos);
+			auto b = mapManager->ConvertAStarMap(a);
+			searchAStar = b;//中心のセル座標を変える
+			playerPos;
+			m_ownerPos;
+			auto u = 0;
 		}
 
 

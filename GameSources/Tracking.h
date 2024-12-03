@@ -33,6 +33,8 @@ namespace basecross {
 		int m_count;
 		int m_directionCount;
 
+		int m_roodCount;//今A*の移動でどの段階にいるか決める変数
+
 		bool m_rightFlag;
 		bool m_leftFlag;
 		bool m_upFlag;
@@ -50,6 +52,9 @@ namespace basecross {
 
 		//AStarMapの情報を入れる配列
 		vector<vector<VecAStarIndex>> m_aStarMapDeta;
+
+		//前のPlayerのAStar座標
+		Vec2 m_beforPlayerAStar;
 
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
@@ -70,7 +75,8 @@ namespace basecross {
 			m_costFod(0),
 			m_costDown(0),
 			m_count(0),
-			m_directionCount(0)
+			m_directionCount(0),
+			m_roodCount(0)
 		{
 		}
 
