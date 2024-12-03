@@ -126,8 +126,7 @@ namespace basecross {
 	void MapManager::WallMapLoad()
 	{
 		auto path = App::GetApp()->GetDataDirWString();
-		wstring stage = L"Stage01/";
-		auto levelPath = path + L"Levels/"+stage;
+		auto levelPath = path + L"Levels/"+m_stageName;
 
 		//マップデータ
 		vector<vector<int>> upWallMap;

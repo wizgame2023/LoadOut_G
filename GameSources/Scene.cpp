@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameOverStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
 
 			GameResourses();
 
@@ -72,7 +72,7 @@ namespace basecross{
 		//テクスチャ
 		wstring strTexture = texPath + L"Black.jpg";
 		app->RegisterTexture(L"Black", strTexture);
-		strTexture = texPath + L"RordOutTitle.png";//タイトル用のテクスチャ
+		strTexture = texPath + L"Title.jpg";//タイトル用のテクスチャ
 		app->RegisterTexture(L"Title", strTexture);
 		strTexture = texPath + L"RordOutGameOver.png";//ゲームオーバー用のテクスチャ
 		app->RegisterTexture(L"GameOver", strTexture);
@@ -106,6 +106,9 @@ namespace basecross{
 		app->RegisterTexture(L"Battery1", strTexture);
 		strTexture = texPath + L"StoneWall.jpg";//石壁のテクスチャ
 		app->RegisterTexture(L"StoneWall", strTexture);
+		strTexture = texPath + L"StartMozi.png";//石壁のテクスチャ
+		app->RegisterTexture(L"StartMozi", strTexture);
+
 
 		//BGMSE
 		wstring soundWav = SoundPath + L"StageBGM.wav";
