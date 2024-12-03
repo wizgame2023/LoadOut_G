@@ -33,6 +33,7 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 			AddGameObject<Sprite>(L"Title", Vec2(1280,800), Vec3(0.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
+			m_sprite = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -150.0f, 0.0f));
 		}
 		catch (...) {
 			throw;
@@ -56,6 +57,26 @@ namespace basecross {
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーのアナログスティックの向き
 		auto m_controler = inputDevice.GetControlerVec()[0];
+
+		if (m_transparency > 0.0f && !m_transparent)
+		{
+			m_transparency -= 1.0f * App::GetApp()->GetElapsedTime();
+		}
+		if (m_transparency < 1 && m_transparent)
+		{
+			m_transparency += 1.0f * App::GetApp()->GetElapsedTime();
+		}
+
+		if (m_transparency <= 0)
+		{
+			m_transparent = true;
+		}
+		if (m_transparency >= 1)
+		{
+			m_transparent = false;
+		}
+
+		m_sprite->SetColor(Col4(0.3, 0.3, 0.3, m_transparency));
 
 		if (m_controler.wButtons & XINPUT_GAMEPAD_B)
 		{
