@@ -35,7 +35,7 @@ namespace basecross {
 
 		//ƒƒbƒVƒ…¶¬
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetMeshResource(L"DEFAULT_CYLINDER");
 		ptrDraw->SetTextureResource(L"Manhole");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);

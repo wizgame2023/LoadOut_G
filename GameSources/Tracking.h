@@ -8,6 +8,8 @@
 //#include"Ray.h"
 namespace basecross {
 	class Ray;
+	class VecAStarIndex;
+	class Node;
 	class Tracking :public StateBase
 	{
 	private:
@@ -32,12 +34,31 @@ namespace basecross {
 		int m_count;
 		int m_directionCount;
 
+		int m_roodCount;//今A*の移動でどの段階にいるか決める変数
+
+		bool m_rightFlag;
+		bool m_leftFlag;
+		bool m_upFlag;
+		bool m_downFlag;
+
 
 		shared_ptr<Transform> m_trans;
 
 		weak_ptr<Ray>m_playerRay;
 
 		vector<Vec3>m_posVec;
+		vector<Vec3> m_tagetRootPos;//通る道の配列
+		Vec3 m_tagetPos;//目的地のワールド座標
+
+
+		//AStarMapの情報を入れる配列
+		vector<vector<VecAStarIndex>> m_aStarMapDeta;
+
+		//前のPlayerのAStar座標
+		Vec2 m_beforPlayerAStar;
+
+		vector<vector<shared_ptr<Node>>> m_aStarMap;//マップのノード配列
+		vector<vector<int>> m_aStarMapCSV;//AStarMapのCSVデータ
 
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
@@ -58,7 +79,8 @@ namespace basecross {
 			m_costFod(0),
 			m_costDown(0),
 			m_count(0),
-			m_directionCount(0)
+			m_directionCount(0),
+			m_roodCount(0)
 		{
 		}
 
@@ -67,10 +89,100 @@ namespace basecross {
 		void OnUpdate();
 		void OnExit();
 
-		Vec3 MoveCost();
+		void nextSelLook(int right,int left,int up, int down,Vec2 enemyAStarPos,Vec2 playerAStarPos);//隣に壁か上げているマンホールがあるか確認する
 
-		void Navi();
+		vector<Vec3> AStar();
+
+		bool LookAround(shared_ptr<Node> node, Vec2 goalPos);
+
 	};
+
+
+	//AStar管理用の専用配列
+	class VecAStarIndex
+	{
+	public:
+		int addLenght;//さしているマスに行くには現在地点からどのくらい進むのか
+		int toTagetLenght;//その地点から目的地への距離
+		int totalLenght;//そこを経由すると目的地に最短どれくらいで着くか
+		bool use;//今まで通ったことのある所か
+
+		VecAStarIndex(int addLenght, int toTagetLenght, int totalLenght, bool use) :
+			addLenght(addLenght),
+			toTagetLenght(toTagetLenght),
+			totalLenght(totalLenght),
+			use(use)
+		{
+		}
+		~VecAStarIndex()
+		{
+		}
+	};
+
+	class AStarIndex
+	{
+	public:
+		int x;
+		int y;
+		int Status;//ステータス
+		int Cost;//コスト
+		int HeuristicCost;//ヒューリスティックコスト
+		int Score;//スコア
+		shared_ptr<AStarIndex> Parent;//親のポインタ
+
+		AStarIndex(int x, int y, int Status, int Cost, int HeuristicCost, int Score, shared_ptr<AStarIndex> parent) :
+			x(x),
+			y(y),
+			Status(Status),
+			Cost(Cost),
+			HeuristicCost(HeuristicCost),
+			Score(Score),
+			Parent(parent)
+		{
+			
+		}
+		~AStarIndex()
+		{
+		}
+
+	};
+
+	enum STATUS//ステータス
+	{
+		Status_None,
+		Status_Open,
+		Status_Closed
+	};
+
+	//ノードデータ
+	class Node
+	{
+	public:
+		int x;
+		int y;
+		int Status;//ステータス
+		int Cost;//コスト
+		int HeuristicCost;//ヒューリスティックコスト
+		int Score;//スコア
+		shared_ptr<Node> Parent;//親のポインタ
+
+		Node(int x, int y, int Status, int Cost, int HeuristicCost, int Score, shared_ptr<Node> parent) :
+			x(x),
+			y(y),
+			Status(Status),
+			Cost(Cost),
+			HeuristicCost(HeuristicCost),
+			Score(Score),
+			Parent(parent)
+		{
+
+		}
+		~Node()
+		{
+		}
+	};
+
+
 
 }
 //end basecross
