@@ -76,7 +76,7 @@ namespace basecross{
 		app->RegisterTexture(L"Title", strTexture);
 		strTexture = texPath + L"RordOutGameOver.png";//ゲームオーバー用のテクスチャ
 		app->RegisterTexture(L"GameOver", strTexture);
-		strTexture = texPath + L"Sand.jpg";//マンホール用の仮テクスチャ
+		strTexture = texPath + L"Manhole.png";//マンホール用の仮テクスチャ
 		app->RegisterTexture(L"Manhole", strTexture);
 		strTexture = texPath + L"Red.png";//マンホール用の仮テクスチャ設置したとき
 		app->RegisterTexture(L"Red", strTexture);
@@ -141,7 +141,7 @@ namespace basecross{
 
 
 		//ボーンモデル
-		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_new_test.bmf");//敵(仮)のメッシュ
+		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_ver1.1.bmf");//敵(仮)のメッシュ
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
 
 		//ボーンマルチメッシュ
