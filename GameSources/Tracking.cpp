@@ -28,11 +28,6 @@ namespace basecross {
 		float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
 		m_ownerRot.y = rad;//playerの方向に向く
 
-<<<<<<< HEAD
-		//auto cost = MoveCost();
-		//m_directionRad = math.GetAngle(m_ownerPos,cost);
-
-=======
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 		//Playerの位置をAStarの座標にする
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
@@ -64,11 +59,10 @@ namespace basecross {
 		}
 		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> yuuta
 		//m_ownerRot.y = m_directionRad;
 
-		m_ownerPos.x += -sin(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
-		m_ownerPos.z += -cos(rad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
+		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
+		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
 		m_ownerPos.y = 2.5f;
 		
 		auto CircleRange = math.GetCircleRange(60, m_ownerPos, m_playerPos);
@@ -107,42 +101,24 @@ namespace basecross {
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
 		//デバックログ
-<<<<<<< HEAD
 		auto scene = App::GetApp()->GetScene<Scene>();
-=======
-		//auto scene = App::GetApp()->GetScene<Scene>();
->>>>>>> yuuta
 		//wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
 		//	<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
 		//	<< L"\n敵の回転.y : " << m_ownerRot.y
 		//	<< L"\n敵の回転（deg）" << deg
 		//	<< L"\n敵のPos.x : " << m_ownerPos.x
 		//	<< L"\n敵のPos.z : " << m_ownerPos.z
-<<<<<<< HEAD
 		//	<< L"\n右コスト : " << m_costRight
 		//	<< L"\n左コスト : " << m_costLeft
 		//	<< L"\n前コスト : " << m_costFod
 		//	<< L"\n後コスト : " << m_costDown
 		//	<< L"\nAStarPos.x : " << AStarPos.x
 		//	<< L"\nAStarPos.y : " << AStarPos.y
-=======
-		//	<< L"\n次の移動場所.x" << m_tagetRootPos[m_roodCount].x//エラー原因
-		//	<< L"\n次の移動場所.z" << m_tagetRootPos[m_roodCount].z//エラー原因
-		//	<< L"\n移動回数" << m_tagetRootPos.size()
-		//	//<< L"\n右コスト : " << m_costRight
-		//	//<< L"\n左コスト : " << m_costLeft
-		//	//<< L"\n前コスト : " << m_costFod
-		//	//<< L"\n後コスト : " << m_costDown
-		//	//<< L"\nAStarPos.x : " << AStarPos.x
-		//	//<< L"\nAStarPos.y : " << AStarPos.y
->>>>>>> yuuta
 		//	//<< L"\na.x : " << a.x
 		//	//<< L"\na.y : "<<a.y
 		//	//<<L"\na.z : "<<a.z
 		//	<< endl;
 		//scene->SetDebugString(wss.str());
-<<<<<<< HEAD
-=======
 
 		//デバック用/////////////////////////////////////////////////////////////
 		// インプットデバイスオブジェクト
@@ -156,7 +132,6 @@ namespace basecross {
 		}
 		////////////////////////////////////////////////////////////////////////
 
->>>>>>> yuuta
 	}
 	//追跡ステートの最後の処理
 	void Tracking::OnExit()
