@@ -15,7 +15,7 @@ namespace basecross {
 
 	//追跡ステートの更新処理
 	void Tracking::OnUpdate()
-	{
+	{	
 		//playerを追いかける処理
 		auto app = App::GetApp;
 		Math math;
@@ -33,16 +33,22 @@ namespace basecross {
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
 		auto playerAStarPos = mapManager->ConvertAStarMap(playerSelPos);//A*の座標に変える
 
+		//A*の処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
 		if (playerAStarPos != m_beforPlayerAStar)
 		{
+			m_ownerPos;
+
+			m_aStarMap.clear();
+			m_roodCount = 0;
 			m_beforPlayerAStar = playerAStarPos;
-			MoveCost();
+			//MoveCost();
+			m_tagetRootPos = AStar();
 		}
 		//auto cost = MoveCost();
 		//m_directionRad = math.GetAngle(m_ownerPos,cost);
 		//目的地に移動したとみなす
-		if (abs(m_ownerPos.x - m_tagetRootPos[m_roodCount].x) <= 2.0f && abs(m_ownerPos.z - m_tagetRootPos[m_roodCount].z) <= 2.0f)
+		if (abs(m_ownerPos.x - m_tagetRootPos[m_roodCount].x) <= 0.5f && abs(m_ownerPos.z - m_tagetRootPos[m_roodCount].z) <= 0.5f)
 		{
 			m_ownerPos = m_tagetRootPos[m_roodCount];
 			m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
@@ -52,7 +58,7 @@ namespace basecross {
 			}
 		}
 		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
-
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//m_ownerRot.y = m_directionRad;
 
 		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
@@ -95,27 +101,27 @@ namespace basecross {
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
 		//デバックログ
-		auto scene = App::GetApp()->GetScene<Scene>();
-		wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
-			<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
-			<< L"\n敵の回転.y : " << m_ownerRot.y
-			<< L"\n敵の回転（deg）" << deg
-			<< L"\n敵のPos.x : " << m_ownerPos.x
-			<< L"\n敵のPos.z : " << m_ownerPos.z
-			<< L"\n次の移動場所.x" << m_tagetRootPos[m_roodCount].x
-			<< L"\n次の移動場所.z" << m_tagetRootPos[m_roodCount].z
-			<< L"\n移動回数" << m_tagetRootPos.size()
-			//<< L"\n右コスト : " << m_costRight
-			//<< L"\n左コスト : " << m_costLeft
-			//<< L"\n前コスト : " << m_costFod
-			//<< L"\n後コスト : " << m_costDown
-			//<< L"\nAStarPos.x : " << AStarPos.x
-			//<< L"\nAStarPos.y : " << AStarPos.y
-			//<< L"\na.x : " << a.x
-			//<< L"\na.y : "<<a.y
-			//<<L"\na.z : "<<a.z
-			<< endl;
-		scene->SetDebugString(wss.str());
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
+		//	<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
+		//	<< L"\n敵の回転.y : " << m_ownerRot.y
+		//	<< L"\n敵の回転（deg）" << deg
+		//	<< L"\n敵のPos.x : " << m_ownerPos.x
+		//	<< L"\n敵のPos.z : " << m_ownerPos.z
+		//	<< L"\n次の移動場所.x" << m_tagetRootPos[m_roodCount].x//エラー原因
+		//	<< L"\n次の移動場所.z" << m_tagetRootPos[m_roodCount].z//エラー原因
+		//	<< L"\n移動回数" << m_tagetRootPos.size()
+		//	//<< L"\n右コスト : " << m_costRight
+		//	//<< L"\n左コスト : " << m_costLeft
+		//	//<< L"\n前コスト : " << m_costFod
+		//	//<< L"\n後コスト : " << m_costDown
+		//	//<< L"\nAStarPos.x : " << AStarPos.x
+		//	//<< L"\nAStarPos.y : " << AStarPos.y
+		//	//<< L"\na.x : " << a.x
+		//	//<< L"\na.y : "<<a.y
+		//	//<<L"\na.z : "<<a.z
+		//	<< endl;
+		//scene->SetDebugString(wss.str());
 
 		//デバック用/////////////////////////////////////////////////////////////
 		// インプットデバイスオブジェクト
@@ -134,264 +140,6 @@ namespace basecross {
 	void Tracking::OnExit()
 	{
 
-	}
-
-	////ここでA*の処理をします  まだ隣のマス(壁のマス)だけ見て進むか進まないか判断してます
-	Vec3 Tracking::MoveCost()
-	{
-		auto stage = App::GetApp()->GetScene<Scene>()->GetActiveStage();
-		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
-		Vec3 pos = m_ownerPos;
-		Vec3 playerPos = m_playerPos;
-
-		m_tagetRootPos.clear();//行き先を更新するために初期化
-		m_roodCount = 0;//行き先を更新するために初期化
-
-		auto aStarMap = mapManager->GetAStarMap();//Aスター取得
-
-		//m_AStarMapDetaの配列の長さをaStarMapとと同じにする
-		vector<VecAStarIndex> lineAStarMapDeta;//一行配列
-		m_aStarMapDeta.clear();//A*マップデータをリセット
-		for (int i = 0; i < aStarMap.size(); i++)
-		{
-			for (int j = 0; j < aStarMap[0].size(); j++)
-			{
-				lineAStarMapDeta.push_back(VecAStarIndex(0, 0, 0, false));
-			}
-			m_aStarMapDeta.push_back(lineAStarMapDeta);
-			lineAStarMapDeta.clear();
-		}
-
-		//自分自身の位置をAStarの座標にする
-		auto EnemySelPos = mapManager->ConvertSelMap(m_ownerPos);
-		auto EnemyAStarPos = mapManager->ConvertAStarMap(EnemySelPos);
-
-		auto test = mapManager->ConvertA_S(EnemyAStarPos);//デバック用
-		auto test2 = mapManager->ConvertWorldMap(test);//デバック用
-
-		//Playerの位置をAStarの座標にする
-		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
-		auto playerAStarPos = mapManager->ConvertAStarMap(playerSelPos);//A*の座標に変える
-
-		if (aStarMap.size() <= playerAStarPos.y || aStarMap[playerAStarPos.y].size() <= playerAStarPos.x)
-		{
-			int a = 0;
-		}
-		aStarMap[playerAStarPos.y][playerAStarPos.x] = 2;//AMapにここが目的地と伝える
-		auto a = 0;
-
-		vector<int> kyori = {999,999,999,999};
-		int minKyori = 999;
-		Vec2 searchAStar = EnemyAStarPos;//座標のデータを取得するための中心のセル座標
-		while (minKyori > 0)//どう行けばいいか決まったらが決まったらループを終わる
-		{
-			//デバック用
-			if (aStarMap.size() <= searchAStar.y || aStarMap[0].size() <= searchAStar.x + 1)
-			{
-				int a = 0;
-			}
-			////右の座標
-			auto right = aStarMap[searchAStar.y][searchAStar.x + 1];//後々、個々の引数はEnemyStarPosではなく調べたい座標の変数に変える
-			//デバック用
-			if (aStarMap.size() <= searchAStar.y || aStarMap[0].size() <= searchAStar.x - 1)
-			{
-				int a = 0;
-			}
-			////左の座標
-			auto left = aStarMap[searchAStar.y][searchAStar.x - 1];
-			//デバック用
-			if (aStarMap.size() <= searchAStar.y+1 || aStarMap[playerAStarPos.y].size() <= searchAStar.x)
-			{
-				int a = 0;
-			}
-			////下の座標
-			auto down = aStarMap[searchAStar.y + 1][searchAStar.x];
-			//デバック用
-			if (aStarMap.size() <= searchAStar.y-1 || aStarMap[playerAStarPos.y].size() <= searchAStar.x)
-			{
-				int a = 0;
-			}
-			////上の座標
-			auto up = aStarMap[searchAStar.y - 1][searchAStar.x];
-
-			//auto m_rightWall = false;
-			//auto m_leftWall = false;
-			//auto m_downWall = false;
-			//auto m_upWall = false;
-
-			//隣の座標が1(つまり壁があれば通らない)処理を書く
-			nextSelLook(right, left, up, down, searchAStar, playerAStarPos);
-
-			//コストの初期化
-			m_costLWall = 999;
-			m_costRWall = 999;
-			m_costFWall = 999;
-			m_costDWall = 999;
-
-			//その後に一番低いコストの方向に進む処理をかく、もし一番低いコストの方向方向が複数あれば同時にやる
-			//まずは一番低いコストの方向が１つだけの処理を書く、その後に関数化させて複数処理をする 複数処理できそう
-			// 隣のマスに情報を入れる
-			//左に壁がなかったらとその座標が使われていないなら
-			
-			//デバック用
-			if (m_aStarMapDeta.size() <= searchAStar.y || m_aStarMapDeta[0].size() <= (searchAStar.x-2))
-			{
-				int a = 0;
-			}
-			if (m_leftFlag && m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].use == false)
-			{
-				auto distance = abs((searchAStar.x - 2) - playerAStarPos.x) + abs(searchAStar.y - playerAStarPos.y);
-				m_costLWall = distance;//コストを入れる
-
-				auto addLenght = m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori[0] = m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].toTagetLenght = distance;//その地点から目的地への距離
-				m_costLWall = m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].totalLenght = distance+addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[searchAStar.y][searchAStar.x - 2].use = true;//そのマスを使ったか
-
-
-
-				auto a = 0;
-			}
-
-			//デバック用
-			if (m_aStarMapDeta.size() <= searchAStar.y || m_aStarMapDeta[0].size() <= (searchAStar.x + 2))
-			{
-				int a = 0;
-			}
-			//右に壁がなかったらとその座標が使われていないなら
-			if (m_rightFlag&& m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].use==false)
-			{
-				auto distance = abs((searchAStar.x + 2) - playerAStarPos.x) + abs(searchAStar.y - playerAStarPos.y);
-				m_costRWall = distance;//コストを入れる
-
-				auto addLenght = m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori[1] = m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].toTagetLenght = distance;//その地点から目的地への距離
-				m_costRWall = m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[searchAStar.y][searchAStar.x + 2].use = true;//そのマスを使ったか
-
-				auto a = 0;
-			}
-
-			//デバック用
-			if (m_aStarMapDeta.size() <= searchAStar.y-2 || m_aStarMapDeta[0].size() <= (searchAStar.x))
-			{
-				int a = 0;
-			}
-			//上に壁がなかったらとその座標が使われていないなら
-			if (m_upFlag&& m_aStarMapDeta[searchAStar.y - 2][searchAStar.x].use==false)
-			{
-				auto distance = abs(searchAStar.x - playerAStarPos.x) + abs((searchAStar.y-2) - playerAStarPos.y);
-				m_costFWall = distance;//コストを入れる
-
-				auto addLenght = m_aStarMapDeta[searchAStar.y-2][searchAStar.x].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori[2] = m_aStarMapDeta[searchAStar.y - 2][searchAStar.x].toTagetLenght = distance;//その地点から目的地への距離
-				m_costFWall = m_aStarMapDeta[searchAStar.y-2][searchAStar.x].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[searchAStar.y-2][searchAStar.x].use = true;//そのマスを使ったか
-
-				auto a = 0;
-
-			}
-
-			//デバック用
-			if (m_aStarMapDeta.size() <= searchAStar.y + 2 || m_aStarMapDeta[0].size() <= (searchAStar.x))
-			{
-				int a = 0;
-			}
-			//下に壁がなかったらとその座標が使われていないなら
-			if (m_downFlag&& m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].use==false)
-			{
-				auto distance = abs(searchAStar.x - playerAStarPos.x) + abs((searchAStar.y + 2) - playerAStarPos.y);
-				m_costDWall = distance;//コストを入れる
-
-				auto addLenght = m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].addLenght = 2;//どれくらいこのマスに行くために現在地から移動しているか
-				kyori[3] = m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].toTagetLenght = distance;//その地点から目的地への距離
-				m_costDWall = m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].totalLenght = distance + addLenght;//そこを経由すると目的地に最短どれくらいで着くか
-				m_aStarMapDeta[searchAStar.y + 2][searchAStar.x].use = true;//そのマスを使ったか
-
-				auto a = 0;
-			}
-			m_aStarMapDeta;//デバック用
-			if (m_costLWall == 999 && m_costRWall == 999 && m_costFWall == 999 && m_costDWall == 999)
-			{
-				auto a = 0;
-			}
-
-			vector<int> cost =
-			{
-				m_costLWall,//左
-				m_costRWall,//右
-				m_costFWall,//上
-				m_costDWall//下
-			};
-
-			auto minCost = 999;//一番低いコストを保管する
-			vector<int> minDirection;//方向を管理する変数
-			//コストが一番低い方向を調べる
-			for (int i = 0; i < cost.size(); i++)
-			{
-				auto nowCost = cost[i];//現在のコスト
-				if (minCost > nowCost)//今のコストが最小のコストよりも低いとき
-				{
-					minCost = nowCost;//最小コストを更新する
-					minDirection.clear();//最小コストが更新されたので配列リセット
-					minDirection.push_back(i);//これで一番低いコストの方向を確認する
-					minKyori = kyori[i];
-				}
-				else if (minCost == nowCost)//今のコストが最小のコストと同じ時
-				{
-					minDirection.push_back(i);//一番低いコストの方向を追加する
-				}
-			}
-
-			for (int i = 0; i < minDirection.size(); i++)
-			{
-				if (minDirection[i] ==0)
-				{
-					auto AStarPos(Vec2(searchAStar.x - 2, searchAStar.y));//AStarの座標を取得
-					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
-					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
-					auto a = 0;
-				}
-				//右に壁がなかったら
-				if (minDirection[i] == 1)
-				{
-					auto AStarPos(Vec2(searchAStar.x + 2, searchAStar.y));//AStarの座標を取得
-					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
-					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
-					auto a = 0;
-				}
-				//上に壁がなかったら
-				if (minDirection[i] == 2)
-				{
-					auto AStarPos(Vec2(searchAStar.x, searchAStar.y - 2));//AStarの座標を取得
-					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
-					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
-					auto a = 0;
-
-				}
-				//下に壁がなかったら
-				if (minDirection[i] == 3)
-				{
-					auto AStarPos(Vec2(searchAStar.x, searchAStar.y + 2));//AStarの座標を取得
-					auto SelPos = mapManager->ConvertA_S(AStarPos);//Sel座標に変換
-					m_tagetPos = mapManager->ConvertWorldMap(SelPos);//ワールド座標に変換
-					auto a = 0;
-				}
-
-			}
-
-			m_tagetRootPos.push_back(m_tagetPos);//一番低いコストの場所に移動することにする
-			auto a = mapManager->ConvertSelMap(m_tagetPos);
-			auto b = mapManager->ConvertAStarMap(a);
-			searchAStar = b;//中心のセル座標を変える
-			playerPos;
-			m_ownerPos;
-			auto u = 0;
-		}
-
-
-
-		return Vec3(0,0,0);
 	}
 
 	void Tracking::nextSelLook(int right,int left,int up,int down,Vec2 enemyAStarPos,Vec2 playerAStarPos)
@@ -455,6 +203,163 @@ namespace basecross {
 			auto addDistance = 1;//進んだ距離
 			m_costDWall = distance;//コストを入れる
 		}
+	}
+
+	vector<Vec3> Tracking::AStar()
+	{		
+		vector<Vec2> aStarRood;//移動遷移
+
+		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		m_aStarMapCSV = mapManager->GetAStarMap();//AStarマップ取得
+		//vector<vector<shared_ptr<Node>>> aStarMap;//マップのノード配列
+		vector<shared_ptr<Node>> aStarMapline;
+		//AStarマップの配列と同じ配列の大きさのノードを作る
+		for (int y=0; y < m_aStarMapCSV.size(); y++)
+		{
+			for (int x=0; x < m_aStarMapCSV[0].size(); x++)
+			{
+				aStarMapline.push_back(make_shared<Node>(Node(x, y, Status_None, 999, 999, 999, NULL)));
+			}
+			m_aStarMap.push_back(aStarMapline);
+			aStarMapline.clear();//リセット
+		}
+		auto test=0;
+		
+		//初期位置を決める自分自身(Enemy)の現在地点
+		auto enemySelPos = mapManager->ConvertSelMap(m_ownerPos);//セルに変える
+		auto enemyAStarPos = mapManager->ConvertAStarMap(enemySelPos);
+		auto originPos = enemyAStarPos;
+		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
+		auto cost = 1;
+		//ゴール地点(Player)
+		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);
+		auto playerASterPos = mapManager->ConvertAStarMap(playerSelPos);
+		auto goalPos = playerASterPos;
+		bool root = false;//経路が見つかったかどうか
+
+		//経路が見つかるまでループする
+		while (!root)
+		{				
+			//周りに何があるか確認する //右左上下の床のセルに経路の評価する処理が出来てません 今、評価している場所が壁のセルになっています
+			root = LookAround(m_aStarMap[originPos.y][originPos.x],goalPos);
+	
+			//検索の中心点を探す
+			auto openScore = 0;
+			auto minScore = 999;
+			for (auto map : m_aStarMap)
+			{
+				for (auto mapline : map)
+				{
+					if (mapline->Status == Status_Open)//Open状態のスコアを取得する
+					{
+						openScore = mapline->Score;//スコアを取得
+						if (openScore <= minScore)//最新の最少スコアよりも今のスコアの方が低ければ渡す
+						{
+							minScore = openScore;
+							originPos.x = mapline->x;//検索の中心点を変更する
+							originPos.y = mapline->y;//検索の中心点を変更する
+						
+						}
+					}
+				}
+			}
+
+
+			auto a = 0;
+			//m_aStarMap[originPos.y][originPos.x]->Status = Status_Closed;//閉じる
+			//cost++;
+		}
+
+		//ルートが見つかったらどう進めばいいかを伝える
+		vector<Vec3> rootVec;
+		//まず、AStarの座標をワールド座標に戻す作業をする
+		rootVec.push_back(m_playerPos);
+		auto parentSel = m_aStarMap[goalPos.y][goalPos.x]->Parent;
+		while (parentSel != NULL)
+		{
+			Vec2 AStarPos = Vec2(parentSel->x, parentSel->y);
+			Vec2 SelPos = mapManager->ConvertA_S(AStarPos);
+			Vec3 worldPos = mapManager->ConvertWorldMap(SelPos);
+			rootVec.push_back(worldPos);
+			parentSel = parentSel->Parent;
+		}
+		vector<Vec3> rootReverse;
+		for (int i = rootVec.size()-1; i >= 0(); i--)
+		{
+			rootReverse.push_back(rootVec[i]);
+		}
+		m_ownerPos;
+		return rootReverse;
+
+	}
+
+	bool Tracking::LookAround(shared_ptr<Node> parent,Vec2 goalPos)
+	{
+		Vec2 originPos = Vec2(parent->x, parent->y);
+		auto cost = parent->Parent ? parent->Cost + 1 : 1;//コストの計算
+
+		//右左上下に壁があるかどうかを見る
+		for (int pushy = -1; pushy < 2; pushy++)
+		{
+			for (int pushx = -1; pushx < 2; pushx++)
+			{
+				int lookX = pushx + originPos.x;
+				int lookY = pushy + originPos.y;
+
+				//確認する座標が親座標から見て左右上下以外なら確認しない
+				if (pushy == 0 && pushx == 0 || pushy != 0 && pushx != 0) continue;	
+				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
+				if (m_aStarMapCSV[lookY][lookX] == 1 || m_aStarMap[lookY][lookX]->Status == Status_Closed) continue;
+				//壁を確認したので床のマスに対して評価する
+				lookX = (pushx * 2) + originPos.x;
+				lookY = (pushy * 2) + originPos.y;	
+				//配列の範囲外なら確認しない	
+				if ((lookY <= 0 || lookY >= (m_aStarMap.size() - 1)) || (lookX <= 0 || lookX >= (m_aStarMap.size() - 1))) continue;
+
+				if (lookX < 0||lookX>m_aStarMap.size()-1)
+				{
+					auto test=0;
+				}
+				if (lookY < 0||lookY>m_aStarMap.size()-1)
+				{
+					auto test = 0;
+				}
+
+				if (m_aStarMap[lookY][lookX]->Status == Status_None)//探索したことがないなら
+				{
+					m_aStarMap[lookY][lookX]->Status = Status_Open;
+					auto lookCost = m_aStarMap[lookY][lookX]->Cost = cost;//コストの変数まだ作ってない
+					auto lookHCost = m_aStarMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - lookX) + abs(goalPos.y - lookY);
+					m_aStarMap[lookY][lookX]->Score = lookCost + lookHCost;
+					m_aStarMap[lookY][lookX]->Parent = m_aStarMap[originPos.y][originPos.x];
+				}
+				if (m_aStarMap[lookY][lookX]->Status == Status_Open)//探索済みなら
+				{
+					auto Cost = m_aStarMap[lookY][lookX]->Cost = cost;
+					m_aStarMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - (lookX)) + abs(goalPos.y - (lookY));
+					auto score = m_aStarMap[lookY][lookX]->Score = m_aStarMap[lookY][lookX]->Cost + m_aStarMap[lookY][lookX]->HeuristicCost;
+
+					if (m_aStarMap[lookY][lookX]->Score > score)//スコアが前よりも少なかったら
+					{
+						m_aStarMap[lookY][lookX]->Status = Status_Open;
+						m_aStarMap[lookY][lookX]->Cost = cost;
+						m_aStarMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - (lookX)) + abs(goalPos.y - (lookY));
+						m_aStarMap[lookY][lookX]->Score = score;
+						m_aStarMap[lookY][lookX]->Parent = m_aStarMap[originPos.y][originPos.x];
+					}
+				}
+
+				if (m_aStarMap[lookY][lookX]->HeuristicCost == 0)
+				{
+					return true;
+				}
+			}
+		}
+
+		//周囲探索が終わったならステータスがOpenからClosedへ変わる
+		m_aStarMap[originPos.y][originPos.x]->Status = Status_Closed;
+
+		return false;
 	}
 
 	//Vec3 Tracking::MoveCost()
