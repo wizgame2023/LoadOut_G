@@ -192,13 +192,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StageManager.h">
       <Filter>Headers\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Hatch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Movie.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameStart.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpPlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameClear.h">
+      <Filter>Headers\Movie</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hatch.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameStart.h">
+      <Filter>Headers\Movie</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpPlayer.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
   </ItemGroup>
@@ -281,9 +287,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameClearStage.cpp">
       <Filter>Sources\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
-      <Filter>Sources\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sky_base.cpp">
       <Filter>Sources\Skyblock</Filter>
     </ClCompile>
@@ -323,13 +326,22 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StageManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Hatch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Movie.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameStart.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpPlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameClear.cpp">
+      <Filter>Sources\Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hatch.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameStart.cpp">
+      <Filter>Sources\Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpPlayer.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
   </ItemGroup>
