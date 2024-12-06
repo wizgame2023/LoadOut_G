@@ -127,8 +127,7 @@ namespace basecross {
 		auto m_controler = inputDevice.GetControlerVec()[0];
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«
 		{
-			mapManager->MapDataUpdate(pos, 5);//’Eoó‘Ô‚É‚·‚é
-
+			auto test = 0;
 		}
 		////////////////////////////////////////////////////////////////////////
 
