@@ -37,6 +37,9 @@ namespace basecross{
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+		ptrDraw->AddAnimation(L"Defalt", 4, 9, true, 30.0f);
+		//ptrDraw->AddAnimation(L"Defalt2", 17, 25, true, 30.0f);
+		//ptrDraw->Ani
 
 		//ptrDraw->SetTextureResource(L"");
 
@@ -58,12 +61,12 @@ namespace basecross{
 
 		AddTag(L"Player");//Player用のタグ
 
-		auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");//ミニマップマネージャーの取得
-		auto miniMapPos = miniMapManager->GetStartPos();
-		auto test = miniMapPos;
+		//auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");//ミニマップマネージャーの取得
+		//auto miniMapPos = miniMapManager->GetStartPos();
+		//auto test = miniMapPos;
 
-		//ミニマップにPlayerを表示させる
-		GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
+		////ミニマップにPlayerを表示させる
+		//GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
 
 		//電池をどれくらい持っているかを表す
 		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
@@ -112,7 +115,7 @@ namespace basecross{
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
 		//もし鍵を持っているなら脱出できる
-		m_key = true;//デバック用
+		//m_key = true;//デバック用
 		if (m_key)
 		{
 			if (selNow == 4)//今いる床がハッチなら
@@ -125,27 +128,34 @@ namespace basecross{
 			}
 		}
 
+		//アニメーション
+		GetComponent<PNTBoneModelDraw>()->UpdateAnimation(Delta);
+
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
-		////デバック用
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		////auto gameStage = scene->GetGameStage();
+		//デバック用
+		//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		//auto gameStage = scene->GetGameStage();
+		m_Pos = GetComponent<Transform>()->GetPosition();
 
-		//wss /* << L"デバッグ用文字列 "*/
-		//	<< L"\n傾き " << m_deg
-		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-		//	<< L"\nm_count：  " << m_itemCount
-		//	<< L"\nSelNow " << selNow
-		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-		//	<<L"\nFPS:"<< 1.0f/Delta
-		//	<<L"\nKey"<<m_key
-		//	<< endl;
-		////XMConvertToRadians(-90.0f)
+		wss /* << L"デバッグ用文字列 "*/
+			<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
+			<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
+			<< L"\n傾き " << m_deg
+			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<< L"\nm_count：  " << m_itemCount
+			<< L"\nSelNow " << selNow
+			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+			<<L"\nFPS:"<< 1.0f/Delta
+			<<L"\nKey"<<m_key
+			<< endl;
+		//XMConvertToRadians(-90.0f)
 
-		//scene->SetDebugString(wss.str());
+		scene->SetDebugString(wss.str());
 
 	}
 
