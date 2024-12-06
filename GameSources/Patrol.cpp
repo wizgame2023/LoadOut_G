@@ -318,27 +318,27 @@ namespace basecross {
 		m_trans->SetRotation(m_ownerRot);//所有者(Enemy)の角度を更新
 		m_Owner->SetAngle(rad + XM_PI * 0.5f);//向いて方向を代入
 
-		//デバック用
-		float deg = rad * 180 / XM_PI;
-		wstringstream wss(L"");
-		auto scene = App::GetApp()->GetScene<Scene>();
-		wss << L"目的地_x : " << m_destinationPos.x
-			<< L"\n目的地_z : " << m_destinationPos.z
-			<< L"\n敵の回転.y : " << m_ownerRot.y
-			<< L"\n敵の回転（deg）" << deg
-			<< L"\nright.x" << right.x
-			<< L"\nforward.z" << forward.z
-			<<L"\n敵のPos.x : "<<m_ownerPos.x 
-			<<L"\n敵のPos.z : "<< m_ownerPos.z
-			<<L"\n移動距離 : "<<m_distance
-			<<L"\nムーブタイム : "<<m_moveTime
-			<<L"\n移動クールタイム : "<<m_time
-			<<L"\n数字X : "<< m_numbers
-			<<L"\n壁 : "<<m_wallCheck 
-			<<L"\n右 : "<<m_rightCheck
-			<<L"\n前 : "<<m_forwardCheck
-			<< endl;
-		scene->SetDebugString(wss.str());
+		////デバック用
+		//float deg = rad * 180 / XM_PI;
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		//wss << L"目的地_x : " << m_destinationPos.x
+		//	<< L"\n目的地_z : " << m_destinationPos.z
+		//	<< L"\n敵の回転.y : " << m_ownerRot.y
+		//	<< L"\n敵の回転（deg）" << deg
+		//	<< L"\nright.x" << right.x
+		//	<< L"\nforward.z" << forward.z
+		//	<<L"\n敵のPos.x : "<<m_ownerPos.x 
+		//	<<L"\n敵のPos.z : "<< m_ownerPos.z
+		//	<<L"\n移動距離 : "<<m_distance
+		//	<<L"\nムーブタイム : "<<m_moveTime
+		//	<<L"\n移動クールタイム : "<<m_time
+		//	<<L"\n数字X : "<< m_numbers
+		//	<<L"\n壁 : "<<m_wallCheck 
+		//	<<L"\n右 : "<<m_rightCheck
+		//	<<L"\n前 : "<<m_forwardCheck
+		//	<< endl;
+		//scene->SetDebugString(wss.str());
 
 	}
 

@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameOverStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
 
 			GameResourses();
 
@@ -72,11 +72,11 @@ namespace basecross{
 		//テクスチャ
 		wstring strTexture = texPath + L"Black.jpg";
 		app->RegisterTexture(L"Black", strTexture);
-		strTexture = texPath + L"RordOutTitle.png";//タイトル用のテクスチャ
+		strTexture = texPath + L"Title.jpg";//タイトル用のテクスチャ
 		app->RegisterTexture(L"Title", strTexture);
 		strTexture = texPath + L"RordOutGameOver.png";//ゲームオーバー用のテクスチャ
 		app->RegisterTexture(L"GameOver", strTexture);
-		strTexture = texPath + L"Sand.jpg";//マンホール用の仮テクスチャ
+		strTexture = texPath + L"Manhole.png";//マンホール用の仮テクスチャ
 		app->RegisterTexture(L"Manhole", strTexture);
 		strTexture = texPath + L"Red.png";//マンホール用の仮テクスチャ設置したとき
 		app->RegisterTexture(L"Red", strTexture);
@@ -106,6 +106,9 @@ namespace basecross{
 		app->RegisterTexture(L"Battery1", strTexture);
 		strTexture = texPath + L"StoneWall.jpg";//石壁のテクスチャ
 		app->RegisterTexture(L"StoneWall", strTexture);
+		strTexture = texPath + L"StartMozi.png";//石壁のテクスチャ
+		app->RegisterTexture(L"StartMozi", strTexture);
+
 
 		//BGMSE
 		wstring soundWav = SoundPath + L"StageBGM.wav";
@@ -129,8 +132,8 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"GameClear2", soundWav);
 		soundWav = SoundPath + L"GameOver.wav";
 		App::GetApp()->RegisterWav(L"GameOverBGM", soundWav);
-		//soundWav = SoundPath + L"Enemyded.wav";なぜかダメ
-		//App::GetApp()->RegisterWav(L"GameOver", soundWav);
+		soundWav = SoundPath + L"Tracking.wav";//なぜかダメ
+		App::GetApp()->RegisterWav(L"Tracking", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
@@ -138,7 +141,7 @@ namespace basecross{
 
 
 		//ボーンモデル
-		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_new_test.bmf");//敵(仮)のメッシュ
+		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_ver1.1.bmf");//敵(仮)のメッシュ
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
 
 		//ボーンマルチメッシュ

@@ -16,7 +16,7 @@ namespace basecross {
 		const Vec3 at(0.0f);
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
-		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 50.0f, -3 0.0f));
+		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 50.0f, -30.0f));
 		PtrView->SetCamera(PtrCamera);
 		PtrCamera->SetEye(eye);
 		PtrCamera->SetAt(at);
@@ -53,15 +53,15 @@ namespace basecross {
 		}
 
 		//マップマネージャーの生成
-		auto mapManager = AddGameObject<MapManager>();
+		auto mapManager = AddGameObject<MapManager>(L"Stage20/");
 		SetSharedGameObject(L"MapManager", mapManager);
 		//mapManager->WallCreateKari();//仮の内壁を生成する
 
 		//床の作成
 		AddGameObject<Ground>();
 
-		//auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
-		//SetSharedGameObject(L"MiniMapManager", miniMapManager);
+		auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
+		SetSharedGameObject(L"MiniMapManager", miniMapManager);
 
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
@@ -70,6 +70,7 @@ namespace basecross {
 
 		}
 
+
 		//アイテムの生成
 		AddGameObject<Item>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(-25.0f, 2.5f, 45.0f), Vec3(0.0f, 0.0f, 0.0f));
@@ -77,7 +78,7 @@ namespace basecross {
 		AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//miniMapManager->CreateItem();
+		miniMapManager->CreateItem();
 		//Playerの生成
 		auto player = AddGameObject<Player>(Vec3(35.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
@@ -102,10 +103,12 @@ namespace basecross {
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
 
 		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
-
+		
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
 
-		//miniMapManager->CreateEnemy();			
+
+		AddGameObject<MovieGameStart>();
+		miniMapManager->CreateEnemy();			
 	}
 
 	void GameStage::OnUpdate()

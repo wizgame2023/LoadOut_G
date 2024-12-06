@@ -37,6 +37,9 @@ namespace basecross{
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+		ptrDraw->AddAnimation(L"Defalt", 4, 9, true, 30.0f);
+		//ptrDraw->AddAnimation(L"Defalt2", 17, 25, true, 30.0f);
+		//ptrDraw->Ani
 
 		//ptrDraw->SetTextureResource(L"");
 
@@ -62,7 +65,7 @@ namespace basecross{
 		//auto miniMapPos = miniMapManager->GetStartPos();
 		//auto test = miniMapPos;
 
-		//ミニマップにPlayerを表示させる
+		////ミニマップにPlayerを表示させる
 		//GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
 
 		//電池をどれくらい持っているかを表す
@@ -112,7 +115,7 @@ namespace basecross{
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
 		//もし鍵を持っているなら脱出できる
-		m_key = true;//デバック用
+		//m_key = true;//デバック用
 		if (m_key)
 		{
 			if (selNow == 4)//今いる床がハッチなら
@@ -125,14 +128,21 @@ namespace basecross{
 			}
 		}
 
+		//アニメーション
+		GetComponent<PNTBoneModelDraw>()->UpdateAnimation(Delta);
+
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
 		//デバック用
+		//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		wstringstream wss(L"");
 		auto scene = App::GetApp()->GetScene<Scene>();
 		//auto gameStage = scene->GetGameStage();
+		m_Pos = GetComponent<Transform>()->GetPosition();
 
 		wss /* << L"デバッグ用文字列 "*/
+			<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
+			<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
 			<< L"\n傾き " << m_deg
 			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
 			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z

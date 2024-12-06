@@ -35,7 +35,7 @@ namespace basecross {
 
 		//メッシュ生成
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetMeshResource(L"DEFAULT_CYLINDER");
 		ptrDraw->SetTextureResource(L"Manhole");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
@@ -61,10 +61,7 @@ namespace basecross {
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto stage = GetStage();//ステージ取得
 
-		//m_mapManager.lock()->MapDataUpdate(m_pos, 1);//今いるセル座標はマンホールのデータということを伝える
 		//セル座標にアイテムを設置した情報があったら
-		auto test = m_charen;
-		auto a = 0;
 		if (m_mapManager.lock()->SelMapNow(m_pos)==2&&m_charen==0)
 		{
 			m_charen = 1;//アイテムが置かれている状態
@@ -113,21 +110,43 @@ namespace basecross {
 	{
 		auto test = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
-
+		auto player = dynamic_pointer_cast<Player>(other);
 
 		if (test->SelMapNow(m_pos) == 2)
-		{//もし当たったオブジェクトが敵ならば
+		{//もし当たったオブジェクトが敵なら
 			if (enemy)
 			{
 				GetStage()->RemoveGameObject<Enemy>(enemy);
 				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 
+
 				//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する(仮で敵は1人しかないから)
 
 			}
+			if (player)//プレイヤーなら
+			{
+				GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
+			}
 		}
 	}
+
+	void Manhole::OnCollisionExit(shared_ptr<GameObject>& other)
+	{
+		auto mapManager = m_mapManager.lock();
+		auto player = dynamic_pointer_cast<Player>(other);
+
+		if (mapManager->SelMapNow(m_pos)==2)
+		{
+			//Playerが離れたらまたプレイヤが来るか待つフラグを立てる
+			if (player)
+			{
+				m_playerStanbyFlag = true;
+			}
+		}
+
+	}
+
 
 }
 //end basecross

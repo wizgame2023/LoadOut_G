@@ -42,6 +42,7 @@
 #include"TilteStage.h"//タイトルステージ
 #include"GameOverStage.h"//ゲームオーバーステージ
 #include"GameClearStage.h"//ゲームクリアステージ
+#include"SelectStage.h"
 #include"Sky_base.h"
 #include"happysky.h"
 #include"ClearObject.h"//透明な物理オブジェクト
