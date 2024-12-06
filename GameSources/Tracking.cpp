@@ -25,8 +25,8 @@ namespace basecross {
 		auto player = app()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
 		m_playerRay = m_Owner->GetPlayerRay();
-		float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
-		m_ownerRot.y = rad;//playerの方向に向く
+		//float rad = atan2f((m_ownerPos.x - m_playerPos.x), (m_ownerPos.z - m_playerPos.z));//所有者(Enemy)を中心にplayerの方向を計算
+		//m_ownerRot.y = rad;//playerの方向に向く
 
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 		//Playerの位置をAStarの座標にする
@@ -59,7 +59,7 @@ namespace basecross {
 		}
 		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//m_ownerRot.y = m_directionRad;
+		m_ownerRot.y = m_directionRad;
 
 		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
 		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
@@ -102,23 +102,23 @@ namespace basecross {
 
 		//デバックログ
 		auto scene = App::GetApp()->GetScene<Scene>();
-		//wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
-		//	<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
-		//	<< L"\n敵の回転.y : " << m_ownerRot.y
-		//	<< L"\n敵の回転（deg）" << deg
-		//	<< L"\n敵のPos.x : " << m_ownerPos.x
-		//	<< L"\n敵のPos.z : " << m_ownerPos.z
-		//	<< L"\n右コスト : " << m_costRight
-		//	<< L"\n左コスト : " << m_costLeft
-		//	<< L"\n前コスト : " << m_costFod
-		//	<< L"\n後コスト : " << m_costDown
-		//	<< L"\nAStarPos.x : " << AStarPos.x
-		//	<< L"\nAStarPos.y : " << AStarPos.y
-		//	//<< L"\na.x : " << a.x
-		//	//<< L"\na.y : "<<a.y
-		//	//<<L"\na.z : "<<a.z
-		//	<< endl;
-		//scene->SetDebugString(wss.str());
+		wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
+			<< L"\nプレイヤーPos.z : " << m_playerPos.z*/
+			<< L"\n敵の回転.y : " << m_ownerRot.y
+			<< L"\n敵の回転（deg）" << deg
+			<< L"\n敵のPos.x : " << m_ownerPos.x
+			<< L"\n敵のPos.z : " << m_ownerPos.z
+			<< L"\n右コスト : " << m_costRight
+			<< L"\n左コスト : " << m_costLeft
+			<< L"\n前コスト : " << m_costFod
+			<< L"\n後コスト : " << m_costDown
+			<< L"\nAStarPos.x : " << AStarPos.x
+			<< L"\nAStarPos.y : " << AStarPos.y
+			//<< L"\na.x : " << a.x
+			//<< L"\na.y : "<<a.y
+			//<<L"\na.z : "<<a.z
+			<< endl;
+		scene->SetDebugString(wss.str());
 
 		//デバック用/////////////////////////////////////////////////////////////
 		// インプットデバイスオブジェクト
@@ -206,7 +206,9 @@ namespace basecross {
 	{		
 		vector<Vec2> aStarRood;//移動遷移
 
-		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");	
+		
+
 		m_aStarMapCSV = mapManager->GetAStarMap();//AStarマップ取得
 		//vector<vector<shared_ptr<Node>>> aStarMap;//マップのノード配列
 		vector<shared_ptr<Node>> aStarMapline;
@@ -228,7 +230,7 @@ namespace basecross {
 		auto originPos = enemyAStarPos;
 		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
 		auto cost = 1;
-		//ゴール地点(Player)
+		//ゴール地点(Player)	
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);
 		auto playerASterPos = mapManager->ConvertAStarMap(playerSelPos);
 		auto goalPos = playerASterPos;
@@ -302,16 +304,18 @@ namespace basecross {
 			{
 				int lookX = pushx + originPos.x;
 				int lookY = pushy + originPos.y;
+				auto test = m_aStarMap.size();
 
 				//確認する座標が親座標から見て左右上下以外なら確認しない
 				if (pushy == 0 && pushx == 0 || pushy != 0 && pushx != 0) continue;	
+				//配列の範囲外なら確認しない
+				if ((lookY < 0 || lookY >= (m_aStarMap.size())) || (lookX < 0 || lookX >= (m_aStarMap.size()))) continue;
 				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
 				if (m_aStarMapCSV[lookY][lookX] == 1 || m_aStarMap[lookY][lookX]->Status == Status_Closed) continue;
-				//壁を確認したので床のマスに対して評価する
+
+				//壁を確認したので床のマスに対して評価する//////////////////////////////////////////////////////////////////////
 				lookX = (pushx * 2) + originPos.x;
 				lookY = (pushy * 2) + originPos.y;	
-				//配列の範囲外なら確認しない	
-				if ((lookY <= 0 || lookY >= (m_aStarMap.size() - 1)) || (lookX <= 0 || lookX >= (m_aStarMap.size() - 1))) continue;
 
 				if (lookX < 0||lookX>m_aStarMap.size()-1)
 				{
@@ -324,6 +328,7 @@ namespace basecross {
 
 				if (m_aStarMap[lookY][lookX]->Status == Status_None)//探索したことがないなら
 				{
+					
 					m_aStarMap[lookY][lookX]->Status = Status_Open;
 					auto lookCost = m_aStarMap[lookY][lookX]->Cost = cost;//コストの変数まだ作ってない
 					auto lookHCost = m_aStarMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - lookX) + abs(goalPos.y - lookY);
