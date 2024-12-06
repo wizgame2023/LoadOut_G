@@ -18,9 +18,11 @@ namespace basecross {
 		shared_ptr<ClearObject> m_clearObject;//透明な壁
 		shared_ptr<WaterPillar> m_waterPillar;//水柱
 
-		int m_charen;//テクスチャを変えるフラグ
+		int m_charen;//進行度
 
-		float m_time;//時間を測るために必要
+		float m_coolTime;//時間を測るために必要
+		float m_stanbyTime;//時間を測るために必要
+		float m_blinkingTime;//点滅する時間を測る
 
 		bool m_playerStanbyFlag;//プレイヤーが踏むかまつフラグ
 
@@ -30,6 +32,8 @@ namespace basecross {
 
 		void OnCreate()override;
 		void OnUpdate()override;
+
+		void ManholeTransition();
 
 		void OnCollisionEnter(shared_ptr<GameObject>& other)override;//当たった時に処理
 		void OnCollisionExit(shared_ptr<GameObject>& other)override;//離れたときに処理
