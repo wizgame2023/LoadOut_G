@@ -22,6 +22,8 @@ namespace basecross {
 
 		float m_time;//時間を測るために必要
 
+		bool m_playerStanbyFlag;//プレイヤーが踏むかまつフラグ
+
 	public:
 		Manhole(shared_ptr<Stage>& stagePtr,Vec3 pos);
 		~Manhole();
@@ -30,6 +32,7 @@ namespace basecross {
 		void OnUpdate()override;
 
 		void OnCollisionEnter(shared_ptr<GameObject>& other)override;//当たった時に処理
+		void OnCollisionExit(shared_ptr<GameObject>& other)override;//離れたときに処理
 	};
 
 }
