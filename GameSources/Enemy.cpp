@@ -34,8 +34,9 @@ namespace basecross {
 	{
 		GetComponent<Transform>()->SetScale(5.0f,5.0f,5.0f);
 		GetComponent<Transform>()->SetPosition(m_pos);
-		auto ptrDraw = AddComponent<PNTStaticDraw>();
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
+		ptrDraw->AddAnimation(L"Default", 6, 10, true, 20.0f);
 		m_CurrentSt = make_shared<Patrol>(GetThis<Enemy>());
 
 		Mat4x4 spanMat;
@@ -111,6 +112,11 @@ namespace basecross {
 		//<< endl;
 
 		//scene->SetDebugString(wss.str());
+
+		//アニメーションの更新
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		auto delta = App::GetApp()->GetElapsedTime();
+		ptrDraw->UpdateAnimation(delta);
 
 	}
 	void Enemy::OnDestroy()
