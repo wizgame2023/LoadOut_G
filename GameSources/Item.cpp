@@ -29,16 +29,17 @@ namespace basecross {
 		//Transformに対しての等差数列
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.25f, 0.25f, 0.25f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		//メッシュ生成
-		auto ptrDraw = AddComponent<PNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"Bule");
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		ptrDraw->SetMeshResource(L"Battry");
+		ptrDraw->AddAnimation(L"Defalt", 0, 30, true, 30.0f);
+		//ptrDraw->SetTextureResource(L"Bule");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
@@ -48,7 +49,7 @@ namespace basecross {
 
 		//ptrColl->SetFixed(false);
 		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
-		//ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -60,7 +61,10 @@ namespace basecross {
 
 	void Item::OnUpdate()
 	{
-
+		auto delta = App::GetApp()->GetElapsedTime();
+		//アニメーション再生
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		ptrDraw->UpdateAnimation(delta);
 	}
 
 	//Playerにぶつかった際にカウントをプラスする

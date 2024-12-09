@@ -94,7 +94,7 @@ namespace basecross {
 		for (size_t count = 0; count < vec.size(); count++) {
 			auto ptr = AddGameObject<Enemy>(vec[count]);
 			//ナンバースクエアを作成して関連させる
-			AddGameObject<NumberSquare>(ptr, count);
+			//AddGameObject<BillBoard>(ptr, count);
 		}
 
 

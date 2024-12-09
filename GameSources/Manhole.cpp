@@ -160,10 +160,11 @@ namespace basecross {
 		{//もし当たったオブジェクトが敵なら
 			if (enemy)
 			{
-				GetStage()->RemoveGameObject<Enemy>(enemy);
+				//GetStage()->RemoveGameObject<Enemy>(enemy);//まだ敵をリムーブしない
 				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 
+				GetStage()->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
 				//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する(仮で敵は1人しかないから)
 
 			}

@@ -52,7 +52,7 @@ namespace basecross {
 		{
 			m_ownerPos = m_tagetRootPos[m_roodCount];
 			m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
-			if (m_roodCount < m_tagetRootPos.size())//この先に進まないといけない先がある場合
+			if (m_roodCount < m_tagetRootPos.size()-1)//この先に進まないといけない先がある場合
 			{
 				m_roodCount++;//目的地を変える
 			}

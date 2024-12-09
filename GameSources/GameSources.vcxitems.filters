@@ -186,7 +186,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MathTools.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)NumberSquare.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)BillBoard.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)StageManager.h">
@@ -208,6 +208,9 @@
       <Filter>Headers\Movie</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpPlayer.h">
+      <Filter>Headers\Movie</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEnemy.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
   </ItemGroup>
@@ -323,7 +326,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)NumberSquare.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)BillBoard.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StageManager.cpp">
@@ -348,6 +351,9 @@
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpPlayer.cpp">
+      <Filter>Sources\Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpEnemy.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
   </ItemGroup>
