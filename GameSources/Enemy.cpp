@@ -57,10 +57,18 @@ namespace basecross {
 
 		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
 		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 60.0f);
+
+		MoveSwich(true);//動けるようにする
+
 	}
 
 	void Enemy::OnUpdate()
 	{
+		if (!m_move)//フラグがオンになったら動ける
+		{
+			return;
+		}
+
 		auto trans = GetComponent<Transform>();
 		auto app = App::GetApp;
 		m_CurrentSt->OnUpdate();//現在のステート更新処理
