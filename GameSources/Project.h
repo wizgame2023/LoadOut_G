@@ -50,7 +50,7 @@
 #include"WaterPillar.h"//水柱
 #include"MiniMapActor.h"//ミニマップのPlayerやEnemy　オブジェクトで動くもの
 #include"MiniMapItem.h"//ミニマップのItem
-#include"NumberSquare.h"
+#include"BillBoard.h"
 #include"Hatch.h"//脱出用のハッチ
 #include"Movie.h"//ムービー用の親クラス
 #include"MovieGameStart.h"//ゲーム開始時のムービ

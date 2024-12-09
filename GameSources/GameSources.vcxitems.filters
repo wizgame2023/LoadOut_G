@@ -186,7 +186,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MathTools.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)NumberSquare.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)BillBoard.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)StageManager.h">
@@ -326,7 +326,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)NumberSquare.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)BillBoard.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StageManager.cpp">

@@ -39,7 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEnemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpPlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)NumberSquare.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BillBoard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h" />
@@ -88,7 +88,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpEnemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpPlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)NumberSquare.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BillBoard.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
