@@ -104,10 +104,12 @@ namespace basecross{
 		app->RegisterTexture(L"MiniEnemy", strTexture);
 		strTexture = texPath + L"battery_tan1.png";//乾電池(単一)のテクスチャ
 		app->RegisterTexture(L"Battery1", strTexture);
-		strTexture = texPath + L"StoneWall.jpg";//石壁のテクスチャ
+		strTexture = texPath + L"Wall.png";//石壁のテクスチャ
 		app->RegisterTexture(L"StoneWall", strTexture);
 		strTexture = texPath + L"StartMozi.png";//石壁のテクスチャ
 		app->RegisterTexture(L"StartMozi", strTexture);
+		strTexture = texPath + L"Road5.jpg";//石壁のテクスチャ
+		app->RegisterTexture(L"Road", strTexture);
 
 
 		//BGMSE
@@ -143,6 +145,8 @@ namespace basecross{
 		//ボーンモデル
 		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_ver1.1.bmf");//敵(仮)のメッシュ
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
+		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"battry_ver1.1.bmf");//電池用のメッシュ
+		app->RegisterResource(L"Battry", boneModelMesh);
 
 		//ボーンマルチメッシュ
 		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");//プレイヤー(仮)メッシュ
