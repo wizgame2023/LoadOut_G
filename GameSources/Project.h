@@ -56,6 +56,7 @@
 #include"MovieGameStart.h"//ゲーム開始時のムービ
 #include"MovieUpPlayer.h"//Playerが打ちあがる時のムービー
 #include"MovieGameClear.h"
+#include"MovieUpEnemy.h"//Enemyが打ちあがる時のムービー
 
 //マネージャー用
 #include"MiniMapManager.h"//ミニマップ生成
