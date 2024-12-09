@@ -25,7 +25,7 @@ namespace basecross {
 	void MovieGameStart::OnUpdate()
 	{
 		auto cameraPos = m_movieCamera->GetEye();//カメラのポジションを取得
-		auto tagetPos = Vec3(0.0f, 0.0f, 200.0f);//目的地
+		auto tagetPos = Vec3(0.0f, 0.0f, 100.0f);//目的地
 
 		if (m_count == 0)//処理①
 		{
