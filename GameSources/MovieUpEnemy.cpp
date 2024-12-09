@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	MovieUpEnemy::MovieUpEnemy(shared_ptr<Stage>& stagePtr,shared_ptr<Enemy> enemy) :
+	MovieUpEnemy::MovieUpEnemy(shared_ptr<Stage>& stagePtr,weak_ptr<Enemy> enemy) :
 		Movie(stagePtr),
 		m_Enemy(enemy)
 	{
@@ -56,7 +56,8 @@ namespace basecross {
 
 			View->SetCamera(PtrCamera);//ƒJƒƒ‰‚ğ–ß‚·
 			GetStage()->SetView(View);
-			GetStage()->RemoveGameObject<MovieGameStart>(GetThis<MovieGameStart>());//©•ª©g‚ğíœ
+			GetStage()->RemoveGameObject<Enemy>(m_Enemy.lock());
+			GetStage()->RemoveGameObject<MovieUpEnemy>(GetThis<MovieUpEnemy>());//©•ª©g‚ğíœ
 
 		}
 

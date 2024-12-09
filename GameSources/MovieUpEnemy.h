@@ -15,7 +15,7 @@ namespace basecross {
 		weak_ptr<Enemy> m_Enemy;//ムービーの注視点となるEnemy
 		shared_ptr<Sprite> m_sprite;
 	public:
-		MovieUpEnemy(shared_ptr<Stage>& stagePtr,shared_ptr<Enemy> enemy);
+		MovieUpEnemy(shared_ptr<Stage>& stagePtr,weak_ptr<Enemy> enemy);
 		~MovieUpEnemy();
 
 		void OnCreate()override;
