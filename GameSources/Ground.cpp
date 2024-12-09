@@ -8,10 +8,19 @@
 #include "Project.h"
 
 namespace basecross {
-	Ground::Ground(const shared_ptr<Stage>& StagePtr) :
-		GameObject(StagePtr)
+	Ground::Ground(const shared_ptr<Stage>& StagePtr, Vec3 pos, Vec3 rot) :
+		GameObject(StagePtr),
+		m_pos(pos),
+		m_rot(rot)
 	{
 	}
+	Ground::Ground(const shared_ptr<Stage>& StagePtr) :
+		GameObject(StagePtr),
+		m_pos(Vec3(0.0f, 0.0f, 0.0f)),
+		m_rot(Vec3(200.0f, 0.1f, 200.0f))
+	{
+	}
+
 	Ground::~Ground()
 	{
 	}
@@ -20,9 +29,9 @@ namespace basecross {
 	{
 		//Transformì¬
 		auto ptr = GetComponent<Transform>();//Transformæ“¾
-		ptr->SetPosition(0.0f,-0.1f,0.0f);
+		ptr->SetPosition(m_pos);
 		ptr->SetRotation(0.0f,0.0f,0.0f);
-		ptr->SetScale(200.0f, 1.0f, 200.0f);
+		ptr->SetScale(m_rot);
 
 		//Transform‚É‘Î‚µ‚Ä‚Ì“™·”—ñ
 		Mat4x4 spanMat;
@@ -36,7 +45,7 @@ namespace basecross {
 		//ƒƒbƒVƒ…¶¬
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"StoneRoad");
+		ptrDraw->SetTextureResource(L"Road");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 

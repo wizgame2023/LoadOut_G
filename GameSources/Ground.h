@@ -9,6 +9,7 @@ namespace basecross {
 		int OneBlock;//このゲームの単位(この数値をセル座標では１とする)
 	public:
 
+		Ground(const shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot = Vec3(10.0f,0.1f,10.0f));//コンストラクタ
 		Ground(const shared_ptr<Stage>& StagePtr);//コンストラクタ
 		~Ground();//デストラクタ
 
