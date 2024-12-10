@@ -98,7 +98,7 @@ namespace basecross {
 		//“G¶¬
 		auto enemy = AddGameObject<Enemy>();
 		enemy->AddTag(L"Key");//Œ®‚ğ‚Á‚Ä‚¢‚é‚±‚Æ‚É‚·‚é
-		AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(enemy),0);
+		//AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(enemy),0);
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
 
 		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
