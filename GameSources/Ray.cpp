@@ -37,7 +37,7 @@ namespace basecross {
 		m_countTime += delta;
 
 		//レイの判定となるレイスフィアを生成する
-		if (m_countTime >= 0.2f)
+		if (m_countTime >= 0.1f)
 		{	
 			m_countTime = 0;//リセット
 			auto raySphere = GetStage()->AddGameObject<RaySphere>(m_parentObj.lock()->GetComponent<Transform>()->GetPosition(), -m_angle, GetThis<Ray>(),m_range);//レイスフィア生成

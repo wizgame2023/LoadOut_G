@@ -6,6 +6,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Ray.h"
+#include "BillBoard.h"
 
 namespace basecross {
 
@@ -26,6 +27,8 @@ namespace basecross {
 		shared_ptr<Ray>m_forwardRay;
 		shared_ptr<Ray>m_leftRay;
 		shared_ptr<Ray>m_playerRay;
+
+		shared_ptr<BillBoard> m_billBoard;
 
 	public:
 		//コンストラクタ・デストラクタ

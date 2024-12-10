@@ -15,6 +15,8 @@ namespace basecross{
 
 		size_t m_Number;
 
+		wstring m_textureName;
+
 		Quat Billboard(const Vec3& Line)
 		{
 			Vec3 Temp = Line;
@@ -37,11 +39,16 @@ namespace basecross{
 		//構築と破棄
 		BillBoard(const shared_ptr<Stage>& StagePtr,
 			shared_ptr<Actor>& actorPtr, size_t Number);
+		BillBoard(const shared_ptr<Stage>& StagePtr,
+			shared_ptr<Actor>& actorPtr, wstring spriteName);
 		virtual ~BillBoard();
 		//初期化
 		virtual void OnCreate() override;
 		//変化
 		virtual void OnUpdate() override;
+
+		//スプライト変更
+		void ChangeTexture(wstring spriteName);
 
 	};
 

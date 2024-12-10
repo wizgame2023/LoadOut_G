@@ -83,7 +83,7 @@ namespace basecross {
 				auto itemPos = itemTrans->GetPosition();
 				auto itemScale = itemTrans->GetScale();
 
-				stage->AddGameObject<Sprite>(L"Red", Vec2((itemScale.x * m_mapMagnification), (itemScale.z * m_mapMagnification)),
+				stage->AddGameObject<Sprite>(L"Bule", Vec2((itemScale.x * m_mapMagnification), (itemScale.z * m_mapMagnification)),
 					Vec3(m_startPos.x + (itemPos.x * m_mapMagnification), m_startPos.y + (itemPos.z * m_mapMagnification), 0.0f), Vec3(0.0f, 0.0f, 0.0f),Col4(1.0f,1.0f,1.0f,1.0f), 10);
 			}
 		}
@@ -99,7 +99,7 @@ namespace basecross {
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto manhole : obj)
 		{
-			auto castEnemy = dynamic_pointer_cast<Actor>(manhole);
+			auto castEnemy = dynamic_pointer_cast<Enemy>(manhole);
 			if (castEnemy)//Enemy型にキャストする
 			{
 				float Lenght = 225.0f;//ミニマップの直径

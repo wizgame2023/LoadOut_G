@@ -60,6 +60,8 @@ namespace basecross {
 
 		MoveSwich(true);//動けるようにする
 
+		//ビルボードの生成
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(GetThis<Actor>()),0);
 	}
 
 	void Enemy::OnUpdate()
@@ -97,6 +99,18 @@ namespace basecross {
 		auto player = GetStage()->GetSharedGameObject<Player>(L"Player");//playerを取得
 		m_playerPos = player->GetComponent<Transform>()->GetPosition();//playerのポジションを取得
 		float playerVec = atan2f((m_pos.x - m_playerPos.x), (m_pos.z - m_playerPos.z)) + XM_PI * 0.5;//所有者(Enemy)を中心にplayerの方向を計算
+
+
+		auto state = GetNowState();
+		//auto castEnemy = dynamic_pointer_cast<Enemy>(manhole);
+		if (!dynamic_pointer_cast<Tracking>(state))
+		{
+			m_billBoard->ChangeTexture(L"search");
+		}
+		if (dynamic_pointer_cast<Tracking>(state))
+		{
+			m_billBoard->ChangeTexture(L"Wow");
+		}
 
 		float angle = playerVec - m_angle;
 		//視界の作成

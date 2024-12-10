@@ -43,7 +43,7 @@ namespace basecross {
 		//コリジョン生成
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
