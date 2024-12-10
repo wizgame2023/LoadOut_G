@@ -38,6 +38,10 @@ namespace basecross{
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 		ptrDraw->AddAnimation(L"Defalt", 4, 9, true, 30.0f);
+		ptrDraw->AddAnimation(L"Walk", 4, 9, true, 30.0f);//歩き状態        
+		ptrDraw->AddAnimation(L"Stand", 4, 4, false, 1.0f);//待機状態
+		ptrDraw->ChangeCurrentAnimation(L"Walk");
+
 		//ptrDraw->AddAnimation(L"Defalt2", 17, 25, true, 30.0f);
 		//ptrDraw->Ani
 
@@ -129,7 +133,7 @@ namespace basecross{
 		}
 
 		//アニメーション
-		GetComponent<PNTBoneModelDraw>()->UpdateAnimation(Delta);
+		//GetComponent<PNTBoneModelDraw>()->UpdateAnimation(Delta);
 
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
@@ -172,6 +176,32 @@ namespace basecross{
 			pos.z += (m_controler.fThumbLY * 10 * Delta) * 2;
 
 			m_Trans->SetPosition(pos);//ポジション更新
+		}
+		
+		//ステックを傾けるとアニメーションが再生される
+		if (!m_controler.fThumbLX == 0 || !m_controler.fThumbLY == 0)
+		{
+			auto Name = GetComponent<PNTBoneModelDraw>()->GetCurrentAnimation();
+			if (Name != L"Walk")
+			{
+				//アニメーション変更
+				GetComponent<PNTBoneModelDraw>()->ChangeCurrentAnimation(L"Walk");
+			}
+
+			//アニメーション再生
+			GetComponent<PNTBoneModelDraw>()->UpdateAnimation(Delta);
+		}
+		else
+		{
+			auto Name = GetComponent<PNTBoneModelDraw>()->GetCurrentAnimation();
+			if (Name != L"Stand")
+			{
+				//アニメーション変更
+				GetComponent<PNTBoneModelDraw>()->ChangeCurrentAnimation(L"Stand");
+			}
+			//アニメーション再生
+			GetComponent<PNTBoneModelDraw>()->UpdateAnimation(0);
+
 		}
 
 		float deg = 0;
