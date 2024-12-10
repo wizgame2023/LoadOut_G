@@ -213,6 +213,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEnemy.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameOver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -356,5 +357,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpEnemy.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameOver.cpp" />
   </ItemGroup>
 </Project>
