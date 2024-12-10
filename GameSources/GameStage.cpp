@@ -112,7 +112,6 @@ namespace basecross {
 
 	void GameStage::OnUpdate()
 	{
-		GameManager();//ゲーム進行を管理する
 	}
 
 	int GameStage::GameEnemyState()
@@ -141,28 +140,28 @@ namespace basecross {
 	//ゲームの進行を管理する後々関数ではなくクラスにします
 	void GameStage::GameManager()
 	{
-		//ゲームクリアの条件
-		//ステージのオブジェクトを全て取得
-		auto obj = GetGameObjectVec();
-		EnemyNow = 0;
-		//取得したオブジェクトがアイテムに変換できたら配列に入れる
-		for (auto manhole : obj)
-		{
+		////ゲームクリアの条件
+		////ステージのオブジェクトを全て取得
+		//auto obj = GetGameObjectVec();
+		//EnemyNow = 0;
+		////取得したオブジェクトがアイテムに変換できたら配列に入れる
+		//for (auto manhole : obj)
+		//{
 
-			if (dynamic_pointer_cast<Enemy>(manhole))//アイテム型にキャストする
-			{
+		//	if (dynamic_pointer_cast<Enemy>(manhole))//アイテム型にキャストする
+		//	{
 
-				auto a = 0;
-				a++;
-				EnemyNow = a;
+		//		auto a = 0;
+		//		a++;
+		//		EnemyNow = a;
 
-			}
-		}
+		//	}
+		//}
 
-		if (EnemyNow == 0)
-		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
-		}
+		//if (EnemyNow == 0)
+		//{
+		//	//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
+		//}
 
 	}
 
