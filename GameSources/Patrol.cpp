@@ -11,7 +11,10 @@ namespace basecross {
 //巡回ステートの最初の処理
 	void Patrol::OnStart()
 	{
-		m_rnd = rand()%2+1;//乱数を生成
+		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
+		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のPositionを取得
+		m_destinationPos = m_ownerPos;
+		m_destinationDecision = true;
 	}
 
 //巡回ステートの更新処理
@@ -19,15 +22,14 @@ namespace basecross {
 	{
 	//所有者(Enemy)の移動処理
 		auto app = App::GetApp;
-		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のPositionを取得
 
 		//Rayの取得
-		m_forwardRay = m_Owner->GetForwardRay();//所有者(Enemy)の前方向のRay
+		//m_forwardRay = m_Owner->GetForwardRay();//所有者(Enemy)の前方向のRay
 		m_playerRay = m_Owner->GetPlayerRay();//所有者(Enemy)からplayerの方向のRay
-
 		m_time += app()->GetElapsedTime();//デルタタイム
 
+		m_destinationPos = DestinationDecision();
 		//ベクトルの生成
 		float rad = atan2f((m_ownerPos.x - m_destinationPos.x), (m_ownerPos.z - m_destinationPos.z));//所有者(Enemy)からplayerの方向の角度計算
 		auto right = m_right * sin(rad);//平行方向のベクトル
@@ -36,177 +38,177 @@ namespace basecross {
 	//巡回ルート算出
 		//巡回ルート1(左周り)
 		//乱数が1だったら実行
-		if (m_rnd==1)
-		{
-			//目的地が決まってなかったら実行
-			if (!m_destinationDecision)
-			{
-				//進む方向に壁がなかったら実行
-				if (!m_wallCheck)
-				{
-					//目的地の方向を決定
-					switch (m_numbers)
-					{
-						//目的地を右方向に決定
-					case 0:
-						m_destinationPos.x += m_point;
-						m_destinationDecision = true;
-						break;
-						//目的地を上方向に決定
-					case 1:
-						m_destinationPos.z += m_point;
-						m_destinationDecision = true;
-						break;
-						//目的地を左方向に決定
-					case 2:
-						m_destinationPos.x -= m_point;
-						m_destinationDecision = true;
-						m_minus = true;
-						break;
-						//目的地を下方向に決定
-					case 3:
-						m_destinationPos.z -= m_point;
-						m_destinationDecision = true;
-						m_minus = true;
-						break;
-						//m_numbersを初期化
-					case 4:
-						m_numbers = 0;
-						break;
-					}
-				}
+		//if (m_rnd==1)
+		//{
+		//	//目的地が決まってなかったら実行
+		//	if (!m_destinationDecision)
+		//	{
+		//		//進む方向に壁がなかったら実行
+		//		if (!m_wallCheck)
+		//		{
+		//			//目的地の方向を決定
+		//			switch (m_numbers)
+		//			{
+		//				//目的地を右方向に決定
+		//			case 0:
+		//				m_destinationPos.x += m_point;
+		//				m_destinationDecision = true;
+		//				break;
+		//				//目的地を上方向に決定
+		//			case 1:
+		//				m_destinationPos.z += m_point;
+		//				m_destinationDecision = true;
+		//				break;
+		//				//目的地を左方向に決定
+		//			case 2:
+		//				m_destinationPos.x -= m_point;
+		//				m_destinationDecision = true;
+		//				m_minus = true;
+		//				break;
+		//				//目的地を下方向に決定
+		//			case 3:
+		//				m_destinationPos.z -= m_point;
+		//				m_destinationDecision = true;
+		//				m_minus = true;
+		//				break;
+		//				//m_numbersを初期化
+		//			case 4:
+		//				m_numbers = 0;
+		//				break;
+		//			}
+		//		}
 				//進む方向に壁があったら実行
-				if (m_wallCheck)
-				{
-					switch (m_numbers)
-					{
-						//目的地を右方向に決定
-					case 0:
-						m_destinationPos.x += m_point;
-						m_destinationPos.z = m_ownerPos.z;//目的地のz方向を所有者(Enemy)に揃える
-						m_destinationDecision = true;
-						m_wallCheck = false;
-						break;
-						//目的地を上方向に決定
-					case 1:
-						m_destinationPos.z += m_point;
-						m_destinationPos.x = m_ownerPos.x;//目的地のx方向を所有者(Enemy)に揃える
-						m_destinationDecision = true;
-						m_wallCheck = false;
-						break;
-						//目的地を左方向に決定
-					case 2:
-						m_destinationPos.x -= m_point;
-						m_destinationPos.z = m_ownerPos.z;//目的地のz方向を所有者(Enemy)に揃える
-						m_destinationDecision = true;
-						m_minus = true;
-						m_wallCheck = false;
-						break;
-						//目的地を下方向に決定
-					case 3:
-						m_destinationPos.z -= m_point;
-						m_destinationPos.x = m_ownerPos.x;//目的地のx方向を所有者(Enemy)に揃える
-						m_destinationDecision = true;
-						m_minus = true;
-						m_wallCheck = false;
-						break;
-						//m_numbersを初期化
-					case 4:
-						m_numbers = 0;
-						break;
-					}
-				}
-			}
-		}
+			//	if (m_wallCheck)
+			//	{
+			//		switch (m_numbers)
+			//		{
+			//			//目的地を右方向に決定
+			//		case 0:
+			//			m_destinationPos.x += m_point;
+			//			m_destinationPos.z = m_ownerPos.z;//目的地のz方向を所有者(Enemy)に揃える
+			//			m_destinationDecision = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//目的地を上方向に決定
+			//		case 1:
+			//			m_destinationPos.z += m_point;
+			//			m_destinationPos.x = m_ownerPos.x;//目的地のx方向を所有者(Enemy)に揃える
+			//			m_destinationDecision = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//目的地を左方向に決定
+			//		case 2:
+			//			m_destinationPos.x -= m_point;
+			//			m_destinationPos.z = m_ownerPos.z;//目的地のz方向を所有者(Enemy)に揃える
+			//			m_destinationDecision = true;
+			//			m_minus = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//目的地を下方向に決定
+			//		case 3:
+			//			m_destinationPos.z -= m_point;
+			//			m_destinationPos.x = m_ownerPos.x;//目的地のx方向を所有者(Enemy)に揃える
+			//			m_destinationDecision = true;
+			//			m_minus = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//m_numbersを初期化
+			//		case 4:
+			//			m_numbers = 0;
+			//			break;
+			//		}
+			//	}
+		//	}
+		//}
 		//巡回ルート2(右回り)
 		//
-		else if(m_rnd==2)
-		{
-			//目的地が決まってなかったら実行
-			if (!m_destinationDecision)
-			{
-				//進む方向に壁がなかったら実行
-				if (!m_wallCheck)
-				{
-					//目的地の方向を決定
-					switch (m_numbers)
-					{
-						//目的地を左方向に決定
-					case 0:
-						m_destinationPos.x -= m_point;
-						m_destinationDecision = true;
-						break;
-						//目的地を下方向に決定
-					case 1:
-						m_destinationPos.z -= m_point;
-						m_destinationDecision = true;
-						break;
-						//目的地を右方向に決定
-					case 2:
-						m_destinationPos.x += m_point;
-						m_destinationDecision = true;
-						m_minus = true;
-						break;
-						//目的地を上方向に決定
-					case 3:
-						m_destinationPos.z += m_point;
-						m_destinationDecision = true;
-						m_minus = true;
-						break;
-						//m_numbersを初期化
-					case 4:
-						m_numbers = 0;
-						break;
-					}
-				}
+		//else if(m_rnd==2)
+		//{
+		//	//目的地が決まってなかったら実行
+		//	if (!m_destinationDecision)
+		//	{
+		//		//進む方向に壁がなかったら実行
+		//		if (!m_wallCheck)
+		//		{
+		//			//目的地の方向を決定
+		//			switch (m_numbers)
+		//			{
+		//				//目的地を左方向に決定
+		//			case 0:
+		//				m_destinationPos.x -= m_point;
+		//				m_destinationDecision = true;
+		//				break;
+		//				//目的地を下方向に決定
+		//			case 1:
+		//				m_destinationPos.z -= m_point;
+		//				m_destinationDecision = true;
+		//				break;
+		//				//目的地を右方向に決定
+		//			case 2:
+		//				m_destinationPos.x += m_point;
+		//				m_destinationDecision = true;
+		//				m_minus = true;
+		//				break;
+		//				//目的地を上方向に決定
+		//			case 3:
+		//				m_destinationPos.z += m_point;
+		//				m_destinationDecision = true;
+		//				m_minus = true;
+		//				break;
+		//				//m_numbersを初期化
+		//			case 4:
+		//				m_numbers = 0;
+		//				break;
+		//			}
+		//		}
 				//進む方向に壁があったら実行
-				if (m_wallCheck)
-				{
-					//目的地の方向を決定
-					switch (m_numbers)
-					{
-						//目的地を左方向に決定
-					case 0:
-						m_destinationPos.x -= m_point;
-						m_destinationPos.z = m_ownerPos.z;
-						m_destinationDecision = true;
-						m_wallCheck = false;
-						break;
-						//目的地を下方向に決定
-					case 1:
-						m_destinationPos.z -= m_point;
-						m_destinationPos.x = m_ownerPos.x;
-						m_destinationDecision = true;
-						m_wallCheck = false;
-						break;
-						//目的地を右方向に決定
-					case 2:
-						m_destinationPos.x += m_point;
-						m_destinationPos.z = m_ownerPos.z;
-						m_destinationDecision = true;
-						m_minus = true;
-						m_wallCheck = false;
-						break;
-						//目的地を上方向に決定
-					case 3:
-						m_destinationPos.z += m_point;
-						m_destinationPos.x = m_ownerPos.x;
-						m_destinationDecision = true;
-						m_minus = true;
-						m_wallCheck = false;
-						break;
-						//m_numbersを初期化
-					case 4:
-						m_numbers = 0;
-						break;
-					}
-				}
-			}
-		}
+			//	if (m_wallCheck)
+			//	{
+			//		//目的地の方向を決定
+			//		switch (m_numbers)
+			//		{
+			//			//目的地を左方向に決定
+			//		case 0:
+			//			m_destinationPos.x -= m_point;
+			//			m_destinationPos.z = m_ownerPos.z;
+			//			m_destinationDecision = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//目的地を下方向に決定
+			//		case 1:
+			//			m_destinationPos.z -= m_point;
+			//			m_destinationPos.x = m_ownerPos.x;
+			//			m_destinationDecision = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//目的地を右方向に決定
+			//		case 2:
+			//			m_destinationPos.x += m_point;
+			//			m_destinationPos.z = m_ownerPos.z;
+			//			m_destinationDecision = true;
+			//			m_minus = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//目的地を上方向に決定
+			//		case 3:
+			//			m_destinationPos.z += m_point;
+			//			m_destinationPos.x = m_ownerPos.x;
+			//			m_destinationDecision = true;
+			//			m_minus = true;
+			//			m_wallCheck = false;
+			//			break;
+			//			//m_numbersを初期化
+			//		case 4:
+			//			m_numbers = 0;
+			//			break;
+			//		}
+			//	}
+		//	}
+		//}
 	//移動処理
-		//目的地が決まっていたら実行
-		if (m_destinationDecision)
-		{
+		////目的地が決まっていたら実行
+		//if (m_destinationDecision)
+		//{
 			//3秒ごとにm_numbersが偶数だったら実行
 			if (m_numbers % 2 == 0 && m_time >= 3)
 			{
@@ -275,31 +277,31 @@ namespace basecross {
 					}
 				}
 			}
-			//m_forwardRayが物体に当たったら実行
-			if (m_forwardRay.lock()->GetDisObj().size() > 0)
-			{
-				m_forwardRay.lock()->ResetDisObj();//Rayの初期化
-				m_rnd = rand() % 2 + 1;//乱数を再度設定
-				m_numbers++;//次の目的地を決める値を加算
-				m_distance = 0;//移動距離を初期化
-				m_time = 0;//待機時間を初期化
-				m_wallCheck = true;//壁が当たったことを返す
-				m_destinationDecision = false;//目的地にを決める処理に移行
+			////m_forwardRayが物体に当たったら実行
+			//if (m_forwardRay.lock()->GetDisObj().size() > 0)
+			//{
+			//	m_forwardRay.lock()->ResetDisObj();//Rayの初期化
+			//	m_rnd = rand() % 2 + 1;//乱数を再度設定
+			//	m_numbers++;//次の目的地を決める値を加算
+			//	m_distance = 0;//移動距離を初期化
+			//	m_time = 0;//待機時間を初期化
+			//	m_wallCheck = true;//壁が当たったことを返す
+			//	m_destinationDecision = false;//目的地にを決める処理に移行
 
-				//垂直方向に移動していたら実行
-				if (m_forwardCheck)
-				{
-					m_forwardCheck = false;//垂直方向の移動の初期化
+			//	//垂直方向に移動していたら実行
+			//	if (m_forwardCheck)
+			//	{
+			//		m_forwardCheck = false;//垂直方向の移動の初期化
 
-				}
-				//平行方向に移動してたら実行
-				if (m_rightCheck)
-				{
-					m_rightCheck = false;//平行方向の移動の初期化
-				}
-			}
+			//	}
+			//	//平行方向に移動してたら実行
+			//	if (m_rightCheck)
+			//	{
+			//		m_rightCheck = false;//平行方向の移動の初期化
+			//	}
+			//}
 
-		}
+		//}
 		//m_playerRayが物体に当たったら実行
 		if (m_playerRay.lock()->GetDisObj().size() > 0)
 		{
@@ -347,5 +349,117 @@ namespace basecross {
 
 	}
 
+	Vec3 Patrol::DestinationDecision()
+	{
+		Math math;
+		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		Vec3 pos = m_ownerPos;
+		Vec3 direction;
+		auto AStar = mapMgr->GetAStarMap();//A*のマップ配列取得
+		auto sellPos = mapMgr->ConvertSelMap(Vec3(95,0,95));//Enemyの位置をセル座標に変更
+		auto AStarPos = mapMgr->ConvertAStarMap(sellPos);//セル座標からAStar座標に変更
+
+		auto rightAStar = AStar[AStarPos.y][AStarPos.x + 1];
+		auto leftAStar = AStar[AStarPos.y][AStarPos.x - 1];
+		auto fodAStar = AStar[AStarPos.y - 1][AStarPos.x];
+		auto downAStar = AStar[AStarPos.y + 1][AStarPos.x];
+
+
+		auto rightASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x + 2, AStarPos.y));
+		auto leftASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x - 2, AStarPos.y));
+		auto fodASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y - 2));
+		auto downASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y + 2));
+
+
+		auto rightWPos = mapMgr->ConvertWorldMap(rightASPos);
+		auto leftWPos = mapMgr->ConvertWorldMap(leftASPos);
+		auto fodWPos = mapMgr->ConvertWorldMap(fodASPos);
+		auto downWPos = mapMgr->ConvertWorldMap(downASPos);
+
+
+		auto rightVec = math.GetDistance(rightWPos, m_destinationPos);
+		auto liftVec = math.GetDistance(leftWPos, m_destinationPos);
+		auto fodVec = math.GetDistance(fodWPos, m_destinationPos);
+		auto downVec = math.GetDistance(downWPos, m_destinationPos);
+
+
+		for ( int i = 0; i < 5; i++)
+		{
+			switch (i)
+			{
+			case 1:
+				if (rightAStar == 1)
+				{
+					m_costRWall += 100;
+				}
+				m_costRWall += rand() % 10 + 1;
+				i++;
+				break;
+			case 2:
+				if (leftAStar == 1)
+				{
+					m_costLWall = 100;
+				}
+				m_costLWall += rand() % 10 + 1;
+				i++;
+				break;
+
+			case 3:
+				if (fodAStar == 1)
+				{
+					m_costFWall += 100;
+				}
+				m_costFWall += rand() % 10 + 1;
+				i++;
+				break;
+			case 4:
+				if (downAStar == 1)
+				{
+					m_costDWall += 100;
+				}
+				m_costFWall += rand() % 10 + 1;
+				i++;
+				break;
+			}
+
+		}
+
+		int min_value[] =
+		{
+			{m_costRWall},
+			{m_costLWall},
+			{m_costFWall},
+			{m_costDWall},
+		};
+
+		int min = min_value[0];
+		for (int i = 0; i < 4; i++)
+		{
+			if (min_value[i] < min)
+			{
+				min = min_value[i];
+			}
+		}
+
+		if (min == min_value[0])
+		{
+			direction = rightWPos;
+		}
+		if (min == min_value[1])
+		{
+			direction = leftWPos;
+		}
+		if (min == min_value[2])
+		{
+			direction = fodWPos;
+		}
+		if (min == min_value[3])
+		{
+			direction = downWPos;
+		}
+
+		return direction;
+
+	}
 }
 //end basecross
