@@ -112,7 +112,7 @@ namespace basecross{
 		app->RegisterTexture(L"Road", strTexture);
 		strTexture = texPath + L"Wow.png";//敵が見つけたときのテクスチャ
 		app->RegisterTexture(L"Wow", strTexture);
-		strTexture = texPath + L"Santen.png";//敵が探しているときのテクスチャ
+		strTexture = texPath + L"QuestionMark.png";//敵が探しているときのテクスチャ
 		app->RegisterTexture(L"search", strTexture);
 
 
