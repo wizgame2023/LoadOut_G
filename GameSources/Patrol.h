@@ -22,6 +22,11 @@ namespace basecross {
 		//int型メンバー変数
 		int m_rnd;
 		int m_numbers;
+		int m_costRWall;
+		int m_costLWall;
+		int m_costFWall;
+		int m_costDWall;
+
 
 		//float型メンバー変数
 		float m_time;
@@ -53,6 +58,10 @@ namespace basecross {
 			m_forward(0, 0, 1),
 			m_rnd(1),
 			m_numbers(0),
+			m_costRWall(0),
+			m_costLWall(0),
+			m_costFWall(0),
+			m_costDWall(0),
 			m_time(0.0f),
 			m_moveTime(0.0f),
 			m_distance(0.0f),
@@ -71,7 +80,7 @@ namespace basecross {
 		void OnUpdate();
 		void OnExit();
 
-
+		Vec3 DestinationDecision();
 	};
 }
 //end basecross
