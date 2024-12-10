@@ -244,13 +244,13 @@ namespace basecross {
 	void MapManager::AStarMapCreate()
 	{
 
-		for (int y = 0; y < m_stageMap.size() * 2; y++)
+		for (int y = 0; y < (m_stageMap.size() * 2)+1; y++)
 		{
 
 			int count = 0;
 			count = 0;//ƒŠƒZƒbƒg
 
-			for (int x = 0; x < m_stageMap[0].size() * 2; x++)
+			for (int x = 0; x < (m_stageMap[0].size() * 2)+1; x++)
 			{
 				bool evenX;//c‚ª‹ô”‚©‚Ç‚¤‚©
 				bool evenY;//‰¡‚ª‹ô”‚©‚Ç‚¤‚©
