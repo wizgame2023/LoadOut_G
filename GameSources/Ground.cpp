@@ -8,10 +8,18 @@
 #include "Project.h"
 
 namespace basecross {
-	Ground::Ground(const shared_ptr<Stage>& StagePtr) :
-		GameObject(StagePtr)
+	Ground::Ground(const shared_ptr<Stage>& StagePtr,vector<vector<int>> map) :
+		GameObject(StagePtr),
+		m_map(map)
 	{
 	}
+	Ground::Ground(const shared_ptr<Stage>& StagePtr) :
+		GameObject(StagePtr),
+		m_pos(Vec3(0.0f, 0.0f, 0.0f)),
+		m_rot(Vec3(200.0f, 0.1f, 200.0f))
+	{
+	}
+
 	Ground::~Ground()
 	{
 	}
@@ -20,9 +28,9 @@ namespace basecross {
 	{
 		//Transform作成
 		auto ptr = GetComponent<Transform>();//Transform取得
-		ptr->SetPosition(0.0f,-0.1f,0.0f);
+		ptr->SetPosition(m_pos);
 		ptr->SetRotation(0.0f,0.0f,0.0f);
-		ptr->SetScale(200.0f, 1.0f, 200.0f);
+		ptr->SetScale(Vec3(10.0f,0.1f,10.0f));
 
 		//Transformに対しての等差数列
 		Mat4x4 spanMat;
@@ -34,11 +42,36 @@ namespace basecross {
 		);
 
 		//メッシュ生成
-		auto ptrDraw = AddComponent<PNTStaticDraw>();
+		auto ptrDraw = AddComponent<PNTStaticInstanceDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"StoneRoad");
+		ptrDraw->SetTextureResource(L"Road");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
+
+		////csvファイルから読み取って床関係のオブジェクトの生成する
+		for (int i = 0; i < m_map.size(); i++)
+		{
+			for (int j = 0; j < m_map[0].size(); j++)
+			{
+				//ブロックの位置を取得
+				float x = (j * 10.0f) - 95;
+				float z = 95 - (i * 10.0f);
+
+				//インスタンス用の行列を作成する
+				Mat4x4 matrix;
+				//matrix.translation(Vec3(x, 0.0f, z));
+				//matrix.scale(Vec3(10.0f, 0.1f, 10.0f));
+				matrix.affineTransformation(
+					Vec3(10.0f, 0.1f, 10.0f),
+					Vec3(),
+					Vec3(),
+					Vec3(x, 0.0f, z)
+				);
+				ptrDraw->AddMatrix(matrix);//ブロックを表示
+
+			}
+		}
+
 
 		//コリジョン生成 コリジョンいらなくなった
 		//auto ptrColl = AddComponent<CollisionObb>();

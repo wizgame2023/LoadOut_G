@@ -7,15 +7,15 @@
 #include "stdafx.h"
 
 namespace basecross{
-	class NumberSquare :public GameObject
+	class BillBoard :public GameObject
 	{
-		weak_ptr<Enemy> m_enemy;
+		weak_ptr<Actor> m_actor;
 
 		shared_ptr<MeshResource> m_SquareMeshResource;
 
 		size_t m_Number;
 
-		Quat Billboard(const Vec3& Line) 
+		Quat Billboard(const Vec3& Line)
 		{
 			Vec3 Temp = Line;
 			Mat4x4 RotMatrix;
@@ -35,9 +35,9 @@ namespace basecross{
 		}
 	public:
 		//\’z‚Æ”jŠü
-		NumberSquare(const shared_ptr<Stage>& StagePtr,
-			shared_ptr<Enemy>& enemyPtr, size_t Number);
-		virtual ~NumberSquare();
+		BillBoard(const shared_ptr<Stage>& StagePtr,
+			shared_ptr<Actor>& actorPtr, size_t Number);
+		virtual ~BillBoard();
 		//‰Šú‰»
 		virtual void OnCreate() override;
 		//•Ï‰»

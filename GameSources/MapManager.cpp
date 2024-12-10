@@ -18,9 +18,9 @@ namespace basecross {
 	}
 
 	void MapManager::OnCreate()
-	{
+	{		
 		StageMapLoad();
-		WallMapLoad();
+		WallMapLoad();	
 		AStarMapCreate();
 	}
 
@@ -120,6 +120,7 @@ namespace basecross {
 			}
 		}
 
+		GetStage()->AddGameObject<Ground>(m_stageMap);//è∞ê∂ê¨
 		
 	}
 
