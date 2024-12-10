@@ -14,7 +14,7 @@ namespace basecross {
 		int m_BGMhow;//今なにのBGMを流れているか保存する変数
 
 		bool m_ClearFlag;//クリアのフラグ判定
-
+		bool m_GameOverFlag;//ゲームオーバー用のフラグ
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
 
@@ -29,6 +29,7 @@ namespace basecross {
 		void OnDestroy()override;//削除されたときの処理
 
 		void SetClearFlag(bool flag);//セッター
+		void SetGameOverFlag(bool flag);//セッター
 	};
 
 }

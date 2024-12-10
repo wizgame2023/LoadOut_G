@@ -81,7 +81,7 @@ namespace basecross {
 		if (m_mapManager.lock()->SelMapNow(m_pos) == 2 && m_charen == 0)
 		{
 			m_charen = 1;//アイテムが置かれている状態
-			GetComponent<PNTStaticDraw>()->SetTextureResource(L"Red");//自分自身にアイテムが置かれていると分かりやすくする
+			GetComponent<PNTStaticDraw>()->SetTextureResource(L"RedManhole");//自分自身にアイテムが置かれていると分かりやすくする
 		}
 
 		//クールタイム過ぎたら電池の抗力が切れてマンホールが上がらないようにする
@@ -98,7 +98,7 @@ namespace basecross {
 				}
 				if (m_blinkingTime > 0.2f)
 				{
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Red");
+					GetComponent<PNTStaticDraw>()->SetTextureResource(L"RedManhole");
 				}
 				if (m_blinkingTime > 0.3f)
 				{

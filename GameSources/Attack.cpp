@@ -15,7 +15,11 @@ namespace basecross {
 
 	void Attack::OnUpdate()
 	{
-		m_Owner->GetGameOverScene();
+		if (m_count == 0)
+		{
+			m_Owner->GetGameOverScene();
+			m_count++;
+		}		
 		//m_Owner->ChangeState<Patrol>();
 	}
 

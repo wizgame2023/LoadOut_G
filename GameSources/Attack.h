@@ -9,13 +9,14 @@
 namespace basecross {
 	class Attack :public StateBase
 	{
-
+		int m_count;
 
 
 
 	public:
 		Attack(const shared_ptr<Enemy> ptrOwner) :
-			StateBase(ptrOwner)
+			StateBase(ptrOwner),
+			m_count(0)
 		{
 		}
 

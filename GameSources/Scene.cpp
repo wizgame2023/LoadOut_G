@@ -114,6 +114,8 @@ namespace basecross{
 		app->RegisterTexture(L"Wow", strTexture);
 		strTexture = texPath + L"QuestionMark.png";//“G‚ª’T‚µ‚Ä‚¢‚é‚Æ‚«‚ÌƒeƒNƒXƒ`ƒƒ
 		app->RegisterTexture(L"search", strTexture);
+		strTexture = texPath + L"ManholeRed.png";//“G‚ª’T‚µ‚Ä‚¢‚é‚Æ‚«‚ÌƒeƒNƒXƒ`ƒƒ
+		app->RegisterTexture(L"RedManhole", strTexture);
 
 
 		//BGMSE

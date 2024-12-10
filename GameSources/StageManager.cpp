@@ -1,6 +1,6 @@
-/*!
+ï»¿/*!
 @file StageManaegr.cpp
-@brief ƒXƒe[ƒW‚Ìis‚ğŠÇ—‚·‚é
+@brief ã‚¹ãƒ†ãƒ¼ã‚¸ã®é€²è¡Œã‚’ç®¡ç†ã™ã‚‹
 */
 
 #include "stdafx.h"
@@ -22,7 +22,7 @@ namespace basecross {
 	{
 		auto stage = GetStage();
 
-		//BGMÄ¶
+		//BGMå†ç”Ÿ
 		m_BGMChase = 2;
 		m_bgmManager = App::GetApp()->GetXAudio2Manager();
 		m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
@@ -33,7 +33,7 @@ namespace basecross {
 	{
 		BGMChange();
 
-		//’Ç‚¢‚©‚¯‚ç‚ê‚Ä‚¢‚é‚È‚ç’Ç‚¢‚©‚¯‚ç‚ê‚Ä‚¢‚éBGM
+		//è¿½ã„ã‹ã‘ã‚‰ã‚Œã¦ã„ã‚‹ãªã‚‰è¿½ã„ã‹ã‘ã‚‰ã‚Œã¦ã„ã‚‹BGM
 		if (m_BGMChase&&m_BGMhow !=1)
 		{
 			m_BGMhow = 1;
@@ -43,7 +43,7 @@ namespace basecross {
 			m_BGM = m_bgmManager->Start(L"Tracking", XAUDIO2_LOOP_INFINITE, 0.9f);
 			auto test = 0;
 		}
-		//’Ç‚¢‚©‚¯‚ç‚ê‚Ä‚¢‚È‚¯‚ê‚Î•’Ê‚ÌBGM
+		//è¿½ã„ã‹ã‘ã‚‰ã‚Œã¦ã„ãªã‘ã‚Œã°æ™®é€šã®BGM
 		if (!m_BGMChase&&m_BGMhow !=2)
 		{
 			m_BGMhow = 2;
@@ -54,10 +54,15 @@ namespace basecross {
 
 		}
 
-		//ƒQ[ƒ€ƒNƒŠƒA‚Ìƒtƒ‰ƒO‚ª—§‚Á‚½‚ç
+		//ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢ã®ãƒ•ãƒ©ã‚°ãŒç«‹ã£ãŸã‚‰
 		if (m_ClearFlag)
 		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ƒQ[ƒ€ƒNƒŠƒA‚ÉˆÚ“®‚·‚é
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢ã«ç§»å‹•ã™ã‚‹
+		}
+		//ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã®ãƒ•ãƒ©ã‚°ãŒç«‹ã£ãŸã‚‰
+		if (m_GameOverFlag)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ï¿½Qï¿½[ï¿½ï¿½ï¿½Iï¿½[ï¿½oï¿½[ï¿½ÉˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 	}
 
@@ -66,23 +71,23 @@ namespace basecross {
 		auto stage = GetStage();
 		auto obj = stage->GetGameObjectVec();
 		auto EnemyTracking = 0;
-		//æ“¾‚µ‚½ƒIƒuƒWƒFƒNƒg‚ªƒAƒCƒeƒ€‚É•ÏŠ·‚Å‚«‚½‚ç”z—ñ‚É“ü‚ê‚é
+		//å–å¾—ã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚¢ã‚¤ãƒ†ãƒ ã«å¤‰æ›ã§ããŸã‚‰é…åˆ—ã«å…¥ã‚Œã‚‹
 		for (auto enemy : obj)
 		{
 			auto enemycast = dynamic_pointer_cast<Enemy>(enemy);
 
-			if (enemycast)//EnemyŒ^‚ÉƒLƒƒƒXƒg‚É¬Œ÷‚µ‚½‚ç
+			if (enemycast)//Enemyå‹ã«ã‚­ãƒ£ã‚¹ãƒˆã«æˆåŠŸã—ãŸã‚‰
 			{
-				auto State = enemycast->GetNowState();//Œ»İ‚ÌƒXƒe[ƒg‚ğó‚¯æ‚é
+				auto State = enemycast->GetNowState();//ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å—ã‘å–ã‚‹
 				auto trackcast = dynamic_pointer_cast<Tracking>(State);
-				if (trackcast)//Œ»İ‚ÌƒXƒe[ƒg‚ªƒgƒ‰ƒbƒLƒ“ƒO(’Ç‚¢‚©‚¯‚éˆ—)‚Ì
+				if (trackcast)//ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆãŒãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°(è¿½ã„ã‹ã‘ã‚‹å‡¦ç†)ã®æ™‚
 				{
 					EnemyTracking++;
 				}
 			}
 		}
-		m_BGMChase;//’Ç‚¢‚©‚¯‚é“G‚ª‚¢‚é‚©
-		if (EnemyTracking > 0)//’Ç‚¢‚©‚¯‚é“G‚ªˆêlˆÈã‚¢‚é‚È‚ç
+		m_BGMChase;//è¿½ã„ã‹ã‘ã‚‹æ•µãŒã„ã‚‹ã‹
+		if (EnemyTracking > 0)//è¿½ã„ã‹ã‘ã‚‹æ•µãŒä¸€äººä»¥ä¸Šã„ã‚‹ãªã‚‰
 		{
 			m_BGMChase = true;
 		}
@@ -102,12 +107,15 @@ namespace basecross {
 
 	}
 
-	//ClearFlag‚ÌƒZƒbƒ^[
+	//ClearFlagã®ã‚»ãƒƒã‚¿ãƒ¼
 	void StageManager::SetClearFlag(bool flag)
 	{
 		m_ClearFlag = flag;
 	}
-
-
+	//GameOverFlagã®ã‚»ãƒƒã‚¿ãƒ¼
+	void StageManager::SetGameOverFlag(bool flag)
+	{
+		m_GameOverFlag = flag;
+	}
 }
 //end basecross
