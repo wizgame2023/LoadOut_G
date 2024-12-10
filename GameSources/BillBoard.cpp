@@ -9,10 +9,18 @@
 namespace basecross{
 
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		 shared_ptr<Actor>& actorPtr, size_t Number) :
+		shared_ptr<Actor>& actorPtr, size_t Number) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
-		m_Number(Number)
+		m_Number(Number),
+		m_textureName(L"Battery1")
+	{}
+	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
+		shared_ptr<Actor>& actorPtr, wstring spriteName) :
+		GameObject(StagePtr),
+		m_actor(actorPtr),
+		m_Number(0),
+		m_textureName(spriteName)
 	{}
 	BillBoard::~BillBoard() {}
 
@@ -61,7 +69,7 @@ namespace basecross{
 
 			auto DrawComp = AddComponent<PCTStaticDraw>();
 			DrawComp->SetMeshResource(m_SquareMeshResource);
-			DrawComp->SetTextureResource(L"Battery1");
+			DrawComp->SetTextureResource(m_textureName);
 			SetAlphaActive(true);
 			SetDrawLayer(2);
 		}
@@ -79,6 +87,9 @@ namespace basecross{
 			PtrTransform->SetPosition(Pos);
 			PtrTransform->SetScale(3.0f, 3.0f, 3.0f);
 
+			auto DrawComp = GetComponent<PCTStaticDraw>();
+			DrawComp->SetTextureResource(m_textureName);
+
 			auto PtrCamera = GetStage()->GetView()->GetTargetCamera();
 
 			Quat Qt;
@@ -89,6 +100,12 @@ namespace basecross{
 
 		}
 
+	}
+
+	//ビルボードのテクスチャ変更
+	void BillBoard::ChangeTexture(wstring textureName)
+	{
+		m_textureName = textureName;
 	}
 
 }
