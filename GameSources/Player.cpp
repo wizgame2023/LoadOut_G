@@ -37,7 +37,7 @@ namespace basecross{
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMeshResource(L"kid_Mesh");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		ptrDraw->AddAnimation(L"Walk", 4, 20, true, 30.0f);//歩き状態        
+		ptrDraw->AddAnimation(L"Walk", 4, 20, true, 30.0f);//歩き状態
 		ptrDraw->AddAnimation(L"Stand", 4, 4, false, 1.0f);//待機状態
 		ptrDraw->ChangeCurrentAnimation(L"Walk");
 
