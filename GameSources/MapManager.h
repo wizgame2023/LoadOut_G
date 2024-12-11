@@ -17,6 +17,8 @@ namespace basecross {
 		vector<int> m_aStarLine;//A*のマップの一行
 		wstring m_stageName;//ステージの名前
 
+		float m_push;//一気にオブジェクト生成する際にエクセルの座標と合わせるための数値
+
 	public:
 		MapManager(shared_ptr<Stage>& stagePtr,wstring stageName=L"Stage01/");//コンストラクタ
 		~MapManager();//デストラクタ

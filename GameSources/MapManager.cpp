@@ -32,8 +32,8 @@ namespace basecross {
 	//ワールド座標をセル座標に変換する
 	Vec2 MapManager::ConvertSelMap(Vec3 worldPosition)
 	{
-		float length = ((worldPosition.x + 95) / 10.0f) + 0.5f;//横のセル座標
-		float height = -((worldPosition.z - 95) / 10.0f) + 0.5f;//縦のセル座標
+		float length = ((worldPosition.x + m_push) / 10.0f) + 0.5f;//横のセル座標
+		float height = -((worldPosition.z - m_push) / 10.0f) + 0.5f;//縦のセル座標
 
 		return Vec2((int)length, (int)height);
 
@@ -41,8 +41,8 @@ namespace basecross {
 
 	Vec3 MapManager::ConvertWorldMap(Vec2 selPosition)
 	{
-		float w_length = (selPosition.x * 10.0f) - 95.0f;
-		float w_height = 95.0f - (selPosition.y * 10.0f);
+		float w_length = (selPosition.x * 10.0f) - m_push;
+		float w_height = m_push - (selPosition.y * 10.0f);
 
 		return Vec3(w_length, 0, w_height);
 	}
@@ -76,8 +76,15 @@ namespace basecross {
 		if (ifs)
 		{
 			string line;
+			bool first = false;
 			while (getline(ifs,line))
-			{
+			{	
+				//最初の配列だけ余計な要素数があるのでそれを取り除く
+				if (!first)
+				{
+					line.erase(line.erase(line.begin(), line.begin() + 2));//いらない配列を削除	
+					first = true;//もうこの処理をしないようにする
+				}
 				vector<int> datas;
 				line += ",";
 
@@ -94,7 +101,7 @@ namespace basecross {
 				m_stageMap.push_back(datas);//一行ずつマップデータを入れている
 			}
 		}
-
+		m_push = ((m_stageMap.size() * 10)/2 - 5);
 		int a = m_stageMap[0].size();//デバック用
 
 		//csvファイルから読み取って床関係のオブジェクトの生成する
@@ -108,11 +115,11 @@ namespace basecross {
 				switch (m_stageMap[i][j])
 				{
 				case 1://マンホール生成
-					GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f)-95, 0.05f, 95-(i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f)- m_push, 0.05f, m_push -(i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
 				case 4://ハッチ作成
-					GetStage()->AddGameObject<Hatch>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					GetStage()->AddGameObject<Hatch>(Vec3((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 				default:
 					break;
@@ -120,7 +127,7 @@ namespace basecross {
 			}
 		}
 
-		GetStage()->AddGameObject<Ground>(m_stageMap);//床生成
+		GetStage()->AddGameObject<Ground>(m_stageMap,m_push);//床生成
 		
 	}
 
@@ -136,8 +143,15 @@ namespace basecross {
 		if (ifs)
 		{
 			string line;
+			bool first = false;
 			while (getline(ifs, line))
 			{
+				//最初の配列だけ余計な要素数があるのでそれを取り除く
+				if (!first)
+				{
+					line.erase(line.erase(line.begin(), line.begin() + 2));//いらない配列を削除	
+					first = true;//もうこの処理をしないようにする
+				}
 				vector<int> datas;
 				line += ",";
 
@@ -162,7 +176,7 @@ namespace basecross {
 				{
 				case 1://横壁生成
 					//GetStage()->AddGameObject<Block>();
-					GetStage()->AddGameObject<Wall>(Vec3((w * 10.0f) - 95, 5.0f, 100 - (h * 10.0f)), Vec3(0.0f, 0.0f, 0.0f), Vec3(9.5f, 5.0f, 1.0f));
+					GetStage()->AddGameObject<Wall>(Vec3((w * 10.0f) - m_push, 5.0f, m_push+5 - (h * 10.0f)), Vec3(0.0f, 0.0f, 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					break;
 				default:
 					break;
@@ -177,8 +191,15 @@ namespace basecross {
 		if (ifs2)
 		{
 			string line;
+			bool first = false;
 			while (getline(ifs2,line))
 			{
+				//最初の配列だけ余計な要素数があるのでそれを取り除く
+				if (!first)
+				{
+					line.erase(line.erase(line.begin(), line.begin() + 2));//いらない配列を削除	
+					first = true;//もうこの処理をしないようにする
+				}
 				vector<int> datas;
 				line += ",";
 
@@ -195,6 +216,7 @@ namespace basecross {
 				m_rightWallMap.push_back(datas);//一行ずつマップデータを入れている
 			}
 		}
+
 		//生成
 		for (int i = 0; i < m_rightWallMap.size(); i++)
 		{
@@ -203,7 +225,7 @@ namespace basecross {
 				switch (m_rightWallMap[i][j])
 				{
 				case 1://縦壁生成
-					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - 100, 5.0f, 95 - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
+					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - m_push+5-10, 5.0f, m_push - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
