@@ -8,9 +8,10 @@
 #include "Project.h"
 
 namespace basecross {
-	Ground::Ground(const shared_ptr<Stage>& StagePtr,vector<vector<int>> map) :
+	Ground::Ground(const shared_ptr<Stage>& StagePtr,vector<vector<int>> map,float push) :
 		GameObject(StagePtr),
-		m_map(map)
+		m_map(map),
+		m_push(push)
 	{
 	}
 	Ground::Ground(const shared_ptr<Stage>& StagePtr) :
@@ -54,8 +55,8 @@ namespace basecross {
 			for (int j = 0; j < m_map[0].size(); j++)
 			{
 				//ブロックの位置を取得
-				float x = (j * 10.0f) - 95;
-				float z = 95 - (i * 10.0f);
+				float x = (j * 10.0f) - m_push;
+				float z = m_push - (i * 10.0f);
 
 				//インスタンス用の行列を作成する
 				Mat4x4 matrix;
