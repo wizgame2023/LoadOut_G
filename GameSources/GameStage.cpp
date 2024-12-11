@@ -53,12 +53,11 @@ namespace basecross {
 		//マップマネージャーの生成
 		auto mapManager = AddGameObject<MapManager>(L"Stage20/");
 		SetSharedGameObject(L"MapManager", mapManager);
-		//mapManager->WallCreateKari();//仮の内壁を生成する
 
 		//床の作成
 		AddGameObject<Ground>();
 
-		auto miniMapManager = AddGameObject<MiniMapManager>();//ミニマップ生成デバック用
+		auto miniMapManager = AddGameObject<MiniMapManager>(200);//ミニマップ生成デバック用
 		SetSharedGameObject(L"MiniMapManager", miniMapManager);
 
 		//ブロックの作成
@@ -78,8 +77,10 @@ namespace basecross {
 		AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
 		miniMapManager->CreateItem();
 		//Playerの生成
-		auto player = AddGameObject<Player>(Vec3(35.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		auto player = AddGameObject<Player>(Vec3(0.0f, 3.0f, -0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
+		miniMapManager->CreatePlayer();
+
 
 		//壁の生成
 		//AddGameObject<Wall>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(20.0f,20.0f,20.0f));
