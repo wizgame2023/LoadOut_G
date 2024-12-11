@@ -45,6 +45,7 @@ namespace basecross {
 
 	void GameClearStage::OnUpdate()
 	{
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーのアナログスティックの向き
@@ -54,7 +55,7 @@ namespace basecross {
 		//{
 		//	PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
 		//}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bPushKeyTbl[VK_SPACE])
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}

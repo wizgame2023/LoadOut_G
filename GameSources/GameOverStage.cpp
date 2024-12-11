@@ -57,16 +57,17 @@ namespace basecross {
 
 	void GameOverStage::OnUpdate()
 	{
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーのアナログスティックの向き
 		auto m_controler = inputDevice.GetControlerVec()[0];
-
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
+		
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bPushKeyTbl[VK_SPACE])
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
 		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A||keyState.m_bPushKeyTbl['A'])
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}
