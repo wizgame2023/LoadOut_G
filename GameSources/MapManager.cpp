@@ -79,12 +79,6 @@ namespace basecross {
 			bool first = false;
 			while (getline(ifs,line))
 			{	
-				//最初の配列だけ余計な要素数があるのでそれを取り除く
-				if (!first)
-				{
-					line.erase(line.erase(line.begin(), line.begin() + 2));//いらない配列を削除	
-					first = true;//もうこの処理をしないようにする
-				}
 				vector<int> datas;
 				line += ",";
 
@@ -137,7 +131,7 @@ namespace basecross {
 		auto path = App::GetApp()->GetDataDirWString();
 		auto levelPath = path + L"Levels/"+m_stageName;
 
-		//上壁
+		//上にある壁
 		//csvファイルからデータを読み込む
 		ifstream ifs(levelPath + L"UpWallMap.csv");
 		if (ifs)
@@ -146,12 +140,6 @@ namespace basecross {
 			bool first = false;
 			while (getline(ifs, line))
 			{
-				//最初の配列だけ余計な要素数があるのでそれを取り除く
-				if (!first)
-				{
-					line.erase(line.erase(line.begin(), line.begin() + 2));//いらない配列を削除	
-					first = true;//もうこの処理をしないようにする
-				}
 				vector<int> datas;
 				line += ",";
 
@@ -185,7 +173,7 @@ namespace basecross {
 		}
 
 
-		//右壁
+		//左にある壁
 		//csvファイルからデータを読み込む
 		ifstream ifs2(levelPath + L"RightWallMap.csv");
 		if (ifs2)
@@ -194,12 +182,6 @@ namespace basecross {
 			bool first = false;
 			while (getline(ifs2,line))
 			{
-				//最初の配列だけ余計な要素数があるのでそれを取り除く
-				if (!first)
-				{
-					line.erase(line.erase(line.begin(), line.begin() + 2));//いらない配列を削除	
-					first = true;//もうこの処理をしないようにする
-				}
 				vector<int> datas;
 				line += ",";
 
@@ -225,7 +207,7 @@ namespace basecross {
 				switch (m_rightWallMap[i][j])
 				{
 				case 1://縦壁生成
-					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - m_push+5-10, 5.0f, m_push - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
+					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - m_push+5 - 10, 5.0f, m_push - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
