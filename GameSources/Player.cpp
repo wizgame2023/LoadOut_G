@@ -78,6 +78,8 @@ namespace basecross{
 		{
 			return;
 		}
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
+
 
 		KeyBoardMove();//キーボードでのPlayerの動きデバック用
 		//デルタタイム
@@ -116,7 +118,7 @@ namespace basecross{
 		{
 			if (selNow == 4)//今いる床がハッチなら
 			{
-				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bLastKeyTbl[VK_SPACE])//Bボタンを押したとき
 				{
 					mapManager->MapDataUpdate(pos, 5);//脱出状態にする
 
@@ -229,11 +231,12 @@ namespace basecross{
 	void Player::ManholeSet(Vec3 pos)
 	{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 
 		if (m_itemCount >= 1)//カウントが１以上なら
 		{
 			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
-			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bPushKeyTbl[VK_SPACE])//Bボタンを押したとき
 			{
 				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
 				{
