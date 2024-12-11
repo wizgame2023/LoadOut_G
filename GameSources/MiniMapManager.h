@@ -15,6 +15,7 @@ namespace basecross {
 		float m_mapSize;//マップの直径
 		float m_mapMagnification;//マップの倍率
 	public:
+		MiniMapManager(shared_ptr<Stage>& stage, float mapSize);
 		MiniMapManager(shared_ptr<Stage>& stage);
 		~MiniMapManager();
 
@@ -25,6 +26,7 @@ namespace basecross {
 		void CreateItem();//ミニマップのアイテムを生成する
 		void CreateManhole();//ミニマップのマンホールを生成する
 		void CreateEnemy();//ミニマップの敵を生成する
+		void CreatePlayer();//ミニマップのプレイヤーを生成する
 
 		Vec3 GetStartPos();//ミニマップの原点を渡す
 	};
