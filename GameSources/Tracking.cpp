@@ -83,7 +83,7 @@ namespace basecross {
 
 		if (m_Owner->GetDistance(m_ownerPos, m_playerPos) < 7)
 		{
-			m_Owner->ChangeState<Attack>();
+			//m_Owner->ChangeState<Attack>();
 		}
 		//auto a = m_posVec[m_count-1];
 
@@ -205,7 +205,7 @@ namespace basecross {
 	{		
 		vector<Vec2> aStarRood;//移動遷移
 
-		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");	
+		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		
 
 		m_aStarMapCSV = mapManager->GetAStarMap();//AStarマップ取得
@@ -228,12 +228,19 @@ namespace basecross {
 		auto enemyAStarPos = mapManager->ConvertAStarMap(enemySelPos);
 		auto originPos = enemyAStarPos;
 		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
-		auto cost = 1;
+		auto cost = 0;
 		//ゴール地点(Player)	
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);
 		auto playerASterPos = mapManager->ConvertAStarMap(playerSelPos);
 		auto goalPos = playerASterPos;
 		bool root = false;//経路が見つかったかどうか
+		
+		//一番最初のPlayerとの距離を確認する
+		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
+		auto lookCost = m_aStarMap[originPos.y][originPos.x]->Cost = cost++;//コストの変数まだ作ってない
+		auto lookHCost = m_aStarMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
+		m_aStarMap[originPos.y][originPos.x]->Score = lookCost + lookHCost;
+
 
 		//経路が見つかるまでループする
 		while (!root)
@@ -350,7 +357,17 @@ namespace basecross {
 					}
 				}
 
-				if (m_aStarMap[lookY][lookX]->HeuristicCost == 0)
+
+
+			}
+		}
+
+		//マップのすべてを見てPlayerの距離が０なところがあるか確認する
+		for (auto map : m_aStarMap)
+		{
+			for (auto mapline : map)
+			{
+				if (mapline->HeuristicCost == 0)
 				{
 					return true;
 				}
