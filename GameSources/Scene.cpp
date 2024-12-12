@@ -116,6 +116,10 @@ namespace basecross{
 		app->RegisterTexture(L"search", strTexture);
 		strTexture = texPath + L"ManholeRed.png";//敵が探しているときのテクスチャ
 		app->RegisterTexture(L"RedManhole", strTexture);
+		strTexture = texPath + L"Key.png";//鍵のテクスチャ
+		app->RegisterTexture(L"Key", strTexture);
+		strTexture = texPath + L"Clear.png";//透明のテクスチャ
+		app->RegisterTexture(L"Clear", strTexture);
 
 
 		//BGMSE
