@@ -70,6 +70,10 @@ namespace basecross{
 		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
 		MoveSwich(true);
 
+		//ビルボード生成
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<Actor>(), L"Clear");
+
+
 	}
 
 	void Player::OnUpdate()
@@ -116,6 +120,7 @@ namespace basecross{
 		//m_key = true;//デバック用
 		if (m_key)
 		{
+			m_billBoard->ChangeTexture(L"Key");
 			if (selNow == 4)//今いる床がハッチなら
 			{
 				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bLastKeyTbl[VK_SPACE])//Bボタンを押したとき
@@ -132,28 +137,27 @@ namespace basecross{
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
 		//デバック用
-		//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		////auto gameStage = scene->GetGameStage();
-		//m_Pos = GetComponent<Transform>()->GetPosition();
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		//auto gameStage = scene->GetGameStage();
+		m_Pos = GetComponent<Transform>()->GetPosition();
 
-		//wss /* << L"デバッグ用文字列 "*/
-		//	<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
-		//	<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
-		//	<< L"\n傾き " << m_deg
-		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-		//	<< L"\nm_count：  " << m_itemCount
-		//	<< L"\nSelNow " << selNow
-		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-		//	<<L"\nFPS:"<< 1.0f/Delta
-		//	<<L"\nKey"<<m_key
-		//	<< endl;
-		////XMConvertToRadians(-90.0f)
+		wss /* << L"デバッグ用文字列 "*/
+			<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
+			<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
+			<< L"\n傾き " << m_deg
+			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<< L"\nm_count：  " << m_itemCount
+			<< L"\nSelNow " << selNow
+			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+			<<L"\nFPS:"<< 1.0f/Delta
+			<<L"\nKey"<<m_key
+			<< endl;
+		//XMConvertToRadians(-90.0f)
 
-		//scene->SetDebugString(wss.str());
+		scene->SetDebugString(wss.str());
 
 	}
 
