@@ -19,13 +19,35 @@ namespace basecross {
 
 	void MovieGameStart::OnCreate()
 	{
-		CameraChange();//カメラを変更
+		Movie::OnCreate();
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto obj = stage->GetGameObjectVec();
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto enemy : obj)
+		{
+			auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
+			if (castEnemy)//アイテム型にキャストする
+			{
+				castEnemy->MoveSwich(false);//うごかなくさせる
+			}
+		}
+		for (auto player : obj)
+		{
+			auto castPlayer = dynamic_pointer_cast<Player>(player);
+			if (castPlayer)//アイテム型にキャストする
+			{
+				castPlayer->MoveSwich(false);//うごかなくさせる
+			}
+		}
+
+
 	}
 
 	void MovieGameStart::OnUpdate()
 	{
 		auto cameraPos = m_movieCamera->GetEye();//カメラのポジションを取得
-		auto tagetPos = Vec3(0.0f, 0.0f, 100.0f);//目的地
+		auto tagetPos = Vec3(0.0f, 0.0f, 50.0f);//目的地
 
 		if (m_count == 0)//処理①
 		{
@@ -56,6 +78,29 @@ namespace basecross {
 			View->SetCamera(PtrCamera);//カメラを戻す
 			GetStage()->SetView(View);
 			GetStage()->RemoveGameObject<MovieGameStart>(GetThis<MovieGameStart>());//自分自身を削除
+
+			//Acotrが動けるようにする
+			auto stage = GetStage();//ステージ取得
+			//ステージのオブジェクトを全て取得
+			auto obj = stage->GetGameObjectVec();
+			//取得したオブジェクトがアイテムに変換できたら配列に入れる
+			for (auto enemy : obj)
+			{
+				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
+				if (castEnemy)//アイテム型にキャストする
+				{
+					castEnemy->MoveSwich(true);//うごかなくさせる
+				}
+			}
+			for (auto player : obj)
+			{
+				auto castPlayer = dynamic_pointer_cast<Player>(player);
+				if (castPlayer)//アイテム型にキャストする
+				{
+					castPlayer->MoveSwich(true);//うごかなくさせる
+				}
+			}
+
 		}
 
 	}
@@ -63,7 +108,7 @@ namespace basecross {
 	//ムービー用のカメラに変更させる
 	void MovieGameStart::CameraChange()
 	{
-		float stageLenght = 200.0f;//ステージの直径
+		float stageLenght = 100.0f;//ステージの直径
 		auto startPos = Vec3(0.0f, stageLenght, -stageLenght);//初期位置
 		m_StageView = GetStage()->GetView();
 		m_stageCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());//ステージ用のカメラを取得 なぜかこの関数が終わるとこの変数の中身が消えます
