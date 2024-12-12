@@ -51,13 +51,16 @@ namespace basecross {
 		}
 
 		//マップマネージャーの生成
-		auto mapManager = AddGameObject<MapManager>(L"Stage20/");
+		auto mapManager = AddGameObject<MapManager>(L"Stage01/");
 		SetSharedGameObject(L"MapManager", mapManager);
+
+		auto collisionManager = AddGameObject<StageCollisionManager>();//コリジョンマネージャー作成
+		SetSharedGameObject(L"CollsionManager", collisionManager);
 
 		//床の作成
 		AddGameObject<Ground>();
 
-		auto miniMapManager = AddGameObject<MiniMapManager>(200);//ミニマップ生成デバック用
+		auto miniMapManager = AddGameObject<MiniMapManager>(100);//ミニマップ生成デバック用
 		SetSharedGameObject(L"MiniMapManager", miniMapManager);
 
 		//ブロックの作成
@@ -68,16 +71,23 @@ namespace basecross {
 		}
 
 
-		//アイテムの生成
-		AddGameObject<Item>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-25.0f, 2.5f, 45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-64.0f, 2.5f, 14.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//アイテムの生成//stage20
+		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(-25.0f, 2.5f, 45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(-64.0f, 2.5f, 14.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//stage01
+		AddGameObject<Item>(Vec3(-5.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-35.0f, 2.5f, -5.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-5.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(45.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Item>(Vec3(-45.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+
 		miniMapManager->CreateItem();
 		//Playerの生成
-		auto player = AddGameObject<Player>(Vec3(0.0f, 3.0f, -0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
 		miniMapManager->CreatePlayer();
 
@@ -96,19 +106,22 @@ namespace basecross {
 
 		//OutWallCreate(20);//外壁生成
 
-		//敵生成
-		auto enemy = AddGameObject<Enemy>();
-		enemy->AddTag(L"Key");//鍵を持っていることにする
+		//敵生成stage20
+		//auto enemy = AddGameObject<Enemy>();
+		//enemy->AddTag(L"Key");//鍵を持っていることにする
 		//AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(enemy),0);
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
-
-		AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
-		
+		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
+		
+		//stage01
+		auto enemy = AddGameObject<Enemy>(Vec3(-25.0f, 2.5f, -35.0f));
+		enemy->AddTag(L"Key");//鍵を持っていることにする
+		AddGameObject<Enemy>(Vec3(5.0f, 2.5f, 45.0f));
 
 
-		//AddGameObject<MovieGameStart>();
-		miniMapManager->CreateEnemy();			
+		AddGameObject<MovieGameStart>();
+		miniMapManager->CreateEnemy();
 	}
 
 	void GameStage::OnUpdate()
