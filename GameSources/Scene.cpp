@@ -153,9 +153,9 @@ namespace basecross{
 
 
 		//ボーンモデル
-		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_ver1.1.bmf");//敵(仮)のメッシュ
+		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_ver1.1.bmf");//敵のメッシュ
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
-		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"kid_ver1.0.bmf");//敵(仮)のメッシュ
+		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"kid_ver1.1.bmf");//プレイヤーのメッシュ
 		app->RegisterResource(L"kid_Mesh", boneModelMesh);
 		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"battry_ver1.2.bmf");//電池用のメッシュ
 		app->RegisterResource(L"Battry", boneModelMesh);
