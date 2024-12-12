@@ -39,6 +39,8 @@ namespace basecross{
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 		ptrDraw->AddAnimation(L"Walk", 4, 15, true, 30.0f);//歩き状態
 		ptrDraw->AddAnimation(L"Stand", 5, 5, false, 1.0f);//待機状態
+		ptrDraw->AddAnimation(L"Down", 40, 60, false, 30.0f);//ゲームオーバー状態
+		ptrDraw->AddAnimation(L"Happey", 20, 24, true, 30.0f);//ゲームクリア状態
 		ptrDraw->ChangeCurrentAnimation(L"Walk");
 
 		//ptrDraw->AddAnimation(L"Defalt2", 17, 25, true, 30.0f);
@@ -77,7 +79,11 @@ namespace basecross{
 	}
 
 	void Player::OnUpdate()
-	{
+	{		
+		//デルタタイム
+		auto Delta = App::GetApp()->GetElapsedTime();
+
+
 		if (!m_move)//フラグがオンになったら動ける
 		{
 			return;
@@ -86,8 +92,6 @@ namespace basecross{
 
 
 		KeyBoardMove();//キーボードでのPlayerの動きデバック用
-		//デルタタイム
-		auto Delta = App::GetApp()->GetElapsedTime();
 
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
