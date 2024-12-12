@@ -21,6 +21,12 @@ namespace basecross {
 	{
 		Movie::OnCreate();	
 		m_tagetPos = m_movieCamera->GetEye() - Vec3(0.0f, 15.0f, 0.0f);//目的地
+		
+		auto stage = GetStage();
+		auto player = stage->GetSharedGameObject<Player>(L"Player");//プレイヤー取得	
+		player->MoveSwich(false);//playerを動かさない
+		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
+		playerDraw->ChangeCurrentAnimation(L"Happey");//うれしいモーションに変更
 
 	}
 
@@ -32,6 +38,10 @@ namespace basecross {
 		auto player = stage->GetSharedGameObject<Player>(L"Player");//プレイヤー取得
 		auto playerTrans = player->GetComponent<Transform>();
 		auto playerPos = playerTrans->GetPosition();
+		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
+
+		//Playerのアニメーション更新
+		playerDraw->UpdateAnimation(delta);
 
 		player->MoveSwich(false);//playerを動かさない
 		Vec3 moveVec= Vec3(cameraPos.x - playerPos.x, cameraPos.y - playerPos.y, cameraPos.z - playerPos.z);//カメラとPlayerの距離ベクトル
