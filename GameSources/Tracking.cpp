@@ -44,6 +44,16 @@ namespace basecross {
 			m_beforPlayerAStar = playerAStarPos;
 			//MoveCost();
 			m_tagetRootPos = AStar();
+			if (m_tagetRootPos.size() >= 2)
+			{
+				auto one = m_tagetRootPos[0];
+				auto two = m_tagetRootPos[1];
+				//現在地が１番目よりも、２番目の距離に近かったら１番目の移動処理を無視する
+				if (abs(two.x - m_ownerPos.x) + abs(two.z - m_ownerPos.z) <= abs(two.x - one.x) + abs(two.z - one.z))
+				{
+					m_roodCount++;
+				}
+			}
 		}
 		//auto cost = MoveCost();
 		//m_directionRad = math.GetAngle(m_ownerPos,cost);
@@ -205,7 +215,7 @@ namespace basecross {
 	{		
 		vector<Vec2> aStarRood;//移動遷移
 
-		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");	
+		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		
 
 		m_aStarMapCSV = mapManager->GetAStarMap();//AStarマップ取得
@@ -228,12 +238,19 @@ namespace basecross {
 		auto enemyAStarPos = mapManager->ConvertAStarMap(enemySelPos);
 		auto originPos = enemyAStarPos;
 		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
-		auto cost = 1;
+		auto cost = 0;
 		//ゴール地点(Player)	
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);
 		auto playerASterPos = mapManager->ConvertAStarMap(playerSelPos);
 		auto goalPos = playerASterPos;
 		bool root = false;//経路が見つかったかどうか
+		
+		//一番最初のPlayerとの距離を確認する
+		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
+		auto lookCost = m_aStarMap[originPos.y][originPos.x]->Cost = cost++;//コストの変数まだ作ってない
+		auto lookHCost = m_aStarMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
+		m_aStarMap[originPos.y][originPos.x]->Score = lookCost + lookHCost;
+
 
 		//経路が見つかるまでループする
 		while (!root)
@@ -350,7 +367,17 @@ namespace basecross {
 					}
 				}
 
-				if (m_aStarMap[lookY][lookX]->HeuristicCost == 0)
+
+
+			}
+		}
+
+		//マップのすべてを見てPlayerの距離が０なところがあるか確認する
+		for (auto map : m_aStarMap)
+		{
+			for (auto mapline : map)
+			{
+				if (mapline->HeuristicCost == 0)
 				{
 					return true;
 				}

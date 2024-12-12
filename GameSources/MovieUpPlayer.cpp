@@ -20,7 +20,7 @@ namespace basecross {
 
 	void MovieUpPlayer::OnCreate()
 	{
-		CameraChange();//カメラを変更する
+		Movie::OnCreate();
 
 		m_sprite = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800));//暗転用のスプライト作成
 		m_sprite->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));

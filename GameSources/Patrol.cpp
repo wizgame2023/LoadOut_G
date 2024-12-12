@@ -8,16 +8,16 @@
 
 namespace basecross {
 
-//巡回ステートの最初の処理
+	//巡回ステートの最初の処理
 	void Patrol::OnStart()
 	{
-		m_rnd = rand()%2+1;//乱数を生成
+		m_rnd = rand() % 2 + 1;//乱数を生成
 	}
 
-//巡回ステートの更新処理
+	//巡回ステートの更新処理
 	void Patrol::OnUpdate()
 	{
-	//所有者(Enemy)の移動処理
+		//所有者(Enemy)の移動処理
 		auto app = App::GetApp;
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のPositionを取得
@@ -33,10 +33,10 @@ namespace basecross {
 		auto right = m_right * sin(rad);//平行方向のベクトル
 		auto forward = m_forward * cos(rad);//垂直方向のベクトル
 		m_ownerRot.y = rad;//角度を代入
-	//巡回ルート算出
-		//巡回ルート1(左周り)
-		//乱数が1だったら実行
-		if (m_rnd==1)
+		//巡回ルート算出
+			//巡回ルート1(左周り)
+			//乱数が1だったら実行
+		if (m_rnd == 1)
 		{
 			//目的地が決まってなかったら実行
 			if (!m_destinationDecision)
@@ -120,7 +120,7 @@ namespace basecross {
 		}
 		//巡回ルート2(右回り)
 		//
-		else if(m_rnd==2)
+		else if (m_rnd == 2)
 		{
 			//目的地が決まってなかったら実行
 			if (!m_destinationDecision)
@@ -203,8 +203,8 @@ namespace basecross {
 				}
 			}
 		}
-	//移動処理
-		//目的地が決まっていたら実行
+		//移動処理
+			//目的地が決まっていたら実行
 		if (m_destinationDecision)
 		{
 			//3秒ごとにm_numbersが偶数だったら実行
@@ -304,7 +304,7 @@ namespace basecross {
 		if (m_playerRay.lock()->GetDisObj().size() > 0)
 		{
 			//当たったオブジェクトの情報取得
-			for (auto obj: m_playerRay.lock()->GetDisObj())
+			for (auto obj : m_playerRay.lock()->GetDisObj())
 			{
 				//当たったオブジェクトがプレイヤーだったら実行
 				if (obj.lock()->FindTag(L"Player"))
@@ -347,5 +347,4 @@ namespace basecross {
 
 	}
 
-}
-//end basecross
+}//end basecross

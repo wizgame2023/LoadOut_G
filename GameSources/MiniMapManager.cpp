@@ -7,8 +7,15 @@
 #include "Project.h"
 
 namespace basecross {
+	MiniMapManager::MiniMapManager(shared_ptr<Stage>& stagePtr, float mapSize) :
+		GameObject(stagePtr),
+		m_mapSize(mapSize)
+	{
+
+	}
 	MiniMapManager::MiniMapManager(shared_ptr<Stage>& stagePtr) :
-		GameObject(stagePtr)
+		GameObject(stagePtr),
+		m_mapSize(200)
 	{
 
 	}
@@ -27,11 +34,12 @@ namespace basecross {
 		m_startPos = Vec3(-640 + (Lenght / 2.0f), 400.0f - (Lenght / 2.0f),5.0f);//スタートポジション
 		auto test = m_startPos;
 		auto a = 0;
-		m_mapSize = 200;//mapの直径
+		//m_mapSize = 200;//mapの直径
 		m_mapMagnification = Lenght / m_mapSize;//マップの倍率
 
 		CreateManhole();//マンホールを生成//もしかしたらエラーでる？
 		CreateEnemy();
+		CreatePlayer();
 	}
 
 	void MiniMapManager::OnUpdate()
@@ -109,6 +117,29 @@ namespace basecross {
 				auto itemScale = itemTrans->GetScale();
 
 				stage->AddGameObject<MiniMapActor>(castEnemy, L"MiniEnemy", Vec2((itemScale.x / m_mapMagnification) * 3, (itemScale.z / m_mapMagnification) * 3), m_startPos, m_mapSize, Lenght);
+			}
+		}
+
+	}
+
+	void MiniMapManager::CreatePlayer()
+	{
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto obj = stage->GetGameObjectVec();
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto manhole : obj)
+		{
+			auto castPlayer = dynamic_pointer_cast<Player>(manhole);
+			if (castPlayer)//Enemy型にキャストする
+			{
+				float Lenght = 225.0f;//ミニマップの直径
+
+				auto itemTrans = manhole->GetComponent<Transform>();
+				auto itemPos = itemTrans->GetPosition();
+				auto itemScale = itemTrans->GetScale();
+
+				stage->AddGameObject<MiniMapActor>(castPlayer, L"MiniPlayer", Vec2((10 * m_mapMagnification), (10 * m_mapMagnification)), m_startPos, m_mapSize, Lenght);
 			}
 		}
 

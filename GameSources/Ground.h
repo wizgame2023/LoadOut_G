@@ -8,9 +8,10 @@ namespace basecross {
 		Vec3 m_rot;//回転度
 		vector<vector<int>> m_map;
 		int OneBlock;//このゲームの単位(この数値をセル座標では１とする)
+		float m_push;
 	public:
 
-		Ground(const shared_ptr<Stage>& StagePtr,vector<vector<int>> map);//コンストラクタ
+		Ground(const shared_ptr<Stage>& StagePtr,vector<vector<int>> map,float push);//コンストラクタ
 		Ground(const shared_ptr<Stage>& StagePtr);//コンストラクタ
 		~Ground();//デストラクタ
 

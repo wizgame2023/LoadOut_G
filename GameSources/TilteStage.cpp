@@ -53,6 +53,8 @@ namespace basecross {
 
 	void TilteStage::OnUpdate()
 	{
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
+
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーのアナログスティックの向き
@@ -78,7 +80,7 @@ namespace basecross {
 
 		m_sprite->SetColor(Col4(0.3, 0.3, 0.3, m_transparency));
 
-		if (m_controler.wButtons & XINPUT_GAMEPAD_B)
+		if (m_controler.wButtons & XINPUT_GAMEPAD_B|| keyState.m_bPushKeyTbl[VK_SPACE])
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
 		}

@@ -35,10 +35,9 @@ namespace basecross{
 
 		//ドローメッシュの設定
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
-		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
+		ptrDraw->SetMeshResource(L"kid_Mesh");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		ptrDraw->AddAnimation(L"Defalt", 4, 9, true, 30.0f);
-		ptrDraw->AddAnimation(L"Walk", 4, 9, true, 30.0f);//歩き状態        
+		ptrDraw->AddAnimation(L"Walk", 4, 20, true, 30.0f);//歩き状態
 		ptrDraw->AddAnimation(L"Stand", 4, 4, false, 1.0f);//待機状態
 		ptrDraw->ChangeCurrentAnimation(L"Walk");
 
@@ -65,18 +64,15 @@ namespace basecross{
 
 		AddTag(L"Player");//Player用のタグ
 
-		auto miniMapManager = GetStage()->GetSharedGameObject<MiniMapManager>(L"MiniMapManager");//ミニマップマネージャーの取得
-		auto miniMapPos = miniMapManager->GetStartPos();
-		auto test = miniMapPos;
-
-		////ミニマップにPlayerを表示させる
-		GetStage()->AddGameObject<MiniMapActor>(GetThis<Actor>(), L"MiniPlayer", Vec2(10.0f * (400.0f / 200.0f), 10.0f * (400.0f / 200.0f)), miniMapPos, 200.0f, 225.0f);
-
 		//電池をどれくらい持っているかを表す
 		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
 		GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
 		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
 		MoveSwich(true);
+
+		//ビルボード生成
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<Actor>(), L"Clear");
+
 
 	}
 
@@ -86,6 +82,8 @@ namespace basecross{
 		{
 			return;
 		}
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
+
 
 		KeyBoardMove();//キーボードでのPlayerの動きデバック用
 		//デルタタイム
@@ -122,9 +120,10 @@ namespace basecross{
 		//m_key = true;//デバック用
 		if (m_key)
 		{
+			m_billBoard->ChangeTexture(L"Key");
 			if (selNow == 4)//今いる床がハッチなら
 			{
-				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bLastKeyTbl[VK_SPACE])//Bボタンを押したとき
 				{
 					mapManager->MapDataUpdate(pos, 5);//脱出状態にする
 
@@ -138,28 +137,27 @@ namespace basecross{
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
 		//デバック用
-		//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		////auto gameStage = scene->GetGameStage();
-		//m_Pos = GetComponent<Transform>()->GetPosition();
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		//auto gameStage = scene->GetGameStage();
+		m_Pos = GetComponent<Transform>()->GetPosition();
 
-		//wss /* << L"デバッグ用文字列 "*/
-		//	<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
-		//	<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
-		//	<< L"\n傾き " << m_deg
-		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-		//	<< L"\nm_count：  " << m_itemCount
-		//	<< L"\nSelNow " << selNow
-		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-		//	<<L"\nFPS:"<< 1.0f/Delta
-		//	<<L"\nKey"<<m_key
-		//	<< endl;
-		////XMConvertToRadians(-90.0f)
+		wss /* << L"デバッグ用文字列 "*/
+			<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
+			<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
+			<< L"\n傾き " << m_deg
+			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<< L"\nm_count：  " << m_itemCount
+			<< L"\nSelNow " << selNow
+			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+			<<L"\nFPS:"<< 1.0f/Delta
+			<<L"\nKey"<<m_key
+			<< endl;
+		//XMConvertToRadians(-90.0f)
 
-		//scene->SetDebugString(wss.str());
+		scene->SetDebugString(wss.str());
 
 	}
 
@@ -237,11 +235,12 @@ namespace basecross{
 	void Player::ManholeSet(Vec3 pos)
 	{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 
 		if (m_itemCount >= 1)//カウントが１以上なら
 		{
 			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
-			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
+			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bPushKeyTbl[VK_SPACE])//Bボタンを押したとき
 			{
 				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
 				{

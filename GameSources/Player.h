@@ -6,6 +6,7 @@
 #pragma once
 #include "stdafx.h"
 #include "SpriteNum.h"
+#include "BillBoard.h"
 
 namespace basecross{
 	class Player :public Actor
@@ -20,12 +21,14 @@ namespace basecross{
 		float m_deg;//角度
 
 		bool m_key;//鍵を持っているかどうか
+		bool m_addBoardFlag;//ビルボードを出すフラグ
 
 		shared_ptr<Transform> m_Trans;//トランスフォーム
 
 		shared_ptr<InputDevice> m_Device;//コントローラー
 		CONTROLER_STATE m_controler;//コントローラー
 		shared_ptr<SpriteNum> m_spriteNum;//数字のスプライト
+		shared_ptr<BillBoard> m_billBoard;//ビルボード
 
 	public:
 		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ

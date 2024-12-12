@@ -17,6 +17,8 @@ namespace basecross {
 		vector<int> m_aStarLine;//A*のマップの一行
 		wstring m_stageName;//ステージの名前
 
+		float m_push;//一気にオブジェクト生成する際にエクセルの座標と合わせるための数値
+
 	public:
 		MapManager(shared_ptr<Stage>& stagePtr,wstring stageName=L"Stage01/");//コンストラクタ
 		~MapManager();//デストラクタ
@@ -34,7 +36,6 @@ namespace basecross {
 
 		void StageMapLoad();
 		void WallMapLoad();
-		void WallCreateKari();//仮の壁を生成しよう
 		void AStarMapCreate();//A*マップの作成
 		void WallCreate();//壁を生成
 		void AddExctraAStar(int addArray);//余分にA*に配列を入れる処理

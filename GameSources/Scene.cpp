@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
 
 			GameResourses();
 
@@ -116,6 +116,10 @@ namespace basecross{
 		app->RegisterTexture(L"search", strTexture);
 		strTexture = texPath + L"ManholeRed.png";//敵が探しているときのテクスチャ
 		app->RegisterTexture(L"RedManhole", strTexture);
+		strTexture = texPath + L"Key.png";//鍵のテクスチャ
+		app->RegisterTexture(L"Key", strTexture);
+		strTexture = texPath + L"Clear.png";//透明のテクスチャ
+		app->RegisterTexture(L"Clear", strTexture);
 
 
 		//BGMSE
@@ -151,7 +155,9 @@ namespace basecross{
 		//ボーンモデル
 		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_ver1.1.bmf");//敵(仮)のメッシュ
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
-		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"battry_ver1.1.bmf");//電池用のメッシュ
+		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"kid_ver1.0.bmf");//敵(仮)のメッシュ
+		app->RegisterResource(L"kid_Mesh", boneModelMesh);
+		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"battry_ver1.2.bmf");//電池用のメッシュ
 		app->RegisterResource(L"Battry", boneModelMesh);
 
 		//ボーンマルチメッシュ

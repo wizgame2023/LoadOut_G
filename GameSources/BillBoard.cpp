@@ -13,7 +13,7 @@ namespace basecross{
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(Number),
-		m_textureName(L"Battery1")
+		m_textureName(L"Clear")
 	{}
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
 		shared_ptr<Actor>& actorPtr, wstring spriteName) :
