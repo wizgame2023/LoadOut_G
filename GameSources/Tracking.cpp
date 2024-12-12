@@ -44,6 +44,16 @@ namespace basecross {
 			m_beforPlayerAStar = playerAStarPos;
 			//MoveCost();
 			m_tagetRootPos = AStar();
+			if (m_tagetRootPos.size() >= 2)
+			{
+				auto one = m_tagetRootPos[0];
+				auto two = m_tagetRootPos[1];
+				//Œ»İ’n‚ª‚P”Ô–Ú‚æ‚è‚àA‚Q”Ô–Ú‚Ì‹——£‚É‹ß‚©‚Á‚½‚ç‚P”Ô–Ú‚ÌˆÚ“®ˆ—‚ğ–³‹‚·‚é
+				if (abs(two.x - m_ownerPos.x) + abs(two.z - m_ownerPos.z) <= abs(two.x - one.x) + abs(two.z - one.z))
+				{
+					m_roodCount++;
+				}
+			}
 		}
 		//auto cost = MoveCost();
 		//m_directionRad = math.GetAngle(m_ownerPos,cost);
@@ -83,7 +93,7 @@ namespace basecross {
 
 		if (m_Owner->GetDistance(m_ownerPos, m_playerPos) < 7)
 		{
-			//m_Owner->ChangeState<Attack>();
+			m_Owner->ChangeState<Attack>();
 		}
 		//auto a = m_posVec[m_count-1];
 
