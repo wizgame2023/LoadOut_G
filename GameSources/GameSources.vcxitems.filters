@@ -67,6 +67,12 @@
     <Filter Include="Sources\System">
       <UniqueIdentifier>{59ee6395-62c3-428a-bbeb-0ed5cf118629}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Effect">
+      <UniqueIdentifier>{d8b0a846-dbc7-4809-88b7-3c7ead03adfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Effect">
+      <UniqueIdentifier>{10c7b071-6c3f-4a66-8319-3c033361a501}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
@@ -216,6 +222,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieGameOver.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PillarEfect.h">
+      <Filter>Headers\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -361,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameOver.cpp">
       <Filter>Sources\Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PillarEffect.cpp">
+      <Filter>Sources\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

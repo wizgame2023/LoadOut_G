@@ -58,6 +58,7 @@
 #include"MovieGameClear.h"
 #include"MovieGameOver.h"//ゲームオーバー遷移時ののムービ
 #include"MovieUpEnemy.h"//Enemyが打ちあがる時のムービー
+#include"PillarEfect.h"//柱上のエフェクト
 
 //マネージャー用
 #include"MiniMapManager.h"//ミニマップ生成
