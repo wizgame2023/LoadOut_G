@@ -20,14 +20,20 @@ namespace basecross {
 
 	void Movie::OnCreate()
 	{
+		m_collsionManager = GetStage()->GetSharedGameObject<StageCollisionManager>(L"CollsionManager");
+		m_collsionManager->SetCollisionSwhich(false);//コリジョンオフにする
+
 		CameraChange();
-		Vec3 cameraEye = m_movieCamera->GetEye();
-		testPos = cameraEye;
 	}
 
 	void Movie::OnUpdate()
 	{
 
+	}
+
+	void Movie::OnDestroy()
+	{
+		m_collsionManager->SetCollisionSwhich(true);//コリジョンオンにする
 	}
 
 	//ムービー用のカメラに変更させる

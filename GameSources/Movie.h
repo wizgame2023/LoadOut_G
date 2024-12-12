@@ -6,6 +6,7 @@
 #pragma once
 #include "stdafx.h"
 #include "MyCamera.h"
+#include "StageCollisionManager.h"
 
 namespace basecross {
 	class Movie :public GameObject
@@ -14,6 +15,7 @@ namespace basecross {
 		shared_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
 		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら
 		Vec3 testPos;
+		shared_ptr<StageCollisionManager> m_collsionManager;//コリジョンマネージャー
 		int m_count;
 	public:
 		Movie(shared_ptr<Stage>& stagePtr);
@@ -21,6 +23,7 @@ namespace basecross {
 
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
+		virtual void OnDestroy()override;
 
 		//ムービー用のカメラに変更させる
 		virtual void CameraChange();
