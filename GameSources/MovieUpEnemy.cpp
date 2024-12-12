@@ -19,13 +19,14 @@ namespace basecross {
 	}
 
 	void MovieUpEnemy::OnCreate()
-	{
+	{		
+		Movie::OnCreate();
+
 		//打ちあがるEnemyのコンポーネント取得
 		auto enemyTrans = m_Enemy.lock()->GetComponent<Transform>();
 		auto enemyPos = enemyTrans->GetPosition();
 		
 
-		CameraChange();//カメラを変更する
 		m_movieCamera->SetAt(enemyPos);//注視点を打ちあがるEnemyに固定する
 
 		m_Enemy.lock()->MoveSwich(false);//動かなくする

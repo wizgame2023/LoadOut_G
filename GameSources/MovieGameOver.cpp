@@ -19,7 +19,7 @@ namespace basecross {
 
 	void MovieGameOver::OnCreate()
 	{
-		CameraChange();//カメラ変更
+		Movie::OnCreate();
 		m_tagetPos = m_movieCamera->GetEye() - Vec3(0.0f, 15.0f, 0.0f);//目的地
 
 	}
