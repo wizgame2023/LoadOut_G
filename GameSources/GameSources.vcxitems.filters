@@ -225,6 +225,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PillarEfect.h">
       <Filter>Headers\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StageCollisionManager.h">
+      <Filter>Headers\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -373,6 +376,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PillarEffect.cpp">
       <Filter>Sources\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StageCollisionManager.cpp">
+      <Filter>Sources\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

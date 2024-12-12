@@ -64,6 +64,7 @@
 #include"MiniMapManager.h"//ミニマップ生成
 #include"UIManager.h";//UIマネージャー
 #include"StageManager.h"
+#include"StageCollisionManager.h"//コリジョン管理
 
 //カメラ用
 #include"MyCamera.h"//追尾カメラ用
