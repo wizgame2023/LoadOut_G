@@ -16,6 +16,7 @@ namespace basecross {
 		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら
 		Vec3 testPos;
 		shared_ptr<StageCollisionManager> m_collsionManager;//コリジョンマネージャー
+		shared_ptr<Player> m_player;//プレイヤー（自機）
 		int m_count;
 	public:
 		Movie(shared_ptr<Stage>& stagePtr);
