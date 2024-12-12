@@ -371,6 +371,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpEnemy.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameOver.cpp" />
+=======
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameOver.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
@@ -380,5 +383,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StageCollisionManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
+>>>>>>> Debug
   </ItemGroup>
 </Project>
