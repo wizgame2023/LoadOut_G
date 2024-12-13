@@ -17,9 +17,12 @@ namespace basecross {
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<Sprite>m_spriteMozi;
 		shared_ptr<Sprite>m_spriteB;
+		shared_ptr<Sprite> m_sprite;
+		shared_ptr<Sprite> m_Credit;
+
 		float m_transparency = 1;
 		bool m_transparent = false;
-
+		bool m_creditCount=true;
 	public:
 		//\’z‚Æ”jŠü
 		TilteStage() :Stage() {}

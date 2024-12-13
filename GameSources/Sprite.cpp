@@ -67,7 +67,7 @@ namespace basecross {
 	void Sprite::SetColor(Col4 color)
 	{
 		m_color = color;
-		m_drawComp->SetDiffuse(color);
+		m_drawComp->SetDiffuse(m_color);
 	}
 	//ƒJƒ‰[‚Ì”’l‚ğæ“¾‚³‚¹‚é
 	Col4 Sprite::GetColor()

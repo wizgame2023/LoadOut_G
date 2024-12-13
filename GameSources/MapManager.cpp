@@ -381,5 +381,11 @@ namespace basecross {
 		return testMap;
 	}
 
+	//マップのサイズを渡す
+	float MapManager::GetMapSize()
+	{
+		return m_stageMap.size() * 10;
+	}
+
 }
 //end basecross

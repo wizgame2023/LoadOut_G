@@ -170,6 +170,8 @@ namespace basecross {
 			}
 			if (player)//プレイヤーなら
 			{
+				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 				GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 			}
 		}

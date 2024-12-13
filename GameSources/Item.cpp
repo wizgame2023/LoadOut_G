@@ -57,6 +57,9 @@ namespace basecross {
 
 		AddTag(L"Item");//アイテム用のタグ
 
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		mapManager->MapDataUpdate(m_pos, 6);//電池が置かれたことを表す
+
 	}
 
 	void Item::OnUpdate()
@@ -85,6 +88,13 @@ namespace basecross {
 				stage->RemoveGameObject<Item>(GetThis<Item>());//自分自身を削除
 			}
 		}
+	}
+
+	//削除されたときの処理
+	void Item::OnDestroy()
+	{
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		mapManager->MapDataUpdate(m_pos, 0);//電池がなくなったことを表す
 	}
 
 }
