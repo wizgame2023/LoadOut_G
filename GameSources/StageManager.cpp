@@ -62,7 +62,40 @@ namespace basecross {
 		//ゲームオーバーのフラグが立ったら
 		if (m_GameOverFlag)
 		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//�Q�[���I�[�o�[�Ɉړ�����
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバーに移動する
+		}
+
+		//もし、Playerが鍵を入手したら
+		if (m_PlayerKeyFlag==1)
+		{
+			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
+
+			auto stage = GetStage();
+			auto obj = stage->GetGameObjectVec();
+			//取得したオブジェクトが変換できたら配列に入れる
+			for (auto hatch : obj)
+			{			
+				//ハッチの上に柱上のエフェクトを表示させる
+				auto castHatch = dynamic_pointer_cast<Hatch>(hatch);
+				if (castHatch)//ハッチ型にキャストする
+				{
+					auto hatchTrans = castHatch->GetComponent<Transform>();
+					auto hatchPos = hatchTrans->GetPosition();
+
+					//筒のエフェクト追加
+					GetStage()->AddGameObject<PillarEffect>(hatchPos, L"Escape", Vec2(0.0f, 0.5f), 36);
+
+				}
+				auto castPlayer = dynamic_pointer_cast<Player>(hatch);
+				if (castPlayer)//プレイヤーにキャスト出来たら
+				{
+					auto playerTrans = castPlayer->GetComponent<Transform>();
+					auto playerPos = playerTrans->GetPosition();
+
+					//鍵の板ポリを表示
+				}
+
+			}
 		}
 	}
 
@@ -116,6 +149,11 @@ namespace basecross {
 	void StageManager::SetGameOverFlag(bool flag)
 	{
 		m_GameOverFlag = flag;
+	}
+	//PlayerKeyFlagのセッター
+	void StageManager::SetPlayerKeyFlag(int flag)
+	{
+		m_PlayerKeyFlag = flag;
 	}
 }
 //end basecross

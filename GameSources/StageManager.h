@@ -15,6 +15,7 @@ namespace basecross {
 
 		bool m_ClearFlag;//クリアのフラグ判定
 		bool m_GameOverFlag;//ゲームオーバー用のフラグ
+		int m_PlayerKeyFlag;///Playerが鍵を持ったかのフラグ
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
 
@@ -30,6 +31,7 @@ namespace basecross {
 
 		void SetClearFlag(bool flag);//セッター
 		void SetGameOverFlag(bool flag);//セッター
+		void SetPlayerKeyFlag(int flag);//セッター
 	};
 
 }
