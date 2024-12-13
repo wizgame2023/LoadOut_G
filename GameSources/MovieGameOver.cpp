@@ -22,6 +22,13 @@ namespace basecross {
 		Movie::OnCreate();
 		m_tagetPos = m_movieCamera->GetEye() - Vec3(0.0f, 15.0f, 0.0f);//目的地
 
+		auto stage = GetStage();
+		auto player = stage->GetSharedGameObject<Player>(L"Player");//プレイヤー取得
+		player->MoveSwich(false);//playerを動かさない
+		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
+		playerDraw->ChangeCurrentAnimation(L"Down");//やられたモーションに変更
+
+
 	}
 
 	void MovieGameOver::OnUpdate()
@@ -32,6 +39,8 @@ namespace basecross {
 		auto player = stage->GetSharedGameObject<Player>(L"Player");//プレイヤー取得
 		auto playerTrans = player->GetComponent<Transform>();
 		auto playerPos = playerTrans->GetPosition();
+		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
+
 
 		player->MoveSwich(false);//playerを動かさない
 		Vec3 moveVec = Vec3(cameraPos.x - playerPos.x, cameraPos.y - playerPos.y, cameraPos.z - playerPos.z);//カメラとPlayerの距離ベクトル
@@ -57,10 +66,19 @@ namespace basecross {
 		}
 		if (m_count == 1)//処理②
 		{
+			//Playerのアニメーション更新
+			m_gameOverFlag = playerDraw->UpdateAnimation(delta);
+			if (m_gameOverFlag)
+			{
+				m_count++;
+			}
+		}
+
+		if (m_count == 2)//処理③
+		{
 			//ステージマネージャーにゲームクリアのフラグを渡す
 			auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
 			stageManager->SetGameOverFlag(true);
-
 		}
 
 

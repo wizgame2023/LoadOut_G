@@ -76,7 +76,10 @@ namespace basecross{
 
 	}
 	void BillBoard::OnUpdate() {
-
+		if (m_actor.expired())
+		{
+			GetStage()->RemoveGameObject<BillBoard>(GetThis<BillBoard>());
+		}
 		if (!m_actor.expired()) {
 			auto SeekPtr = m_actor.lock();
 			auto SeekTransPtr = SeekPtr->GetComponent<Transform>();

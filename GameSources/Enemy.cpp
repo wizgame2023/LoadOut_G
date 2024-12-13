@@ -37,6 +37,7 @@ namespace basecross {
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->AddAnimation(L"Default", 6, 10, true, 20.0f);
+		ptrDraw->AddAnimation(L"Ran", 6, 20, true, 20.0f);
 		m_CurrentSt = make_shared<Patrol>(GetThis<Enemy>());
 
 		Mat4x4 spanMat;
@@ -151,11 +152,14 @@ namespace basecross {
 		//SE¶¬ “G‚Ì‹©‚Ñº
 		auto SEManager = App::GetApp()->GetXAudio2Manager();
 		auto SE = SEManager->Start(L"Scream", 0, 0.9f);
+		auto stage = GetStage();
+		auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
 		//Ž©•ª‚ªŒ®‚ðŽ‚Á‚Ä‚¢‚é‚Æ‚«
 		if (this->FindTag(L"Key"))
 		{	
 			//Œ®‚ðPlayer‚É“n‚·
 			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
+			stageManager->SetPlayerKeyFlag(1);
 		}
 
 	}
@@ -205,7 +209,7 @@ namespace basecross {
 
 	void Enemy::GetGameOverScene()
 	{
-		return PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ƒQ[ƒ€ƒI[ƒoƒV[ƒ“‚ÉˆÚ“®‚·‚é
+		GetStage()->AddGameObject<MovieGameOver>();
 	}
 
 

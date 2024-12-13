@@ -23,6 +23,9 @@ namespace basecross {
 		m_collsionManager = GetStage()->GetSharedGameObject<StageCollisionManager>(L"CollsionManager");
 		m_collsionManager->SetCollisionSwhich(false);//コリジョンオフにする
 
+		m_player = GetStage()->GetSharedGameObject<Player>(L"Player");
+		m_player->MoveSwich(false);//操作効かないようにする
+
 		CameraChange();
 	}
 
@@ -33,6 +36,7 @@ namespace basecross {
 
 	void Movie::OnDestroy()
 	{
+		m_player->MoveSwich(true);//操作効くようにする
 		m_collsionManager->SetCollisionSwhich(true);//コリジョンオンにする
 	}
 

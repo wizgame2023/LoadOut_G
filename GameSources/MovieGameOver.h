@@ -12,6 +12,7 @@ namespace basecross {
 	{
 	private:
 		Vec3 m_tagetPos;//目的地
+		bool m_gameOverFlag;//ゲームオーバーのフラグ
 	public:
 		MovieGameOver(shared_ptr<Stage>& stagePtr);
 		~MovieGameOver();
