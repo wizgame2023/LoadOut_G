@@ -38,7 +38,7 @@ namespace basecross {
 		//ƒƒbƒVƒ…¶¬
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"Gray");
+		ptrDraw->SetTextureResource(L"Hatch");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
