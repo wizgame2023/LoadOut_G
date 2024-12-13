@@ -43,9 +43,6 @@ namespace basecross {
 
 
 		player->MoveSwich(false);//playerを動かさない
-		Vec3 moveVec = Vec3(cameraPos.x - playerPos.x, cameraPos.y - playerPos.y, cameraPos.z - playerPos.z);//カメラとPlayerの距離ベクトル
-		float angle = atan2(moveVec.z, moveVec.x);//角度を取得
-		playerTrans->SetRotation(Vec3(0.0f, -angle, 0.0f));//カメラ目線になるようにする
 
 		if (m_count == 0)//処理①
 		{
@@ -57,28 +54,29 @@ namespace basecross {
 				{
 					cameraPos = m_tagetPos;
 					m_movieCamera->SetEye(cameraPos);
-					m_count = 1;//更新
+					//m_count = 1;//更新
 				}
 				m_movieCamera->SetEye(cameraPos);
 
 			}
-
-		}
-		if (m_count == 1)//処理②
-		{
 			//Playerのアニメーション更新
 			m_gameOverFlag = playerDraw->UpdateAnimation(delta);
 			if (m_gameOverFlag)
 			{
 				m_count++;
 			}
+
+		}
+		if (m_count == 1)//処理②
+		{		
+			//ステージマネージャーにゲームクリアのフラグを渡す
+			auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+			stageManager->SetGameOverFlag(true);
+
 		}
 
 		if (m_count == 2)//処理③
 		{
-			//ステージマネージャーにゲームクリアのフラグを渡す
-			auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
-			stageManager->SetGameOverFlag(true);
 		}
 
 
