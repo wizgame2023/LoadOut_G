@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
 
 			GameResourses();
 
@@ -124,6 +124,8 @@ namespace basecross{
 		app->RegisterTexture(L"Escape", strTexture);
 		strTexture = texPath + L"Hatch.png";//ハッチのテクスチャ
 		app->RegisterTexture(L"Hatch", strTexture);
+		strTexture = texPath + L"Credit.png";//ハッチのテクスチャ
+		app->RegisterTexture(L"Credit", strTexture);
 
 
 		//BGMSE
