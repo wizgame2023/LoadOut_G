@@ -122,6 +122,8 @@ namespace basecross{
 		app->RegisterTexture(L"Clear", strTexture);
 		strTexture = texPath + L"Escape.png";//透明の柱のテクスチャ
 		app->RegisterTexture(L"Escape", strTexture);
+		strTexture = texPath + L"Hatch.png";//ハッチのテクスチャ
+		app->RegisterTexture(L"Hatch", strTexture);
 
 
 		//BGMSE
