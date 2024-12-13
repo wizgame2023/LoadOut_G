@@ -15,7 +15,8 @@ namespace basecross {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
 		shared_ptr<SoundItem> m_BGM;
-		shared_ptr<Sprite>m_sprite;
+		shared_ptr<Sprite>m_spriteMozi;
+		shared_ptr<Sprite>m_spriteB;
 		float m_transparency = 1;
 		bool m_transparent = false;
 
