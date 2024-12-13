@@ -110,6 +110,8 @@ namespace basecross{
 		app->RegisterTexture(L"StartMozi", strTexture);
 		strTexture = texPath + L"StartMoziB.png";//Title画面に表示する文字
 		app->RegisterTexture(L"StartMoziB", strTexture);
+		strTexture = texPath + L"CreditMozi.png";//Title画面に表示する文字
+		app->RegisterTexture(L"CreditMozi", strTexture);
 		strTexture = texPath + L"Road5.jpg";//石壁のテクスチャ
 		app->RegisterTexture(L"Road", strTexture);
 		strTexture = texPath + L"Wow.png";//敵が見つけたときのテクスチャ
