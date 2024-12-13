@@ -35,7 +35,6 @@ namespace basecross {
 			AddGameObject<Sprite>(L"Title", Vec2(1280,800), Vec3(0.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
 			m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -150.0f, 0.0f));
 			m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -150.0f, 0.0f));
-			m_sprite = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -150.0f, 0.0f));	
 			m_Credit = AddGameObject<Sprite>(L"Credit", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//クレジット生成
 			m_Credit->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
 
@@ -85,7 +84,6 @@ namespace basecross {
 
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, m_transparency));
 		m_spriteB->SetColor(Col4(1, 0, 0, m_transparency));
-		m_sprite->SetColor(Col4(0.3, 0.3, 0.3, m_transparency));
 
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B || keyState.m_bPushKeyTbl[VK_SPACE])
 		{
