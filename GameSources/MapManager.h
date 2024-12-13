@@ -17,9 +17,20 @@ namespace basecross {
 		vector<int> m_aStarLine;//A*のマップの一行
 		wstring m_stageName;//ステージの名前
 
+		float m_mapSize;//マップのサイズ(直径)
 		float m_push;//一気にオブジェクト生成する際にエクセルの座標と合わせるための数値
 
 	public:
+		enum SelMapCount
+		{
+			Map_None = 0,
+			Map_Manhole,
+			Map_ManholeSet,
+			Map_ManholeOpen,
+			Map_ExitNone,
+			Map_ExitOpen,
+			Map_Item
+		};
 		MapManager(shared_ptr<Stage>& stagePtr,wstring stageName=L"Stage01/");//コンストラクタ
 		~MapManager();//デストラクタ
 
@@ -40,6 +51,8 @@ namespace basecross {
 		void WallCreate();//壁を生成
 		void AddExctraAStar(int addArray);//余分にA*に配列を入れる処理
 		void AddArray(int loop,int num);//配列に数値を入れる処理
+
+		float GetMapSize();//マップのサイズを渡す処理
 
 		vector<vector<int>> TestAStar();//A*のテスト用のマップ取得
 
