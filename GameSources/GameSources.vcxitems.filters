@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-      <Filter Include="Headers">
+    <Filter Include="Headers">
       <UniqueIdentifier>{4b0a624a-610d-4bc6-b311-2b02a781cdf9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources">
@@ -228,6 +228,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StageCollisionManager.h">
       <Filter>Headers\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\DoctorRemote\DoctorRemote_α\GameSources\NumberManager.h">
+      <Filter>Headers\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -380,5 +383,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StageCollisionManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
-</ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\DoctorRemote\DoctorRemote_α\GameSources\NumberManager.cpp">
+      <Filter>Sources\Manager</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

@@ -15,11 +15,10 @@ namespace basecross {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
 		shared_ptr<SoundItem> m_BGM;
-		shared_ptr<Sprite>m_sprite;
-		float m_transparency = 1;
+		shared_ptr<SpriteNum>m_sprite;
 
-		const int m_allStage = 10;
-		bool m_transparent = false;
+		const int m_allStage = 20;
+		
 
 	public:
 		//\’z‚Æ”jŠü
