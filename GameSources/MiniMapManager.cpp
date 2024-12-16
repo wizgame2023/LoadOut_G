@@ -58,9 +58,9 @@ namespace basecross {
 	{
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
-		auto obj = stage->GetGameObjectVec();
+		auto objVec = stage->GetGameObjectVec();
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
-		for (auto item : obj)
+		for (auto item : objVec)
 		{
 			auto castitem = dynamic_pointer_cast<Item>(item);
 			if (castitem)//アイテム型にキャストする

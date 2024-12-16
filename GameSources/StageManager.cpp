@@ -34,7 +34,7 @@ namespace basecross {
 	{
 		BGMChange();
 		auto stage = GetStage();
-		auto obj = stage->GetGameObjectVec();
+		auto objVec = stage->GetGameObjectVec();
 		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
 		auto delta = App::GetApp()->GetElapsedTime();
 
@@ -76,7 +76,7 @@ namespace basecross {
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
 
 			//取得したオブジェクトが変換できたら配列に入れる
-			for (auto hatch : obj)
+			for (auto hatch : objVec)
 			{			
 				//ハッチの上に柱上のエフェクトを表示させる
 				auto castHatch = dynamic_pointer_cast<Hatch>(hatch);
@@ -107,7 +107,7 @@ namespace basecross {
 		//取得したオブジェクトが変換できたら配列に入れる
 		if (!m_repopItemFlag)//リポップする条件を満たしいない限り見る
 		{
-			for (auto item : obj)
+			for (auto item : objVec)
 			{
 				//ハッチの上に柱上のエフェクトを表示させる
 				auto castItem = dynamic_pointer_cast<Item>(item);
