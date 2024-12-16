@@ -32,6 +32,8 @@ namespace basecross {
 	void StageManager::OnUpdate()
 	{
 		BGMChange();
+		auto stage = GetStage();
+		auto obj = stage->GetGameObjectVec();
 
 		//追いかけられているなら追いかけられているBGM
 		if (m_BGMChase&&m_BGMhow !=1)
@@ -66,12 +68,10 @@ namespace basecross {
 		}
 
 		//もし、Playerが鍵を入手したら
-		if (m_PlayerKeyFlag==1)
+		if (m_PlayerKeyFlag == 1)
 		{
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
 
-			auto stage = GetStage();
-			auto obj = stage->GetGameObjectVec();
 			//取得したオブジェクトが変換できたら配列に入れる
 			for (auto hatch : obj)
 			{			
@@ -94,6 +94,23 @@ namespace basecross {
 
 					//鍵の板ポリを表示
 				}
+
+			}
+		}
+
+		//取得したオブジェクトが変換できたら配列に入れる
+		for (auto item : obj)
+		{
+			//ハッチの上に柱上のエフェクトを表示させる
+			auto castItem = dynamic_pointer_cast<Item>(item);
+			int countItem = 0;
+			if (castItem)//ハッチ型にキャストする
+			{
+				countItem++;
+			}
+			//ステージ上に5個未満のアイテム数ならアイテムがポップする
+			if (countItem > 5)
+			{
 
 			}
 		}
