@@ -19,6 +19,9 @@ namespace basecross {
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
 
+		float m_repopItemCountTime;//リポップするタイム
+		bool m_repopItemFlag;//アイテムのリポップフラグ
+
 	public:
 		StageManager(shared_ptr<Stage>& stagePtr);
 		~StageManager();

@@ -8,7 +8,8 @@
 
 namespace basecross {
 	StageManager::StageManager(shared_ptr<Stage>& stagePtr) :
-		GameObject(stagePtr)
+		GameObject(stagePtr),
+		m_repopItemFlag(false)
 	{
 
 	}
@@ -34,6 +35,8 @@ namespace basecross {
 		BGMChange();
 		auto stage = GetStage();
 		auto obj = stage->GetGameObjectVec();
+		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
+		auto delta = App::GetApp()->GetElapsedTime();
 
 		//追いかけられているなら追いかけられているBGM
 		if (m_BGMChase&&m_BGMhow !=1)
@@ -98,22 +101,60 @@ namespace basecross {
 			}
 		}
 
+		int countItem = 0;	
+		int itemCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
+
 		//取得したオブジェクトが変換できたら配列に入れる
-		for (auto item : obj)
+		if (!m_repopItemFlag)//リポップする条件を満たしいない限り見る
 		{
-			//ハッチの上に柱上のエフェクトを表示させる
-			auto castItem = dynamic_pointer_cast<Item>(item);
-			int countItem = 0;
-			if (castItem)//ハッチ型にキャストする
+			for (auto item : obj)
 			{
-				countItem++;
+				//ハッチの上に柱上のエフェクトを表示させる
+				auto castItem = dynamic_pointer_cast<Item>(item);
+				if (castItem)//ハッチ型にキャストする
+				{
+					countItem++;
+				}
 			}
-			//ステージ上に5個未満のアイテム数ならアイテムがポップする
-			if (countItem > 5)
+			//ステージ上に一定数のアイテム数より下回っているならフラグをオンにする			
+			if (countItem < itemCountMax)
 			{
+				m_repopItemFlag = true;
+			}
+		}
+
+		//ステージ上に一定数のアイテム数より下回っているならアイテムがポップする
+		if (m_repopItemFlag)
+		{
+			m_repopItemCountTime += delta;//時間経過
+			auto m_repopItemCountTimeMax = 5.0f;//リポップする時間
+
+			//クールタイム過ぎたら生成する
+			if (m_repopItemCountTime >= m_repopItemCountTimeMax)
+			{
+				m_repopItemCountTime = 0.0f;//クールタイムリセット
+
+				auto mapSize = stage->GetSharedGameObject<MapManager>(L"MapManager")->GetMapSize();
+				mapSize = mapSize;
+				float halfMapSize = mapSize / 2;
+				
+				//ランダムに出現する場所を決める
+				auto randX = (rand() % (int)mapSize) - halfMapSize;
+				auto randY = halfMapSize - (rand() % (int)mapSize);
+				Vec3 randVec = Vec3(randX, 0.0f, randY);
+				
+				//ランダムに決めた場所がアイテムがない場所なら出現させる
+				if (mapManager->SelMapNow(randVec) == mapManager->Map_None)
+				{
+					auto randSelVec = mapManager->ConvertSelMap(randVec);//セルマップに変える
+					auto popSelVec = mapManager->ConvertWorldMap(randSelVec);//ワールド座標に変換する
+					stage->AddGameObject<Item>(Vec3(popSelVec),Vec3(0.0f,0.0f,0.0f));//生成
+					m_repopItemFlag = false;//フラグリセット
+				}
 
 			}
 		}
+
 	}
 
 	void StageManager::BGMChange()
