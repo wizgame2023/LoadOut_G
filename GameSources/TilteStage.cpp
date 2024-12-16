@@ -36,7 +36,10 @@ namespace basecross {
 			m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -150.0f, 0.0f));
 			m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -150.0f, 0.0f));
 			m_Credit = AddGameObject<Sprite>(L"Credit", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//クレジット生成
+			m_break = AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f));
 			m_Credit->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
+			m_break->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
+
 
 		}
 		catch (...) {
@@ -59,6 +62,7 @@ namespace basecross {
 	{
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 
+		auto time = App::GetApp()->GetElapsedTime();
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーのアナログスティックの向き
@@ -87,8 +91,21 @@ namespace basecross {
 
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B || keyState.m_bPushKeyTbl[VK_SPACE])
 		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+			m_onFaed = true;
 		}
+		if (m_onFaed)
+		{
+			float fadeSpeed = 1.0f;
+
+			m_anCollar += fadeSpeed * time;
+
+			m_break->SetColor(Col4(1, 1, 1, m_anCollar));
+			if (m_anCollar>=1.0f)
+			{
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+			}
+		}
+
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_X)
 		{
 			if (m_creditCount)

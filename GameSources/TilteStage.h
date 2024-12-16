@@ -18,10 +18,14 @@ namespace basecross {
 		shared_ptr<Sprite>m_spriteMozi;
 		shared_ptr<Sprite>m_spriteB;
 		shared_ptr<Sprite> m_Credit;
+		shared_ptr<Sprite> m_break;
 
 		float m_transparency = 1;
+		float m_anCollar = 0;
+
 		bool m_transparent = false;
 		bool m_creditCount=true;
+		bool m_onFaed = false;
 	public:
 		//\’z‚Æ”jŠü
 		TilteStage() :Stage() {}
