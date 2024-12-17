@@ -120,13 +120,13 @@ namespace basecross {
 		{
 			m_charen = 2;//通行禁止になっている状態
 			Vec3 clearPos = m_pos;
-			clearPos.y += 5.0f;
+			clearPos.y += 0.0f;
 			m_clearObject = GetStage()->AddGameObject<ClearObject>(clearPos, Vec3(0.0f, 0.0f, 0.0f));
 			GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 			m_blinkingTime = 0;//点滅のクールタイムをリセットする
 
 			//水柱が発生する
-			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(10.0f, 10.0f, 10.0f));
+			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(8.5f, 10.0f, 8.5f));
 		}
 
 		//通行禁止の時の際の処理

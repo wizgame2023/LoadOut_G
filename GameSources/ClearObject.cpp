@@ -23,7 +23,7 @@ namespace basecross {
 		auto ptr = GetComponent<Transform>();
 		ptr->SetPosition(m_pos);
 		ptr->SetRotation(m_rot);
-		ptr->SetScale(10.0f, 10.0f, 10.0f);
+		ptr->SetScale(9.0f, 10.0f, 9.0f);
 
 		//Transformに対しての等差数列
 		Mat4x4 spanMat;
@@ -47,7 +47,7 @@ namespace basecross {
 
 		ptrColl->SetFixed(true);
 		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
-		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
+		ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);

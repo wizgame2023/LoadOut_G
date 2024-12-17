@@ -75,5 +75,11 @@ namespace basecross {
 		return m_color;
 	}
 
+	//Ž©•ªŽ©g‚ðÁ‹Ž‚·‚é
+	void Sprite::MyDestroy()
+	{
+		GetStage()->RemoveGameObject<Sprite>(GetThis<Sprite>());
+	}
+
 }
 //end basecross
