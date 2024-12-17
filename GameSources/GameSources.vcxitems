@@ -14,7 +14,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\DoctorRemote\DoctorRemote_α\GameSources\NumberManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Actor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Block.h" />
@@ -42,6 +41,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpPlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BillBoard.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NumberManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PillarEfect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectStage.h" />
@@ -68,7 +68,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)YuutaStage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\DoctorRemote\DoctorRemote_α\GameSources\NumberManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Actor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Block.cpp" />
@@ -95,6 +94,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpPlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BillBoard.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NumberManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PillarEffect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />

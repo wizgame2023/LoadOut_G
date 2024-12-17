@@ -9,25 +9,6 @@
 namespace basecross{
 
 
-	//--------------------------------------------------------------------------------------
-	//	class Foo : public GameObject;
-	//--------------------------------------------------------------------------------------
-	class Foo : public GameObject
-	{
-	public:
-		// \’z‚Æ”jŠü
-		Foo(const shared_ptr<Stage>& stage) :
-			GameObject(stage)
-		{
-		}
-		virtual ~Foo()
-		{
-		}
-
-		virtual void OnCreate() override; // ‰Šú‰»
-		//virtual void OnUpdate() override; // XV
-		//virtual void OnDraw() override; // •`‰æ
-	};
 
 }
 //end basecross

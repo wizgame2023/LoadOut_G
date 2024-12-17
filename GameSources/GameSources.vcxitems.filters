@@ -228,7 +228,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StageCollisionManager.h">
       <Filter>Headers\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\DoctorRemote\DoctorRemote_α\GameSources\NumberManager.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)NumberManager.h">
       <Filter>Headers\Manager</Filter>
     </ClInclude>
   </ItemGroup>
@@ -383,7 +383,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StageCollisionManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\DoctorRemote\DoctorRemote_α\GameSources\NumberManager.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)NumberManager.cpp">
       <Filter>Sources\Manager</Filter>
     </ClCompile>
   </ItemGroup>
