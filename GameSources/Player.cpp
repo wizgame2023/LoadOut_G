@@ -159,7 +159,6 @@ namespace basecross{
 		//	<<L"\nFPS:"<< 1.0f/Delta
 		//	<<L"\nKey"<<m_key
 		//	<< endl;
-		////XMConvertToRadians(-90.0f)
 
 		//scene->SetDebugString(wss.str());
 
