@@ -47,7 +47,7 @@ namespace basecross{
 		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定
-			ResetActiveStage<SelectStage>();
+			ResetActiveStage<TilteStage>();
 		}
 		if (event->m_MsgStr == L"ToGameOverStage") {
 			//タイトルのアクティブステージの設定
