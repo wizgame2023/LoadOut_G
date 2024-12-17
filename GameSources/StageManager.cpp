@@ -129,7 +129,7 @@ namespace basecross {
 			m_repopItemCountTime += delta;//時間経過
 			auto m_repopItemCountTimeMax = 5.0f;//リポップする時間
 
-			//クールタイム過ぎたら生成する
+			//クールタイム過ぎたら生成する,クールタイムの時間は調整必須
 			if (m_repopItemCountTime >= m_repopItemCountTimeMax)
 			{
 				m_repopItemCountTime = 0.0f;//クールタイムリセット
