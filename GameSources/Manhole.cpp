@@ -9,7 +9,8 @@
 namespace basecross {
 	Manhole::Manhole(shared_ptr<Stage>& stagePtr,Vec3 pos) :
 		GameObject(stagePtr),
-		m_pos(pos)
+		m_pos(pos),
+		m_charen(Manhole_None)
 	{
 
 	}
@@ -76,38 +77,46 @@ namespace basecross {
 	{
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto stage = GetStage();//ステージ取得
-
+		auto a = m_mapManager.lock()->SelMapNow(m_pos);
 		//セル座標にアイテムを設置した情報があったら
-		if (m_mapManager.lock()->SelMapNow(m_pos) == 2 && m_charen == 0)
+		if (m_mapManager.lock()->SelMapNow(m_pos) == 2 && m_charen == Manhole_None)
 		{
-			m_charen = 1;//アイテムが置かれている状態
+			m_charen = Manhole_Start;//アイテムが置かれている状態
 			GetComponent<PNTStaticDraw>()->SetTextureResource(L"RedManhole");//自分自身にアイテムが置かれていると分かりやすくする
 		}
 
 		//クールタイム過ぎたら電池の抗力が切れてマンホールが上がらないようにする
-		if (m_charen == 1)//電池を入れている状態
+		if (m_charen == Manhole_Start)//電池を入れている状態
 		{
 			m_stanbyTime += delta;
 			//3秒経ったら点滅する
 			if (m_stanbyTime > 3.0f)
 			{
-				m_blinkingTime += delta;
-				if (m_blinkingTime < 0.1f)
-				{
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");
-				}
-				if (m_blinkingTime > 0.2f)
-				{
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"RedManhole");
-				}
-				if (m_blinkingTime > 0.3f)
-				{
-					m_blinkingTime = 0;
-				}
+				m_charen = Manhole_SoonUp;//もうすぐマンホールが上がる状態
+			}
+		}
+
+		if (m_charen == Manhole_SoonUp)
+		{
+			m_stanbyTime += delta;
+			//3秒経ったら点滅する
+			m_blinkingTime += delta;
+			if (m_blinkingTime < 0.1f)
+			{
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");
+			}
+			if (m_blinkingTime > 0.2f)
+			{
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"RedManhole");
+			}
+			if (m_blinkingTime > 0.3f)
+			{
+				m_blinkingTime = 0;
 			}
 			//スタンバイ状態を終える
 			if (m_stanbyTime > 5.0f)
 			{
+				m_charen = Manhole_Up;//電池が上がった状態にする
 				m_stanbyTime = 0;//クールタイムリセット
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//自分自身にアイテムが置かれていない状態だと分かりやすくする
 				m_mapManager.lock()->MapDataUpdate(m_pos, 3);//上げるようにする
@@ -116,9 +125,9 @@ namespace basecross {
 		}
 
 		//通行禁止になる時の処理
-		if (m_mapManager.lock()->SelMapNow(m_pos) == 3 && m_charen == 1)
+		if (m_mapManager.lock()->SelMapNow(m_pos) == 3 && (m_charen == Manhole_Up||m_charen==Manhole_Start))
 		{
-			m_charen = 2;//通行禁止になっている状態
+			m_charen = Manhole_Used;//通行禁止になっている状態
 			Vec3 clearPos = m_pos;
 			clearPos.y += 0.0f;
 			m_clearObject = GetStage()->AddGameObject<ClearObject>(clearPos, Vec3(0.0f, 0.0f, 0.0f));
@@ -130,7 +139,7 @@ namespace basecross {
 		}
 
 		//通行禁止の時の際の処理
-		if (m_charen == 2)
+		if (m_charen == Manhole_Used)
 		{
 			//クールタイム過ぎたら通れるようにする
 			m_coolTime += delta;
@@ -141,7 +150,7 @@ namespace basecross {
 				m_mapManager.lock()->MapDataUpdate(m_pos, 1);//マップマネージャーに通れる状態だと返す
 				stage->RemoveGameObject<ClearObject>(m_clearObject);//前生成した透明なオブジェクトを消す
 				stage->RemoveGameObject<WaterPillar>(m_waterPillar);//前生成した水柱を消す
-				m_charen = 0;
+				m_charen = Manhole_None;
 				m_blinkingTime = 0;
 				m_stanbyTime = 0;
 			}

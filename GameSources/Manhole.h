@@ -12,6 +12,15 @@ namespace basecross {
 	class Manhole :public GameObject
 	{
 	private:
+		//マンホールの状態遷移
+		enum state
+		{
+			Manhole_None,
+			Manhole_Start,
+			Manhole_SoonUp,
+			Manhole_Up,
+			Manhole_Used
+		};
 		Vec3 m_pos;//ポジション
 		weak_ptr<MapManager> m_mapManager;//マップマネージャー
 
