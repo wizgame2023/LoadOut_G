@@ -20,13 +20,24 @@ namespace basecross {
 
 	void Movie::OnCreate()
 	{
+		auto stage = GetStage();
 		m_collsionManager = GetStage()->GetSharedGameObject<StageCollisionManager>(L"CollsionManager");
 		m_collsionManager->SetCollisionSwhich(false);//コリジョンオフにする
 
-		m_player = GetStage()->GetSharedGameObject<Player>(L"Player");
-		m_player->MoveSwich(false);//操作効かないようにする
+		auto objVec = stage->GetGameObjectVec();
+		//アクターが親クラスのものだけ取得
+		for (auto actor : objVec)
+		{
+			auto actorCast = dynamic_pointer_cast<Actor>(actor);
+			if (actorCast)
+			{
+				actorCast->MoveSwich(false);//動けないようにする
+				auto m_actorOne = actorCast;
+			}
+			m_actorVec.push_back(actorCast);
+		}
 
-		CameraChange();
+		CameraChange();//カメラ変更
 	}
 
 	void Movie::OnUpdate()
@@ -36,7 +47,16 @@ namespace basecross {
 
 	void Movie::OnDestroy()
 	{
-		m_player->MoveSwich(true);//操作効くようにする
+		//動くオブジェクトが動けるようにする
+		for (auto actor : m_actorVec)
+		{
+			auto actorCheck = actor.lock();
+			if (actorCheck)
+			{
+				actorCheck->MoveSwich(true);//動ける
+			}
+		}
+
 		m_collsionManager->SetCollisionSwhich(true);//コリジョンオンにする
 	}
 

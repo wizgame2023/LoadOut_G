@@ -11,6 +11,8 @@
 namespace basecross {
 	class Movie :public GameObject
 	{
+	private:
+		vector<weak_ptr<Actor>> m_actorVec;//動くオブジェクトを入れる配列
 	protected:
 		shared_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
 		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら
