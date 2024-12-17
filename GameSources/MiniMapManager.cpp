@@ -44,7 +44,7 @@ namespace basecross {
 
 	void MiniMapManager::OnUpdate()
 	{
-
+		UpdateItem();
 	}
 
 	//ミニマップ用の壁を生成
@@ -59,6 +59,7 @@ namespace basecross {
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
 		auto objVec = stage->GetGameObjectVec();
+		auto count = 0;
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto item : objVec)
 		{
@@ -69,10 +70,53 @@ namespace basecross {
 				auto itemPos = itemTrans->GetPosition();
 				auto itemScale = itemTrans->GetScale();
 				
-				stage->AddGameObject<MiniMapItem>(castitem ,L"White", Vec2(itemScale.x * m_mapMagnification, itemScale.z * m_mapMagnification),5,
-					Vec3(m_startPos.x+(itemPos.x*m_mapMagnification), m_startPos.y + (itemPos.z * m_mapMagnification),0.0f),Vec3(0.0f,0.0f,0.0f));
+				auto miniMapItem = stage->AddGameObject<MiniMapItem>(castitem ,L"White", Vec2(itemScale.x * m_mapMagnification, itemScale.z * m_mapMagnification),5,
+				Vec3(m_startPos.x+(itemPos.x*m_mapMagnification), m_startPos.y + (itemPos.z * m_mapMagnification),0.0f),Vec3(0.0f,0.0f,0.0f));
+				miniMapItem->AddTag(L"MiniMapItem");//タグを追加
+				count++;
 			}
 		}
+		m_beforeItemNum = count;
+	}
+	//ミニマップ用のアイテムを生成(Updeta版)
+	void MiniMapManager::UpdateItem()
+	{
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto objVec = stage->GetGameObjectVec();
+		int itemNumNow = 0;
+		//ステージにあるアイテムの数をカウントする
+		for (auto item : objVec)
+		{
+			auto castitem = dynamic_pointer_cast<Item>(item);
+			if (castitem)//アイテム型にキャストする
+			{
+				itemNumNow++;
+			}
+		}
+
+		//今あるアイテムの数が前よりも多かったらミニマップのアイテムの表示を更新する
+		if (itemNumNow > m_beforeItemNum)
+		{
+			//ミニマップにあるアイテムをリセットする
+			for (auto sprite : objVec)
+			{
+				auto castsprite = dynamic_pointer_cast<Sprite>(sprite);
+				if (castsprite)//アイテム型にキャストする
+				{
+					//タグがMiniMapItem
+					if (castsprite->FindTag(L"MiniMapItem"))
+					{
+						castsprite->MyDestroy();//自分自身を消去する
+					}
+				}
+			}
+			//再生成する
+			CreateItem();
+
+		}
+
+		m_beforeItemNum = itemNumNow;//更新する
 	}
 
 	//ミニマップ用のマンホールを作成
