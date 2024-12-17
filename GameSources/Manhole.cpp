@@ -202,6 +202,11 @@ namespace basecross {
 
 	}
 
+	int Manhole::GetState()
+	{
+		return m_charen;
+	}
+
 
 }
 //end basecross
