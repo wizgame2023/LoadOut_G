@@ -146,43 +146,5 @@ namespace basecross {
 		}
 
 	};
-
-	enum STATUS//ステータス
-	{
-		Status_None,
-		Status_Open,
-		Status_Closed
-	};
-
-	//ノードデータ
-	class Node
-	{
-	public:
-		int x;
-		int y;
-		int Status;//ステータス
-		int Cost;//コスト
-		int HeuristicCost;//ヒューリスティックコスト
-		int Score;//スコア
-		shared_ptr<Node> Parent;//親のポインタ
-
-		Node(int x, int y, int Status, int Cost, int HeuristicCost, int Score, shared_ptr<Node> parent) :
-			x(x),
-			y(y),
-			Status(Status),
-			Cost(Cost),
-			HeuristicCost(HeuristicCost),
-			Score(Score),
-			Parent(parent)
-		{
-
-		}
-		~Node()
-		{
-		}
-	};
-
-
-
 }
 //end basecross
