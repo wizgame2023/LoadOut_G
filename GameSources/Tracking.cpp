@@ -35,13 +35,13 @@ namespace basecross {
 
 		//A*の処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
-		if (playerAStarPos != m_beforPlayerAStar)
+		if (playerAStarPos != m_beforPlayerUnity)
 		{
 			m_ownerPos;
 
 			m_unityMap.clear();
 			m_roodCount = 0;
-			m_beforPlayerAStar = playerAStarPos;
+			m_beforPlayerUnity = playerAStarPos;
 			//MoveCost();
 			m_tagetRootPos = AStar();
 			if (m_tagetRootPos.size() >= 2)
@@ -219,13 +219,13 @@ namespace basecross {
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		
 
-		m_aStarMapCSV = mapManager->GetUnityMap();//AStarマップ取得
+		m_unityMapCSV = mapManager->GetUnityMap();//AStarマップ取得
 		//vector<vector<shared_ptr<Node>>> aStarMap;//マップのノード配列
 		vector<shared_ptr<Node>> aStarMapline;
 		//AStarマップの配列と同じ配列の大きさのノードを作る
-		for (int y=0; y < m_aStarMapCSV.size(); y++)
+		for (int y=0; y < m_unityMapCSV.size(); y++)
 		{
-			for (int x=0; x < m_aStarMapCSV[0].size(); x++)
+			for (int x=0; x < m_unityMapCSV[0].size(); x++)
 			{
 				aStarMapline.push_back(make_shared<Node>(Node(x, y, Status_None, 999, 999, 999, NULL)));
 			}
@@ -323,7 +323,7 @@ namespace basecross {
 				//配列の範囲外なら確認しない
 				if ((lookY < 0 || lookY >= (m_unityMap.size())) || (lookX < 0 || lookX >= (m_unityMap.size()))) continue;
 				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
-				if (m_aStarMapCSV[lookY][lookX] == 1 || m_unityMap[lookY][lookX]->Status == Status_Closed) continue;
+				if (m_unityMapCSV[lookY][lookX] == 1 || m_unityMap[lookY][lookX]->Status == Status_Closed) continue;
 
 				//壁を確認したので床のマスに対して評価する//////////////////////////////////////////////////////////////////////
 				lookX = (pushx * 2) + originPos.x;

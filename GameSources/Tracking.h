@@ -52,13 +52,13 @@ namespace basecross {
 
 
 		//AStarMapの情報を入れる配列
-		vector<vector<VecAStarIndex>> m_aStarMapDeta;
+		vector<vector<VecAStarIndex>> m_unityMapDeta;
 
 		//前のPlayerのAStar座標
-		Vec2 m_beforPlayerAStar;
+		Vec2 m_beforPlayerUnity;
 
 		vector<vector<shared_ptr<Node>>> m_unityMap;//マップのノード配列
-		vector<vector<int>> m_aStarMapCSV;//AStarMapのCSVデータ
+		vector<vector<int>> m_unityMapCSV;//AStarMapのCSVデータ
 
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
