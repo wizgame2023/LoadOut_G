@@ -8,12 +8,9 @@
 
 namespace basecross {
 	class Node;
-	class AStar :GameObject
+	class AStar :public GameObject
 	{
 	private:
-		Vec3 m_startPos;//最初のポジション
-		Vec3 m_goalPos;//ゴールするポジション
-
 		//前のPlayerのAStar座標
 		Vec2 m_beforPlayerUnity;
 
@@ -21,12 +18,13 @@ namespace basecross {
 		vector<vector<int>> m_unityMapCSV;//AStarMapのCSVデータ
 
 	public:
-		AStar(shared_ptr<Stage>& stagePtr,Vec3 startPos,Vec3 goalPos);//コンストラクタ
+		AStar(shared_ptr<Stage>& stagePtr);//コンストラクタ
 		~AStar();//デストラクタ
 
 		void OnCreate() override;//作成
 		void OnUpdate() override;//更新
 
+		vector<Vec3> RouteSearch(Vec3 startPos,Vec3 goalPos);//経路探査
 		bool LookAround(shared_ptr<Node> parent, Vec2 goalPos);//周りを確認する処理
 	};
 
