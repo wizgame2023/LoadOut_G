@@ -7,17 +7,27 @@
 #include "stdafx.h"
 
 namespace basecross {
+	class Node;
 	class AStar :GameObject
 	{
 	private:
 		Vec3 m_startPos;//最初のポジション
 		Vec3 m_goalPos;//ゴールするポジション
+
+		//前のPlayerのAStar座標
+		Vec2 m_beforPlayerUnity;
+
+		vector<vector<shared_ptr<Node>>> m_unityMap;//マップのノード配列
+		vector<vector<int>> m_unityMapCSV;//AStarMapのCSVデータ
+
 	public:
 		AStar(shared_ptr<Stage>& stagePtr,Vec3 startPos,Vec3 goalPos);//コンストラクタ
 		~AStar();//デストラクタ
 
 		void OnCreate() override;//作成
 		void OnUpdate() override;//更新
+
+		bool LookAround(shared_ptr<Node> parent, Vec2 goalPos);//周りを確認する処理
 	};
 
 	enum STATUS//ステータス
