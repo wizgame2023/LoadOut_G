@@ -252,7 +252,6 @@ namespace basecross {
 		auto lookHCost = m_unityMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
 		m_unityMap[originPos.y][originPos.x]->Score = lookCost + lookHCost;
 
-
 		//経路が見つかるまでループする
 		while (!root)
 		{				
@@ -280,10 +279,6 @@ namespace basecross {
 				}
 			}
 
-
-			auto a = 0;
-			//m_unityMap[originPos.y][originPos.x]->Status = Status_Closed;//閉じる
-			//cost++;
 		}
 
 		//ルートが見つかったらどう進めばいいかを伝える
