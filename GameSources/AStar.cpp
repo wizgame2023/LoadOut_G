@@ -36,6 +36,9 @@ namespace basecross {
 	//Œo˜H’T¸ˆ—
 	vector<Vec3> AStar::RouteSearch(Vec3 startWPos,Vec3 goalWPos)
 	{
+		//‰Šú‰»‚ğ‚·‚é
+		m_unityMap.clear();
+
 		vector<Vec2> aStarRood;//ˆÚ“®‘JˆÚ
 
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
