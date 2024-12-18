@@ -28,7 +28,7 @@ namespace basecross {
 
 	public:
 		//ƒ}ƒ“ƒz[ƒ‹‚Ìó‘Ô‘JˆÚ
-		enum state
+		enum STATE
 		{
 			Manhole_None,
 			Manhole_Start,
