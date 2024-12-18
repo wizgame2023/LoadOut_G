@@ -234,6 +234,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ManholeSprite.h">
       <Filter>Headers\UI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AStar.h">
+      <Filter>Headers\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -391,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ManholeSprite.cpp">
       <Filter>Sources\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
