@@ -60,6 +60,8 @@ namespace basecross {
 		vector<vector<shared_ptr<Node>>> m_unityMap;//マップのノード配列
 		vector<vector<int>> m_unityMapCSV;//AStarMapのCSVデータ
 
+		shared_ptr<AStar> m_aStar;//経路探査の処理が入ったポインタ
+
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
@@ -91,7 +93,7 @@ namespace basecross {
 
 		void nextSelLook(int right,int left,int up, int down,Vec2 enemyAStarPos,Vec2 playerAStarPos);//隣に壁か上げているマンホールがあるか確認する
 
-		vector<Vec3> AStar();
+		vector<Vec3> RouteSearch();
 
 		bool LookAround(shared_ptr<Node> node, Vec2 goalPos);
 

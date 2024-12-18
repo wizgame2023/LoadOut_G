@@ -11,6 +11,8 @@ namespace basecross {
 	//追跡ステートの最初の処理
 	void Tracking::OnStart()
 	{
+		//m_aStar->RouteSearch(m_ownerPos)
+		//m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//マップマネージャー取得
 	}
 
 	//追跡ステートの更新処理
@@ -34,6 +36,7 @@ namespace basecross {
 		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
 
 		//A*の処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//マップマネージャー取得
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
 		if (playerAStarPos != m_beforPlayerUnity)
 		{
@@ -43,7 +46,8 @@ namespace basecross {
 			m_roodCount = 0;
 			m_beforPlayerUnity = playerAStarPos;
 			//MoveCost();
-			m_tagetRootPos = AStar();
+			//m_tagetRootPos = RouteSearch();//経路探査してる
+			m_tagetRootPos = m_aStar->RouteSearch(m_ownerPos,m_playerPos);
 			if (m_tagetRootPos.size() >= 2)
 			{
 				auto one = m_tagetRootPos[0];
@@ -101,7 +105,7 @@ namespace basecross {
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		Vec3 pos = m_ownerPos;
 		Vec3 playerPos = m_playerPos;
-		auto AStar = mapMgr->GetUnityMap();
+		auto RouteSearch = mapMgr->GetUnityMap();
 		auto sellPos = mapMgr->ConvertSelMap(pos);
 		auto AStarPos = mapMgr->ConvertUnityMap(sellPos);
 
@@ -149,6 +153,7 @@ namespace basecross {
 
 	}
 
+	//使わない処理です消します
 	void Tracking::nextSelLook(int right,int left,int up,int down,Vec2 enemyAStarPos,Vec2 playerAStarPos)
 	{
 
@@ -212,7 +217,7 @@ namespace basecross {
 		}
 	}
 
-	vector<Vec3> Tracking::AStar()
+	vector<Vec3> Tracking::RouteSearch()
 	{		
 		vector<Vec2> aStarRood;//移動遷移
 
@@ -393,14 +398,14 @@ namespace basecross {
 	//	Vec3 pos = m_ownerPos;
 	//	Vec3 playerPos = m_playerPos;
 	//	Vec3 direction;
-	//	auto AStar = mapMgr->GetUnityMap();//A*のマップ配列取得
+	//	auto RouteSearch = mapMgr->GetUnityMap();//A*のマップ配列取得
 	//	auto sellPos = mapMgr->ConvertSelMap(pos);//Enemyの位置をセル座標に変更
 	//	auto AStarPos = mapMgr->ConvertUnityMap(sellPos);//セル座標からAStar座標に変更
 
-	//	auto rightAStar = AStar[AStarPos.y][AStarPos.x + 1];
-	//	auto leftAStar = AStar[AStarPos.y][AStarPos.x - 1];
-	//	auto fodAStar = AStar[AStarPos.y - 1][AStarPos.x];
-	//	auto downAStar = AStar[AStarPos.y + 1][AStarPos.x];
+	//	auto rightAStar = RouteSearch[AStarPos.y][AStarPos.x + 1];
+	//	auto leftAStar = RouteSearch[AStarPos.y][AStarPos.x - 1];
+	//	auto fodAStar = RouteSearch[AStarPos.y - 1][AStarPos.x];
+	//	auto downAStar = RouteSearch[AStarPos.y + 1][AStarPos.x];
 
 
 	//	auto rightASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x + 2, AStarPos.y));
