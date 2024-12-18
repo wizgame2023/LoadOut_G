@@ -21,7 +21,7 @@ namespace basecross {
 	{		
 		StageMapLoad();
 		WallMapLoad();	
-		AStarMapCreate();
+		UnityMapCreate();
 	}
 
 	void MapManager::OnUpdate()
@@ -47,7 +47,7 @@ namespace basecross {
 		return Vec3(w_length, 0, w_height);
 	}
 
-	Vec2 MapManager::ConvertAStarMap(Vec2 selPosition)
+	Vec2 MapManager::ConvertUnityMap(Vec2 selPosition)
 	{
 		int AStarLength = (selPosition.x) * 2 + 1;
 		int AStarHeight = (selPosition.y) * 2 + 1;
@@ -56,7 +56,7 @@ namespace basecross {
 	}
 
 	//AStar座標からセル座標へ
-	Vec2 MapManager::ConvertA_S(Vec2 aStarPosition)
+	Vec2 MapManager::ConvertU_S(Vec2 aStarPosition)
 	{
 		int Length = (aStarPosition.x - 1) / 2 ;
 		int Height = (aStarPosition.y - 1) / 2 ;
@@ -245,7 +245,7 @@ namespace basecross {
 	}
 
 
-	void MapManager::AStarMapCreate()
+	void MapManager::UnityMapCreate()
 	{
 
 		for (int y = 0; y < (m_stageMap.size() * 2)+1; y++)
@@ -266,7 +266,7 @@ namespace basecross {
 				//xとyが奇数なら空白
 				if (!evenX && !evenY)
 				{
-					m_aStarLine.push_back(0);
+					m_unityLine.push_back(0);
 				}
 				//xが奇数yが偶数なら縦壁
 				if (!evenX && evenY)
@@ -274,7 +274,7 @@ namespace basecross {
 					int originY = y / 2;//小数点以下切り捨て
 					int originX = x / 2;
 
-					m_aStarLine.push_back(m_rightWallMap[originY][originX]);
+					m_unityLine.push_back(m_rightWallMap[originY][originX]);
 				}
 				//xが偶数yが奇数なら横壁
 				if (evenX && !evenY)
@@ -282,7 +282,7 @@ namespace basecross {
 					int originY = y / 2;//小数点以下切り捨て
 					int originX = x / 2;
 
-					m_aStarLine.push_back(m_upWallMap[originY][originX]);
+					m_unityLine.push_back(m_upWallMap[originY][originX]);
 				}
 				//xとyが偶数なら地面
 				if (evenX && evenY)
@@ -290,7 +290,7 @@ namespace basecross {
 					int originY = y / 2;//小数点以下切り捨て
 					int originX = x / 2;
 
-					m_aStarLine.push_back(m_stageMap[originY][originX]);
+					m_unityLine.push_back(m_stageMap[originY][originX]);
 				}
 			}
 
@@ -298,12 +298,12 @@ namespace basecross {
 
 
 			//aStarMapにA＊の一行ずつ配列を入れる
-			m_aStarMap.push_back(m_aStarLine);
-			m_aStarLine.clear();//使わない配列は削除
+			m_unityMap.push_back(m_unityLine);
+			m_unityLine.clear();//使わない配列は削除
 			auto a = 0;
 
 		}
-		m_aStarMap;
+		m_unityMap;
 		auto test = 0;
 
 	}
@@ -316,13 +316,13 @@ namespace basecross {
 		while (count < 2)
 		{
 			count++;
-			m_aStarLine.push_back(9);
+			m_unityLine.push_back(9);
 		}
 		count = 0;//リセット
 	}
 
 	//Aスターにある程度余分に配列を入れる処理
-	void MapManager::AddExctraAStar(int addArray)
+	void MapManager::AddExctraUnity(int addArray)
 	{
 		//範囲外の配列を指定してエラーはかないようにある程度余分に配列を入れておく
 		vector<int> extra;//余分に入れる配列
@@ -335,16 +335,16 @@ namespace basecross {
 		while (count < addArray)
 		{
 			count++;
-			m_aStarMap.push_back(extra);//配列を余分に入れておく
+			m_unityMap.push_back(extra);//配列を余分に入れておく
 		}
-		m_aStarMap;
+		m_unityMap;
 
 	}
 
 	//A*マップを渡す
-	vector<vector<int>> MapManager::GetAStarMap()
+	vector<vector<int>> MapManager::GetUnityMap()
 	{
-		return m_aStarMap;
+		return m_unityMap;
 	}
 
 	vector<vector<int>> MapManager::TestAStar()

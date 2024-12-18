@@ -13,8 +13,8 @@ namespace basecross {
 		vector<vector<int>> m_stageMap;
 		vector<vector<int>> m_upWallMap;
 		vector<vector<int>> m_rightWallMap;
-		vector<vector<int>> m_aStarMap;//A*のマップ
-		vector<int> m_aStarLine;//A*のマップの一行
+		vector<vector<int>> m_unityMap;//A*のマップ
+		vector<int> m_unityLine;//A*のマップの一行
 		wstring m_stageName;//ステージの名前
 
 		float m_mapSize;//マップのサイズ(直径)
@@ -39,24 +39,24 @@ namespace basecross {
 
 		Vec2 ConvertSelMap(Vec3 worldPosition);//ワールド座標からセル座標に変える
 		Vec3 ConvertWorldMap(Vec2 selPosition);
-		Vec2 ConvertAStarMap(Vec2 selPosition);
-		Vec2 ConvertA_S(Vec2 AStarPosition);//AStarからセルマップに変える
+		Vec2 ConvertUnityMap(Vec2 selPosition);
+		Vec2 ConvertU_S(Vec2 AStarPosition);//AStarからセルマップに変える
 
 		void MapDataUpdate(Vec3 worldPosition,int change);
 		int SelMapNow(Vec3 worldPosition);//今のセル座標に何があるのかを返す
 
 		void StageMapLoad();
 		void WallMapLoad();
-		void AStarMapCreate();//A*マップの作成
+		void UnityMapCreate();//A*マップの作成
 		void WallCreate();//壁を生成
-		void AddExctraAStar(int addArray);//余分にA*に配列を入れる処理
+		void AddExctraUnity(int addArray);//余分にA*に配列を入れる処理
 		void AddArray(int loop,int num);//配列に数値を入れる処理
 
 		float GetMapSize();//マップのサイズを渡す処理
 
 		vector<vector<int>> TestAStar();//A*のテスト用のマップ取得
 
-		vector<vector<int>> GetAStarMap();//A*マップの取得
+		vector<vector<int>> GetUnityMap();//A*マップの取得
 	};
 
 

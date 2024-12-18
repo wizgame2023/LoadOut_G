@@ -57,7 +57,7 @@ namespace basecross {
 		//前のPlayerのAStar座標
 		Vec2 m_beforPlayerAStar;
 
-		vector<vector<shared_ptr<Node>>> m_aStarMap;//マップのノード配列
+		vector<vector<shared_ptr<Node>>> m_unityMap;//マップのノード配列
 		vector<vector<int>> m_aStarMapCSV;//AStarMapのCSVデータ
 
 	public:

@@ -31,7 +31,7 @@ namespace basecross {
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 		//Playerの位置をAStarの座標にする
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
-		auto playerAStarPos = mapManager->ConvertAStarMap(playerSelPos);//A*の座標に変える
+		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
 
 		//A*の処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
@@ -39,7 +39,7 @@ namespace basecross {
 		{
 			m_ownerPos;
 
-			m_aStarMap.clear();
+			m_unityMap.clear();
 			m_roodCount = 0;
 			m_beforPlayerAStar = playerAStarPos;
 			//MoveCost();
@@ -58,7 +58,7 @@ namespace basecross {
 		//auto cost = MoveCost();
 		//m_directionRad = math.GetAngle(m_ownerPos,cost);
 		//目的地に移動したとみなす
-		if (abs(m_ownerPos.x - m_tagetRootPos[m_roodCount].x) <= 0.5f && abs(m_ownerPos.z - m_tagetRootPos[m_roodCount].z) <= 0.5f)
+		if (abs(m_ownerPos.x - m_tagetRootPos[m_roodCount].x) <= 1.0f && abs(m_ownerPos.z - m_tagetRootPos[m_roodCount].z) <= 1.0f)
 		{
 			m_ownerPos = m_tagetRootPos[m_roodCount];
 			m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
@@ -69,6 +69,7 @@ namespace basecross {
 		}
 		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		m_ownerRot.y = m_directionRad;
 
 		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
@@ -100,9 +101,9 @@ namespace basecross {
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		Vec3 pos = m_ownerPos;
 		Vec3 playerPos = m_playerPos;
-		auto AStar = mapMgr->GetAStarMap();
+		auto AStar = mapMgr->GetUnityMap();
 		auto sellPos = mapMgr->ConvertSelMap(pos);
-		auto AStarPos = mapMgr->ConvertAStarMap(sellPos);
+		auto AStarPos = mapMgr->ConvertUnityMap(sellPos);
 
 		m_trans->SetRotation(m_ownerRot);//所有者(Enemy)のローテーションの更新
 		m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
@@ -218,7 +219,7 @@ namespace basecross {
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		
 
-		m_aStarMapCSV = mapManager->GetAStarMap();//AStarマップ取得
+		m_aStarMapCSV = mapManager->GetUnityMap();//AStarマップ取得
 		//vector<vector<shared_ptr<Node>>> aStarMap;//マップのノード配列
 		vector<shared_ptr<Node>> aStarMapline;
 		//AStarマップの配列と同じ配列の大きさのノードを作る
@@ -228,40 +229,40 @@ namespace basecross {
 			{
 				aStarMapline.push_back(make_shared<Node>(Node(x, y, Status_None, 999, 999, 999, NULL)));
 			}
-			m_aStarMap.push_back(aStarMapline);
+			m_unityMap.push_back(aStarMapline);
 			aStarMapline.clear();//リセット
 		}
 		auto test=0;
 		
 		//初期位置を決める自分自身(Enemy)の現在地点
 		auto enemySelPos = mapManager->ConvertSelMap(m_ownerPos);//セルに変える
-		auto enemyAStarPos = mapManager->ConvertAStarMap(enemySelPos);
+		auto enemyAStarPos = mapManager->ConvertUnityMap(enemySelPos);
 		auto originPos = enemyAStarPos;
-		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
+		m_unityMap[originPos.y][originPos.x]->Status = Status_Open;
 		auto cost = 0;
 		//ゴール地点(Player)	
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);
-		auto playerASterPos = mapManager->ConvertAStarMap(playerSelPos);
+		auto playerASterPos = mapManager->ConvertUnityMap(playerSelPos);
 		auto goalPos = playerASterPos;
 		bool root = false;//経路が見つかったかどうか
 		
 		//一番最初のPlayerとの距離を確認する
-		m_aStarMap[originPos.y][originPos.x]->Status = Status_Open;
-		auto lookCost = m_aStarMap[originPos.y][originPos.x]->Cost = cost++;//コストの変数まだ作ってない
-		auto lookHCost = m_aStarMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
-		m_aStarMap[originPos.y][originPos.x]->Score = lookCost + lookHCost;
+		m_unityMap[originPos.y][originPos.x]->Status = Status_Open;
+		auto lookCost = m_unityMap[originPos.y][originPos.x]->Cost = cost++;//コストの変数まだ作ってない
+		auto lookHCost = m_unityMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
+		m_unityMap[originPos.y][originPos.x]->Score = lookCost + lookHCost;
 
 
 		//経路が見つかるまでループする
 		while (!root)
 		{				
 			//周りに何があるか確認する //右左上下の床のセルに経路の評価する処理が出来てません 今、評価している場所が壁のセルになっています
-			root = LookAround(m_aStarMap[originPos.y][originPos.x],goalPos);
+			root = LookAround(m_unityMap[originPos.y][originPos.x],goalPos);
 	
 			//検索の中心点を探す
 			auto openScore = 0;
 			auto minScore = 999;
-			for (auto map : m_aStarMap)
+			for (auto map : m_unityMap)
 			{
 				for (auto mapline : map)
 				{
@@ -281,7 +282,7 @@ namespace basecross {
 
 
 			auto a = 0;
-			//m_aStarMap[originPos.y][originPos.x]->Status = Status_Closed;//閉じる
+			//m_unityMap[originPos.y][originPos.x]->Status = Status_Closed;//閉じる
 			//cost++;
 		}
 
@@ -289,11 +290,11 @@ namespace basecross {
 		vector<Vec3> rootVec;
 		//まず、AStarの座標をワールド座標に戻す作業をする
 		rootVec.push_back(m_playerPos);
-		auto parentSel = m_aStarMap[goalPos.y][goalPos.x]->Parent;
+		auto parentSel = m_unityMap[goalPos.y][goalPos.x]->Parent;
 		while (parentSel != NULL)
 		{
 			Vec2 AStarPos = Vec2(parentSel->x, parentSel->y);
-			Vec2 SelPos = mapManager->ConvertA_S(AStarPos);
+			Vec2 SelPos = mapManager->ConvertU_S(AStarPos);
 			Vec3 worldPos = mapManager->ConvertWorldMap(SelPos);
 			rootVec.push_back(worldPos);
 			parentSel = parentSel->Parent;
@@ -320,50 +321,50 @@ namespace basecross {
 			{
 				int lookX = pushx + originPos.x;
 				int lookY = pushy + originPos.y;
-				auto test = m_aStarMap.size();
+				auto test = m_unityMap.size();
 
 				//確認する座標が親座標から見て左右上下以外なら確認しない
 				if (pushy == 0 && pushx == 0 || pushy != 0 && pushx != 0) continue;	
 				//配列の範囲外なら確認しない
-				if ((lookY < 0 || lookY >= (m_aStarMap.size())) || (lookX < 0 || lookX >= (m_aStarMap.size()))) continue;
+				if ((lookY < 0 || lookY >= (m_unityMap.size())) || (lookX < 0 || lookX >= (m_unityMap.size()))) continue;
 				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
-				if (m_aStarMapCSV[lookY][lookX] == 1 || m_aStarMap[lookY][lookX]->Status == Status_Closed) continue;
+				if (m_aStarMapCSV[lookY][lookX] == 1 || m_unityMap[lookY][lookX]->Status == Status_Closed) continue;
 
 				//壁を確認したので床のマスに対して評価する//////////////////////////////////////////////////////////////////////
 				lookX = (pushx * 2) + originPos.x;
 				lookY = (pushy * 2) + originPos.y;	
 
-				if (lookX < 0||lookX>m_aStarMap.size()-1)
+				if (lookX < 0||lookX>m_unityMap.size()-1)
 				{
 					auto test=0;
 				}
-				if (lookY < 0||lookY>m_aStarMap.size()-1)
+				if (lookY < 0||lookY>m_unityMap.size()-1)
 				{
 					auto test = 0;
 				}
 
-				if (m_aStarMap[lookY][lookX]->Status == Status_None)//探索したことがないなら
+				if (m_unityMap[lookY][lookX]->Status == Status_None)//探索したことがないなら
 				{
 					
-					m_aStarMap[lookY][lookX]->Status = Status_Open;
-					auto lookCost = m_aStarMap[lookY][lookX]->Cost = cost;//コストの変数まだ作ってない
-					auto lookHCost = m_aStarMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - lookX) + abs(goalPos.y - lookY);
-					m_aStarMap[lookY][lookX]->Score = lookCost + lookHCost;
-					m_aStarMap[lookY][lookX]->Parent = m_aStarMap[originPos.y][originPos.x];
+					m_unityMap[lookY][lookX]->Status = Status_Open;
+					auto lookCost = m_unityMap[lookY][lookX]->Cost = cost;//コストの変数まだ作ってない
+					auto lookHCost = m_unityMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - lookX) + abs(goalPos.y - lookY);
+					m_unityMap[lookY][lookX]->Score = lookCost + lookHCost;
+					m_unityMap[lookY][lookX]->Parent = m_unityMap[originPos.y][originPos.x];
 				}
-				if (m_aStarMap[lookY][lookX]->Status == Status_Open)//探索済みなら
+				if (m_unityMap[lookY][lookX]->Status == Status_Open)//探索済みなら
 				{
-					auto Cost = m_aStarMap[lookY][lookX]->Cost = cost;
-					m_aStarMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - (lookX)) + abs(goalPos.y - (lookY));
-					auto score = m_aStarMap[lookY][lookX]->Score = m_aStarMap[lookY][lookX]->Cost + m_aStarMap[lookY][lookX]->HeuristicCost;
+					auto Cost = m_unityMap[lookY][lookX]->Cost = cost;
+					m_unityMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - (lookX)) + abs(goalPos.y - (lookY));
+					auto score = m_unityMap[lookY][lookX]->Score = m_unityMap[lookY][lookX]->Cost + m_unityMap[lookY][lookX]->HeuristicCost;
 
-					if (m_aStarMap[lookY][lookX]->Score > score)//スコアが前よりも少なかったら
+					if (m_unityMap[lookY][lookX]->Score > score)//スコアが前よりも少なかったら
 					{
-						m_aStarMap[lookY][lookX]->Status = Status_Open;
-						m_aStarMap[lookY][lookX]->Cost = cost;
-						m_aStarMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - (lookX)) + abs(goalPos.y - (lookY));
-						m_aStarMap[lookY][lookX]->Score = score;
-						m_aStarMap[lookY][lookX]->Parent = m_aStarMap[originPos.y][originPos.x];
+						m_unityMap[lookY][lookX]->Status = Status_Open;
+						m_unityMap[lookY][lookX]->Cost = cost;
+						m_unityMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - (lookX)) + abs(goalPos.y - (lookY));
+						m_unityMap[lookY][lookX]->Score = score;
+						m_unityMap[lookY][lookX]->Parent = m_unityMap[originPos.y][originPos.x];
 					}
 				}
 
@@ -373,7 +374,7 @@ namespace basecross {
 		}
 
 		//マップのすべてを見てPlayerの距離が０なところがあるか確認する
-		for (auto map : m_aStarMap)
+		for (auto map : m_unityMap)
 		{
 			for (auto mapline : map)
 			{
@@ -385,7 +386,7 @@ namespace basecross {
 		}
 
 		//周囲探索が終わったならステータスがOpenからClosedへ変わる
-		m_aStarMap[originPos.y][originPos.x]->Status = Status_Closed;
+		m_unityMap[originPos.y][originPos.x]->Status = Status_Closed;
 
 		return false;
 	}
@@ -397,9 +398,9 @@ namespace basecross {
 	//	Vec3 pos = m_ownerPos;
 	//	Vec3 playerPos = m_playerPos;
 	//	Vec3 direction;
-	//	auto AStar = mapMgr->GetAStarMap();//A*のマップ配列取得
+	//	auto AStar = mapMgr->GetUnityMap();//A*のマップ配列取得
 	//	auto sellPos = mapMgr->ConvertSelMap(pos);//Enemyの位置をセル座標に変更
-	//	auto AStarPos = mapMgr->ConvertAStarMap(sellPos);//セル座標からAStar座標に変更
+	//	auto AStarPos = mapMgr->ConvertUnityMap(sellPos);//セル座標からAStar座標に変更
 
 	//	auto rightAStar = AStar[AStarPos.y][AStarPos.x + 1];
 	//	auto leftAStar = AStar[AStarPos.y][AStarPos.x - 1];
@@ -407,10 +408,10 @@ namespace basecross {
 	//	auto downAStar = AStar[AStarPos.y + 1][AStarPos.x];
 
 
-	//	auto rightASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x + 2, AStarPos.y));
-	//	auto leftASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x - 2, AStarPos.y));
-	//	auto fodASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y - 2));
-	//	auto downASPos = mapMgr->ConvertA_S(Vec2(AStarPos.x, AStarPos.y + 2));
+	//	auto rightASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x + 2, AStarPos.y));
+	//	auto leftASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x - 2, AStarPos.y));
+	//	auto fodASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x, AStarPos.y - 2));
+	//	auto downASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x, AStarPos.y + 2));
 
 
 	//	auto rightWPos = mapMgr->ConvertWorldMap(rightASPos);
