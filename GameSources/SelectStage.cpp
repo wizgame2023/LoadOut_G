@@ -38,26 +38,24 @@ namespace basecross {
 		}
 
 		auto w = 250;
-		auto h = 100;
-		for (int j = 1; j < 2; j++)
-		{
-
-		}
-		for (int i = 1; i < m_allStage / 2 + 1; i++)
+		auto h = 200;
+		for (int i = 1; i < m_allStage + 1; i++)
 		{
 			if (i <= 5)
 			{
-				m_sprite = AddGameObject<SpriteNum>(L"Number", Vec2(50, 50), i, Vec3((-500 - w) + (w * i), 250.0f, 0.0f));
+				AddGameObject<NuberManager>(i, Vec2(50, 50), Vec3((-500 - w) + (w * i), 250.0f, 0.0f));
 			}
-			else if (i > 5 && i < 10)
+			else if (i > 5 && i <= 10)
 			{
-				m_sprite = AddGameObject<SpriteNum>(L"Number", Vec2(50, 50), i, Vec3((-500 - w) + (w * (i - 5)), 250.0f - h, 0.0f));
+				AddGameObject<NuberManager>(i, Vec2(50, 50), Vec3((-500 - w) + (w * (i - 5)), 250.0f - h, 0.0f));
 			}
-			else if (i >= 10)
+			else if (i > 10 && i <= 15)
 			{
-				m_sprite = AddGameObject<SpriteNum>(L"Number", Vec2(50, 50), 1, Vec3((-500 - w) + (w * (i - 5)-12), 250.0f - h, 0.0f));
-				m_sprite = AddGameObject<SpriteNum>(L"Number", Vec2(50, 50), 0, Vec3((-500 - w) + (w * (i - 5) + 12), 250.0f - h, 0.0f));
-
+				AddGameObject<NuberManager>(i, Vec2(50, 50), Vec3((-500 - w) + (w * (i - 10)), 250.0f - h * 2, 0.0f));
+			}
+			else if(i>=15)
+			{
+				AddGameObject<NuberManager>(i, Vec2(50, 50), Vec3((-500 - w) + (w * (i - 15)), 250.0f - h * 3, 0.0f));
 			}
 		}
 	}
