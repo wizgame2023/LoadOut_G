@@ -33,6 +33,7 @@ namespace basecross {
 
 		void CreatePlayer();//Player¶¬
 		void CreateItem();//ƒAƒCƒeƒ€¶¬
+		void CreateEnemy();//Enemy¶¬
 
 		void SetEnemy(int num);
 

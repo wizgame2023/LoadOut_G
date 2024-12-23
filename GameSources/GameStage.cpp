@@ -78,13 +78,7 @@ namespace basecross {
 		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//stage01
-		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(-35.0f, 2.5f, -5.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(45.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(-45.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		CreateItem();
+		CreateItem();//アイテムの生成
 
 		m_miniMapManager->CreateItem();
 
@@ -112,12 +106,7 @@ namespace basecross {
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
-		
-		//stage01
-		auto enemy = AddGameObject<Enemy>(Vec3(-25.0f, 2.5f, -35.0f));
-		enemy->AddTag(L"Key");//鍵を持っていることにする
-		AddGameObject<Enemy>(Vec3(5.0f, 2.5f, 45.0f));
-
+		CreateEnemy();
 
 		AddGameObject<MovieGameStart>();
 		m_miniMapManager->CreateEnemy();
@@ -133,6 +122,25 @@ namespace basecross {
 		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
 		m_miniMapManager->CreatePlayer();
+	}
+
+	//Enemy生成
+	void GameStage::CreateEnemy()
+	{
+		vector<shared_ptr<Enemy>>enemyVec;
+		vector<Vec3> posVec =
+		{
+			Vec3(-25.0f, 2.5f, -35.0f),
+			Vec3(5.0f, 2.5f, 45.0f)
+		};
+		auto test = posVec.size();
+
+		for (int i = 0; i < posVec.size(); i++)
+		{
+			auto enemy = AddGameObject<Enemy>(posVec[i]);
+			enemyVec.push_back(enemy);
+		}
+		enemyVec[0]->AddTag(L"Key");//鍵を持っていることにする
 	}
 
 	//アイテム生成
@@ -155,6 +163,7 @@ namespace basecross {
 
 	}
 
+	//敵がどれくらい追いかけてくるか確認する
 	int GameStage::GameEnemyState()
 	{
 		auto obj = GetGameObjectVec();
