@@ -14,6 +14,7 @@ namespace basecross {
 	{
 	private:
 		Vec3 m_pos;
+		const Vec3 m_startPos;
 		Vec3 m_playerPos;
 		float m_speed;
 		float m_angle;
@@ -57,6 +58,7 @@ namespace basecross {
 		void SetAngle(float angle);
 		void GetGameOverScene();
 		Vec3 GetPlayerPos();
+		Vec3 GetStartPos();
 		shared_ptr<Ray> GetForwardRay();
 		shared_ptr<Ray> GetPlayerRay();
 		shared_ptr<StateBase> GetNowState();

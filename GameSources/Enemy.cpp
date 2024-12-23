@@ -12,6 +12,7 @@ namespace basecross {
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
 		Actor(StagePtr),
 		m_pos(-95.0f,2.5f,95.0f),
+		m_startPos(-95.0f, 2.5f, 95.0f),
 		m_playerPos(0,0,0),
 		m_speed(10),
 		m_angle(0)
@@ -20,6 +21,7 @@ namespace basecross {
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos) :
 		Actor(StagePtr),
 		m_pos(pos),
+		m_startPos(pos),
 		m_playerPos(0, 0, 0),
 		m_speed(10),
 		m_angle(0)
@@ -191,6 +193,10 @@ namespace basecross {
 	Vec3 Enemy::GetPlayerPos()
 	{
 		return m_playerPos;
+	}
+	Vec3 Enemy::GetStartPos()
+	{
+		return m_startPos;
 	}
 	shared_ptr<Ray> Enemy::GetForwardRay()
 	{
