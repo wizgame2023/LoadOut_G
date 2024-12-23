@@ -60,8 +60,8 @@ namespace basecross {
 		//床の作成
 		AddGameObject<Ground>();
 
-		auto miniMapManager = AddGameObject<MiniMapManager>(100);//ミニマップ生成デバック用
-		SetSharedGameObject(L"MiniMapManager", miniMapManager);
+		m_miniMapManager = AddGameObject<MiniMapManager>(100);//ミニマップ生成デバック用
+		SetSharedGameObject(L"MiniMapManager", m_miniMapManager);
 
 		//ブロックの作成
 		for (int i = 0; i < 20; i++)
@@ -85,11 +85,10 @@ namespace basecross {
 		AddGameObject<Item>(Vec3(45.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
 		AddGameObject<Item>(Vec3(-45.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 
-		miniMapManager->CreateItem();
+		m_miniMapManager->CreateItem();
+
 		//Playerの生成
-		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		SetSharedGameObject(L"Player", player);
-		miniMapManager->CreatePlayer();
+		CreatePlayer();
 
 
 		//壁の生成
@@ -121,11 +120,20 @@ namespace basecross {
 
 
 		AddGameObject<MovieGameStart>();
-		miniMapManager->CreateEnemy();
+		m_miniMapManager->CreateEnemy();
 	}
 
 	void GameStage::OnUpdate()
 	{
+	}
+
+	//Player生成
+	void GameStage::CreatePlayer()
+	{
+		//Playerの生成
+		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		SetSharedGameObject(L"Player", player);
+		m_miniMapManager->CreatePlayer();
 	}
 
 	int GameStage::GameEnemyState()

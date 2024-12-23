@@ -5,6 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include "MiniMapManager.h"
 
 namespace basecross {
 
@@ -16,6 +17,7 @@ namespace basecross {
 		void CreateViewLight();
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
+		shared_ptr<MiniMapManager> m_miniMapManager;
 
 	public:
 		//構築と破棄
@@ -29,6 +31,8 @@ namespace basecross {
 		void GameManager();//ステージの進行度を管理する
 		int GameEnemyState();//全ての敵の遷移状態を受け取る
 		int EnemyNow = 0;
+
+		void CreatePlayer();//Player生成
 
 		void SetEnemy(int num);
 
