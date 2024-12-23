@@ -79,11 +79,12 @@ namespace basecross {
 		//AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//stage01
-		AddGameObject<Item>(Vec3(-5.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-35.0f, 2.5f, -5.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-5.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(45.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-45.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(-35.0f, 2.5f, -5.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(45.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Item>(Vec3(-45.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		CreateItem();
 
 		m_miniMapManager->CreateItem();
 
@@ -130,10 +131,29 @@ namespace basecross {
 	//Playerê∂ê¨
 	void GameStage::CreatePlayer()
 	{
-		//PlayerÇÃê∂ê¨
 		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
 		m_miniMapManager->CreatePlayer();
+	}
+
+	//ÉAÉCÉeÉÄê∂ê¨
+	void GameStage::CreateItem()
+	{
+		vector<Vec3> posVec =
+		{
+		   Vec3(-5.0f, 2.5f, -15.0f),//1
+		   Vec3(-35.0f, 2.5f, -5.0f),//2
+		   Vec3(-5.0f, 2.5f, 25.0f), //3
+		   Vec3(45.0f, 2.5f, -15.0f),//4
+		   Vec3(-45.0f, 2.5f, -45.0f)//5
+		};
+		auto test = posVec.size();
+
+		for (int i = 0; i < posVec.size(); i++)
+		{
+			AddGameObject<Item>(posVec[i], Vec3(0.0f, 0.0f, 0.0f));
+		}
+
 	}
 
 	int GameStage::GameEnemyState()
