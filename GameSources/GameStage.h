@@ -28,7 +28,6 @@ namespace basecross {
 		virtual void OnUpdate()override;
 		void OnDestroy()override;
 		void OutWallCreate(int selLength);//外壁を作る関数
-		void GameManager();//ステージの進行度を管理する
 		int GameEnemyState();//全ての敵の遷移状態を受け取る
 		int EnemyNow = 0;
 

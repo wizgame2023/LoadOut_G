@@ -109,7 +109,6 @@ namespace basecross {
 		//敵生成stage20
 		//auto enemy = AddGameObject<Enemy>();
 		//enemy->AddTag(L"Key");//鍵を持っていることにする
-		//AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(enemy),0);
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
@@ -177,34 +176,6 @@ namespace basecross {
 		}
 
 		return EnemyTracking;//どのくらいの数の敵が追いかける処理をしているのか渡す
-	}
-
-	//ゲームの進行を管理する後々関数ではなくクラスにします
-	void GameStage::GameManager()
-	{
-		////ゲームクリアの条件
-		////ステージのオブジェクトを全て取得
-		//auto obj = GetGameObjectVec();
-		//EnemyNow = 0;
-		////取得したオブジェクトがアイテムに変換できたら配列に入れる
-		//for (auto manhole : obj)
-		//{
-
-		//	if (dynamic_pointer_cast<Enemy>(manhole))//アイテム型にキャストする
-		//	{
-
-		//		auto a = 0;
-		//		a++;
-		//		EnemyNow = a;
-
-		//	}
-		//}
-
-		//if (EnemyNow == 0)
-		//{
-		//	//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
-		//}
-
 	}
 
 	void GameStage::OnDestroy()
