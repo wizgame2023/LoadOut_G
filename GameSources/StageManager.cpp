@@ -36,33 +36,16 @@ namespace basecross {
 
 	void StageManager::OnUpdate()
 	{
-		BGMChange();
+		EnemyStateCheck();//敵が追いかけてきてるか確認する
 		auto stage = GetStage();
 		auto objVec = stage->GetGameObjectVec();
-		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
 		auto delta = App::GetApp()->GetElapsedTime();
 
-		//追いかけられているなら追いかけられているBGM
-		if (m_BGMChase&&m_BGMhow !=1)
-		{
-			m_BGMhow = 1;
-			m_bgmManager->Stop(m_BGM);
-			//BGM
-			m_bgmManager = App::GetApp()->GetXAudio2Manager();
-			m_BGM = m_bgmManager->Start(L"Tracking", XAUDIO2_LOOP_INFINITE, 0.9f);
-			auto test = 0;
-		}
-		//追いかけられていなければ普通のBGM
-		if (!m_BGMChase&&m_BGMhow !=2)
-		{
-			m_BGMhow = 2;
-			m_bgmManager->Stop(m_BGM);
-			//BGM
-			m_bgmManager = App::GetApp()->GetXAudio2Manager();
-			m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
-
-		}
-
+		BGMChange();//BGMを変更する処理
+		KeyEvent();//鍵関連のイベント
+		RepopItem();//アイテムのリポップ処理
+		RepopEnemy();//敵のリポップ処理		
+		
 		//ゲームクリアのフラグが立ったら
 		if (m_ClearFlag)
 		{
@@ -74,6 +57,95 @@ namespace basecross {
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバーに移動する
 		}
 
+	}
+
+	//BGMを変更する処理
+	void StageManager::BGMChange()
+	{
+		//追いかけられているなら追いかけられているBGM
+		if (m_BGMChase && m_BGMhow != 1)
+		{
+			m_BGMhow = 1;
+			m_bgmManager->Stop(m_BGM);
+			//BGM
+			m_bgmManager = App::GetApp()->GetXAudio2Manager();
+			m_BGM = m_bgmManager->Start(L"Tracking", XAUDIO2_LOOP_INFINITE, 0.9f);
+			auto test = 0;
+		}
+		//追いかけられていなければ普通のBGM
+		if (!m_BGMChase && m_BGMhow != 2)
+		{
+			m_BGMhow = 2;
+			m_bgmManager->Stop(m_BGM);
+			//BGM
+			m_bgmManager = App::GetApp()->GetXAudio2Manager();
+			m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+
+		}
+	}
+
+	//追いかけてくる敵がいるか確認する関数
+	void StageManager::EnemyStateCheck()
+	{
+		auto stage = GetStage();
+		auto obj = stage->GetGameObjectVec();
+		auto EnemyTracking = 0;
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto enemy : obj)
+		{
+			auto enemycast = dynamic_pointer_cast<Enemy>(enemy);
+
+			if (enemycast)//Enemy型にキャストに成功したら
+			{
+				auto State = enemycast->GetNowState();//現在のステートを受け取る
+				auto trackcast = dynamic_pointer_cast<Tracking>(State);
+				if (trackcast)//現在のステートがトラッキング(追いかける処理)の時
+				{
+					EnemyTracking++;
+				}
+			}
+		}
+		m_BGMChase;//追いかける敵がいるか
+		if (EnemyTracking > 0)//追いかける敵が一人以上いるなら
+		{
+			m_BGMChase = true;
+		}
+		else
+		{
+			m_BGMChase = false;
+		}
+
+		
+		
+	}
+
+	//Enemyのリポップ装置
+	void StageManager::RepopEnemy()
+	{
+		auto delta = App::GetApp()->GetElapsedTime();
+		auto repopSize = m_repopEnemyPos.size();
+		auto stage = GetStage();
+
+		//生成する物が１以上あったら生成する
+		if (repopSize > 0)
+		{
+			m_repopEnemyCountTime += delta;
+			//クールタイム過ぎたら敵がリポップする
+			if (m_repopEnemyCountTime >= 30.0f)
+			{
+				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]);//リポップ
+				m_repopEnemyCountTime = 0;//カウントリセット
+				m_repopEnemyPos.erase(m_repopEnemyPos.begin());//生成した物は配列から削除する
+			}
+		}
+	}
+
+	//鍵関係のイベント
+	void StageManager::KeyEvent()
+	{
+		auto stage = GetStage();
+		auto objVec = stage->GetGameObjectVec();
+
 		//もし、Playerが鍵を入手したら
 		if (m_PlayerKeyFlag == 1)
 		{
@@ -81,7 +153,7 @@ namespace basecross {
 
 			//取得したオブジェクトが変換できたら配列に入れる
 			for (auto hatch : objVec)
-			{			
+			{
 				//ハッチの上に柱上のエフェクトを表示させる
 				auto castHatch = dynamic_pointer_cast<Hatch>(hatch);
 				if (castHatch)//ハッチ型にキャストする
@@ -105,7 +177,17 @@ namespace basecross {
 			}
 		}
 
-		int countItem = 0;	
+	}
+
+	//乾電池のリポップ
+	void StageManager::RepopItem()
+	{
+		auto stage = GetStage();
+		auto objVec = stage->GetGameObjectVec();
+		auto delta = App::GetApp()->GetElapsedTime();
+		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
+
+		int countItem = 0;
 		int itemCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
 
 		//取得したオブジェクトが変換できたら配列に入れる
@@ -141,58 +223,24 @@ namespace basecross {
 				auto mapSize = stage->GetSharedGameObject<MapManager>(L"MapManager")->GetMapSize();
 				mapSize = mapSize;
 				float halfMapSize = mapSize / 2;
-				
+
 				//ランダムに出現する場所を決める
 				auto randX = (rand() % (int)mapSize) - halfMapSize;
 				auto randY = halfMapSize - (rand() % (int)mapSize);
 				Vec3 randVec = Vec3(randX, 0.0f, randY);
-				
+
 				//ランダムに決めた場所がアイテムがない場所なら出現させる
 				if (mapManager->SelMapNow(randVec) == mapManager->Map_None)
 				{
 					auto randSelVec = mapManager->ConvertSelMap(randVec);//セルマップに変える
 					auto popSelVec = mapManager->ConvertWorldMap(randSelVec);//ワールド座標に変換する
-					stage->AddGameObject<Item>(Vec3(popSelVec),Vec3(0.0f,0.0f,0.0f));//生成
+					stage->AddGameObject<Item>(Vec3(popSelVec), Vec3(0.0f, 0.0f, 0.0f));//生成
 					m_repopItemFlag = false;//フラグリセット
 				}
 
 			}
 		}
 
-	}
-
-	void StageManager::BGMChange()
-	{
-		auto stage = GetStage();
-		auto obj = stage->GetGameObjectVec();
-		auto EnemyTracking = 0;
-		//取得したオブジェクトがアイテムに変換できたら配列に入れる
-		for (auto enemy : obj)
-		{
-			auto enemycast = dynamic_pointer_cast<Enemy>(enemy);
-
-			if (enemycast)//Enemy型にキャストに成功したら
-			{
-				auto State = enemycast->GetNowState();//現在のステートを受け取る
-				auto trackcast = dynamic_pointer_cast<Tracking>(State);
-				if (trackcast)//現在のステートがトラッキング(追いかける処理)の時
-				{
-					EnemyTracking++;
-				}
-			}
-		}
-		m_BGMChase;//追いかける敵がいるか
-		if (EnemyTracking > 0)//追いかける敵が一人以上いるなら
-		{
-			m_BGMChase = true;
-		}
-		else
-		{
-			m_BGMChase = false;
-		}
-
-		
-		
 	}
 
 	void StageManager::OnDestroy()
@@ -216,6 +264,11 @@ namespace basecross {
 	void StageManager::SetPlayerKeyFlag(int flag)
 	{
 		m_PlayerKeyFlag = flag;
+	}
+	//repopEnemyPosのセッター
+	void StageManager::SetRepopEnemyPos(Vec3 pos)
+	{
+		m_repopEnemyPos.push_back(pos);
 	}
 }
 //end basecross

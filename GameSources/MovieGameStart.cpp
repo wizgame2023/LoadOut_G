@@ -7,8 +7,10 @@
 #include "Project.h"
 
 namespace basecross {
-	MovieGameStart::MovieGameStart(shared_ptr<Stage>& stagePtr) :
-		Movie(stagePtr)
+	MovieGameStart::MovieGameStart(shared_ptr<Stage>& stagePtr,float mapSize,float speed) :
+		Movie(stagePtr),
+		m_mapSize(mapSize),
+		m_speed(speed)
 	{
 
 	}
@@ -47,13 +49,13 @@ namespace basecross {
 	void MovieGameStart::OnUpdate()
 	{
 		auto cameraPos = m_movieCamera->GetEye();//カメラのポジションを取得
-		auto tagetPos = Vec3(0.0f, 0.0f, 50.0f);//目的地
+		auto tagetPos = Vec3(0.0f, 0.0f, m_mapSize/2);//目的地
 
 		if (m_count == 0)//処理①
 		{
 			if (cameraPos != tagetPos)//目的地とカメラの位置が同じでないなら
 			{
-				cameraPos += CameraMove(50, cameraPos, tagetPos);
+				cameraPos += CameraMove(m_speed, cameraPos, tagetPos);
 				m_movieCamera->SetEye(cameraPos);
 				if (abs(cameraPos.x - tagetPos.x) <= 5.8f && abs(cameraPos.z - tagetPos.z) <= 5.8f)//ほぼPosがターゲットののPosと一緒なら
 				{
@@ -108,7 +110,7 @@ namespace basecross {
 	//ムービー用のカメラに変更させる
 	void MovieGameStart::CameraChange()
 	{
-		float stageLenght = 100.0f;//ステージの直径
+		float stageLenght = m_mapSize;//ステージの直径
 		auto startPos = Vec3(0.0f, stageLenght, -stageLenght);//初期位置
 		m_StageView = GetStage()->GetView();
 		m_stageCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());//ステージ用のカメラを取得 なぜかこの関数が終わるとこの変数の中身が消えます

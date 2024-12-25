@@ -9,18 +9,20 @@
 namespace basecross{
 
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<Actor>& actorPtr, size_t Number) :
+		shared_ptr<Actor>& actorPtr, size_t Number,float pushY) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(Number),
-		m_textureName(L"Clear")
+		m_textureName(L"Clear"),
+		m_pushY(pushY)
 	{}
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<Actor>& actorPtr, wstring spriteName) :
+		shared_ptr<Actor>& actorPtr, wstring spriteName,float pushY) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(0),
-		m_textureName(spriteName)
+		m_textureName(spriteName),
+		m_pushY(pushY)
 	{}
 	BillBoard::~BillBoard() {}
 
@@ -32,7 +34,7 @@ namespace basecross{
 			auto SeekPtr = m_actor.lock();
 			auto SeekTransPtr = SeekPtr->GetComponent<Transform>();
 			auto Pos = SeekTransPtr->GetPosition();
-			Pos.y += 18.0f;
+			Pos.y += m_pushY;
 			PtrTransform->SetPosition(Pos);
 			PtrTransform->SetScale(3.0f, 3.0f, 3.0f);
 			PtrTransform->SetQuaternion(SeekTransPtr->GetQuaternion());
@@ -86,7 +88,7 @@ namespace basecross{
 
 			auto PtrTransform = GetComponent<Transform>();
 			auto Pos = SeekTransPtr->GetPosition();
-			Pos.y += 18.0f;
+			Pos.y += m_pushY;
 			PtrTransform->SetPosition(Pos);
 			PtrTransform->SetScale(3.0f, 3.0f, 3.0f);
 

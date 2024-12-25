@@ -171,10 +171,13 @@ namespace basecross {
 			{
 				//GetStage()->RemoveGameObject<Enemy>(enemy);//まだ敵をリムーブしない
 				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
+
+				auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
+				auto stageManager = GetStage()->GetSharedGameObject<StageManager>(L"StageManager");
+				stageManager->SetRepopEnemyPos(enemyStartPos);//上の初期位置をStageManagerに渡す
 
 				GetStage()->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
-				//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する(仮で敵は1人しかないから)
 
 			}
 			if (player)//プレイヤーなら

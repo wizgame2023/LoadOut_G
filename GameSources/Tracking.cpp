@@ -135,16 +135,6 @@ namespace basecross {
 		//	<< endl;
 		//scene->SetDebugString(wss.str());
 
-		//デバック用/////////////////////////////////////////////////////////////
-		// インプットデバイスオブジェクト
-		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
-		//コントローラーの取得
-		auto m_controler = inputDevice.GetControlerVec()[0];
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
-		{
-			auto test = 0;
-		}
-		////////////////////////////////////////////////////////////////////////
 
 	}
 	//追跡ステートの最後の処理
