@@ -73,7 +73,7 @@ namespace basecross{
 		MoveSwich(true);
 
 		//ビルボード生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<Actor>(), L"Clear");
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<Actor>(), L"Clear",12.0f);
 
 
 	}
@@ -135,7 +135,7 @@ namespace basecross{
 		////////////////////////////////////////////////////////////////////////
 
 
-		//デバック用
+		////デバック用
 		//wstringstream wss(L"");
 		//auto scene = App::GetApp()->GetScene<Scene>();
 		////auto gameStage = scene->GetGameStage();
