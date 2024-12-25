@@ -108,16 +108,6 @@ namespace basecross{
 
 		ManholeSet(pos);//マンホールの上にわなを仕掛ける処理
 
-		//デバック用でhpを減らす
-		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_Y)//Yボタンでhpを減らす
-		//{
-		//	m_hp -= 1;
-		//}
-		if (m_hp <= 0)//体力が0になったら
-		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバシーンに移動する
-		}
-
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
 		//もし鍵を持っているなら脱出できる
@@ -135,10 +125,15 @@ namespace basecross{
 			}
 		}
 
-		//アニメーション
-		//GetComponent<PNTBoneModelDraw>()->UpdateAnimation(Delta);
-
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
+
+		//デバック用/////////////////////////////////////////////////////////////
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)//Aボタンを押したとき
+		{
+			auto test = 0;
+		}
+		////////////////////////////////////////////////////////////////////////
+
 
 		//デバック用
 		//wstringstream wss(L"");
