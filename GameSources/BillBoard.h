@@ -17,6 +17,8 @@ namespace basecross{
 
 		wstring m_textureName;
 
+		float m_pushY;
+
 		Quat Billboard(const Vec3& Line)
 		{
 			Vec3 Temp = Line;
@@ -38,9 +40,9 @@ namespace basecross{
 	public:
 		//\’z‚Æ”jŠü
 		BillBoard(const shared_ptr<Stage>& StagePtr,
-			shared_ptr<Actor>& actorPtr, size_t Number);
+			shared_ptr<Actor>& actorPtr, size_t Number,float pushY = 18.0f);
 		BillBoard(const shared_ptr<Stage>& StagePtr,
-			shared_ptr<Actor>& actorPtr, wstring spriteName);
+			shared_ptr<Actor>& actorPtr, wstring spriteName, float pushY = 18.0f);
 		virtual ~BillBoard();
 		//‰Šú‰»
 		virtual void OnCreate() override;
