@@ -39,7 +39,6 @@ namespace basecross {
 		BGMChange();
 		auto stage = GetStage();
 		auto objVec = stage->GetGameObjectVec();
-		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
 		auto delta = App::GetApp()->GetElapsedTime();
 
 		//追いかけられているなら追いかけられているBGM
@@ -105,60 +104,8 @@ namespace basecross {
 			}
 		}
 
-		int countItem = 0;	
-		int itemCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
-
-		//取得したオブジェクトが変換できたら配列に入れる
-		if (!m_repopItemFlag)//リポップする条件を満たしいない限り見る
-		{
-			for (auto item : objVec)
-			{
-				//ハッチの上に柱上のエフェクトを表示させる
-				auto castItem = dynamic_pointer_cast<Item>(item);
-				if (castItem)//ハッチ型にキャストする
-				{
-					countItem++;
-				}
-			}
-			//ステージ上に一定数のアイテム数より下回っているならフラグをオンにする			
-			if (countItem < itemCountMax)
-			{
-				m_repopItemFlag = true;
-			}
-		}
-
-		//ステージ上に一定数のアイテム数より下回っているならアイテムがポップする
-		if (m_repopItemFlag)
-		{
-			m_repopItemCountTime += delta;//時間経過
-			auto m_repopItemCountTimeMax = 5.0f;//リポップする時間
-
-			//クールタイム過ぎたら生成する,クールタイムの時間は調整必須
-			if (m_repopItemCountTime >= m_repopItemCountTimeMax)
-			{
-				m_repopItemCountTime = 0.0f;//クールタイムリセット
-
-				auto mapSize = stage->GetSharedGameObject<MapManager>(L"MapManager")->GetMapSize();
-				mapSize = mapSize;
-				float halfMapSize = mapSize / 2;
-				
-				//ランダムに出現する場所を決める
-				auto randX = (rand() % (int)mapSize) - halfMapSize;
-				auto randY = halfMapSize - (rand() % (int)mapSize);
-				Vec3 randVec = Vec3(randX, 0.0f, randY);
-				
-				//ランダムに決めた場所がアイテムがない場所なら出現させる
-				if (mapManager->SelMapNow(randVec) == mapManager->Map_None)
-				{
-					auto randSelVec = mapManager->ConvertSelMap(randVec);//セルマップに変える
-					auto popSelVec = mapManager->ConvertWorldMap(randSelVec);//ワールド座標に変換する
-					stage->AddGameObject<Item>(Vec3(popSelVec),Vec3(0.0f,0.0f,0.0f));//生成
-					m_repopItemFlag = false;//フラグリセット
-				}
-
-			}
-		}
-
+		//アイテムのリポップ処理
+		RepopItem();
 
 		//敵のリポップ処理
 		RepopEnemy();
@@ -210,13 +157,77 @@ namespace basecross {
 		{
 			m_repopEnemyCountTime += delta;
 			//クールタイム過ぎたら敵がリポップする
-			if (m_repopEnemyCountTime >= 5.0f)
+			if (m_repopEnemyCountTime >= 30.0f)
 			{
 				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]);//リポップ
 				m_repopEnemyCountTime = 0;//カウントリセット
 				m_repopEnemyPos.erase(m_repopEnemyPos.begin());//生成した物は配列から削除する
 			}
 		}
+	}
+
+	//乾電池のリポップ
+	void StageManager::RepopItem()
+	{
+		auto stage = GetStage();
+		auto objVec = stage->GetGameObjectVec();
+		auto delta = App::GetApp()->GetElapsedTime();
+		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
+
+		int countItem = 0;
+		int itemCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
+
+		//取得したオブジェクトが変換できたら配列に入れる
+		if (!m_repopItemFlag)//リポップする条件を満たしいない限り見る
+		{
+			for (auto item : objVec)
+			{
+				//ハッチの上に柱上のエフェクトを表示させる
+				auto castItem = dynamic_pointer_cast<Item>(item);
+				if (castItem)//ハッチ型にキャストする
+				{
+					countItem++;
+				}
+			}
+			//ステージ上に一定数のアイテム数より下回っているならフラグをオンにする			
+			if (countItem < itemCountMax)
+			{
+				m_repopItemFlag = true;
+			}
+		}
+
+		//ステージ上に一定数のアイテム数より下回っているならアイテムがポップする
+		if (m_repopItemFlag)
+		{
+			m_repopItemCountTime += delta;//時間経過
+			auto m_repopItemCountTimeMax = 5.0f;//リポップする時間
+
+			//クールタイム過ぎたら生成する,クールタイムの時間は調整必須
+			if (m_repopItemCountTime >= m_repopItemCountTimeMax)
+			{
+				m_repopItemCountTime = 0.0f;//クールタイムリセット
+
+				auto mapSize = stage->GetSharedGameObject<MapManager>(L"MapManager")->GetMapSize();
+				mapSize = mapSize;
+				float halfMapSize = mapSize / 2;
+
+				//ランダムに出現する場所を決める
+				auto randX = (rand() % (int)mapSize) - halfMapSize;
+				auto randY = halfMapSize - (rand() % (int)mapSize);
+				Vec3 randVec = Vec3(randX, 0.0f, randY);
+
+				//ランダムに決めた場所がアイテムがない場所なら出現させる
+				if (mapManager->SelMapNow(randVec) == mapManager->Map_None)
+				{
+					auto randSelVec = mapManager->ConvertSelMap(randVec);//セルマップに変える
+					auto popSelVec = mapManager->ConvertWorldMap(randSelVec);//ワールド座標に変換する
+					stage->AddGameObject<Item>(Vec3(popSelVec), Vec3(0.0f, 0.0f, 0.0f));//生成
+					m_repopItemFlag = false;//フラグリセット
+				}
+
+			}
+		}
+
 	}
 
 	void StageManager::OnDestroy()

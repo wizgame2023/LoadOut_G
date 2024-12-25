@@ -35,7 +35,9 @@ namespace basecross {
 
 		void BGMChange();//BGMの変更処理
 		void OnDestroy()override;//削除されたときの処理
+
 		void RepopEnemy();//Enemyのリポップ処理
+		void RepopItem();//乾電池のリポップ処理
 
 		void SetClearFlag(bool flag);//セッター
 		void SetGameOverFlag(bool flag);//セッター
