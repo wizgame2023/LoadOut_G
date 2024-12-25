@@ -53,23 +53,22 @@ namespace basecross {
 		//マップマネージャーの生成
 		auto mapManager = AddGameObject<MapManager>(L"Stage01/");
 		SetSharedGameObject(L"MapManager", mapManager);
+		auto mapSize = mapManager->GetMapSize();
 
-		auto collisionManager = AddGameObject<StageCollisionManager>();//コリジョンマネージャー作成
-		SetSharedGameObject(L"CollsionManager", collisionManager);
+        //コリジョンマネージャー作成
+		auto collisionManager = AddGameObject<StageCollisionManager>();
+		SetSharedGameObject(L"CollsionManager", collisionManager);		
+		
+		//ステージマネージャー生成
+		auto stageManager = AddGameObject<StageManager>();
+		SetSharedGameObject(L"StageManager", stageManager);
+
+		//ミニマップマネージャ生成
+		m_miniMapManager = AddGameObject<MiniMapManager>(mapSize);
+		SetSharedGameObject(L"MiniMapManager", m_miniMapManager);
 
 		//床の作成
 		AddGameObject<Ground>();
-
-		m_miniMapManager = AddGameObject<MiniMapManager>(100);//ミニマップ生成デバック用
-		SetSharedGameObject(L"MiniMapManager", m_miniMapManager);
-
-		//ブロックの作成
-		for (int i = 0; i < 20; i++)
-		{
-			//AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
-
-		}
-
 
 		//アイテムの生成//stage20
 		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
@@ -85,19 +84,6 @@ namespace basecross {
 		//Playerの生成
 		CreatePlayer();
 
-
-		//壁の生成
-		//AddGameObject<Wall>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(20.0f,20.0f,20.0f));
-
-		//マンホールの生成
-		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
-
-		//ステージマネージャー生成
-		auto stageManager = AddGameObject<StageManager>();
-		SetSharedGameObject(L"StageManager", stageManager);
-
-		//OutWallCreate(20);//外壁生成
-
 		//敵生成stage20
 		//auto enemy = AddGameObject<Enemy>();
 		//enemy->AddTag(L"Key");//鍵を持っていることにする
@@ -105,9 +91,9 @@ namespace basecross {
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
 		CreateEnemy();
-
-		AddGameObject<MovieGameStart>();
 		m_miniMapManager->CreateEnemy();
+
+		AddGameObject<MovieGameStart>(mapSize);//ムービー生成
 	}
 
 	void GameStage::OnUpdate()
