@@ -159,6 +159,9 @@ namespace basecross {
 			}
 		}
 
+
+		//敵のリポップ処理
+		RepopEnemy();
 	}
 
 	void StageManager::BGMChange()
@@ -195,6 +198,27 @@ namespace basecross {
 		
 	}
 
+	//Enemyのリポップ装置
+	void StageManager::RepopEnemy()
+	{
+		auto delta = App::GetApp()->GetElapsedTime();
+		auto repopSize = m_repopEnemyPos.size();
+		auto stage = GetStage();
+
+		//生成する物が１以上あったら生成する
+		if (repopSize > 0)
+		{
+			m_repopEnemyCountTime += delta;
+			//クールタイム過ぎたら敵がリポップする
+			if (m_repopEnemyCountTime >= 5.0f)
+			{
+				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]);//リポップ
+				m_repopEnemyCountTime = 0;//カウントリセット
+				m_repopEnemyPos.erase(m_repopEnemyPos.begin());//生成した物は配列から削除する
+			}
+		}
+	}
+
 	void StageManager::OnDestroy()
 	{
 		auto BGM = App::GetApp()->GetXAudio2Manager();
@@ -216,6 +240,11 @@ namespace basecross {
 	void StageManager::SetPlayerKeyFlag(int flag)
 	{
 		m_PlayerKeyFlag = flag;
+	}
+	//repopEnemyPosのセッター
+	void StageManager::SetRepopEnemyPos(Vec3 pos)
+	{
+		m_repopEnemyPos.push_back(pos);
 	}
 }
 //end basecross
