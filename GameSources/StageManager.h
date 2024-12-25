@@ -34,6 +34,7 @@ namespace basecross {
 		void OnUpdate()override;
 
 		void BGMChange();//BGMの変更処理
+		void EnemyStateCheck();
 		void OnDestroy()override;//削除されたときの処理
 
 		void RepopEnemy();//Enemyのリポップ処理

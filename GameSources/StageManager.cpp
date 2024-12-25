@@ -36,7 +36,7 @@ namespace basecross {
 
 	void StageManager::OnUpdate()
 	{
-		BGMChange();
+		EnemyStateCheck();//敵が追いかけてきてるか確認する
 		auto stage = GetStage();
 		auto objVec = stage->GetGameObjectVec();
 		auto delta = App::GetApp()->GetElapsedTime();
@@ -111,7 +111,8 @@ namespace basecross {
 		RepopEnemy();
 	}
 
-	void StageManager::BGMChange()
+	//追いかけてくる敵がいるか確認する関数
+	void StageManager::EnemyStateCheck()
 	{
 		auto stage = GetStage();
 		auto obj = stage->GetGameObjectVec();
