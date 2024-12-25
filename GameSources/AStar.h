@@ -25,6 +25,7 @@ namespace basecross {
 		void OnUpdate() override;//更新
 
 		vector<Vec3> RouteSearch(Vec3 startPos,Vec3 goalPos);//経路探査
+		void MoveActor(shared_ptr<Actor> actor,vector<Vec3> routePos,int& routeCount,float speed);//移動処理
 		bool LookAround(shared_ptr<Node> parent, Vec2 goalPos);//周りを確認する処理
 	};
 

@@ -212,6 +212,48 @@ namespace basecross {
 		return false;
 	}
 
+	//AStar用の移動処理
+	void AStar::MoveActor(shared_ptr<Actor> actor, vector<Vec3> routePos,int& routeCount,float speed)
+	{
+		auto trans = actor->GetComponent<Transform>();
+		auto pos = trans->GetPosition();
+
+		if (routePos.size() > 2&&routeCount == 0)
+		{
+			auto one = routePos[0];
+			auto two = routePos[1];
+			//現在地が１番目よりも、２番目の距離に近かったら１番目の移動処理を無視する
+			if (abs(two.x - pos.x) + abs(two.z - pos.z) <= abs(two.x - one.x) + abs(two.z - one.z))
+			{
+				routeCount++;
+			}
+
+		}
+
+		//目的地に移動したとみなす
+		if (abs(pos.x - routePos[routeCount].x) <= 1.0f && abs(pos.z - routePos[routeCount].z) <= 1.0f)
+		{
+			pos = routePos[routeCount];
+			trans->SetPosition(pos);//所有者(Enemy)のポジションの更新
+			if (routeCount < routePos.size() - 1)//この先に進まないといけない先がある場合
+			{
+				routeCount++;//目的地を変える
+			}
+		}
+		auto delta = App::GetApp()->GetElapsedTime();
+
+		//回転を進む方向に合わせる
+		Math math;	
+		auto rot = trans->GetRotation();
+		auto angle = math.GetAngle(pos, routePos[routeCount]);
+		rot.y = angle;
+		trans->SetRotation(rot);
+
+		//移動処理
+		pos.x += -sin(angle) * speed * delta;
+		pos.z += -cos(angle) * speed * delta;
+		trans->SetPosition(pos);
+	}
 
 }
 //end basecross
