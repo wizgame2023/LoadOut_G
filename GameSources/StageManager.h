@@ -40,6 +40,8 @@ namespace basecross {
 		void RepopEnemy();//Enemyのリポップ処理
 		void RepopItem();//乾電池のリポップ処理
 
+		void KeyEvent();//鍵関係のイベント
+
 		void SetClearFlag(bool flag);//セッター
 		void SetGameOverFlag(bool flag);//セッター
 		void SetPlayerKeyFlag(int flag);//セッター

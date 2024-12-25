@@ -41,27 +41,11 @@ namespace basecross {
 		auto objVec = stage->GetGameObjectVec();
 		auto delta = App::GetApp()->GetElapsedTime();
 
-		//追いかけられているなら追いかけられているBGM
-		if (m_BGMChase&&m_BGMhow !=1)
-		{
-			m_BGMhow = 1;
-			m_bgmManager->Stop(m_BGM);
-			//BGM
-			m_bgmManager = App::GetApp()->GetXAudio2Manager();
-			m_BGM = m_bgmManager->Start(L"Tracking", XAUDIO2_LOOP_INFINITE, 0.9f);
-			auto test = 0;
-		}
-		//追いかけられていなければ普通のBGM
-		if (!m_BGMChase&&m_BGMhow !=2)
-		{
-			m_BGMhow = 2;
-			m_bgmManager->Stop(m_BGM);
-			//BGM
-			m_bgmManager = App::GetApp()->GetXAudio2Manager();
-			m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
-
-		}
-
+		BGMChange();//BGMを変更する処理
+		KeyEvent();//鍵関連のイベント
+		RepopItem();//アイテムのリポップ処理
+		RepopEnemy();//敵のリポップ処理		
+		
 		//ゲームクリアのフラグが立ったら
 		if (m_ClearFlag)
 		{
@@ -73,42 +57,31 @@ namespace basecross {
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバーに移動する
 		}
 
-		//もし、Playerが鍵を入手したら
-		if (m_PlayerKeyFlag == 1)
+	}
+
+	//BGMを変更する処理
+	void StageManager::BGMChange()
+	{
+		//追いかけられているなら追いかけられているBGM
+		if (m_BGMChase && m_BGMhow != 1)
 		{
-			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
-
-			//取得したオブジェクトが変換できたら配列に入れる
-			for (auto hatch : objVec)
-			{			
-				//ハッチの上に柱上のエフェクトを表示させる
-				auto castHatch = dynamic_pointer_cast<Hatch>(hatch);
-				if (castHatch)//ハッチ型にキャストする
-				{
-					auto hatchTrans = castHatch->GetComponent<Transform>();
-					auto hatchPos = hatchTrans->GetPosition();
-
-					//筒のエフェクト追加
-					GetStage()->AddGameObject<PillarEffect>(hatchPos, L"Escape", Vec2(0.0f, 0.5f), 36);
-
-				}
-				auto castPlayer = dynamic_pointer_cast<Player>(hatch);
-				if (castPlayer)//プレイヤーにキャスト出来たら
-				{
-					auto playerTrans = castPlayer->GetComponent<Transform>();
-					auto playerPos = playerTrans->GetPosition();
-
-					//鍵の板ポリを表示
-				}
-
-			}
+			m_BGMhow = 1;
+			m_bgmManager->Stop(m_BGM);
+			//BGM
+			m_bgmManager = App::GetApp()->GetXAudio2Manager();
+			m_BGM = m_bgmManager->Start(L"Tracking", XAUDIO2_LOOP_INFINITE, 0.9f);
+			auto test = 0;
 		}
+		//追いかけられていなければ普通のBGM
+		if (!m_BGMChase && m_BGMhow != 2)
+		{
+			m_BGMhow = 2;
+			m_bgmManager->Stop(m_BGM);
+			//BGM
+			m_bgmManager = App::GetApp()->GetXAudio2Manager();
+			m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
 
-		//アイテムのリポップ処理
-		RepopItem();
-
-		//敵のリポップ処理
-		RepopEnemy();
+		}
 	}
 
 	//追いかけてくる敵がいるか確認する関数
@@ -165,6 +138,45 @@ namespace basecross {
 				m_repopEnemyPos.erase(m_repopEnemyPos.begin());//生成した物は配列から削除する
 			}
 		}
+	}
+
+	//鍵関係のイベント
+	void StageManager::KeyEvent()
+	{
+		auto stage = GetStage();
+		auto objVec = stage->GetGameObjectVec();
+
+		//もし、Playerが鍵を入手したら
+		if (m_PlayerKeyFlag == 1)
+		{
+			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
+
+			//取得したオブジェクトが変換できたら配列に入れる
+			for (auto hatch : objVec)
+			{
+				//ハッチの上に柱上のエフェクトを表示させる
+				auto castHatch = dynamic_pointer_cast<Hatch>(hatch);
+				if (castHatch)//ハッチ型にキャストする
+				{
+					auto hatchTrans = castHatch->GetComponent<Transform>();
+					auto hatchPos = hatchTrans->GetPosition();
+
+					//筒のエフェクト追加
+					GetStage()->AddGameObject<PillarEffect>(hatchPos, L"Escape", Vec2(0.0f, 0.5f), 36);
+
+				}
+				auto castPlayer = dynamic_pointer_cast<Player>(hatch);
+				if (castPlayer)//プレイヤーにキャスト出来たら
+				{
+					auto playerTrans = castPlayer->GetComponent<Transform>();
+					auto playerPos = playerTrans->GetPosition();
+
+					//鍵の板ポリを表示
+				}
+
+			}
+		}
+
 	}
 
 	//乾電池のリポップ
