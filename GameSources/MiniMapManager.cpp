@@ -45,6 +45,7 @@ namespace basecross {
 	void MiniMapManager::OnUpdate()
 	{
 		UpdateItem();
+		UpdateEnemy();
 	}
 
 	//ミニマップ用の壁を生成
@@ -119,6 +120,47 @@ namespace basecross {
 		m_beforeItemNum = itemNumNow;//更新する
 	}
 
+	//ミニマップの敵表示(Update版)
+	void MiniMapManager::UpdateEnemy()
+	{
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto objVec = stage->GetGameObjectVec();
+		int enemyNumNow = 0;
+		//ステージにあるアイテムの数をカウントする
+		for (auto enemy : objVec)
+		{
+			auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
+			if (castEnemy)//アイテム型にキャストする
+			{
+				enemyNumNow++;
+			}
+		}
+
+		//今あるアイテムの数が前よりも多かったらミニマップのアイテムの表示を更新する
+		if (enemyNumNow > m_beforeEnemyNum)
+		{
+			//ミニマップにあるアイテムをリセットする
+			for (auto sprite : objVec)
+			{
+				auto castsprite = dynamic_pointer_cast<MiniMapActor>(sprite);
+				if (castsprite)//キャストする
+				{
+					//タグがMiniMapItem
+					if (castsprite->FindTag(L"MiniMapEnemy"))
+					{
+						castsprite->MyDestroy();//自分自身を消去する
+					}
+				}
+			}
+			//再生成する
+			CreateEnemy();
+		}
+
+		m_beforeEnemyNum = enemyNumNow;//更新する
+	}
+
+
 	//ミニマップ用のマンホールを作成
 	void MiniMapManager::CreateManhole()
 	{
@@ -148,6 +190,8 @@ namespace basecross {
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
 		auto obj = stage->GetGameObjectVec();
+		int count = 0;//生成したミニマップのEnemyの数を数える
+
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto manhole : obj)
 		{
@@ -160,9 +204,14 @@ namespace basecross {
 				auto itemPos = itemTrans->GetPosition();
 				auto itemScale = itemTrans->GetScale();
 
-				stage->AddGameObject<MiniMapActor>(castEnemy, L"MiniEnemy", Vec2((itemScale.x / m_mapMagnification) * 3, (itemScale.z / m_mapMagnification) * 3), m_startPos, m_mapSize, Lenght);
+				auto sprite = stage->AddGameObject<MiniMapActor>(castEnemy, L"MiniEnemy", Vec2((itemScale.x / m_mapMagnification) * 3, (itemScale.z / m_mapMagnification) * 3), m_startPos, m_mapSize, Lenght);
+				sprite->AddTag(L"MiniMapEnemy");//タグ追加
+				count++;
+
 			}
 		}
+
+		m_beforeEnemyNum = count;//生成したミニマップのEnemyの数を渡す
 
 	}
 
