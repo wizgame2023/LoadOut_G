@@ -92,9 +92,7 @@ namespace basecross {
 		//マンホールの生成
 		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
 
-		//BGM
-		//m_bgmManager = App::GetApp()->GetXAudio2Manager();
-		//m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+		//ステージマネージャー生成
 		auto stageManager = AddGameObject<StageManager>();
 		SetSharedGameObject(L"StageManager", stageManager);
 
@@ -206,7 +204,5 @@ namespace basecross {
 	{
 		EnemyNow -= num;
 	}
-
-
 }
 //end basecross
