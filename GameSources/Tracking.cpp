@@ -11,6 +11,8 @@ namespace basecross {
 	//追跡ステートの最初の処理
 	void Tracking::OnStart()
 	{
+		//m_aStar->RouteSearch(m_ownerPos)
+		//m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//マップマネージャー取得
 	}
 
 	//追跡ステートの更新処理
@@ -34,16 +36,18 @@ namespace basecross {
 		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
 
 		//A*の処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//マップマネージャー取得
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
-		if (playerAStarPos != m_beforPlayerAStar)
+		if (playerAStarPos != m_beforPlayerUnity)
 		{
 			m_ownerPos;
 
 			m_unityMap.clear();
 			m_roodCount = 0;
-			m_beforPlayerAStar = playerAStarPos;
+			m_beforPlayerUnity = playerAStarPos;
 			//MoveCost();
-			m_tagetRootPos = AStar();
+			//m_tagetRootPos = RouteSearch();//経路探査してる
+			m_tagetRootPos = m_aStar->RouteSearch(m_ownerPos,m_playerPos);
 			if (m_tagetRootPos.size() >= 2)
 			{
 				auto one = m_tagetRootPos[0];
@@ -101,7 +105,7 @@ namespace basecross {
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		Vec3 pos = m_ownerPos;
 		Vec3 playerPos = m_playerPos;
-		auto AStar = mapMgr->GetUnityMap();
+		auto RouteSearch = mapMgr->GetUnityMap();
 		auto sellPos = mapMgr->ConvertSelMap(pos);
 		auto AStarPos = mapMgr->ConvertUnityMap(sellPos);
 
@@ -131,16 +135,6 @@ namespace basecross {
 		//	<< endl;
 		//scene->SetDebugString(wss.str());
 
-		//デバック用/////////////////////////////////////////////////////////////
-		// インプットデバイスオブジェクト
-		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
-		//コントローラーの取得
-		auto m_controler = inputDevice.GetControlerVec()[0];
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
-		{
-			auto test = 0;
-		}
-		////////////////////////////////////////////////////////////////////////
 
 	}
 	//追跡ステートの最後の処理
@@ -149,6 +143,7 @@ namespace basecross {
 
 	}
 
+	//使わない処理です消します
 	void Tracking::nextSelLook(int right,int left,int up,int down,Vec2 enemyAStarPos,Vec2 playerAStarPos)
 	{
 
@@ -212,20 +207,20 @@ namespace basecross {
 		}
 	}
 
-	vector<Vec3> Tracking::AStar()
+	vector<Vec3> Tracking::RouteSearch()
 	{		
 		vector<Vec2> aStarRood;//移動遷移
 
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		
 
-		m_aStarMapCSV = mapManager->GetUnityMap();//AStarマップ取得
+		m_unityMapCSV = mapManager->GetUnityMap();//AStarマップ取得
 		//vector<vector<shared_ptr<Node>>> aStarMap;//マップのノード配列
 		vector<shared_ptr<Node>> aStarMapline;
 		//AStarマップの配列と同じ配列の大きさのノードを作る
-		for (int y=0; y < m_aStarMapCSV.size(); y++)
+		for (int y=0; y < m_unityMapCSV.size(); y++)
 		{
-			for (int x=0; x < m_aStarMapCSV[0].size(); x++)
+			for (int x=0; x < m_unityMapCSV[0].size(); x++)
 			{
 				aStarMapline.push_back(make_shared<Node>(Node(x, y, Status_None, 999, 999, 999, NULL)));
 			}
@@ -251,7 +246,6 @@ namespace basecross {
 		auto lookCost = m_unityMap[originPos.y][originPos.x]->Cost = cost++;//コストの変数まだ作ってない
 		auto lookHCost = m_unityMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
 		m_unityMap[originPos.y][originPos.x]->Score = lookCost + lookHCost;
-
 
 		//経路が見つかるまでループする
 		while (!root)
@@ -280,10 +274,6 @@ namespace basecross {
 				}
 			}
 
-
-			auto a = 0;
-			//m_unityMap[originPos.y][originPos.x]->Status = Status_Closed;//閉じる
-			//cost++;
 		}
 
 		//ルートが見つかったらどう進めばいいかを伝える
@@ -328,7 +318,7 @@ namespace basecross {
 				//配列の範囲外なら確認しない
 				if ((lookY < 0 || lookY >= (m_unityMap.size())) || (lookX < 0 || lookX >= (m_unityMap.size()))) continue;
 				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
-				if (m_aStarMapCSV[lookY][lookX] == 1 || m_unityMap[lookY][lookX]->Status == Status_Closed) continue;
+				if (m_unityMapCSV[lookY][lookX] == 1 || m_unityMap[lookY][lookX]->Status == Status_Closed) continue;
 
 				//壁を確認したので床のマスに対して評価する//////////////////////////////////////////////////////////////////////
 				lookX = (pushx * 2) + originPos.x;
@@ -398,14 +388,14 @@ namespace basecross {
 	//	Vec3 pos = m_ownerPos;
 	//	Vec3 playerPos = m_playerPos;
 	//	Vec3 direction;
-	//	auto AStar = mapMgr->GetUnityMap();//A*のマップ配列取得
+	//	auto RouteSearch = mapMgr->GetUnityMap();//A*のマップ配列取得
 	//	auto sellPos = mapMgr->ConvertSelMap(pos);//Enemyの位置をセル座標に変更
 	//	auto AStarPos = mapMgr->ConvertUnityMap(sellPos);//セル座標からAStar座標に変更
 
-	//	auto rightAStar = AStar[AStarPos.y][AStarPos.x + 1];
-	//	auto leftAStar = AStar[AStarPos.y][AStarPos.x - 1];
-	//	auto fodAStar = AStar[AStarPos.y - 1][AStarPos.x];
-	//	auto downAStar = AStar[AStarPos.y + 1][AStarPos.x];
+	//	auto rightAStar = RouteSearch[AStarPos.y][AStarPos.x + 1];
+	//	auto leftAStar = RouteSearch[AStarPos.y][AStarPos.x - 1];
+	//	auto fodAStar = RouteSearch[AStarPos.y - 1][AStarPos.x];
+	//	auto downAStar = RouteSearch[AStarPos.y + 1][AStarPos.x];
 
 
 	//	auto rightASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x + 2, AStarPos.y));

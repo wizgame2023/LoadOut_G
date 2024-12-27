@@ -53,23 +53,22 @@ namespace basecross {
 		//マップマネージャーの生成
 		auto mapManager = AddGameObject<MapManager>(L"Stage01/");
 		SetSharedGameObject(L"MapManager", mapManager);
+		auto mapSize = mapManager->GetMapSize();
 
-		auto collisionManager = AddGameObject<StageCollisionManager>();//コリジョンマネージャー作成
-		SetSharedGameObject(L"CollsionManager", collisionManager);
+        //コリジョンマネージャー作成
+		auto collisionManager = AddGameObject<StageCollisionManager>();
+		SetSharedGameObject(L"CollsionManager", collisionManager);		
+		
+		//ステージマネージャー生成
+		auto stageManager = AddGameObject<StageManager>();
+		SetSharedGameObject(L"StageManager", stageManager);
+
+		//ミニマップマネージャ生成
+		m_miniMapManager = AddGameObject<MiniMapManager>(mapSize);
+		SetSharedGameObject(L"MiniMapManager", m_miniMapManager);
 
 		//床の作成
 		AddGameObject<Ground>();
-
-		auto miniMapManager = AddGameObject<MiniMapManager>(100);//ミニマップ生成デバック用
-		SetSharedGameObject(L"MiniMapManager", miniMapManager);
-
-		//ブロックの作成
-		for (int i = 0; i < 20; i++)
-		{
-			//AddGameObject<Block>(Vec3(-95.0f+(i*10), 5.0f, 95.0f), Vec3(0.0f, 0.0f, 0.0f));
-
-		}
-
 
 		//アイテムの生成//stage20
 		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
@@ -78,56 +77,77 @@ namespace basecross {
 		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//stage01
-		AddGameObject<Item>(Vec3(-5.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-35.0f, 2.5f, -5.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-5.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(45.0f, 2.5f, -15.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-45.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		CreateItem();//アイテムの生成
 
-		miniMapManager->CreateItem();
+		m_miniMapManager->CreateItem();
+
 		//Playerの生成
-		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		SetSharedGameObject(L"Player", player);
-		miniMapManager->CreatePlayer();
-
-
-		//壁の生成
-		//AddGameObject<Wall>(Vec3(0.0f, 5.0f, 0.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),Vec3(20.0f,20.0f,20.0f));
-
-		//マンホールの生成
-		//AddGameObject<Manhole>(Vec3(20.0f, 4.0f, 10.0f));
-
-		//BGM
-		//m_bgmManager = App::GetApp()->GetXAudio2Manager();
-		//m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
-		auto stageManager = AddGameObject<StageManager>();
-		SetSharedGameObject(L"StageManager", stageManager);
-
-		//OutWallCreate(20);//外壁生成
+		CreatePlayer();
 
 		//敵生成stage20
 		//auto enemy = AddGameObject<Enemy>();
 		//enemy->AddTag(L"Key");//鍵を持っていることにする
-		//AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(enemy),0);
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
-		
-		//stage01
-		auto enemy = AddGameObject<Enemy>(Vec3(-25.0f, 2.5f, -35.0f));
-		enemy->AddTag(L"Key");//鍵を持っていることにする
-		AddGameObject<Enemy>(Vec3(5.0f, 2.5f, 45.0f));
+		CreateEnemy();
+		m_miniMapManager->CreateEnemy();
 
-
-		AddGameObject<MovieGameStart>();
-		miniMapManager->CreateEnemy();
+		AddGameObject<MovieGameStart>(mapSize);//ムービー生成
 	}
 
 	void GameStage::OnUpdate()
 	{
 	}
 
+	//Player生成
+	void GameStage::CreatePlayer()
+	{
+		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		SetSharedGameObject(L"Player", player);
+		m_miniMapManager->CreatePlayer();
+	}
+
+	//Enemy生成
+	void GameStage::CreateEnemy()
+	{
+		vector<shared_ptr<Enemy>>enemyVec;
+		vector<Vec3> posVec =
+		{
+			Vec3(-25.0f, 2.5f, -35.0f),
+			Vec3(5.0f, 2.5f, 45.0f)
+		};
+		auto test = posVec.size();
+
+		for (int i = 0; i < posVec.size(); i++)
+		{
+			auto enemy = AddGameObject<Enemy>(posVec[i]);
+			enemyVec.push_back(enemy);
+		}
+		enemyVec[0]->AddTag(L"Key");//鍵を持っていることにする
+	}
+
+	//アイテム生成
+	void GameStage::CreateItem()
+	{
+		vector<Vec3> posVec =
+		{
+		   Vec3(-5.0f, 2.5f, -15.0f),//1
+		   Vec3(-35.0f, 2.5f, -5.0f),//2
+		   Vec3(-5.0f, 2.5f, 25.0f), //3
+		   Vec3(45.0f, 2.5f, -15.0f),//4
+		   Vec3(-45.0f, 2.5f, -45.0f)//5
+		};
+		auto test = posVec.size();
+
+		for (int i = 0; i < posVec.size(); i++)
+		{
+			AddGameObject<Item>(posVec[i], Vec3(0.0f, 0.0f, 0.0f));
+		}
+
+	}
+
+	//敵がどれくらい追いかけてくるか確認する
 	int GameStage::GameEnemyState()
 	{
 		auto obj = GetGameObjectVec();
@@ -151,34 +171,6 @@ namespace basecross {
 		return EnemyTracking;//どのくらいの数の敵が追いかける処理をしているのか渡す
 	}
 
-	//ゲームの進行を管理する後々関数ではなくクラスにします
-	void GameStage::GameManager()
-	{
-		////ゲームクリアの条件
-		////ステージのオブジェクトを全て取得
-		//auto obj = GetGameObjectVec();
-		//EnemyNow = 0;
-		////取得したオブジェクトがアイテムに変換できたら配列に入れる
-		//for (auto manhole : obj)
-		//{
-
-		//	if (dynamic_pointer_cast<Enemy>(manhole))//アイテム型にキャストする
-		//	{
-
-		//		auto a = 0;
-		//		a++;
-		//		EnemyNow = a;
-
-		//	}
-		//}
-
-		//if (EnemyNow == 0)
-		//{
-		//	//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
-		//}
-
-	}
-
 	void GameStage::OnDestroy()
 	{
 		auto BGM = App::GetApp()->GetXAudio2Manager();
@@ -198,7 +190,5 @@ namespace basecross {
 	{
 		EnemyNow -= num;
 	}
-
-
 }
 //end basecross

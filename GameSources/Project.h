@@ -11,6 +11,7 @@
 #include"RaySphere.h";//レイの当たり判定
 #include"Ray.h";//レイ
 #include"MathTools.h";//数学計算用ツール
+#include"AStar.h";//経路探査処理
 
 //ステート用
 #include"State.h"//ステートの親クラス
@@ -66,6 +67,7 @@
 #include"UIManager.h";//UIマネージャー
 #include"StageManager.h"
 #include"StageCollisionManager.h"//コリジョン管理
+#include"NumberManager.h"
 
 //カメラ用
 #include"MyCamera.h"//追尾カメラ用

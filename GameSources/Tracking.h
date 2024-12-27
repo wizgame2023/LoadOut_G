@@ -52,13 +52,15 @@ namespace basecross {
 
 
 		//AStarMapの情報を入れる配列
-		vector<vector<VecAStarIndex>> m_aStarMapDeta;
+		vector<vector<VecAStarIndex>> m_unityMapDeta;
 
 		//前のPlayerのAStar座標
-		Vec2 m_beforPlayerAStar;
+		Vec2 m_beforPlayerUnity;
 
 		vector<vector<shared_ptr<Node>>> m_unityMap;//マップのノード配列
-		vector<vector<int>> m_aStarMapCSV;//AStarMapのCSVデータ
+		vector<vector<int>> m_unityMapCSV;//AStarMapのCSVデータ
+
+		shared_ptr<AStar> m_aStar;//経路探査の処理が入ったポインタ
 
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
@@ -91,7 +93,7 @@ namespace basecross {
 
 		void nextSelLook(int right,int left,int up, int down,Vec2 enemyAStarPos,Vec2 playerAStarPos);//隣に壁か上げているマンホールがあるか確認する
 
-		vector<Vec3> AStar();
+		vector<Vec3> RouteSearch();
 
 		bool LookAround(shared_ptr<Node> node, Vec2 goalPos);
 
@@ -146,43 +148,5 @@ namespace basecross {
 		}
 
 	};
-
-	enum STATUS//ステータス
-	{
-		Status_None,
-		Status_Open,
-		Status_Closed
-	};
-
-	//ノードデータ
-	class Node
-	{
-	public:
-		int x;
-		int y;
-		int Status;//ステータス
-		int Cost;//コスト
-		int HeuristicCost;//ヒューリスティックコスト
-		int Score;//スコア
-		shared_ptr<Node> Parent;//親のポインタ
-
-		Node(int x, int y, int Status, int Cost, int HeuristicCost, int Score, shared_ptr<Node> parent) :
-			x(x),
-			y(y),
-			Status(Status),
-			Cost(Cost),
-			HeuristicCost(HeuristicCost),
-			Score(Score),
-			Parent(parent)
-		{
-
-		}
-		~Node()
-		{
-		}
-	};
-
-
-
 }
 //end basecross

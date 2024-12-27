@@ -13,6 +13,7 @@ namespace basecross {
 		Vec3 m_startPos;//初期位置(ピポット)
 
 		int m_beforeItemNum;//前のアイテムの個数
+		int m_beforeEnemyNum;//前の敵の数
 
 		float m_mapSize;//マップの直径
 		float m_mapMagnification;//マップの倍率
@@ -31,6 +32,7 @@ namespace basecross {
 		void CreatePlayer();//ミニマップのプレイヤーを生成する
 
 		void UpdateItem();//ミニマップのアイテム表示(Update版)
+		void UpdateEnemy();//ミニマップの敵表示(Update版)
 
 		Vec3 GetStartPos();//ミニマップの原点を渡す
 	};
