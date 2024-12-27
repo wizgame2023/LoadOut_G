@@ -15,6 +15,7 @@ namespace basecross {
 		//Vec3型のメンバー変数
 		Vec3 m_ownerPos;
 		Vec3 m_ownerRot;
+		Vec3 m_fakeOwnerPos;
 		Vec3 m_destinationPos;
 		Vec3 m_right;
 		Vec3 m_forward;
@@ -45,8 +46,11 @@ namespace basecross {
 		shared_ptr<Transform> m_trans;
 
 		//weak_ptr型メンバー変数
-		weak_ptr<Ray> m_forwardRay;
 		weak_ptr<Ray>m_playerRay;
+
+		vector<Vec3>m_checkPoint;
+		vector<Vec3>m_cPoint;
+		vector<Vec3>m_navi;
 	public:
 		//コンストラクタの宣言
 		Patrol(const shared_ptr<Enemy> ptrOwner) :
@@ -65,7 +69,7 @@ namespace basecross {
 			m_time(0.0f),
 			m_moveTime(0.0f),
 			m_distance(0.0f),
-			m_point(120.0f),
+			m_point(60.0f),
 			m_destinationDecision(false),
 			m_wallCheck(false),
 			m_rightCheck(false),
@@ -80,7 +84,8 @@ namespace basecross {
 		void OnUpdate();
 		void OnExit();
 
-		Vec3 DestinationDecision();
+		Vec3 WallCheck();
+
 	};
 }
 //end basecross
