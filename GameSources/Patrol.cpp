@@ -15,43 +15,58 @@ namespace basecross {
 		m_trans = m_Owner->GetComponent<Transform>();//Š—LŽÒ(Enemy)‚ÌTransform‚ðŽæ“¾
 		m_ownerPos = m_trans->GetPosition();//Š—LŽÒ(Enemy)‚ÌPosition‚ðŽæ“¾
 		m_checkPoint.clear();
-		Vec3 checkPoint[] =
+
+		if (m_ownerPos.z > 0)
 		{
-			{m_ownerPos},
-			{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z},
-			{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z + m_point},
-			{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z + m_point},
+			m_cPoint = 
+			{
+				{m_ownerPos},
+				{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z},
+				{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z - m_point},
+				{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z - m_point},
 
-		};
+			};
+		}
+		if (m_ownerPos.z < 0)
+		{
+			m_cPoint =
+			{
+				{m_ownerPos},
+				{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z},
+				{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z + m_point},
+				{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z + m_point},
 
+			};
+
+		}
 		for (int i = 0; i < 4; i++)
 		{
-			if (checkPoint[i].x<mapMgr->GetMapSize() * 0.5 &&
-				checkPoint[i].x>-mapMgr->GetMapSize() * -0.5 &&
-				checkPoint[i].z < mapMgr->GetMapSize() * 0.5 &&
-				checkPoint[i].z > mapMgr->GetMapSize() * -0.5)
+			if (m_cPoint[i].x<mapMgr->GetMapSize() * 0.5 &&
+				m_cPoint[i].x>-mapMgr->GetMapSize() * -0.5 &&
+				m_cPoint[i].z < mapMgr->GetMapSize() * 0.5 &&
+				m_cPoint[i].z > mapMgr->GetMapSize() * -0.5)
 			{
-				m_checkPoint.push_back(checkPoint[i]);
+				m_checkPoint.push_back(m_cPoint[i]);
 			}
 			else
 			{
-				while (checkPoint[i].x > mapMgr->GetMapSize() * 0.5)
+				while (m_cPoint[i].x > mapMgr->GetMapSize() * 0.5)
 				{
-					checkPoint[i].x -= 10;
+					m_cPoint[i].x -= 10;
 				}
-				while (checkPoint[i].x< mapMgr->GetMapSize() * -0.5)
+				while (m_cPoint[i].x< mapMgr->GetMapSize() * -0.5)
 				{
-					checkPoint[i].x += 10;
+					m_cPoint[i].x += 10;
 				}
-				while (checkPoint[i].z > mapMgr->GetMapSize() * 0.5)
+				while (m_cPoint[i].z > mapMgr->GetMapSize() * 0.5)
 				{
-					checkPoint[i].z -= 10;
+					m_cPoint[i].z -= 10;
 				}
-				while (checkPoint[i].z < mapMgr->GetMapSize() * -0.5)
+				while (m_cPoint[i].z < mapMgr->GetMapSize() * -0.5)
 				{
-					checkPoint[i].z += 10;
+					m_cPoint[i].z += 10;
 				}
-				m_checkPoint.push_back(checkPoint[i]);
+				m_checkPoint.push_back(m_cPoint[i]);
 
 			}
 		}

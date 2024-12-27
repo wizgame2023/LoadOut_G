@@ -49,6 +49,7 @@ namespace basecross {
 		weak_ptr<Ray>m_playerRay;
 
 		vector<Vec3>m_checkPoint;
+		vector<Vec3>m_cPoint;
 		vector<Vec3>m_navi;
 	public:
 		//コンストラクタの宣言
