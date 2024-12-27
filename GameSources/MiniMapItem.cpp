@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	MiniMapItem::MiniMapItem(shared_ptr<Stage>& stagePtr,weak_ptr<Item> parentObj, wstring textureName, Vec2 size,int layer, Vec3 pos,  Vec3 rot) :
+	MiniMapItem::MiniMapItem(shared_ptr<Stage>& stagePtr,weak_ptr<Battery> parentObj, wstring textureName, Vec2 size,int layer, Vec3 pos,  Vec3 rot) :
 		GameObject(stagePtr),
 		m_textureName(textureName),
 		m_parentObj(parentObj),

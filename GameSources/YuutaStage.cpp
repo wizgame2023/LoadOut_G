@@ -55,16 +55,16 @@ namespace basecross {
 		SetSharedGameObject(L"MiniMapManager", miniMapManager);
 		
 		//アイテムの生成
-		AddGameObject<Item>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-10.0f, 2.5f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-10.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Item>(Vec3(-10.0f, 2.5f, -50.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(30.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Battery>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Battery>(Vec3(50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Battery>(Vec3(-50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Battery>(Vec3(-10.0f, 2.5f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Battery>(Vec3(-10.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Battery>(Vec3(-10.0f, 2.5f, -50.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(30.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//Playerの生成
 		auto player = AddGameObject<Player>(Vec3(0.0f, 3.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
@@ -83,7 +83,7 @@ namespace basecross {
 
 		//AddGameObject<SpriteNum>(L"Number",Vec2(30.0f,30.0f),10,Vec3(500.0f,0.0f,0.0f));//数字のスプライト生成
 
-		miniMapManager->CreateItem();
+		miniMapManager->CreateBattery();
 
 		OutWallCreate(20);//外壁生成
 	}

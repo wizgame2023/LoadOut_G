@@ -22,10 +22,10 @@ namespace basecross {
 		Vec3 m_rot;
 		Col4 m_color;
 
-		weak_ptr<Item> m_parentObj;//元となるオブジェクトを保管する変数
+		weak_ptr<Battery> m_parentObj;//元となるオブジェクトを保管する変数
 
 	public:
-		MiniMapItem(shared_ptr<Stage>& stagePtr,weak_ptr<Item> parentObj, wstring textureName, Vec2 size,int layer = 1, Vec3 pos = Vec3(0.0f, 0.0f, 0.0f), Vec3 rot = Vec3(0.0f, 0.0f, 0.0f));//コンストラクタ
+		MiniMapItem(shared_ptr<Stage>& stagePtr,weak_ptr<Battery> parentObj, wstring textureName, Vec2 size,int layer = 1, Vec3 pos = Vec3(0.0f, 0.0f, 0.0f), Vec3 rot = Vec3(0.0f, 0.0f, 0.0f));//コンストラクタ
 		virtual ~MiniMapItem();//デストラクタ
 
 		virtual void OnCreate()override;//作成
