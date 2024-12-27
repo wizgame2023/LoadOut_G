@@ -40,6 +40,9 @@ namespace basecross {
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->AddAnimation(L"Default", 6, 10, true, 20.0f);
 		ptrDraw->AddAnimation(L"Ran", 6, 20, true, 20.0f);
+
+		m_mapMgr = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+
 		m_CurrentSt = make_shared<Patrol>(GetThis<Enemy>());
 
 		Mat4x4 spanMat;
@@ -211,6 +214,11 @@ namespace basecross {
 	shared_ptr<StateBase> Enemy::GetNowState()
 	{
 		return m_CurrentSt;
+	}
+
+	shared_ptr<MapManager> Enemy::GetMapMgr()
+	{
+		return m_mapMgr;
 	}
 
 	void Enemy::GetGameOverScene()

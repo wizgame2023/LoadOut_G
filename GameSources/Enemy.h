@@ -30,6 +30,7 @@ namespace basecross {
 		shared_ptr<Ray>m_playerRay;
 
 		shared_ptr<BillBoard> m_billBoard;
+		shared_ptr<MapManager> m_mapMgr;
 
 	public:
 		//コンストラクタ・デストラクタ
@@ -52,7 +53,6 @@ namespace basecross {
 			m_NextSt = make_shared<NextState>(GetThis<Enemy>());
 		}
 		float GetSpeed();
-
 		float GetAngle();
 		float GetDistance(Vec3 a, Vec3 b);
 		void SetAngle(float angle);
@@ -62,6 +62,7 @@ namespace basecross {
 		shared_ptr<Ray> GetForwardRay();
 		shared_ptr<Ray> GetPlayerRay();
 		shared_ptr<StateBase> GetNowState();
+		shared_ptr<MapManager> GetMapMgr();
 	};
 }
 //end basecross
