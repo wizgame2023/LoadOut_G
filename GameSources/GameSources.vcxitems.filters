@@ -120,9 +120,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h">
       <Filter>Headers\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Item.h">
-      <Filter>Headers\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
@@ -237,6 +234,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Battery.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -283,9 +283,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp">
       <Filter>Sources\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp">
-      <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp">
       <Filter>Sources\GameObject</Filter>
@@ -397,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp">
       <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Battery.cpp">
+      <Filter>Sources\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
