@@ -27,7 +27,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Ground.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)happysky.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Hatch.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Item.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Battery.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Manhole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ManholeSprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h" />
@@ -83,7 +83,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Ground.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)happysky.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hatch.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Item.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Battery.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ManholeSprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp" />

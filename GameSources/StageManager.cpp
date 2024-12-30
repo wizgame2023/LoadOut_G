@@ -196,7 +196,7 @@ namespace basecross {
 			for (auto item : objVec)
 			{
 				//ハッチの上に柱上のエフェクトを表示させる
-				auto castItem = dynamic_pointer_cast<Item>(item);
+				auto castItem = dynamic_pointer_cast<Battery>(item);
 				if (castItem)//ハッチ型にキャストする
 				{
 					countItem++;
@@ -234,7 +234,7 @@ namespace basecross {
 				{
 					auto randSelVec = mapManager->ConvertSelMap(randVec);//セルマップに変える
 					auto popSelVec = mapManager->ConvertWorldMap(randSelVec);//ワールド座標に変換する
-					stage->AddGameObject<Item>(Vec3(popSelVec), Vec3(0.0f, 0.0f, 0.0f));//生成
+					stage->AddGameObject<Battery>(Vec3(popSelVec), Vec3(0.0f, 0.0f, 0.0f));//生成
 					m_repopItemFlag = false;//フラグリセット
 				}
 

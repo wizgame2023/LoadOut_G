@@ -71,15 +71,15 @@ namespace basecross {
 		AddGameObject<Ground>();
 
 		//アイテムの生成//stage20
-		//AddGameObject<Item>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(-25.0f, 2.5f, 45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(-64.0f, 2.5f, 14.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Item>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
-		CreateItem();//アイテムの生成
+		//AddGameObject<Battery>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(-25.0f, 2.5f, 45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(-64.0f, 2.5f, 14.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Battery>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
+		CreateBattery();//アイテムの生成
 
-		m_miniMapManager->CreateItem();
+		m_miniMapManager->CreateBattery();
 
 		//Playerの生成
 		CreatePlayer();
@@ -128,7 +128,7 @@ namespace basecross {
 	}
 
 	//アイテム生成
-	void GameStage::CreateItem()
+	void GameStage::CreateBattery()
 	{
 		vector<Vec3> posVec =
 		{
@@ -142,7 +142,7 @@ namespace basecross {
 
 		for (int i = 0; i < posVec.size(); i++)
 		{
-			AddGameObject<Item>(posVec[i], Vec3(0.0f, 0.0f, 0.0f));
+			AddGameObject<Battery>(posVec[i], Vec3(0.0f, 0.0f, 0.0f));
 		}
 
 	}

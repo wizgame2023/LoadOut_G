@@ -44,7 +44,7 @@ namespace basecross {
 
 	void MiniMapManager::OnUpdate()
 	{
-		UpdateItem();
+		UpdateBattery();
 		UpdateEnemy();
 	}
 
@@ -55,7 +55,7 @@ namespace basecross {
 	}
 
 	//ミニマップ用のアイテムを生成
-	void MiniMapManager::CreateItem()
+	void MiniMapManager::CreateBattery()
 	{
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
@@ -64,7 +64,7 @@ namespace basecross {
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto item : objVec)
 		{
-			auto castitem = dynamic_pointer_cast<Item>(item);
+			auto castitem = dynamic_pointer_cast<Battery>(item);
 			if (castitem)//アイテム型にキャストする
 			{
 				auto itemTrans = item->GetComponent<Transform>();
@@ -80,7 +80,7 @@ namespace basecross {
 		m_beforeItemNum = count;
 	}
 	//ミニマップ用のアイテムを生成(Updeta版)
-	void MiniMapManager::UpdateItem()
+	void MiniMapManager::UpdateBattery()
 	{
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
@@ -89,7 +89,7 @@ namespace basecross {
 		//ステージにあるアイテムの数をカウントする
 		for (auto item : objVec)
 		{
-			auto castitem = dynamic_pointer_cast<Item>(item);
+			auto castitem = dynamic_pointer_cast<Battery>(item);
 			if (castitem)//アイテム型にキャストする
 			{
 				itemNumNow++;
@@ -113,7 +113,7 @@ namespace basecross {
 				}
 			}
 			//再生成する
-			CreateItem();
+			CreateBattery();
 
 		}
 

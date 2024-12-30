@@ -26,12 +26,12 @@ namespace basecross {
 		void OnUpdate()override;//更新
 
 		void CreateWall();//ミニマップの壁を生成する
-		void CreateItem();//ミニマップのアイテムを生成する
+		void CreateBattery();//ミニマップのアイテムを生成する
 		void CreateManhole();//ミニマップのマンホールを生成する
 		void CreateEnemy();//ミニマップの敵を生成する
 		void CreatePlayer();//ミニマップのプレイヤーを生成する
 
-		void UpdateItem();//ミニマップのアイテム表示(Update版)
+		void UpdateBattery();//ミニマップのアイテム表示(Update版)
 		void UpdateEnemy();//ミニマップの敵表示(Update版)
 
 		Vec3 GetStartPos();//ミニマップの原点を渡す

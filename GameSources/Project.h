@@ -35,7 +35,7 @@
 #include"YuutaStage.h"
 #include"Ground.h"
 #include"MapManager.h"
-#include"Item.h"
+#include"Battery.h"//電池
 #include"Enemy.h"
 #include"Manhole.h"
 #include"Wall.h"
@@ -67,7 +67,6 @@
 #include"UIManager.h";//UIマネージャー
 #include"StageManager.h"
 #include"StageCollisionManager.h"//コリジョン管理
-#include"NumberManager.h"
 
 //カメラ用
 #include"MyCamera.h"//追尾カメラ用

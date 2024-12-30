@@ -8,18 +8,18 @@
 #include "Project.h"
 
 namespace basecross {
-	Item::Item(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot) :
+	Battery::Battery(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rot(rot)
 	{
 
 	}
-	Item::~Item()
+	Battery::~Battery()
 	{
 	}
 
-	void Item::OnCreate()
+	void Battery::OnCreate()
 	{
 		auto ptr = GetComponent<Transform>();
 		ptr->SetPosition(m_pos);
@@ -55,14 +55,14 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
-		AddTag(L"Item");//アイテム用のタグ
+		AddTag(L"Battery");//アイテム用のタグ
 
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		mapManager->MapDataUpdate(m_pos, 6);//電池が置かれたことを表す
 
 	}
 
-	void Item::OnUpdate()
+	void Battery::OnUpdate()
 	{
 		auto delta = App::GetApp()->GetElapsedTime();
 		//アニメーション再生
@@ -71,7 +71,7 @@ namespace basecross {
 	}
 
 	//Playerにぶつかった際にカウントをプラスする
-	void Item::OnCollisionEnter(shared_ptr<GameObject>& other)
+	void Battery::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
 		auto player = dynamic_pointer_cast<Player>(other);
 		auto stage = GetStage();
@@ -85,13 +85,13 @@ namespace basecross {
 				SE->Start(L"ItemGet", 0, 0.9f);
 
 				player->AddCount(1);//カウントをプラスする
-				stage->RemoveGameObject<Item>(GetThis<Item>());//自分自身を削除
+				stage->RemoveGameObject<Battery>(GetThis<Battery>());//自分自身を削除
 			}
 		}
 	}
 
 	//削除されたときの処理
-	void Item::OnDestroy()
+	void Battery::OnDestroy()
 	{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		mapManager->MapDataUpdate(m_pos, 0);//電池がなくなったことを表す
