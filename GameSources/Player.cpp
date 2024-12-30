@@ -10,7 +10,8 @@ namespace basecross{
 	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
 		Actor(StagePtr),
 		m_Pos(pos),
-		m_Rot(rot)
+		m_Rot(rot),
+		m_speed(10)
 		//m_move(true)
 	{
 	}
@@ -167,9 +168,8 @@ namespace basecross{
 		//左ステックの向きにプレイヤーが進む
 		if (m_controler.bConnected)
 		{
-
-			pos.x += (m_controler.fThumbLX * 10 * Delta) * 2;
-			pos.z += (m_controler.fThumbLY * 10 * Delta) * 2;
+			pos.z += (m_controler.fThumbLY * (m_speed + m_pushSpeed) * Delta) * 2;
+			pos.x += (m_controler.fThumbLX * (m_speed + m_pushSpeed) * Delta) * 2;
 
 			m_Trans->SetPosition(pos);//ポジション更新
 		}
