@@ -46,7 +46,7 @@ namespace basecross {
 		enemyPos.y += speed * delta;
 		enemyTrans->SetPosition(enemyPos);//位置更新
 
-		enemyRot = enemyRot*Quat(0.0f, 1.0f*(sin(XMConvertToRadians(30.0f)) / 2), 0.0f,cos(XMConvertToRadians(30.0f)) / 2.0f);
+		enemyRot = enemyRot * Quat(0.0f, 1.0f * (sin(XMConvertToRadians(30.0f) / 2.0f)), 0.0f, cos(XMConvertToRadians(30.0f) / 2.0f));
 		enemyTrans->SetQuaternion(enemyRot);
 
 		//終了処理
