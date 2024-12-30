@@ -241,18 +241,22 @@ namespace basecross {
 			}
 		}
 		auto delta = App::GetApp()->GetElapsedTime();
-
-		//‰ñ“]‚ði‚Þ•ûŒü‚É‡‚í‚¹‚é
 		Math math;	
-		auto rot = trans->GetRotation();
 		auto angle = math.GetAngle(pos, routePos[routeCount]);
-		rot.y = angle;
-		trans->SetRotation(rot);
 
 		//ˆÚ“®ˆ—
 		pos.x += -sin(angle) * speed * delta;
 		pos.z += -cos(angle) * speed * delta;
-		trans->SetPosition(pos);
+		trans->SetPosition(pos);		
+		
+		//‰ñ“]‚ði‚Þ•ûŒü‚É‡‚í‚¹‚é
+		auto quat = trans->GetQuaternion();
+		quat = Quat(0.0f, sin((angle) / 2.0f), 0.0f, cos((angle) / 2.0f));
+		trans->SetQuaternion(quat);
+
+		//Šp“x‚ð“n‚·
+		actor->SetAngle(angle + XMConvertToRadians(90.0f));
+
 	}
 
 }
