@@ -24,7 +24,7 @@ namespace basecross {
 		auto trans = GetComponent<Transform>();
 		trans->SetPosition(m_pos);
 		trans->SetRotation(Vec3(0.0f, 0.0f, 0.0f));
-		trans->SetScale(1.0f, 1.0f, 1.0f);
+		trans->SetScale(10.0f, 10.0f, 10.0f);
 
 		//ドローメッシュ設定
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
@@ -42,8 +42,8 @@ namespace basecross {
 		//もし当たったのがプレイヤーならランダムにイベントが発生する
 		if (player)
 		{
-			auto randam = rand() % 10;
-
+			auto randam = rand() % 4;
+			randam = 3;
 			switch (randam)
 			{
 			case 0:
@@ -54,13 +54,17 @@ namespace basecross {
 				break;
 			case 2:
 				//Playerのスピードを遅くする
+				player->SetPushSpeed(-5.0f);
 				break;
 			case 3:
 				//Playerのスピードを速くする
+				player->SetPushSpeed(5.0f);
 				break;
 			default:
 				break;
 			}
+
+			GetStage()->RemoveGameObject<RandomItem>(GetThis<RandomItem>());
 		}
 	}
 
