@@ -54,11 +54,11 @@ namespace basecross {
 				break;
 			case 2:
 				//Playerのスピードを遅くする
-				player->SetPushSpeed(-5.0f);
+				player->SetPushSpeed(-2.0f);
 				break;
 			case 3:
 				//Playerのスピードを速くする
-				player->SetPushSpeed(5.0f);
+				player->SetPushSpeed(2.0f);
 				break;
 			default:
 				break;
