@@ -344,6 +344,12 @@ namespace basecross{
 		m_key = key;
 	}
 
+	//追加スピードのセッター
+	void Player::SetPushSpeed(float pushSpeed)
+	{
+		m_pushSpeed = pushSpeed;
+	}
+
 }
 //end basecross
 

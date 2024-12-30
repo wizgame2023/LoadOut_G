@@ -53,6 +53,7 @@ namespace basecross{
 		void AddBatteryUI();//電池をどれくらい取得しているかのUI
 
 		void SetKey(bool key);//鍵を持っているかどうか渡す
+		void SetPushSpeed(float pushSpeed);//追加するスピードを渡す
 
 		//bool m_move;//動くか動かないかのフラグ
 
