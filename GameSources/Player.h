@@ -21,6 +21,7 @@ namespace basecross{
 		float m_deg;//角度
 		float m_speed;//スピード
 		float m_pushSpeed;//追加スピード
+		float m_pushSpeedCountTime;//追加スピードの経過時間
 
 		bool m_key;//鍵を持っているかどうか
 		bool m_addBoardFlag;//ビルボードを出すフラグ
