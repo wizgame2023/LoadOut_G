@@ -11,7 +11,8 @@ namespace basecross{
 		Actor(StagePtr),
 		m_Pos(pos),
 		m_Rot(rot),
-		m_speed(10)
+		m_speed(10),
+		m_pushSpeed(0)
 		//m_move(true)
 	{
 	}
