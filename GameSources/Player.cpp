@@ -10,7 +10,9 @@ namespace basecross{
 	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
 		Actor(StagePtr),
 		m_Pos(pos),
-		m_Rot(rot)
+		m_Rot(rot),
+		m_speed(10),
+		m_pushSpeed(0)
 		//m_move(true)
 	{
 	}
@@ -127,6 +129,18 @@ namespace basecross{
 
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
+		//追加スピードが0ではない場合適応時間を計測して一定時間過ぎたら0にする
+		if (m_pushSpeed != 0)
+		{
+			m_pushSpeedCountTime += Delta;
+			if (m_pushSpeedCountTime >= 10.0f)
+			{
+				//追加スピードと計測時間リセット
+				m_pushSpeed = 0;
+				m_pushSpeedCountTime = 0.0f;
+			}
+		}
+
 		//デバック用/////////////////////////////////////////////////////////////
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)//Aボタンを押したとき
 		{
@@ -153,6 +167,7 @@ namespace basecross{
 		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
 		//	<<L"\nFPS:"<< 1.0f/Delta
 		//	<<L"\nKey"<<m_key
+		//	<<L"\nm_pushSpeedCountTime:"<< m_pushSpeedCountTime
 		//	<< endl;
 
 		//scene->SetDebugString(wss.str());
@@ -167,9 +182,8 @@ namespace basecross{
 		//左ステックの向きにプレイヤーが進む
 		if (m_controler.bConnected)
 		{
-
-			pos.x += (m_controler.fThumbLX * 10 * Delta) * 2;
-			pos.z += (m_controler.fThumbLY * 10 * Delta) * 2;
+			pos.z += (m_controler.fThumbLY * (m_speed + m_pushSpeed) * Delta) * 2;
+			pos.x += (m_controler.fThumbLX * (m_speed + m_pushSpeed) * Delta) * 2;
 
 			m_Trans->SetPosition(pos);//ポジション更新
 		}
@@ -341,6 +355,13 @@ namespace basecross{
 	void Player::SetKey(bool key)
 	{
 		m_key = key;
+	}
+
+	//追加スピードのセッター
+	void Player::SetPushSpeed(float pushSpeed)
+	{
+		m_pushSpeed = pushSpeed;
+		m_pushSpeedCountTime = 0.0f;
 	}
 
 }

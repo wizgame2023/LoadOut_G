@@ -61,6 +61,7 @@
 #include"MovieUpEnemy.h"//Enemyが打ちあがる時のムービー
 #include"PillarEfect.h"//柱上のエフェクト
 #include"ManholeSprite.h"//ミニマップ用のマンホールスプライト
+#include"RandomItem.h"//ランダムにイベントが発生するアイテム
 
 //マネージャー用
 #include"MiniMapManager.h"//ミニマップ生成

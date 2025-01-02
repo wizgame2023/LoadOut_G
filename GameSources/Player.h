@@ -19,6 +19,9 @@ namespace basecross{
 		int m_hp = 3;//Playerの体力
 
 		float m_deg;//角度
+		float m_speed;//スピード
+		float m_pushSpeed;//追加スピード
+		float m_pushSpeedCountTime;//追加スピードの経過時間
 
 		bool m_key;//鍵を持っているかどうか
 		bool m_addBoardFlag;//ビルボードを出すフラグ
@@ -51,6 +54,7 @@ namespace basecross{
 		void AddBatteryUI();//電池をどれくらい取得しているかのUI
 
 		void SetKey(bool key);//鍵を持っているかどうか渡す
+		void SetPushSpeed(float pushSpeed);//追加するスピードを渡す
 
 		//bool m_move;//動くか動かないかのフラグ
 
