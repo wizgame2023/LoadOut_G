@@ -51,7 +51,7 @@ namespace basecross {
 		}
 
 		//マップマネージャーの生成
-		auto mapManager = AddGameObject<MapManager>(L"Stage01/");
+		auto mapManager = AddGameObject<MapManager>(L"Stage06/");
 		SetSharedGameObject(L"MapManager", mapManager);
 		auto mapSize = mapManager->GetMapSize();
 
