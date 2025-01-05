@@ -9,13 +9,15 @@
 namespace basecross{
 	class BillBoard :public GameObject
 	{
-		weak_ptr<Actor> m_actor;
+		weak_ptr<GameObject> m_actor;
 
 		shared_ptr<MeshResource> m_SquareMeshResource;
 
 		size_t m_Number;
 
 		wstring m_textureName;
+
+		Vec3 m_scale;
 
 		float m_pushY;
 
@@ -40,9 +42,9 @@ namespace basecross{
 	public:
 		//構築と破棄
 		BillBoard(const shared_ptr<Stage>& StagePtr,
-			shared_ptr<Actor>& actorPtr, size_t Number,float pushY = 18.0f);
+			shared_ptr<GameObject>& actorPtr, size_t Number,float pushY = 18.0f, Vec3 scale = Vec3(3.0f, 3.0f, 3.0f));
 		BillBoard(const shared_ptr<Stage>& StagePtr,
-			shared_ptr<Actor>& actorPtr, wstring spriteName, float pushY = 18.0f);
+			shared_ptr<GameObject>& actorPtr, wstring spriteName, float pushY = 18.0f,Vec3 scale = Vec3(3.0f,3.0f,3.0f));
 		virtual ~BillBoard();
 		//初期化
 		virtual void OnCreate() override;
@@ -51,6 +53,9 @@ namespace basecross{
 
 		//スプライト変更
 		void ChangeTexture(wstring spriteName);
+
+		//サイズ変更
+		void SetScale(Vec3 scale);
 
 	};
 

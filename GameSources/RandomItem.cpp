@@ -24,11 +24,12 @@ namespace basecross {
 		auto trans = GetComponent<Transform>();
 		trans->SetPosition(m_pos);
 		trans->SetRotation(Vec3(0.0f, 0.0f, 0.0f));
-		trans->SetScale(10.0f, 10.0f, 10.0f);
+		trans->SetScale(3.0f, 3.0f, 3.0f);
 
 		//ドローメッシュ設定
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetTextureResource(L"Bule");
 
 		//コリジョン設定
 		auto ptrColl = AddComponent<CollisionObb>();
@@ -43,7 +44,7 @@ namespace basecross {
 		if (player)
 		{
 			auto randam = rand() % 4;
-			randam = 3;
+			//randam = 3;
 			switch (randam)
 			{
 			case 0:
@@ -65,6 +66,9 @@ namespace basecross {
 			}
 
 			GetStage()->RemoveGameObject<RandomItem>(GetThis<RandomItem>());
+			//リポップ予約
+			auto stageManager = GetStage()->GetSharedGameObject<StageManager>(L"StageManager");
+			stageManager->SetRepopRandomItemPos(m_pos);
 		}
 	}
 

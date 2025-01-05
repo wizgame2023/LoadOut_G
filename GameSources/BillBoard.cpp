@@ -9,20 +9,22 @@
 namespace basecross{
 
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<Actor>& actorPtr, size_t Number,float pushY) :
+		shared_ptr<GameObject>& actorPtr, size_t Number,float pushY,Vec3 scale) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(Number),
 		m_textureName(L"Clear"),
-		m_pushY(pushY)
+		m_pushY(pushY),
+		m_scale(scale)
 	{}
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<Actor>& actorPtr, wstring spriteName,float pushY) :
+		shared_ptr<GameObject>& actorPtr, wstring spriteName,float pushY,Vec3 scale) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(0),
 		m_textureName(spriteName),
-		m_pushY(pushY)
+		m_pushY(pushY),
+		m_scale(scale)
 	{}
 	BillBoard::~BillBoard() {}
 
@@ -36,7 +38,7 @@ namespace basecross{
 			auto Pos = SeekTransPtr->GetPosition();
 			Pos.y += m_pushY;
 			PtrTransform->SetPosition(Pos);
-			PtrTransform->SetScale(3.0f, 3.0f, 3.0f);
+			PtrTransform->SetScale(m_scale);
 			PtrTransform->SetQuaternion(SeekTransPtr->GetQuaternion());
 			//変更できるスクエアリソースを作成
 
@@ -90,7 +92,7 @@ namespace basecross{
 			auto Pos = SeekTransPtr->GetPosition();
 			Pos.y += m_pushY;
 			PtrTransform->SetPosition(Pos);
-			PtrTransform->SetScale(3.0f, 3.0f, 3.0f);
+			PtrTransform->SetScale(m_scale);
 
 			auto DrawComp = GetComponent<PCTStaticDraw>();
 			DrawComp->SetTextureResource(m_textureName);
@@ -112,6 +114,13 @@ namespace basecross{
 	{
 		m_textureName = textureName;
 	}
+
+	//サイズのセッター
+	void BillBoard::SetScale(Vec3 scale)
+	{
+		m_scale = scale;
+	}
+	
 
 }
 //end basecross

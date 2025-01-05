@@ -55,6 +55,7 @@ namespace basecross {
 		);
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
+		ptrColl->SetAfterCollision(AfterCollision::None);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		AddTag(L"Enemy");
@@ -67,7 +68,7 @@ namespace basecross {
 		MoveSwich(true);//動けるようにする
 
 		//ビルボードの生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(GetThis<Actor>()),0);
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0);
 	}
 
 	void Enemy::OnUpdate()

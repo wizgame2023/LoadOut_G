@@ -15,6 +15,7 @@ namespace basecross {
 
 		float m_repopItemCountTime;//アイテムがリポップするタイム
 		float m_repopEnemyCountTime;//敵がリポップするタイム
+		float m_repopRamdomItemCountTime;//ランダムアイテムがリポップするタイム
 
 		bool m_ClearFlag;//クリアのフラグ判定
 		bool m_GameOverFlag;//ゲームオーバー用のフラグ	
@@ -25,6 +26,7 @@ namespace basecross {
 		shared_ptr<XAudio2Manager> m_bgmManager;
 
 		vector<Vec3> m_repopEnemyPos;//リポップするEnemyのポジション
+		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション
 
 	public:
 		StageManager(shared_ptr<Stage>& stagePtr);
@@ -39,6 +41,7 @@ namespace basecross {
 
 		void RepopEnemy();//Enemyのリポップ処理
 		void RepopItem();//乾電池のリポップ処理
+		void RepopRandamItem();
 
 		void KeyEvent();//鍵関係のイベント
 
@@ -46,6 +49,7 @@ namespace basecross {
 		void SetGameOverFlag(bool flag);//セッター
 		void SetPlayerKeyFlag(int flag);//セッター
 		void SetRepopEnemyPos(Vec3 pos);//セッター
+		void SetRepopRandomItemPos(Vec3 pos);//セッター
 	};
 
 }
