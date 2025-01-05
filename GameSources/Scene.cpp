@@ -45,16 +45,29 @@ namespace basecross{
 			//最初のアクティブステージの設定
 			ResetActiveStage<GameStage>();
 		}
+		if (event->m_MsgStr == L"ToGameStage02") {
+			ResetActiveStage<GameStage02>();
+		}
+		if (event->m_MsgStr == L"ToGameStage03") {
+			ResetActiveStage<GameStage03>();
+		}
+		if (event->m_MsgStr == L"ToGameStage04") {
+			ResetActiveStage<GameStage04>();
+		}
+		if (event->m_MsgStr == L"ToGameStage05") {
+			ResetActiveStage<GameStage05>();
+		}
+		if (event->m_MsgStr == L"ToGameStage06") {
+			ResetActiveStage<GameStage06>();
+		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定
 			ResetActiveStage<TilteStage>();
 		}
 		if (event->m_MsgStr == L"ToGameOverStage") {
-			//タイトルのアクティブステージの設定
 			ResetActiveStage<GameOverStage>();
 		}
 		if (event->m_MsgStr == L"ToGameClearStage") {
-			//タイトルのアクティブステージの設定
 			ResetActiveStage<GameClearStage>();
 		}
 	}
