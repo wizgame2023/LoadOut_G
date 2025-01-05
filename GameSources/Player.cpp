@@ -275,14 +275,12 @@ namespace basecross{
 			{
 				if (m_itemCount <= 0)
 				{
-					//SE生成マンホールにわなを仕掛ける音
 					auto SEManager = App::GetApp()->GetXAudio2Manager();
 					auto SE = SEManager->Start(L"Error", 0, 0.9f);
 				}
 			}
 			if (mapManager->SelMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
 			{
-				//SE生成マンホールにわなを仕掛ける音
 				auto SEManager = App::GetApp()->GetXAudio2Manager();
 				auto SE = SEManager->Start(L"Error", 0, 0.9f);
 			}
