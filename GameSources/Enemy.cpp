@@ -93,7 +93,7 @@ namespace basecross {
 			
 			m_NextSt.reset();// 次のステート用の変数を空にする
 		
-			m_CurrentSt->OnExit();// 切り替わった新しいステートの最初に行う処理
+			m_CurrentSt->OnStart();// 切り替わった新しいステートの最初に行う処理
 		}
 
 		//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
