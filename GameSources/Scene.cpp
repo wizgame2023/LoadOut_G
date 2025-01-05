@@ -130,6 +130,18 @@ namespace basecross{
 		app->RegisterTexture(L"Hatch", strTexture);
 		strTexture = texPath + L"Credit.png";//ハッチのテクスチャ
 		app->RegisterTexture(L"Credit", strTexture);
+		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
+		strTexture = texPath + L"Manhole_BillBoard_Push.png";
+		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
+		strTexture = texPath + L"Manhole_BillBoard_Hit.png";
+		app->RegisterTexture(L"Manhole_BillBoard_Hit", strTexture);
+		strTexture = texPath + L"Manhole_BillBoard_Up.png";
+		app->RegisterTexture(L"Manhole_BillBoard_Up", strTexture);
+		strTexture = texPath + L"battery_haveNo.png";
+		app->RegisterTexture(L"Battery_HaveNo", strTexture);
+		strTexture = texPath + L"Key_HaveNo.png";
+		app->RegisterTexture(L"Key_HaveNo", strTexture);
+		//////////////////////////////////////////////////////////////////////////////////////
 
 
 		//BGMSE
