@@ -75,7 +75,7 @@ namespace basecross{
 		MoveSwich(true);
 
 		//ビルボード生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<Actor>(), L"Clear",12.0f);
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",12.0f);
 
 
 	}
@@ -113,7 +113,6 @@ namespace basecross{
 		auto rot = GetComponent<Transform>()->GetRotation();//回転度を取得
 
 		//もし鍵を持っているなら脱出できる
-		//m_key = true;//デバック用
 		if (m_key)
 		{
 			m_billBoard->ChangeTexture(L"Key");
@@ -126,6 +125,41 @@ namespace basecross{
 				}
 			}
 		}
+		//バッテリーが1以上でマンホールの上にいるならBを押して設置するビルボードを出す
+		if (selNow == 1)
+		{
+			if (m_itemCount > 0)
+			{
+				m_billBoard->SetScale(Vec3(8.0f, 3.0f, 3.0f));
+				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Push");
+			}
+			if (m_itemCount <= 0)
+			{
+				m_billBoard->SetScale(Vec3(3.0f, 3.0f, 3.0f));
+				m_billBoard->ChangeTexture(L"Battery_HaveNo");
+			}
+		}
+
+		if (selNow == 4&&!m_key)
+		{
+			if (!m_key)
+			{
+				m_billBoard->SetScale(Vec3(3.0f, 3.0f, 3.0f));
+				m_billBoard->ChangeTexture(L"Key_HaveNo");
+			}
+			if (m_key)
+			{
+				m_billBoard->SetScale(Vec3(8.0f, 3.0f, 3.0f));
+				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Push");
+			}
+		}	
+		
+		if(selNow!=4&&selNow!=1)
+		{
+			m_billBoard->ChangeTexture(L"Clear");
+		}		
+
+
 
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
@@ -150,27 +184,27 @@ namespace basecross{
 
 
 		////デバック用
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		////auto gameStage = scene->GetGameStage();
-		//m_Pos = GetComponent<Transform>()->GetPosition();
+		wstringstream wss(L"");
+		auto scene = App::GetApp()->GetScene<Scene>();
+		//auto gameStage = scene->GetGameStage();
+		m_Pos = GetComponent<Transform>()->GetPosition();
 
-		//wss /* << L"デバッグ用文字列 "*/
-		//	<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
-		//	<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
-		//	<< L"\n傾き " << m_deg
-		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-		//	<< L"\nm_count：  " << m_itemCount
-		//	<< L"\nSelNow " << selNow
-		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-		//	<<L"\nFPS:"<< 1.0f/Delta
-		//	<<L"\nKey"<<m_key
-		//	<<L"\nm_pushSpeedCountTime:"<< m_pushSpeedCountTime
-		//	<< endl;
+		wss /* << L"デバッグ用文字列 "*/
+			<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
+			<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
+			<< L"\n傾き " << m_deg
+			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+			<< L"\nm_count：  " << m_itemCount
+			<< L"\nSelNow " << selNow
+			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+			<<L"\nFPS:"<< 1.0f/Delta
+			<<L"\nKey"<<m_key
+			<<L"\nm_pushSpeedCountTime:"<< m_pushSpeedCountTime
+			<< endl;
 
-		//scene->SetDebugString(wss.str());
+		scene->SetDebugString(wss.str());
 
 	}
 
@@ -230,6 +264,33 @@ namespace basecross{
 			}
 
 		}
+
+		//エラー音のSE			
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
+
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B || keyState.m_bPushKeyTbl[VK_SPACE])//Bボタンを押したとき
+		{
+			if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールなら
+			{
+				if (m_itemCount <= 0)
+				{
+					//SE生成マンホールにわなを仕掛ける音
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Error", 0, 0.9f);
+				}
+			}
+			if (mapManager->SelMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
+			{
+				//SE生成マンホールにわなを仕掛ける音
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Error", 0, 0.9f);
+			}
+
+		}
+
+
+
 
 		//m_time += Delta;
 		//if(m_time >= 0.05f)//レイの処理の実験 実験しなくなったら消してください
