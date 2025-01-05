@@ -17,12 +17,14 @@ namespace basecross {
 
 		shared_ptr<ClearObject> m_clearObject;//透明な壁
 		shared_ptr<WaterPillar> m_waterPillar;//水柱
+		shared_ptr<BillBoard> m_billBoard;//ビルボード
 
 		int m_charen;//進行度
 
 		float m_coolTime;//時間を測るために必要
 		float m_stanbyTime;//時間を測るために必要
 		float m_blinkingTime;//点滅する時間を測る
+		float m_billBoardTime;//ビルボードが出ている時間を測る
 
 		bool m_playerStanbyFlag;//プレイヤーが踏むかまつフラグ
 
