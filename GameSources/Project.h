@@ -87,6 +87,7 @@
 #include"UIManager.h";//UIマネージャー
 #include"StageManager.h"
 #include"StageCollisionManager.h"//コリジョン管理
+#include"NumberManager.h";
 
 //カメラ用
 #include"MyCamera.h"//追尾カメラ用
