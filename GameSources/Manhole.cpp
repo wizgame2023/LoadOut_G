@@ -54,6 +54,12 @@ namespace basecross {
 
 		AddTag(L"Manhole");//マンホール用のタグ
 
+		//GetStage()->AddGameObject<BillBoard>();
+
+		//ビルボードの生成
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",13.0f,Vec3(5.0f,5.0f,5.0f));
+
+
 	}
 
 	void Manhole::OnUpdate()
@@ -69,6 +75,27 @@ namespace basecross {
 		//wss << L"時間 : " << m_time
 		//	<< endl;
 		//scene->SetDebugString(wss.str());
+
+		if (m_mapManager.lock()->SelMapNow(m_pos) >= 2)
+		{			
+			m_billBoardTime += delta;
+			if (m_billBoardTime < 0.8f)
+			{
+				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Hit");
+			}
+			if (m_billBoardTime >= 0.8f)
+			{
+				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Up");
+			}
+			if (m_billBoardTime >= 1.6f)
+			{
+				m_billBoardTime = 0.0f;
+			}
+		}
+		if (m_mapManager.lock()->SelMapNow(m_pos) < 2)
+		{
+			m_billBoard->ChangeTexture(L"Clear");
+		}
 
 	}
 

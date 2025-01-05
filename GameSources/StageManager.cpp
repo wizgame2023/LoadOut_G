@@ -44,7 +44,8 @@ namespace basecross {
 		BGMChange();//BGMを変更する処理
 		KeyEvent();//鍵関連のイベント
 		RepopItem();//アイテムのリポップ処理
-		RepopEnemy();//敵のリポップ処理		
+		RepopEnemy();//敵のリポップ処理
+		RepopRandamItem();//ランダムアイテムのリポップ処理
 		
 		//ゲームクリアのフラグが立ったら
 		if (m_ClearFlag)
@@ -243,6 +244,27 @@ namespace basecross {
 
 	}
 
+	void StageManager::RepopRandamItem()
+	{
+		auto delta = App::GetApp()->GetElapsedTime();
+		auto repopSize = m_repopRandomItemPos.size();
+		auto stage = GetStage();
+
+		//生成する物が１以上あったら生成する
+		if (repopSize > 0)
+		{
+			m_repopRamdomItemCountTime += delta;
+			//クールタイム過ぎたら敵がリポップする
+			if (m_repopRamdomItemCountTime >= 3.0f)
+			{
+				stage->AddGameObject<RandomItem>(m_repopRandomItemPos[0]);//リポップ
+				m_repopRamdomItemCountTime = 0;//カウントリセット
+				m_repopRandomItemPos.erase(m_repopRandomItemPos.begin());//生成した物は配列から削除する
+			}
+		}
+
+	}
+
 	void StageManager::OnDestroy()
 	{
 		auto BGM = App::GetApp()->GetXAudio2Manager();
@@ -270,5 +292,11 @@ namespace basecross {
 	{
 		m_repopEnemyPos.push_back(pos);
 	}
+	//repopRandomItemPosのセッター
+	void StageManager::SetRepopRandomItemPos(Vec3 pos)
+	{
+		m_repopRandomItemPos.push_back(pos);
+	}
+
 }
 //end basecross

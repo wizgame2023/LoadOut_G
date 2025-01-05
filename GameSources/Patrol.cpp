@@ -14,60 +14,63 @@ namespace basecross {
 		auto mapMgr = m_Owner->GetMapMgr();
 		m_trans = m_Owner->GetComponent<Transform>();//Š—LŽÒ(Enemy)‚ÌTransform‚ðŽæ“¾
 		m_ownerPos = m_trans->GetPosition();//Š—LŽÒ(Enemy)‚ÌPosition‚ðŽæ“¾
-		m_checkPoint.clear();
 
-		if (m_ownerPos.z > 0)
+		//m_checkPoint.clear();
+		if (m_checkPoint.size() == 0)
 		{
-			m_cPoint = 
+			if (m_ownerPos.z > 0)
 			{
-				{m_ownerPos},
-				{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z},
-				{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z - m_point},
-				{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z - m_point},
+				m_cPoint =
+				{
+					{m_ownerPos},
+					{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z},
+					{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z - m_point},
+					{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z - m_point},
 
-			};
-		}
-		if (m_ownerPos.z < 0)
-		{
-			m_cPoint =
-			{
-				{m_ownerPos},
-				{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z},
-				{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z + m_point},
-				{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z + m_point},
-
-			};
-
-		}
-		for (int i = 0; i < 4; i++)
-		{
-			if (m_cPoint[i].x<mapMgr->GetMapSize() * 0.5 &&
-				m_cPoint[i].x>-mapMgr->GetMapSize() * -0.5 &&
-				m_cPoint[i].z < mapMgr->GetMapSize() * 0.5 &&
-				m_cPoint[i].z > mapMgr->GetMapSize() * -0.5)
-			{
-				m_checkPoint.push_back(m_cPoint[i]);
+				};
 			}
-			else
+			if (m_ownerPos.z < 0)
 			{
-				while (m_cPoint[i].x > mapMgr->GetMapSize() * 0.5)
+				m_cPoint =
 				{
-					m_cPoint[i].x -= 10;
-				}
-				while (m_cPoint[i].x< mapMgr->GetMapSize() * -0.5)
-				{
-					m_cPoint[i].x += 10;
-				}
-				while (m_cPoint[i].z > mapMgr->GetMapSize() * 0.5)
-				{
-					m_cPoint[i].z -= 10;
-				}
-				while (m_cPoint[i].z < mapMgr->GetMapSize() * -0.5)
-				{
-					m_cPoint[i].z += 10;
-				}
-				m_checkPoint.push_back(m_cPoint[i]);
+					{m_ownerPos},
+					{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z},
+					{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z + m_point},
+					{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z + m_point},
 
+				};
+
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (m_cPoint[i].x<mapMgr->GetMapSize() * 0.5 &&
+					m_cPoint[i].x>-mapMgr->GetMapSize() * -0.5 &&
+					m_cPoint[i].z < mapMgr->GetMapSize() * 0.5 &&
+					m_cPoint[i].z > mapMgr->GetMapSize() * -0.5)
+				{
+					m_checkPoint.push_back(m_cPoint[i]);
+				}
+				else
+				{
+					while (m_cPoint[i].x > mapMgr->GetMapSize() * 0.5)
+					{
+						m_cPoint[i].x -= 10;
+					}
+					while (m_cPoint[i].x < mapMgr->GetMapSize() * -0.5)
+					{
+						m_cPoint[i].x += 10;
+					}
+					while (m_cPoint[i].z > mapMgr->GetMapSize() * 0.5)
+					{
+						m_cPoint[i].z -= 10;
+					}
+					while (m_cPoint[i].z < mapMgr->GetMapSize() * -0.5)
+					{
+						m_cPoint[i].z += 10;
+					}
+					m_checkPoint.push_back(m_cPoint[i]);
+
+				}
 			}
 		}
 	}

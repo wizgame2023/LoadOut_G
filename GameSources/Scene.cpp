@@ -45,16 +45,29 @@ namespace basecross{
 			//最初のアクティブステージの設定
 			ResetActiveStage<GameStage>();
 		}
+		if (event->m_MsgStr == L"ToGameStage02") {
+			ResetActiveStage<GameStage02>();
+		}
+		if (event->m_MsgStr == L"ToGameStage03") {
+			ResetActiveStage<GameStage03>();
+		}
+		if (event->m_MsgStr == L"ToGameStage04") {
+			ResetActiveStage<GameStage04>();
+		}
+		if (event->m_MsgStr == L"ToGameStage05") {
+			ResetActiveStage<GameStage05>();
+		}
+		if (event->m_MsgStr == L"ToGameStage06") {
+			ResetActiveStage<GameStage06>();
+		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定
 			ResetActiveStage<TilteStage>();
 		}
 		if (event->m_MsgStr == L"ToGameOverStage") {
-			//タイトルのアクティブステージの設定
 			ResetActiveStage<GameOverStage>();
 		}
 		if (event->m_MsgStr == L"ToGameClearStage") {
-			//タイトルのアクティブステージの設定
 			ResetActiveStage<GameClearStage>();
 		}
 	}
@@ -130,6 +143,18 @@ namespace basecross{
 		app->RegisterTexture(L"Hatch", strTexture);
 		strTexture = texPath + L"Credit.png";//ハッチのテクスチャ
 		app->RegisterTexture(L"Credit", strTexture);
+		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
+		strTexture = texPath + L"Manhole_BillBoard_Push.png";
+		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
+		strTexture = texPath + L"Manhole_BillBoard_Hit.png";
+		app->RegisterTexture(L"Manhole_BillBoard_Hit", strTexture);
+		strTexture = texPath + L"Manhole_BillBoard_Up.png";
+		app->RegisterTexture(L"Manhole_BillBoard_Up", strTexture);
+		strTexture = texPath + L"battery_haveNo.png";
+		app->RegisterTexture(L"Battery_HaveNo", strTexture);
+		strTexture = texPath + L"Key_HaveNo.png";
+		app->RegisterTexture(L"Key_HaveNo", strTexture);
+		//////////////////////////////////////////////////////////////////////////////////////
 
 
 		//BGMSE
@@ -154,8 +179,10 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"GameClear2", soundWav);
 		soundWav = SoundPath + L"GameOver.wav";
 		App::GetApp()->RegisterWav(L"GameOverBGM", soundWav);
-		soundWav = SoundPath + L"Tracking.wav";//なぜかダメ
+		soundWav = SoundPath + L"Tracking.wav";
 		App::GetApp()->RegisterWav(L"Tracking", soundWav);
+		soundWav = SoundPath + L"Error.wav";//エラー音
+		App::GetApp()->RegisterWav(L"Error", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ

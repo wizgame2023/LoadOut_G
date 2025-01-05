@@ -62,12 +62,32 @@
 #include"PillarEfect.h"//柱上のエフェクト
 #include"ManholeSprite.h"//ミニマップ用のマンホールスプライト
 #include"RandomItem.h"//ランダムにイベントが発生するアイテム
+#include"GameStage02.h"
+#include"GameStage03.h"
+#include"GameStage04.h"
+#include"GameStage05.h"
+#include"GameStage06.h"
+#include"GameStage07.h"
+#include"GameStage08.h"
+#include"GameStage09.h"
+#include"GameStage10.h"
+#include"GameStage11.h"
+#include"GameStage12.h"
+#include"GameStage13.h"
+#include"GameStage14.h"
+#include"GameStage15.h"
+#include"GameStage16.h"
+#include"GameStage17.h"
+#include"GameStage18.h"
+#include"GameStage19.h"
+#include"GameStage20.h"
 
 //マネージャー用
 #include"MiniMapManager.h"//ミニマップ生成
 #include"UIManager.h";//UIマネージャー
 #include"StageManager.h"
 #include"StageCollisionManager.h"//コリジョン管理
+#include"NumberManager.h";
 
 //カメラ用
 #include"MyCamera.h"//追尾カメラ用

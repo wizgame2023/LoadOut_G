@@ -55,6 +55,7 @@ namespace basecross {
 		);
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
+		ptrColl->SetAfterCollision(AfterCollision::None);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		AddTag(L"Enemy");
@@ -67,7 +68,7 @@ namespace basecross {
 		MoveSwich(true);//動けるようにする
 
 		//ビルボードの生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(dynamic_pointer_cast<Actor>(GetThis<Actor>()),0);
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0);
 	}
 
 	void Enemy::OnUpdate()
@@ -92,7 +93,7 @@ namespace basecross {
 			
 			m_NextSt.reset();// 次のステート用の変数を空にする
 		
-			m_CurrentSt->OnExit();// 切り替わった新しいステートの最初に行う処理
+			m_CurrentSt->OnStart();// 切り替わった新しいステートの最初に行う処理
 		}
 
 		//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
