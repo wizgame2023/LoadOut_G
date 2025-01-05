@@ -46,6 +46,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NumberManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PillarEfect.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RandomItem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sky_base.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RandomItem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RaySphere.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
