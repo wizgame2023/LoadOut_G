@@ -44,7 +44,7 @@ namespace basecross {
 		if (player)
 		{
 			auto randam = rand() % 4;
-			randam = 3;
+			//randam = 3;
 			switch (randam)
 			{
 			case 0:
@@ -66,6 +66,9 @@ namespace basecross {
 			}
 
 			GetStage()->RemoveGameObject<RandomItem>(GetThis<RandomItem>());
+			//ƒŠƒ|ƒbƒv—\–ñ
+			auto stageManager = GetStage()->GetSharedGameObject<StageManager>(L"StageManager");
+			stageManager->SetRepopRandomItemPos(m_pos);
 		}
 	}
 
