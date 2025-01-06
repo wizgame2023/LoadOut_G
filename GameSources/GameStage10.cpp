@@ -149,7 +149,11 @@ namespace basecross {
 	{
 		vector<Vec3> posVec =
 		{
-		   Vec3(-5.0f, 2.5f, -15.0f),//1
+		   Vec3(15.0f, 2.5f, 75.0f),//1
+		   Vec3(65.0f, 2.5f, -25.0f),//2
+		   Vec3(-75.0f, 2.5f, -75.0f),//3
+
+
 		};
 		auto test = posVec.size();
 
