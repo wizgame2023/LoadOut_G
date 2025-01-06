@@ -106,8 +106,9 @@ namespace basecross {
 		vector<shared_ptr<Enemy>>enemyVec;
 		vector<Vec3> posVec =
 		{
-			Vec3(-25.0f, 2.5f, -35.0f),
-			Vec3(5.0f, 2.5f, 45.0f)
+			Vec3(40.0f, 2.5f, 40.0f),
+			Vec3(-60.0f, 2.5f, 30.0f),
+			Vec3(-40.0f, 2.5f, -50.0f),
 		};
 		auto test = posVec.size();
 
@@ -124,11 +125,11 @@ namespace basecross {
 	{
 		vector<Vec3> posVec =
 		{
-		   Vec3(-5.0f, 2.5f, -15.0f),//1
-		   Vec3(-35.0f, 2.5f, -5.0f),//2
-		   Vec3(-5.0f, 2.5f, 25.0f), //3
-		   Vec3(45.0f, 2.5f, -15.0f),//4
-		   Vec3(-45.0f, 2.5f, -45.0f)//5
+		   Vec3(-40.0f, 2.5f, -30.0f),//1
+		   Vec3(0.0f, 2.5f, 60.0f),//2
+		   Vec3(50.0f, 2.5f, -50.0f), //3
+		   Vec3(-30.0f, 2.5f, -40.0f),//4
+		   Vec3(10.0f, 2.5f, -20.0f)//5
 		};
 		auto test = posVec.size();
 
