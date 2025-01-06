@@ -117,6 +117,13 @@ namespace basecross {
 				}
 				else if (m_ownerPos == m_checkPoint[i])
 				{
+					//次進む場所が同じならスキップする
+					while (m_checkPoint[i] == m_checkPoint[i + 1])
+					{
+						i++;
+						if (i == 3) break;
+					}
+
 					m_destinationPos = m_checkPoint[i + 1];
 					m_destinationDecision = true;
 					break;

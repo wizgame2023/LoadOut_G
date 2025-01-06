@@ -18,7 +18,7 @@ namespace basecross {
 		~RandomItem();//デストラクタ
 
 		virtual void OnCreate() override;//開始する際に呼び出す関数
-		//virtual void OnUpdate() override;
+		virtual void OnUpdate() override;
 
 		void OnCollisionEnter(shared_ptr<GameObject>& obj)override;
 

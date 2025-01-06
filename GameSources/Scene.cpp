@@ -143,6 +143,14 @@ namespace basecross{
 		app->RegisterTexture(L"Hatch", strTexture);
 		strTexture = texPath + L"Credit.png";//ハッチのテクスチャ
 		app->RegisterTexture(L"Credit", strTexture);
+		strTexture = texPath + L"GameClear.png";//ゲームクリアのテクスチャ
+		app->RegisterTexture(L"GameClearText", strTexture);
+		strTexture = texPath + L"GameClearText2.png";//ゲームクリアのテクスチャ
+		app->RegisterTexture(L"GameClearTextBButton", strTexture);
+		strTexture = texPath + L"GameClearText3.png";//ゲームクリアのテクスチャ
+		app->RegisterTexture(L"GameClearTextAButton", strTexture);
+		strTexture = texPath + L"GameOver.png";//ゲームオーバーのテクスチャ
+		app->RegisterTexture(L"GameOverText", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
@@ -183,6 +191,10 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"Tracking", soundWav);
 		soundWav = SoundPath + L"Error.wav";//エラー音
 		App::GetApp()->RegisterWav(L"Error", soundWav);
+		soundWav = SoundPath + L"StatusUp.wav";//ステータスアップ
+		App::GetApp()->RegisterWav(L"Status_Up", soundWav);
+		soundWav = SoundPath + L"Status_DownVer1.2.wav";//ステータスダウン
+		App::GetApp()->RegisterWav(L"Status_Down", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
@@ -200,6 +212,8 @@ namespace basecross{
 		//ボーンマルチメッシュ
 		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");//プレイヤー(仮)メッシュ
 		app->RegisterResource(L"Player_Mesh_Kari", boneMultiModelMesh);
+		boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"misterybox.bmf");
+		app->RegisterResource(L"MisteryBox", boneMultiModelMesh);
 		//boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"police_test.bmf");//敵(仮)メッシュ
 		//app->RegisterResource(L"Boss_Mesh_Kari2", boneMultiModelMesh);
 

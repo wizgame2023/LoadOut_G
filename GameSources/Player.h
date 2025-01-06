@@ -25,6 +25,7 @@ namespace basecross{
 
 		bool m_key;//鍵を持っているかどうか
 		bool m_addBoardFlag;//ビルボードを出すフラグ
+		bool m_gameStageFlag;//ゲームステージかどうか確認するフラグ
 
 		shared_ptr<Transform> m_Trans;//トランスフォーム
 
@@ -34,7 +35,7 @@ namespace basecross{
 		shared_ptr<BillBoard> m_billBoard;//ビルボード
 
 	public:
-		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot);//コンストラクタ
+		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot,bool GameFlag = true);//コンストラクタ
 		~Player();
 
 		virtual void OnCreate()override;

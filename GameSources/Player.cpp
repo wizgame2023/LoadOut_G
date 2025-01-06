@@ -7,12 +7,13 @@
 #include "Project.h"
 
 namespace basecross{
-	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot) :
+	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot,bool gameFlag) :
 		Actor(StagePtr),
 		m_Pos(pos),
 		m_Rot(rot),
 		m_speed(10),
-		m_pushSpeed(0)
+		m_pushSpeed(0),
+		m_gameStageFlag(gameFlag)
 		//m_move(true)
 	{
 	}
@@ -41,7 +42,7 @@ namespace basecross{
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 		ptrDraw->AddAnimation(L"Walk", 4, 15, true, 30.0f);//歩き状態
 		ptrDraw->AddAnimation(L"Stand", 5, 5, false, 1.0f);//待機状態
-		ptrDraw->AddAnimation(L"Down", 40, 60, false, 30.0f);//ゲームオーバー状態
+		ptrDraw->AddAnimation(L"Player_Down", 40, 60, false, 30.0f);//ゲームオーバー状態
 		ptrDraw->AddAnimation(L"Happey", 20, 24, true, 30.0f);//ゲームクリア状態
 		ptrDraw->ChangeCurrentAnimation(L"Walk");
 
@@ -68,14 +69,18 @@ namespace basecross{
 
 		AddTag(L"Player");//Player用のタグ
 
-		//電池をどれくらい持っているかを表す
-		GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
-		GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
-		m_spriteNum =  GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f+80.0f, 400-250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
-		MoveSwich(true);
+		//ゲームステージなら
+		if (m_gameStageFlag)
+		{
+			//電池をどれくらい持っているかを表す
+			GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
+			GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
+			m_spriteNum = GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f + 80.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
+			MoveSwich(true);
 
-		//ビルボード生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",12.0f);
+			//ビルボード生成
+			m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear", 12.0f);
+		}
 
 
 	}
@@ -86,7 +91,7 @@ namespace basecross{
 		auto Delta = App::GetApp()->GetElapsedTime();
 
 
-		if (!m_move)//フラグがオンになったら動ける
+		if (!m_move||!m_gameStageFlag)//フラグがオンになったら動ける
 		{
 			return;
 		}
@@ -275,14 +280,12 @@ namespace basecross{
 			{
 				if (m_itemCount <= 0)
 				{
-					//SE生成マンホールにわなを仕掛ける音
 					auto SEManager = App::GetApp()->GetXAudio2Manager();
 					auto SE = SEManager->Start(L"Error", 0, 0.9f);
 				}
 			}
 			if (mapManager->SelMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
 			{
-				//SE生成マンホールにわなを仕掛ける音
 				auto SEManager = App::GetApp()->GetXAudio2Manager();
 				auto SE = SEManager->Start(L"Error", 0, 0.9f);
 			}
