@@ -82,7 +82,7 @@ namespace basecross {
 		CreatePlayer();
 
 		//“G¶¬
-		//CreateEnemy();
+		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
 
 		AddGameObject<MovieGameStart>(mapSize);//ƒ€[ƒr[¶¬
