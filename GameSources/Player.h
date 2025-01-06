@@ -7,6 +7,7 @@
 #include "stdafx.h"
 #include "SpriteNum.h"
 #include "BillBoard.h"
+#include "NumberManager.h"
 
 namespace basecross{
 	class Player :public Actor
@@ -31,7 +32,7 @@ namespace basecross{
 
 		shared_ptr<InputDevice> m_Device;//コントローラー
 		CONTROLER_STATE m_controler;//コントローラー
-		shared_ptr<SpriteNum> m_spriteNum;//数字のスプライト
+		shared_ptr<NuberManager> m_spriteNum;//数字のスプライト
 		shared_ptr<BillBoard> m_billBoard;//ビルボード
 
 	public:

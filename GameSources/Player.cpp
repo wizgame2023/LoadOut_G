@@ -75,13 +75,12 @@ namespace basecross{
 			//電池をどれくらい持っているかを表す
 			GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
 			GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
-			m_spriteNum = GetStage()->AddGameObject<SpriteNum>(L"Number", Vec2(30.0f, 30.0f), m_itemCount, Vec3(-640.0f + 80.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//個数
+			m_spriteNum = GetStage()->AddGameObject<NuberManager>(m_itemCount, Vec2(30.0f, 30.0f), Vec3(-640.0f + 100.0f, 400 - 250.0f, 0.0f), true);//個数
 			MoveSwich(true);
 
 			//ビルボード生成
 			m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear", 12.0f);
 		}
-
 
 	}
 
@@ -165,7 +164,11 @@ namespace basecross{
 		}		
 
 
-
+		//電池所持数は99個が限界
+		if (m_itemCount >= 100)
+		{
+			m_itemCount = 99;
+		}
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
 		//追加スピードが0ではない場合適応時間を計測して一定時間過ぎたら0にする
@@ -182,6 +185,14 @@ namespace basecross{
 
 		//デバック用/////////////////////////////////////////////////////////////
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)//Aボタンを押したとき
+		{
+			auto test = 0;
+		}
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)//L
+		{
+			auto test = 0;
+		}
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)//R
 		{
 			auto test = 0;
 		}
