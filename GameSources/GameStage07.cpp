@@ -81,6 +81,8 @@ namespace basecross {
 		//AddGameObject<Battery>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//AddGameObject<Battery>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
 		CreateBattery();//アイテムの生成
+		//ランダムアイテムの生成
+		CreateRamdomItem();
 
 		m_miniMapManager->CreateBattery();
 
@@ -150,6 +152,23 @@ namespace basecross {
 		}
 
 	}
+
+	//ランダムアイテム生成
+	void GameStage07::CreateRamdomItem()
+	{
+		vector<Vec3> posVec =
+		{
+		   Vec3(-5.0f, 2.5f, -15.0f),//1
+		};
+		auto test = posVec.size();
+
+		for (int i = 0; i < posVec.size(); i++)
+		{
+			AddGameObject<RandomItem>(posVec[i]);
+		}
+
+	}
+
 
 	//敵がどれくらい追いかけてくるか確認する
 	int GameStage07::GameEnemyState()

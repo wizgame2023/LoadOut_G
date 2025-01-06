@@ -34,6 +34,7 @@ namespace basecross {
 		void CreatePlayer();//Player生成
 		void CreateBattery();//アイテム生成
 		void CreateEnemy();//Enemy生成
+		void CreateRamdomItem();//ランダムアイテム生成
 
 		void SetEnemy(int num);
 
