@@ -66,11 +66,8 @@ namespace basecross {
 		//床の作成
 		AddGameObject<Ground>();
 
-
-		//SE生成マンホールにわなを仕掛ける音
-		//auto SEManager = App::GetApp()->GetXAudio2Manager();
-		//auto SE = SEManager->Start(L"SetManhole", 0, 0.9f);
-
+		//最後にプレイしたステージを渡す
+		auto m_lastStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
 
 
 	}
@@ -87,20 +84,51 @@ namespace basecross {
 		//コントローラーのアナログスティックの向き
 		auto m_controler = inputDevice.GetControlerVec()[0];
 
-		////Playerのうれしいアニメーション
-		//auto player = GetSharedGameObject<Player>(L"Player");//プレイヤー取得
-		//auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
-		////Playerのアニメーション更新
-		//playerDraw->UpdateAnimation(delta);
+		auto m_lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
+
 
 		
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bPushKeyTbl[VK_SPACE])
-		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
-		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A||keyState.m_bPushKeyTbl['A'])
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
+		}
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
+		{
+			switch (m_lastPlayStage)
+			{
+			case 1:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+				break;
+			case 2:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
+				break;
+			case 3:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
+				break;
+			case 4:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
+				break;
+			case 5:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
+				break;
+			case 6:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
+				break;
+			case 7:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
+				break;
+			case 8:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
+				break;
+			case 9:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
+				break;
+			case 10:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
