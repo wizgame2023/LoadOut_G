@@ -65,6 +65,7 @@ namespace basecross {
 	void GameClearStage::OnUpdate()
 	{
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
+		auto lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
 
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 		// インプットデバイスオブジェクト
@@ -77,7 +78,7 @@ namespace basecross {
 		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
 		//Playerのアニメーション更新
 		playerDraw->UpdateAnimation(delta);
-
+		
 
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
 		{
