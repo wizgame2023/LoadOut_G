@@ -22,12 +22,13 @@ namespace basecross {
 			m_numLength = true;
 		}
 	}
-	NuberManager::NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos,bool numLenght) :
+	NuberManager::NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos,bool numLenght,float between) :
 		GameObject(stage),
 		m_number(number),
 		m_scale(scale),
 		m_pos(pos),
-		m_numLength(numLenght)
+		m_numLength(numLenght),
+		m_between(between)
 	{
 	}
 	NuberManager::~NuberManager()
@@ -42,8 +43,8 @@ namespace basecross {
 		}
 		if (m_numLength)
 		{
-			m_spriteTen = GetStage()->AddGameObject<SpriteNum>(L"Number", m_scale , m_number / 10, Vec3(m_pos.x - 18, m_pos.y, m_pos.z));
-			m_spriteOne = GetStage()->AddGameObject<SpriteNum>(L"Number", m_scale, m_number % 10, Vec3(m_pos.x + 18, m_pos.y, m_pos.z));
+			m_spriteTen = GetStage()->AddGameObject<SpriteNum>(L"Number", m_scale , m_number / 10, Vec3(m_pos.x - m_between, m_pos.y, m_pos.z));
+			m_spriteOne = GetStage()->AddGameObject<SpriteNum>(L"Number", m_scale, m_number % 10, Vec3(m_pos.x + m_between, m_pos.y, m_pos.z));
 		}
 	}
 	void NuberManager::OnUpdate()

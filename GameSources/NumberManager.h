@@ -11,6 +11,7 @@ namespace basecross{
 	class NuberManager :public GameObject
 	{
 		int m_number;
+		float m_between;//”š‚Æ”š‚ÌŠÔ
 		bool m_numLength;//1Œ…‚É‚·‚é‚©2Œ…‚É‚·‚é‚©
 
 		Vec3 m_pos;
@@ -20,7 +21,7 @@ namespace basecross{
 		shared_ptr<SpriteNum> m_spriteTen;//\‚ÌˆÊ
 
 	public:
-		NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos, bool numLength);
+		NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos, bool numLength,float between = 18.0f);
 		NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos);
 		~NuberManager();
 

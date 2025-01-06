@@ -20,13 +20,17 @@ namespace basecross {
 	void MapManager::OnCreate()
 	{		
 		StageMapLoad();
-		WallMapLoad();	
+		WallMapLoad();
 		UnityMapCreate();
 	}
 
 	void MapManager::OnUpdate()
 	{
-
+		if (m_UpdetaUnityMapFlag)
+		{
+			UnityMapCreate();
+			m_UpdetaUnityMapFlag = false;
+		}
 	}
 
 	//ワールド座標をセル座標に変換する
@@ -247,7 +251,7 @@ namespace basecross {
 
 	void MapManager::UnityMapCreate()
 	{
-
+		m_unityMap.clear();//初期化
 		for (int y = 0; y < (m_stageMap.size() * 2)+1; y++)
 		{
 
@@ -263,12 +267,12 @@ namespace basecross {
 				evenX = x % 2 == 0 ? false : true;
 				evenY = y % 2 == 0 ? false : true;
 
-				//xとyが奇数なら空白
+				//xとyが偶数なら空白
 				if (!evenX && !evenY)
 				{
 					m_unityLine.push_back(0);
 				}
-				//xが奇数yが偶数なら縦壁
+				//xが偶数yが奇数なら縦壁
 				if (!evenX && evenY)
 				{
 					int originY = y / 2;//小数点以下切り捨て
@@ -276,7 +280,7 @@ namespace basecross {
 
 					m_unityLine.push_back(m_rightWallMap[originY][originX]);
 				}
-				//xが偶数yが奇数なら横壁
+				//xが奇数yが偶数なら横壁
 				if (evenX && !evenY)
 				{
 					int originY = y / 2;//小数点以下切り捨て
@@ -284,7 +288,7 @@ namespace basecross {
 
 					m_unityLine.push_back(m_upWallMap[originY][originX]);
 				}
-				//xとyが偶数なら地面
+				//xとyが奇数なら地面
 				if (evenX && evenY)
 				{
 					int originY = y / 2;//小数点以下切り捨て
@@ -296,15 +300,12 @@ namespace basecross {
 
 			count = 0;//リセット
 
-
 			//aStarMapにA＊の一行ずつ配列を入れる
 			m_unityMap.push_back(m_unityLine);
 			m_unityLine.clear();//使わない配列は削除
 			auto a = 0;
 
 		}
-		m_unityMap;
-		auto test = 0;
 
 	}
 
@@ -379,6 +380,11 @@ namespace basecross {
 		
 
 		return testMap;
+	}
+
+	void MapManager::SetUpdataUnityMapFlag(bool flag)
+	{
+		m_UpdetaUnityMapFlag = flag;
 	}
 
 	//マップのサイズを渡す

@@ -37,6 +37,7 @@ namespace basecross {
 		virtual void OnUpdate()override;//更新
 
 		void SetColor(Col4 coler);//セッター
+		void SetTexture(wstring Texture);//セッター
 		void MyDestroy();//自分自身を消す
 		Col4 GetColor();//ゲッター
 

@@ -20,6 +20,8 @@ namespace basecross {
 		float m_mapSize;//マップのサイズ(直径)
 		float m_push;//一気にオブジェクト生成する際にエクセルの座標と合わせるための数値
 
+		bool m_UpdetaUnityMapFlag;//UnityMapの更新
+
 	public:
 		enum SelMapCount
 		{
@@ -51,6 +53,8 @@ namespace basecross {
 		void WallCreate();//壁を生成
 		void AddExctraUnity(int addArray);//余分にA*に配列を入れる処理
 		void AddArray(int loop,int num);//配列に数値を入れる処理
+
+		void SetUpdataUnityMapFlag(bool flag);
 
 		float GetMapSize();//マップのサイズを渡す処理
 

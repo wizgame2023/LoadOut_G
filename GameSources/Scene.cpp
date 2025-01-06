@@ -43,7 +43,7 @@ namespace basecross{
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
 		if (event->m_MsgStr == L"ToGameStage") {
 			//最初のアクティブステージの設定
-			ResetActiveStage<GameStage02>();
+			ResetActiveStage<GameStage>();
 		}
 		if (event->m_MsgStr == L"ToGameStage02") {
 			ResetActiveStage<GameStage02>();
@@ -81,6 +81,9 @@ namespace basecross{
 		}
 		if (event->m_MsgStr == L"ToGameClearStage") {
 			ResetActiveStage<GameClearStage>();
+		}
+		if (event->m_MsgStr == L"ToSelectStage") {
+			ResetActiveStage<SelectStage>();
 		}
 	}
 
@@ -165,6 +168,14 @@ namespace basecross{
 		app->RegisterTexture(L"GameOverText", strTexture);
 		strTexture = texPath + L"Light.png";//ゲームオーバー用のライト
 		app->RegisterTexture(L"GameOverLight", strTexture);
+		strTexture = texPath + L"StageText.png";//ゲームオーバー用のライト
+		app->RegisterTexture(L"StageText", strTexture);
+		strTexture = texPath + L"BackGround.png";//背景用のスプライト
+		app->RegisterTexture(L"BackGround", strTexture);
+		strTexture = texPath + L"RightArrowVer1.1.png";//右矢印
+		app->RegisterTexture(L"RightArrow", strTexture);
+		strTexture = texPath + L"LeftArrowVer1.1.png";//左矢印
+		app->RegisterTexture(L"LeftArrow", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
@@ -177,6 +188,29 @@ namespace basecross{
 		strTexture = texPath + L"Key_HaveNo.png";
 		app->RegisterTexture(L"Key_HaveNo", strTexture);
 		//////////////////////////////////////////////////////////////////////////////////////
+		//ステージの上空写真//////////////////////////////////////////////////////////////////
+		strTexture = texPath + L"Stage01.png";
+		app->RegisterTexture(L"Stage01_HiShot", strTexture);
+		strTexture = texPath + L"Stage02.png";
+		app->RegisterTexture(L"Stage02_HiShot", strTexture);
+		strTexture = texPath + L"Stage03.png";
+		app->RegisterTexture(L"Stage03_HiShot", strTexture);
+		strTexture = texPath + L"Stage04.png";
+		app->RegisterTexture(L"Stage04_HiShot", strTexture);
+		strTexture = texPath + L"Stage05.png";
+		app->RegisterTexture(L"Stage05_HiShot", strTexture);
+		strTexture = texPath + L"Stage06.png";
+		app->RegisterTexture(L"Stage06_HiShot", strTexture);
+		strTexture = texPath + L"Stage07.png";
+		app->RegisterTexture(L"Stage07_HiShot", strTexture);
+		strTexture = texPath + L"Stage08.png";
+		app->RegisterTexture(L"Stage08_HiShot", strTexture);
+		strTexture = texPath + L"Stage09.png";
+		app->RegisterTexture(L"Stage09_HiShot", strTexture);
+		strTexture = texPath + L"Stage10.png";
+		app->RegisterTexture(L"Stage10_HiShot", strTexture);
+		/////////////////////////////////////////////////////////////////////////////////////
+
 
 
 		//BGMSE
@@ -184,6 +218,8 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"StageBGM", soundWav);
 		soundWav = SoundPath + L"StageBGMEscape.wav";//ステージBGM追いかけられているとき
 		App::GetApp()->RegisterWav(L"StageBGMEscape", soundWav);
+		soundWav = SoundPath + L"SelectStageBGM.wav";//セレクトBGM
+		App::GetApp()->RegisterWav(L"SelectStageBGM", soundWav);
 		soundWav = SoundPath + L"ItemGet.wav";
 		App::GetApp()->RegisterWav(L"ItemGet", soundWav);
 		soundWav = SoundPath + L"GameClrear.wav";
@@ -209,6 +245,10 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"Status_Up", soundWav);
 		soundWav = SoundPath + L"Status_DownVer1.2.wav";//ステータスダウン
 		App::GetApp()->RegisterWav(L"Status_Down", soundWav);
+		soundWav = SoundPath + L"Choice.wav";//選択移動
+		App::GetApp()->RegisterWav(L"Choice", soundWav);
+		soundWav = SoundPath + L"Decision.wav";//決定
+		App::GetApp()->RegisterWav(L"Decision", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ

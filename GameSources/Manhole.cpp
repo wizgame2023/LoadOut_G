@@ -154,6 +154,7 @@ namespace basecross {
 		//通行禁止になる時の処理
 		if (m_mapManager.lock()->SelMapNow(m_pos) == 3 && (m_charen == Manhole_Up||m_charen==Manhole_Start))
 		{
+			m_mapManager.lock()->SetUpdataUnityMapFlag(true);//UnityMapデータ更新
 			m_charen = Manhole_Used;//通行禁止になっている状態
 			Vec3 clearPos = m_pos;
 			clearPos.y += 0.0f;
@@ -172,6 +173,7 @@ namespace basecross {
 			m_coolTime += delta;
 			if (m_coolTime > 10.0f)//時間が過ぎたら
 			{
+				m_mapManager.lock()->SetUpdataUnityMapFlag(true);//UnityMapデータ更新
 				m_coolTime = 0;//クールタイムリセット
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//自分自身にアイテムが置かれていると分かりやすくする
 				m_mapManager.lock()->MapDataUpdate(m_pos, 1);//マップマネージャーに通れる状態だと返す
