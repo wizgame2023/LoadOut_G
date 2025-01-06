@@ -51,7 +51,7 @@ namespace basecross {
 		}
 
 		//マップマネージャーの生成
-		auto mapManager = AddGameObject<MapManager>(L"Stage01/");
+		auto mapManager = AddGameObject<MapManager>(L"Stage10/");
 		SetSharedGameObject(L"MapManager", mapManager);
 		auto mapSize = mapManager->GetMapSize();
 
@@ -70,13 +70,7 @@ namespace basecross {
 		//床の作成
 		AddGameObject<Ground>();
 
-		//アイテムの生成//stage20
-		//AddGameObject<Battery>(Vec3(-5.0f, 2.5f, -24.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(-25.0f, 2.5f, 45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(-64.0f, 2.5f, 14.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(85.0f, 2.5f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(5.0f, 2.5f, -85.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//アイテムの生成
 		CreateBattery();//アイテムの生成
 
 		m_miniMapManager->CreateBattery();
@@ -84,12 +78,7 @@ namespace basecross {
 		//Playerの生成
 		CreatePlayer();
 
-		//敵生成stage20
-		//auto enemy = AddGameObject<Enemy>();
-		//enemy->AddTag(L"Key");//鍵を持っていることにする
-		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
-		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
-		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
+		//敵生成
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
 
@@ -114,8 +103,10 @@ namespace basecross {
 		vector<shared_ptr<Enemy>>enemyVec;
 		vector<Vec3> posVec =
 		{
-			Vec3(-25.0f, 2.5f, -35.0f),
-			Vec3(5.0f, 2.5f, 45.0f)
+			Vec3(-95.0f,2.5f,95.0f),
+			Vec3(95.0f, 2.5f, -95.0f),
+			Vec3(95.0f, 2.5f, 95.0f),
+			Vec3(-95.0f, 2.5f, -95.0f)
 		};
 		auto test = posVec.size();
 
@@ -132,11 +123,12 @@ namespace basecross {
 	{
 		vector<Vec3> posVec =
 		{
-		   Vec3(-5.0f, 2.5f, -15.0f),//1
-		   Vec3(-35.0f, 2.5f, -5.0f),//2
-		   Vec3(-5.0f, 2.5f, 25.0f), //3
-		   Vec3(45.0f, 2.5f, -15.0f),//4
-		   Vec3(-45.0f, 2.5f, -45.0f)//5
+		Vec3(-5.0f, 2.5f, -24.0f),//1
+		Vec3(-25.0f, 2.5f, 45.0f),//2
+		Vec3(-64.0f, 2.5f, 14.0f),//3
+		Vec3(25.0f, 2.5f, 0.0f),//4
+		Vec3(85.0f, 2.5f, -45.0f),//5
+		Vec3(5.0f, 2.5f, -85.0f)//6
 		};
 		auto test = posVec.size();
 
