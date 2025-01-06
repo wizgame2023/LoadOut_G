@@ -28,7 +28,7 @@ namespace basecross {
 		weak_ptr<Player> player = stage->GetSharedGameObject<Player>(L"Player");//プレイヤー取得
 
 		auto posPlayer = player.lock()->GetComponent<Transform>()->GetPosition();//ポジション取得
-		SetAt(posPlayer);//注視点を決定
+		SetAt(posPlayer+Vec3(0.0f,5.0f,0.0f));//注視点を決定
 
 		//カメラの座標を決める	
 		SetEye(m_Pos+posPlayer);
