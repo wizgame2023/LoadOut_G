@@ -64,6 +64,12 @@ namespace basecross {
 	}
 
 	//カラーの数値を変更する
+	void Sprite::SetTexture(wstring texture)
+	{
+		m_drawComp->SetTextureResource(texture);//テクスチャの名前指定
+	}
+
+	//カラーの数値を変更する
 	void Sprite::SetColor(Col4 color)
 	{
 		m_color = color;
