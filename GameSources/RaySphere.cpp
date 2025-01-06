@@ -75,7 +75,7 @@ namespace basecross {
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム取得
 		auto ptr = GetComponent<Transform>();//Transform取得
 		auto pos = ptr->GetPosition();
-		float speed = 20;
+		float speed = 37;
 		pos.x += cos(m_rad) * speed * delta;
 		pos.z += sin(m_rad) * speed * delta;
 		ptr->SetPosition(pos);

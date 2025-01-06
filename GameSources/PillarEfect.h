@@ -37,11 +37,11 @@ namespace basecross {
 		PillarEffect(const shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velovity, int square = 36);
 		~PillarEffect();
 
-		void OnCreate() override;
-		void OnUpdate() override;
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
 
 		void SetScrollPerSecond(Vec2 velocity);
-		void UpdateTest(bool OnOff);
+		virtual void UpdateTest(bool OnOff);
 
 	};
 

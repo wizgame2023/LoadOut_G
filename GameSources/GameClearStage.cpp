@@ -65,7 +65,7 @@ namespace basecross {
 	void GameClearStage::OnUpdate()
 	{
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
-		auto lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
+		auto m_lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
 
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 		// インプットデバイスオブジェクト
@@ -82,9 +82,43 @@ namespace basecross {
 
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
 		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+			switch (m_lastPlayStage)
+			{
+			case 1:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+				break;
+			case 2:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
+				break;
+			case 3:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
+				break;
+			case 4:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
+				break;
+			case 5:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
+				break;
+			case 6:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
+				break;
+			case 7:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
+				break;
+			case 8:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
+				break;
+			case 9:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
+				break;
+			case 10:
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
+				break;
+			default:
+				break;
+			}
 		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bPushKeyTbl[VK_SPACE])
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}
