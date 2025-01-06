@@ -50,6 +50,9 @@ namespace basecross {
 			throw;
 		}
 
+		//最後にプレイしたステージを渡す
+		App::GetApp()->GetScene<Scene>()->SetLastPlayStage(2);
+
 		//マップマネージャーの生成
 		auto mapManager = AddGameObject<MapManager>(L"Stage02/");
 		SetSharedGameObject(L"MapManager", mapManager);
