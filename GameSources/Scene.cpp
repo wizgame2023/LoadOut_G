@@ -60,6 +60,18 @@ namespace basecross{
 		if (event->m_MsgStr == L"ToGameStage06") {
 			ResetActiveStage<GameStage06>();
 		}
+		if (event->m_MsgStr == L"ToGameStage07") {
+			ResetActiveStage<GameStage07>();
+		}
+		if (event->m_MsgStr == L"ToGameStage08") {
+			ResetActiveStage<GameStage08>();
+		}
+		if (event->m_MsgStr == L"ToGameStage09") {
+			ResetActiveStage<GameStage09>();
+		}
+		if (event->m_MsgStr == L"ToGameStage10") {
+			ResetActiveStage<GameStage10>();
+		}
 		if (event->m_MsgStr == L"ToTilteStage") {
 			//タイトルのアクティブステージの設定
 			ResetActiveStage<TilteStage>();
@@ -151,6 +163,8 @@ namespace basecross{
 		app->RegisterTexture(L"GameClearTextAButton", strTexture);
 		strTexture = texPath + L"GameOver.png";//ゲームオーバーのテクスチャ
 		app->RegisterTexture(L"GameOverText", strTexture);
+		strTexture = texPath + L"Light.png";//ゲームオーバー用のライト
+		app->RegisterTexture(L"GameOverLight", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
