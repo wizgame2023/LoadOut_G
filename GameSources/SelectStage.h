@@ -17,6 +17,12 @@ namespace basecross {
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<SpriteNum>m_sprite;
 
+		shared_ptr<Sprite> m_StagePhoto;
+		shared_ptr<Sprite> m_StageText;
+		shared_ptr<NuberManager> m_NumberSprite;
+
+		int m_SelectStage;//選択しているステージ
+
 		const int m_allStage = 20;
 		
 
