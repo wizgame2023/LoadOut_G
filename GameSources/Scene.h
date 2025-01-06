@@ -42,10 +42,14 @@ namespace basecross{
 
 		void GameResourses();
 
+		void SetLastPlayStage(int playStage);//最後にプレイしたステージを返すセッター
+
 		int GetSelOneSize();//１つのセル座標がワールド座標ではどんな大きさかを返すゲッター
+		int GetLastPlayStage();//最後にプレイしたステージを返すゲッター
 
 	private:
 		int m_OneBox = 10;//１つのボックスの大きさ
+		int m_lastPlayStage = 1;//最後にプレイしたステージ
 	};
 
 }

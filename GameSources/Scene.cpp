@@ -43,7 +43,7 @@ namespace basecross{
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
 		if (event->m_MsgStr == L"ToGameStage") {
 			//最初のアクティブステージの設定
-			ResetActiveStage<GameStage>();
+			ResetActiveStage<GameStage02>();
 		}
 		if (event->m_MsgStr == L"ToGameStage02") {
 			ResetActiveStage<GameStage02>();
@@ -233,10 +233,21 @@ namespace basecross{
 
 	}
 
+	void Scene::SetLastPlayStage(int playStage)
+	{
+		m_lastPlayStage = playStage;
+	}
+
 	//１つのブロックの基準の大きさ これがセルでいうところの1に当たる大きさ
 	int Scene::GetSelOneSize()
 	{
 		return m_OneBox;
+	}
+
+	//最後にプレイしたステージを返す
+	int Scene::GetLastPlayStage()
+	{
+		return m_lastPlayStage;
 	}
 
 }
