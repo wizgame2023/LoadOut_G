@@ -124,7 +124,7 @@ namespace basecross {
 		{
 			rootReverse.push_back(rootVec[i]);
 		}
-
+		auto a = mapManager->ConvertUnityMap(Vec2(6, 6));
 		return rootReverse;
 	}
 
@@ -154,6 +154,10 @@ namespace basecross {
 				//壁を確認したので床のマスに対して評価する//////////////////////////////////////////////////////////////////////
 				lookX = (pushx * 2) + originPos.x;
 				lookY = (pushy * 2) + originPos.y;
+
+				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
+				if (m_unityMapCSV[lookY][lookX] == 3) continue;
+
 
 				if (lookX < 0 || lookX>m_unityMap.size() - 1)
 				{
