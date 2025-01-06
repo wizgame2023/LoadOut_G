@@ -103,7 +103,7 @@ namespace basecross {
 			m_break->SetColor(Col4(1, 1, 1, m_anCollar));
 			if (m_anCollar>=1.0f)
 			{
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//ゲームシーンに移動する
 			}
 		}
 
