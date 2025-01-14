@@ -27,6 +27,9 @@ namespace basecross {
 
 		const int m_allStage = 20;
 		
+		bool m_decisionFlag;//選択したかどうかのフラグ
+
+		CONTROLER_STATE m_controler;//コントローラー
 
 	public:
 		//構築と破棄
@@ -35,6 +38,8 @@ namespace basecross {
 		//初期化
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
+
+		void SelectionStage();//どのステージにするかの選択処理
 
 		void OnDestroy()override;
 
