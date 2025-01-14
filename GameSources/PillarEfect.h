@@ -10,6 +10,10 @@ namespace basecross {
 	class PillarEffect : public GameObject
 	{
 	private:
+
+	protected:
+		void InitializeVertices();
+
 		std::vector<VertexPositionColorTexture> m_vertices;
 		std::vector<uint16_t> m_indices;
 
@@ -30,9 +34,6 @@ namespace basecross {
 
 		Vec2 m_test;
 
-	protected:
-		void InitializeVertices();
-
 	public:
 		PillarEffect(const shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velovity, int square = 36);
 		~PillarEffect();
@@ -41,6 +42,8 @@ namespace basecross {
 		virtual void OnUpdate() override;
 
 		void SetScrollPerSecond(Vec2 velocity);
+		void SetVelocity(Vec2 velocity);
+		void SetTexture(wstring textureName);
 		virtual void UpdateTest(bool OnOff);
 
 	};

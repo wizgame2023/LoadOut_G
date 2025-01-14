@@ -120,6 +120,18 @@ namespace basecross {
 		m_isUpdate = OnOff;
 	}
 
+	void PillarEffect::SetVelocity(Vec2 velocity)
+	{
+		m_scrollVelocity = velocity;
+	}
+
+	//テクスチャの変更
+	void PillarEffect::SetTexture(wstring textureName)
+	{
+		m_textureName = textureName;
+		m_drawComp->SetTextureResource(m_textureName);
+	}
+
 	//void PillarEffect::SetScrollPerSecond()
 
 }
