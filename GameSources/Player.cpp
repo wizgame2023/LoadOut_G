@@ -122,7 +122,6 @@ namespace basecross{
 		//もし鍵を持っているなら脱出できる
 		if (m_key)
 		{
-			m_billBoard->ChangeTexture(L"Key");
 			if (selNow == 4)//今いる床がハッチなら
 			{
 				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B||keyState.m_bLastKeyTbl[VK_SPACE])//Bボタンを押したとき
@@ -147,7 +146,7 @@ namespace basecross{
 			}
 		}
 
-		if (selNow == 4&&!m_key)
+		if (selNow == 4)
 		{
 			if (!m_key)
 			{
@@ -161,9 +160,17 @@ namespace basecross{
 			}
 		}	
 		
-		if(selNow!=4&&selNow!=1)
+		if(selNow!=4 && selNow!=1)
 		{
-			m_billBoard->ChangeTexture(L"Clear");
+			if (m_key)
+			{
+				m_billBoard->SetScale(Vec3(3.0f, 3.0f, 3.0f));
+				m_billBoard->ChangeTexture(L"Key");
+			}
+			if (!m_key)
+			{
+				m_billBoard->ChangeTexture(L"Clear");
+			}
 		}		
 
 
