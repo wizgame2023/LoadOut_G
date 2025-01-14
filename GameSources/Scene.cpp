@@ -210,6 +210,12 @@ namespace basecross{
 		strTexture = texPath + L"Stage10.png";
 		app->RegisterTexture(L"Stage10_HiShot", strTexture);
 		/////////////////////////////////////////////////////////////////////////////////////
+		//ステータス状態を見せる
+		strTexture = texPath + L"StutasDown.png";//ステータス上昇
+		app->RegisterTexture(L"StutasDown", strTexture);
+		strTexture = texPath + L"StutasUP.png";//ステータス下方
+		app->RegisterTexture(L"StutasUp", strTexture);
+
 
 
 
