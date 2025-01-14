@@ -8,6 +8,7 @@
 #include "SpriteNum.h"
 #include "BillBoard.h"
 #include "NumberManager.h"
+#include "TrackingPillarEfect.h"
 
 namespace basecross{
 	class Player :public Actor
@@ -34,7 +35,7 @@ namespace basecross{
 		CONTROLER_STATE m_controler;//コントローラー
 		shared_ptr<NuberManager> m_spriteNum;//数字のスプライト
 		shared_ptr<BillBoard> m_billBoard;//ビルボード
-
+		shared_ptr<TrackingPillarEfect> m_pillar;//柱上のエフェクト
 	public:
 		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot,bool GameFlag = true);//コンストラクタ
 		~Player();

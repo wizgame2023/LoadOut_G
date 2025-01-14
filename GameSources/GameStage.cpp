@@ -92,8 +92,9 @@ namespace basecross {
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, -95.0f));
 		//AddGameObject<Enemy>(Vec3(95.0f, 2.5f, 95.0f));
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
-		//CreateEnemy();
+		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
+
 
 		AddGameObject<MovieGameStart>(mapSize);//ÉÄÅ[ÉrÅ[ê∂ê¨
 	}

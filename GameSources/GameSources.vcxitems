@@ -17,6 +17,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Actor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BlackOut.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Block.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ClearObject.h" />
@@ -82,6 +83,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UIManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Wall.h" />
@@ -93,6 +95,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Actor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BlackOut.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Block.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ClearObject.cpp" />
@@ -156,6 +159,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Wall.cpp" />

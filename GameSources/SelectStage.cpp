@@ -48,6 +48,9 @@ namespace basecross {
 		auto bgmManager = App::GetApp()->GetXAudio2Manager();
 		m_BGM = bgmManager->Start(L"SelectStageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
 
+		//暗転処理
+		m_blackOut = AddGameObject<BlackOut>(false);
+
 
 		//auto w = 250;
 		//auto h = 200;
@@ -171,6 +174,12 @@ namespace basecross {
 			auto SEManager = App::GetApp()->GetXAudio2Manager();
 			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
 
+			m_blackOut->SetSwitch(true);//暗転開始
+		}
+
+		//暗転が終わったらステージ移動
+		if (m_blackOut->GetBlackOutFlag())
+		{
 			switch (m_SelectStage)
 			{
 			case 1:
@@ -207,6 +216,7 @@ namespace basecross {
 				break;
 			}
 		}
+
 	}
 
 }

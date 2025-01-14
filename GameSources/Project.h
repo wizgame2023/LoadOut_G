@@ -81,6 +81,8 @@
 #include"GameStage18.h"
 #include"GameStage19.h"
 #include"GameStage20.h"
+#include"BlackOut.h"
+#include"TrackingPillarEfect.h"
 
 //マネージャー用
 #include"MiniMapManager.h"//ミニマップ生成

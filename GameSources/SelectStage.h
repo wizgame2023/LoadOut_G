@@ -5,6 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include "BlackOut.h"
 
 namespace basecross {
 
@@ -20,6 +21,7 @@ namespace basecross {
 		shared_ptr<Sprite> m_StagePhoto;
 		shared_ptr<Sprite> m_StageText;
 		shared_ptr<NuberManager> m_NumberSprite;
+		shared_ptr<BlackOut> m_blackOut;//暗転処理
 
 		int m_SelectStage;//選択しているステージ
 

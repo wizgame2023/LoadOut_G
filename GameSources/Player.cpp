@@ -80,6 +80,9 @@ namespace basecross{
 
 			//ビルボード生成
 			m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear", 12.0f);
+			//ステータス上方下方エフェクト
+			m_pillar = GetStage()->AddGameObject<TrackingPillarEfect>(Vec3(0.0f, 0.0f, 0.0f), L"Clear", Vec2(0.0f, -1.0f));
+
 		}
 
 	}
@@ -175,8 +178,21 @@ namespace basecross{
 		if (m_pushSpeed != 0)
 		{
 			m_pushSpeedCountTime += Delta;
+			//追加スピードが0より多いなら上昇エフェクトを出す
+			if (m_pushSpeed > 0)
+			{
+				m_pillar->SetVelocity(Vec2(0.0f, 1.0f));
+				m_pillar->SetTexture(L"StutasUp");
+			}
+			//追加スピードが0より小さいなら下方エフェクトを出す
+			if (m_pushSpeed < 0)
+			{
+				m_pillar->SetVelocity(Vec2(0.0f, -1.0f));
+				m_pillar->SetTexture(L"StutasDown");
+			}
 			if (m_pushSpeedCountTime >= 10.0f)
 			{
+				m_pillar->SetTexture(L"Clear");
 				//追加スピードと計測時間リセット
 				m_pushSpeed = 0;
 				m_pushSpeedCountTime = 0.0f;
