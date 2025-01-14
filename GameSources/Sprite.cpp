@@ -12,6 +12,7 @@ namespace basecross {
 		m_textureName(textureName),
 		m_size(size),
 		m_pos(pos),
+		m_rot(rot),
 		m_color(color),
 		m_layer(layer)
 	{
