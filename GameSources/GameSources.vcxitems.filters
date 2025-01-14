@@ -297,6 +297,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage03.h">
       <Filter>Headers\Stage</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BlackOut.h">
+      <Filter>Headers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.h">
+      <Filter>Headers\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -517,6 +523,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage20.cpp">
       <Filter>Sources\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BlackOut.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.cpp">
+      <Filter>Sources\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
