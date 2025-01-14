@@ -89,7 +89,7 @@ namespace basecross {
 		else if(m_manhole)
 		{
 			//吹っ飛び用のマンホールを上に上げる
-			manholePos.y += 200 * delta;
+			manholePos.y += 300 * delta;
 			manholeTrans->SetPosition(manholePos);
 		}
 
