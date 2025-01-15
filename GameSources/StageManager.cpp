@@ -7,9 +7,10 @@
 #include "Project.h"
 
 namespace basecross {
-	StageManager::StageManager(shared_ptr<Stage>& stagePtr) :
+	StageManager::StageManager(shared_ptr<Stage>& stagePtr,int batteryMax) :
 		GameObject(stagePtr),
-		m_repopItemFlag(false)
+		m_repopItemFlag(false),
+		m_batteryCountMax(batteryMax)
 	{
 
 	}
@@ -189,7 +190,7 @@ namespace basecross {
 		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
 
 		int countItem = 0;
-		int itemCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
+		//int batteryCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
 
 		//取得したオブジェクトが変換できたら配列に入れる
 		if (!m_repopItemFlag)//リポップする条件を満たしいない限り見る
@@ -204,7 +205,7 @@ namespace basecross {
 				}
 			}
 			//ステージ上に一定数のアイテム数より下回っているならフラグをオンにする			
-			if (countItem < itemCountMax)
+			if (countItem < m_batteryCountMax)
 			{
 				m_repopItemFlag = true;
 			}

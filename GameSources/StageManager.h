@@ -12,6 +12,7 @@ namespace basecross {
 	private:
 		int m_BGMhow;//今なにのBGMを流れているか保存する変数
 		int m_PlayerKeyFlag;///Playerが鍵を持ったかのフラグ
+		int m_batteryCountMax;//ステージのバッテリー出現上限
 
 		float m_repopItemCountTime;//アイテムがリポップするタイム
 		float m_repopEnemyCountTime;//敵がリポップするタイム
@@ -29,7 +30,7 @@ namespace basecross {
 		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション
 
 	public:
-		StageManager(shared_ptr<Stage>& stagePtr);
+		StageManager(shared_ptr<Stage>& stagePtr,int batteryMax=5);
 		~StageManager();
 
 		void OnCreate()override;
