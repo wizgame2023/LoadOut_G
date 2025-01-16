@@ -115,9 +115,14 @@ namespace basecross {
 				case 1://マンホール生成
 					GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f)- m_push, 0.05f, m_push -(i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
-
 				case 4://ハッチ作成
 					GetStage()->AddGameObject<Hatch>(Vec3((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					break;
+				case 6://バッテリー生成
+					//GetStage()->AddGameObject<Battery>((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f), Vec3(0.0f, 0.0f, 0.0f));
+					break;
+				case 7://エネミー生成
+
 					break;
 				default:
 					break;
@@ -223,6 +228,120 @@ namespace basecross {
 
 
 
+	}
+
+	//マップの壁の配置を変更する処理//作成途中
+	void MapManager::MapChange()
+	{
+		auto path = App::GetApp()->GetDataDirWString();
+		auto levelPath = path + L"Levels/" + m_stageName;
+
+		//初期化処理
+		m_upWallMap.clear();
+		m_rightWallMap.clear();
+
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto obj = stage->GetGameObjectVec();
+
+		//前の壁の消去処理
+		for (auto wall : obj)
+		{
+			auto castWall = dynamic_pointer_cast<Wall>(wall);
+			if (castWall)//Enemy型にキャストする
+			{
+				stage->RemoveGameObject<Wall>(wall);
+			}
+		}
+
+
+		//上にある壁
+		//csvファイルからデータを読み込む
+		ifstream ifs(levelPath + L"UpriseWallMap.csv");
+		if (ifs)
+		{
+			string line;
+			bool first = false;
+			while (getline(ifs, line))
+			{
+				vector<int> datas;
+				line += ",";
+
+				string data;
+				istringstream ss(line);//読み取った内容をストリームに変換する
+				//一行ずつ変換
+				while (getline(ss, data, ','))
+				{
+					int cellData = atoi(data.c_str());//string型からint型に変更
+					datas.push_back(cellData);
+				}
+				//一番最初の行列だけ消えている
+				m_upWallMap.push_back(datas);//一行ずつマップデータを入れている
+			}
+		}
+		//生成
+		for (int h = 0; h < m_upWallMap.size(); h++)
+		{
+			for (int w = 0; w < m_upWallMap[0].size(); w++)
+			{
+				switch (m_upWallMap[h][w])
+				{
+				case 1://横壁生成
+					//GetStage()->AddGameObject<Block>();
+					GetStage()->AddGameObject<Wall>(Vec3((w * 10.0f) - m_push, 5.0f, m_push + 5 - (h * 10.0f)), Vec3(0.0f, 0.0f, 0.0f), Vec3(9.5f, 5.0f, 1.0f));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+		//左にある壁
+		//csvファイルからデータを読み込む
+		ifstream ifs2(levelPath + L"RightriseWallmap.csv");
+		if (ifs2)
+		{
+			string line;
+			bool first = false;
+			while (getline(ifs2, line))
+			{
+				vector<int> datas;
+				line += ",";
+
+				string data;
+				istringstream ss(line);//読み取った内容をストリームに変換する
+				//一行ずつ変換
+				while (getline(ss, data, ','))
+				{
+					int cellData = atoi(data.c_str());//string型からint型に変更
+					datas.push_back(cellData);
+				}
+
+				//一番最初の行列だけ消えている
+				m_rightWallMap.push_back(datas);//一行ずつマップデータを入れている
+			}
+		}
+
+		//生成
+		for (int i = 0; i < m_rightWallMap.size(); i++)
+		{
+			for (int j = 0; j < m_rightWallMap[0].size(); j++)
+			{
+				switch (m_rightWallMap[i][j])
+				{
+				case 1://縦壁生成
+					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - m_push + 5 - 10, 5.0f, m_push - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
+					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+
+		//Unityマップの更新処理のフラグを立てる
+		m_UpdetaUnityMapFlag = true;
 	}
 
 	//セルマップにマンホールなどを置く処理
