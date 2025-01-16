@@ -303,6 +303,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.h">
       <Filter>Headers\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BillBoardGauge.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -529,6 +532,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.cpp">
       <Filter>Sources\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BillBoardGauge.cpp">
+      <Filter>Sources\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

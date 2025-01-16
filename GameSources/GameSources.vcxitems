@@ -17,6 +17,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Actor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BillBoardGauge.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BlackOut.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Block.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Actor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BillBoardGauge.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BlackOut.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Block.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
