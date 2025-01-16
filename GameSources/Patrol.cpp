@@ -95,7 +95,17 @@ namespace basecross
 		////Rayの取得
 		//m_playerRay = m_Owner->GetPlayerRay();//所有者(Enemy)からplayerの方向のRay
 
-		m_time += app()->GetElapsedTime();//デルタタイム
+
+
+		m_time += 1;
+
+		if (m_time > 3)
+		{
+			m_navi = AS->RouteSearch(m_ownerPos, m_destinationPos);
+			m_time = 0;
+		}
+
+		//m_time += app()->GetElapsedTime();//デルタタイム
 		Vision(m_ownerPos, m_playerPos, 8);
 
 		//m_ownerRot.y = rnd;
