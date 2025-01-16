@@ -54,6 +54,7 @@ namespace basecross{
 		void KeyBoardMove();
 
 		float GetAngle()override;//角度を渡す
+		int GetBatteryCount();//どれくらいバッテリーを持っているか
 		void AddBatteryUI();//電池をどれくらい取得しているかのUI
 
 		void SetKey(bool key);//鍵を持っているかどうか渡す
