@@ -14,7 +14,8 @@ namespace basecross {
 		int m_PlayerKeyFlag;///Playerが鍵を持ったかのフラグ
 		int m_batteryCountMax;//ステージのバッテリー出現上限
 
-		float m_repopItemCountTime;//アイテムがリポップするタイム
+		float m_repopItemCountTime;//アイテムがリポップするタイムを測る変数
+		float m_repopItemCountTimeMax;//アイテムがリポップするまでの時間
 		float m_repopEnemyCountTime;//敵がリポップするタイム
 		float m_repopRamdomItemCountTime;//ランダムアイテムがリポップするタイム
 
@@ -30,7 +31,7 @@ namespace basecross {
 		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション
 
 	public:
-		StageManager(shared_ptr<Stage>& stagePtr,int batteryMax=5);
+		StageManager(shared_ptr<Stage>& stagePtr, int batteryMax = 5, float repopItemCountTimeMax = 15.0f);
 		~StageManager();
 
 		void OnCreate()override;
