@@ -67,11 +67,11 @@ namespace basecross {
 			{
 			case 0:
 				SEManager->Start(L"ItemGet", 0, 0.9f);
-				player->AddCount(2);
+				player->AddCount(1);
 				break;
 			case 1:
 				SEManager->Start(L"ItemGet", 0, 0.9f);
-				player->AddCount(3);
+				player->AddCount(2);
 				break;
 			case 2:
 				//Playerのスピードを遅くする

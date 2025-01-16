@@ -7,6 +7,7 @@
 #include "stdafx.h"
 #include "ClearObject.h"
 #include "WaterPillar.h"
+#include "BillBoardGauge.h"
 
 namespace basecross {
 	class Manhole :public GameObject
@@ -18,6 +19,7 @@ namespace basecross {
 		shared_ptr<ClearObject> m_clearObject;//透明な壁
 		shared_ptr<WaterPillar> m_waterPillar;//水柱
 		shared_ptr<BillBoard> m_billBoard;//ビルボード
+		shared_ptr<BillBoardGauge> m_billBoardSecond;//2つめのビルボード
 
 		int m_charen;//進行度
 
@@ -25,6 +27,7 @@ namespace basecross {
 		float m_stanbyTime;//時間を測るために必要
 		float m_blinkingTime;//点滅する時間を測る
 		float m_billBoardTime;//ビルボードが出ている時間を測る
+		float m_playerUpTime;//マンホールから出てプレイヤーが踏むと上がる時間計測
 
 		bool m_playerStanbyFlag;//プレイヤーが踏むかまつフラグ
 

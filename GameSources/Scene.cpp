@@ -176,6 +176,10 @@ namespace basecross{
 		app->RegisterTexture(L"RightArrow", strTexture);
 		strTexture = texPath + L"LeftArrowVer1.1.png";//左矢印
 		app->RegisterTexture(L"LeftArrow", strTexture);
+		strTexture = texPath + L"GaugeCover.png";//ゲージのカバー
+		app->RegisterTexture(L"GaugeCover", strTexture);
+		strTexture = texPath + L"Gauge.png";//ゲージ
+		app->RegisterTexture(L"Gauge", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);

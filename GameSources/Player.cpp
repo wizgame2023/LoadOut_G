@@ -82,7 +82,7 @@ namespace basecross{
 			m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear", 12.0f);
 			//ステータス上方下方エフェクト
 			m_pillar = GetStage()->AddGameObject<TrackingPillarEfect>(Vec3(0.0f, 0.0f, 0.0f), L"Clear", Vec2(0.0f, -1.0f));
-
+			
 		}
 
 	}
@@ -218,32 +218,35 @@ namespace basecross{
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)//R
 		{
 			auto test = 0;
+			//デバック用
+			//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+			//mapManager->MapChange();
 		}
 		////////////////////////////////////////////////////////////////////////
 
 
-		////デバック用
-		wstringstream wss(L"");
-		auto scene = App::GetApp()->GetScene<Scene>();
-		//auto gameStage = scene->GetGameStage();
-		m_Pos = GetComponent<Transform>()->GetPosition();
+		//////デバック用
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		////auto gameStage = scene->GetGameStage();
+		//m_Pos = GetComponent<Transform>()->GetPosition();
 
-		wss /* << L"デバッグ用文字列 "*/
-			<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
-			<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
-			<< L"\n傾き " << m_deg
-			<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
-			<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
-			<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
-			<< L"\nm_count：  " << m_itemCount
-			<< L"\nSelNow " << selNow
-			<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
-			<<L"\nFPS:"<< 1.0f/Delta
-			<<L"\nKey"<<m_key
-			<<L"\nm_pushSpeedCountTime:"<< m_pushSpeedCountTime
-			<< endl;
+		//wss /* << L"デバッグ用文字列 "*/
+		//	<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
+		//	<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
+		//	<< L"\n傾き " << m_deg
+		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
+		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
+		//	<< L"\nSelPos.x " << selPos.x << "\nSelPos.y " << selPos.y
+		//	<< L"\nm_count：  " << m_itemCount
+		//	<< L"\nSelNow " << selNow
+		//	<< L"\ntest " <<  XMConvertToDegrees(XM_PI * 0.5f)
+		//	<<L"\nFPS:"<< 1.0f/Delta
+		//	<<L"\nKey"<<m_key
+		//	<<L"\nm_pushSpeedCountTime:"<< m_pushSpeedCountTime
+		//	<< endl;
 
-		scene->SetDebugString(wss.str());
+		//scene->SetDebugString(wss.str());
 
 	}
 
@@ -447,6 +450,11 @@ namespace basecross{
 		float rad = -atan2(m_controler.fThumbLY, m_controler.fThumbLX);
 
 		return rad;
+	}
+
+	int Player::GetBatteryCount()
+	{
+		return m_itemCount;
 	}
 
 	//鍵を持っているかのセッター
