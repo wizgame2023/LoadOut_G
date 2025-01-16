@@ -62,8 +62,8 @@ namespace basecross {
 
 		m_CurrentSt->OnStart();
 
-		m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
-		m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 60.0f);
+		//m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
+		//m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 60.0f);
 
 		MoveSwich(true);//“®‚¯‚é‚æ‚¤‚É‚·‚é
 
@@ -121,15 +121,15 @@ namespace basecross {
 			m_speed = 18.0f;
 		}
 
-		float angle = playerVec - m_angle;
+		//float angle = playerVec - m_angle;
 		//Ž‹ŠE‚Ìì¬
-		if (angle > m_angle + XM_PI * 0.25 || angle < m_angle-XM_PI*0.25)
-		{
-			angle = m_angle;
-		}
-		m_forwardRay->SetAngle(m_angle);
+		//if (angle > m_angle + XM_PI * 0.25 || angle < m_angle-XM_PI*0.25)
+		//{
+		//	angle = m_angle;
+		//}
+		//m_forwardRay->SetAngle(m_angle);
 		//m_leftRay->SetAngle(m_angle - XM_PI * 0.5f);
-		m_playerRay->SetAngle(angle);
+		//m_playerRay->SetAngle(angle);
 		//wstringstream wss(L"");
 		//auto scene = App::GetApp()->GetScene<Scene>();
 		//wss << L"\n“G‚Ì‰ñ“].x : " << rot.x
