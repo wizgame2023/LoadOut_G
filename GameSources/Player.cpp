@@ -218,8 +218,9 @@ namespace basecross{
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)//R
 		{
 			auto test = 0;
-			auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
-			mapManager->MapChange();
+			//デバック用
+			//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+			//mapManager->MapChange();
 		}
 		////////////////////////////////////////////////////////////////////////
 
