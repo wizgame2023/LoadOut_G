@@ -135,8 +135,9 @@ namespace basecross {
 			if (m_SelectStage <= 1)
 			{
 				//‚Ô‚Ô[‚ÌSE
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Error", 0, 0.9f);
+				/*auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Error", 0, 0.9f);*/
+				m_SelectStage = 11;
 			}
 			if (m_SelectStage >= 2)
 			{
@@ -150,8 +151,9 @@ namespace basecross {
 			if (m_SelectStage >= 10)
 			{
 				//‚Ô‚Ô[‚ÌSE
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Error", 0, 0.9f);
+				/*auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Error", 0, 0.9f);*/
+				m_SelectStage = 0;
 			}
 			if (m_SelectStage < 10)
 			{
