@@ -9,18 +9,9 @@
 namespace basecross{
 	class BillBoard :public GameObject
 	{
-		weak_ptr<GameObject> m_actor;
 
-		shared_ptr<MeshResource> m_SquareMeshResource;
 
-		size_t m_Number;
-
-		wstring m_textureName;
-
-		Vec3 m_scale;
-
-		float m_pushY;
-
+	protected:
 		Quat Billboard(const Vec3& Line)
 		{
 			Vec3 Temp = Line;
@@ -39,12 +30,29 @@ namespace basecross{
 			Qt.normalize();
 			return Qt;
 		}
+
+		weak_ptr<GameObject> m_actor;
+
+		shared_ptr<MeshResource> m_SquareMeshResource;
+
+		vector<VertexPositionNormalTexture> m_vertices;
+
+		size_t m_Number;
+
+		wstring m_textureName;
+
+		Vec3 m_scale;
+
+		Col4 m_color;
+
+		float m_pushY;
+
 	public:
 		//構築と破棄
 		BillBoard(const shared_ptr<Stage>& StagePtr,
 			shared_ptr<GameObject>& actorPtr, size_t Number,float pushY = 18.0f, Vec3 scale = Vec3(3.0f, 3.0f, 3.0f));
 		BillBoard(const shared_ptr<Stage>& StagePtr,
-			shared_ptr<GameObject>& actorPtr, wstring spriteName, float pushY = 18.0f,Vec3 scale = Vec3(3.0f,3.0f,3.0f));
+			shared_ptr<GameObject>& actorPtr, wstring spriteName, float pushY = 18.0f,Vec3 scale = Vec3(3.0f,3.0f,3.0f),Col4 color = Col4(1.0f,1.0f,1.0f,1.0f));
 		virtual ~BillBoard();
 		//初期化
 		virtual void OnCreate() override;
@@ -52,10 +60,13 @@ namespace basecross{
 		virtual void OnUpdate() override;
 
 		//スプライト変更
-		void ChangeTexture(wstring spriteName);
+		virtual void ChangeTexture(wstring spriteName);
 
 		//サイズ変更
-		void SetScale(Vec3 scale);
+		virtual void SetScale(Vec3 scale);
+
+		//出現する高さ変更
+		virtual void SetPushY(float pushY);
 
 	};
 
