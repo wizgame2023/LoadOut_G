@@ -64,6 +64,7 @@ namespace basecross {
 			m_forward(0, 0, 1),
 			m_rnd(1),
 			m_numbers(0),
+			m_time(0.0f),
 			m_distance(0.0f),
 			m_point(60.0f),
 			m_destinationDecision(false),
