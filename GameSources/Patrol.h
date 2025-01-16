@@ -15,7 +15,8 @@ namespace basecross {
 		//Vec3型のメンバー変数
 		Vec3 m_ownerPos;
 		Vec3 m_ownerRot;
-		Vec3 m_fakeOwnerPos;
+		Vec3 m_playerPos;
+		Vec3 m_fowanerPos;
 		Vec3 m_destinationPos;
 		Vec3 m_right;
 		Vec3 m_forward;
@@ -23,21 +24,16 @@ namespace basecross {
 		//int型メンバー変数
 		int m_rnd;
 		int m_numbers;
-		int m_costRWall;
-		int m_costLWall;
-		int m_costFWall;
-		int m_costDWall;
+
 
 
 		//float型メンバー変数
 		float m_time;
-		float m_moveTime;
 		float m_distance;
 		const float m_point;
 
 		//bool型メンバー変数
 		bool m_destinationDecision;
-		bool m_wallCheck;
 		bool m_rightCheck;
 		bool m_forwardCheck;
 		bool m_minus;
@@ -51,27 +47,26 @@ namespace basecross {
 		vector<Vec3>m_checkPoint;
 		vector<Vec3>m_cPoint;
 		vector<Vec3>m_navi;
+
+		vector<int> m_wallCheck;
+
+		
 	public:
 		//コンストラクタの宣言
 		Patrol(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
 			m_ownerPos(0, 0, 0),
+			m_fowanerPos(0,0,0),
+			m_playerPos(0,0,0),
 			m_ownerRot(0, 0, 0),
 			m_destinationPos(0, 0, 0),
 			m_right(1, 0, 0),
 			m_forward(0, 0, 1),
 			m_rnd(1),
 			m_numbers(0),
-			m_costRWall(0),
-			m_costLWall(0),
-			m_costFWall(0),
-			m_costDWall(0),
-			m_time(0.0f),
-			m_moveTime(0.0f),
 			m_distance(0.0f),
 			m_point(60.0f),
 			m_destinationDecision(false),
-			m_wallCheck(false),
 			m_rightCheck(false),
 			m_forwardCheck(false),
 			m_minus(false)
@@ -84,7 +79,7 @@ namespace basecross {
 		void OnUpdate();
 		void OnExit();
 
-		Vec3 WallCheck();
+		void Vision(Vec3 pos,Vec3 target,int vision);
 
 	};
 }

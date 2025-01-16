@@ -6,7 +6,8 @@
 #include "stdafx.h"
 #include "Project.h"
 
-namespace basecross {
+namespace basecross
+{
 
 	//巡回ステートの最初の処理
 	void Patrol::OnStart()
@@ -14,7 +15,7 @@ namespace basecross {
 		auto mapMgr = m_Owner->GetMapMgr();
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のPositionを取得
-
+		m_fowanerPos = m_trans->GetPosition();//所有者(Enemy)のPositionを取得
 		//m_checkPoint.clear();
 		if (m_checkPoint.size() == 0)
 		{
@@ -80,8 +81,8 @@ namespace basecross {
 	{
 		//CPWallCheck();
 		Math math;
-
 		auto AS = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");
+		auto player = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");
 
 		//所有者(Enemy)の移動処理
 		auto app = App::GetApp;
@@ -89,10 +90,13 @@ namespace basecross {
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のPositionを取得
 		m_ownerRot = m_trans->GetRotation();
 
-		//Rayの取得
-		m_playerRay = m_Owner->GetPlayerRay();//所有者(Enemy)からplayerの方向のRay
+		m_playerPos = player->GetComponent<Transform>()->GetPosition();
+
+		////Rayの取得
+		//m_playerRay = m_Owner->GetPlayerRay();//所有者(Enemy)からplayerの方向のRay
 
 		m_time += app()->GetElapsedTime();//デルタタイム
+		Vision(m_ownerPos, m_playerPos, 8);
 
 		//m_ownerRot.y = rnd;
 		if (m_destinationDecision)
@@ -132,22 +136,6 @@ namespace basecross {
 			m_numbers = 0;
 			m_navi = AS->RouteSearch(m_ownerPos, m_destinationPos);
 		}
-		//m_trans->SetRotation(m_ownerRot);//所有者(Enemy)のローテーションの更新
-		//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
-		//m_Owner->SetAngle(XM_PI * 0.5f);
-				//m_playerRayが物体に当たったら実行
-		if (m_playerRay.lock()->GetDisObj().size() > 0)
-		{
-			//当たったオブジェクトの情報取得
-			for (auto obj : m_playerRay.lock()->GetDisObj())
-			{
-				//当たったオブジェクトがプレイヤーだったら実行
-				if (obj.lock()->FindTag(L"Player"))
-				{
-					m_Owner->ChangeState<Tracking>();//追跡ステートに移行
-				}
-			}
-		}
 
 	}
 
@@ -156,6 +144,78 @@ namespace basecross {
 
 	}
 
+	void Patrol::Vision(Vec3 pos, Vec3 target, int vision)
+	{
+		Vec3 n_pos = pos;
+		Vec3 n_fpos = m_fowanerPos;
+		Vec3 n_target = target;
+		int n_vision = vision;
 
+		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		auto angle = m_Owner->GetAngle();
+
+		auto unityMap = mapMgr->GetUnityMap();
+
+		auto sellPos = mapMgr->ConvertSelMap(n_pos);
+		auto unityPos = mapMgr->ConvertUnityMap(sellPos);
+
+		auto fsellPos = mapMgr->ConvertSelMap(n_fpos);
+		auto funityPos = mapMgr->ConvertUnityMap(fsellPos);
+
+		auto sellTargetPos = mapMgr->ConvertSelMap(n_target);
+		auto unityTargetPos = mapMgr->ConvertUnityMap(sellTargetPos);
+
+		for (int i = 1; i < n_vision; i++)
+		{
+			if (angle == 0)
+			{
+				if (unityMap[unityPos.y][unityPos.x + i] == 1)
+				{
+					break;
+				}
+				else if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
+				{
+					m_Owner->ChangeState<Tracking>();
+				}
+						
+			}
+			if (angle == XM_PI)
+			{
+				if (unityMap[unityPos.y][unityPos.x - i] == 1)
+				{
+					break;
+				}
+				else if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
+				{
+					m_Owner->ChangeState<Tracking>();
+				}
+			}
+			if (angle == XMConvertToRadians(270))
+			{
+				if (unityMap[unityPos.y - i][unityPos.x] == 1)
+				{
+					break;
+				}
+				else if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
+				{
+					m_Owner->ChangeState<Tracking>();
+				}
+			}
+			if (angle == XM_PI * 0.5)
+			{
+				if (unityMap[unityPos.y + i][unityPos.x] == 1)
+				{
+					break;
+				}
+				else if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
+				{
+					m_Owner->ChangeState<Tracking>();
+				}
+			}
+			
+
+		}
+
+	}
 }//end basecross
 
