@@ -91,7 +91,7 @@ namespace basecross {
 
 		if (m_Owner->GetDistance(m_ownerPos, m_playerPos) < 7)
 		{
-			//m_Owner->ChangeState<Attack>();
+			m_Owner->ChangeState<Attack>();
 		}
 		//auto a = m_posVec[m_count-1];
 
