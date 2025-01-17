@@ -44,6 +44,11 @@ namespace basecross {
 		m_StageText = AddGameObject<Sprite>(L"RightArrow", Vec2(200, 200), Vec3(550.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
 		m_StageText = AddGameObject<Sprite>(L"LeftArrow", Vec2(200, 200), Vec3(-550.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
 
+		m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -350.0f, 0.0f));
+		m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -352.0f, 0.0f));
+		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, 1));
+		m_spriteB->SetColor(Col4(1, 0, 0, 1));
+
 		//BGM
 		auto bgmManager = App::GetApp()->GetXAudio2Manager();
 		m_BGM = bgmManager->Start(L"SelectStageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
