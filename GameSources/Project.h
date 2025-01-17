@@ -59,6 +59,7 @@
 #include"MovieGameClear.h"
 #include"MovieGameOver.h"//ゲームオーバー遷移時ののムービ
 #include"MovieUpEnemy.h"//Enemyが打ちあがる時のムービー
+#include"MovieUpEandP.h"//EnemyとPlayerが同時に打ちあがる時のムービー
 #include"PillarEfect.h"//柱上のエフェクト
 #include"ManholeSprite.h"//ミニマップ用のマンホールスプライト
 #include"RandomItem.h"//ランダムにイベントが発生するアイテム

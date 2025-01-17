@@ -89,6 +89,7 @@ namespace basecross{
 
 	void Player::OnUpdate()
 	{		
+
 		//デルタタイム
 		auto Delta = App::GetApp()->GetElapsedTime();
 
@@ -108,6 +109,9 @@ namespace basecross{
 		m_controler = inputDevice.GetControlerVec()[0];
 		auto pos = GetComponent<Transform>()->GetPosition();//ポジション取得
 
+		//y座標をずらさないようにする
+		pos.y = 0.0f;
+		GetComponent<Transform>()->SetPosition(pos);
 
 		PlayerMove();//プレイヤーの動き
 
@@ -455,6 +459,12 @@ namespace basecross{
 	int Player::GetBatteryCount()
 	{
 		return m_itemCount;
+	}	
+
+	//鍵を持っているかのゲッター
+	bool Player::GetKey()
+	{
+		return m_key;
 	}
 
 	//鍵を持っているかのセッター

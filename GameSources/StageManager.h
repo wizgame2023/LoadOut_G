@@ -13,6 +13,7 @@ namespace basecross {
 		int m_BGMhow;//今なにのBGMを流れているか保存する変数
 		int m_PlayerKeyFlag;///Playerが鍵を持ったかのフラグ
 		int m_batteryCountMax;//ステージのバッテリー出現上限
+		//int m_KeyTextFlag;//鍵を手に入れているかのフラグ
 
 		float m_repopItemCountTime;//アイテムがリポップするタイムを測る変数
 		float m_repopItemCountTimeMax;//アイテムがリポップするまでの時間
@@ -26,6 +27,7 @@ namespace basecross {
 
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
+		shared_ptr<Sprite> m_KeyGetText;
 
 		vector<Vec3> m_repopEnemyPos;//リポップするEnemyのポジション
 		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション

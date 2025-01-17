@@ -51,6 +51,7 @@ namespace basecross {
 		void ManholeTransition();
 
 		void OnCollisionEnter(shared_ptr<GameObject>& other)override;//“–‚½‚Á‚½‚Éˆ—
+		void OnCollisionExcute(shared_ptr<GameObject>& other)override;//“ü‚è‘±‚¯‚Ä‚¢‚é‚Æ‚«‚Éˆ—
 		void OnCollisionExit(shared_ptr<GameObject>& other)override;//—£‚ê‚½‚Æ‚«‚Éˆ—
 
 		int GetState();//ƒQƒbƒ^[

@@ -148,11 +148,15 @@ namespace basecross {
 	{
 		auto stage = GetStage();
 		auto objVec = stage->GetGameObjectVec();
+		auto delta = App::GetApp()->GetElapsedTime();
 
 		//もし、Playerが鍵を入手したら
 		if (m_PlayerKeyFlag == 1)
 		{
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
+
+			//鍵を手に入れたことを知らせるテクスチャ追加
+			m_KeyGetText = stage->AddGameObject<Sprite>(L"KeyGetText", Vec2(800.0f, 400.0f),Vec3(1000.0f,0.0f,0.0f));
 
 			//取得したオブジェクトが変換できたら配列に入れる
 			for (auto hatch : objVec)
@@ -177,6 +181,21 @@ namespace basecross {
 					//鍵の板ポリを表示
 				}
 
+			}
+		}
+		//鍵を手に入れたのを知らせるテキストの移動処理
+		if (m_PlayerKeyFlag == 2)
+		{
+			auto GetTextTrans = m_KeyGetText->GetComponent<Transform>();
+			auto GetTextPos = GetTextTrans->GetPosition();
+			GetTextPos.x -= 500 * delta;//移動
+			GetTextTrans->SetPosition(GetTextPos);
+
+			//テキストが画面範囲外に移動したら移動処理をしないようにする
+			if (GetTextPos.x >= 1000)
+			{
+				m_PlayerKeyFlag = 3;//この処理をしないようにする
+				stage->RemoveGameObject<Sprite>(m_KeyGetText);
 			}
 		}
 
