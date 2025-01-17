@@ -33,6 +33,7 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 			AddGameObject<Sprite>(L"Title", Vec2(1280,800), Vec3(0.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
+
 			m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -200.0f, 0.0f));
 			m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -202.0f, 0.0f));
 			AddGameObject<Sprite>(L"CreditMozi", Vec2(256*0.5, 128*0.5), Vec3(570.0f, -370.0f, 0.0f));//タイトル用のスプライト生成
@@ -40,7 +41,6 @@ namespace basecross {
 			m_break = AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f));
 			m_Credit->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
 			m_break->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
-
 
 		}
 		catch (...) {
@@ -64,10 +64,68 @@ namespace basecross {
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 
 		auto time = App::GetApp()->GetElapsedTime();
+
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーのアナログスティックの向き
 		auto m_controler = inputDevice.GetControlerVec()[0];
+
+		if (m_count == 0 && m_time >= 0)
+		{
+			m_water = AddGameObject<Sprite>(L"water0", Vec2(510, 460 * 0.5), Vec3(257.0f, 125.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 1 && m_time >= 0.2)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water", Vec2(510, 460 * 0.5), Vec3(257.0f, 140.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 2 && m_time >= 0.4)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water2", Vec2(510, 460 * 0.6), Vec3(257.0f, 178.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 3 && m_time >= 0.6)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water3", Vec2(510, 510 * 0.6), Vec3(257.0f, 190.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 4 && m_time >= 0.8f)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water3", Vec2(510, 510 * 0.8), Vec3(257.0f, 230.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 5 && m_time >= 1.0f)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water3", Vec2(510, 510 * 0.6), Vec3(257.0f, 190.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 6 && m_time >= 1.2f)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water2", Vec2(510, 460 * 0.6), Vec3(257.0f, 178.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 7 && m_time >= 1.4f)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water", Vec2(510, 460 * 0.5), Vec3(257.0f, 140.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 8 && m_time >= 1.6f)
+		{
+			RemoveGameObject<Sprite>(m_water);
+			m_water = AddGameObject<Sprite>(L"water0", Vec2(510, 460 * 0.5), Vec3(257.0f, 130.0f, 0.0f));
+			m_count = 1;
+			m_time = 0;
+		}
+
+		m_time += time;
 
 		if (m_transparency > 0.0f && !m_transparent)
 		{
