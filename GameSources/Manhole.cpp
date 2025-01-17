@@ -215,6 +215,8 @@ namespace basecross {
 				m_charen = Manhole_None;
 				m_blinkingTime = 0;
 				m_stanbyTime = 0;
+				m_playerUpTime = 0;
+				m_playerStanbyFlag = false;
 			}
 
 		}
