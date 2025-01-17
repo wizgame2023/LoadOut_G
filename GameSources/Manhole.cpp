@@ -147,6 +147,7 @@ namespace basecross {
 			//3秒経ったら点滅する
 			if (m_stanbyTime > 3.0f)
 			{
+				m_playerStanbyFlag = true;//プレイヤーがマンホールの上にいると打ちあがるようにする
 				m_charen = Manhole_SoonUp;//もうすぐマンホールが上がる状態
 			}
 		}
@@ -154,8 +155,8 @@ namespace basecross {
 		if (m_charen == Manhole_SoonUp)
 		{
 			m_stanbyTime += delta;
-			//3秒経ったら点滅する
 			m_blinkingTime += delta;
+
 			if (m_blinkingTime < 0.1f)
 			{
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");
@@ -180,7 +181,7 @@ namespace basecross {
 		}
 
 		//通行禁止になる時の処理
-		if (m_mapManager.lock()->SelMapNow(m_pos) == 3 && (m_charen == Manhole_Up||m_charen==Manhole_Start))
+		if (m_mapManager.lock()->SelMapNow(m_pos) == 3 && (m_charen == Manhole_Up||m_charen == Manhole_Start||m_charen == Manhole_None))
 		{
 			m_mapManager.lock()->SetUpdataUnityMapFlag(true);//UnityMapデータ更新
 			m_charen = Manhole_Used;//通行禁止になっている状態
@@ -220,12 +221,12 @@ namespace basecross {
 
 	}
 
-	void Manhole::OnCollisionEnter(shared_ptr<GameObject>& other)
+	//入り続けているとき処理
+	void Manhole::OnCollisionExcute(shared_ptr<GameObject>& other)
 	{
 		auto test = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
 		auto player = dynamic_pointer_cast<Player>(other);
-		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 
 		if (test->SelMapNow(m_pos) == 2)
 		{//もし当たったオブジェクトが敵なら
@@ -249,6 +250,55 @@ namespace basecross {
 					test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 					GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
+				}
+			}
+		}
+
+	}
+	void Manhole::OnCollisionEnter(shared_ptr<GameObject>& other)
+	{
+		auto test = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
+		auto enemy = dynamic_pointer_cast<Enemy>(other);
+		auto player = dynamic_pointer_cast<Player>(other);
+		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
+		auto stage = GetStage();
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+
+		if (test->SelMapNow(m_pos) == 2)
+		{//もし当たったオブジェクトが敵なら
+			if (enemy)
+			{
+				//GetStage()->RemoveGameObject<Enemy>(enemy);//まだ敵をリムーブしない
+				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
+
+				auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
+				auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+				stageManager->SetRepopEnemyPos(enemyStartPos);//上の初期位置をStageManagerに渡す
+
+				player = stage->GetSharedGameObject<Player>(L"Player");
+				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
+				auto playerSelPos = mapManager->ConvertSelMap(playerPos);
+				auto selPos = mapManager->ConvertSelMap(m_pos);
+
+				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
+				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
+				{
+					stage->AddGameObject<MovieUpEandP>(enemy, player);
+				}
+				else//敵だけマンホールを踏んでいる映像
+				{
+					stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
+				}
+
+			}
+			else if (player)//プレイヤーなら
+			{
+				if (m_playerUpTime > 0.3f)
+				{
+					test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+					stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 				}
 			}
 		}
