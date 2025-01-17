@@ -156,7 +156,14 @@ namespace basecross {
 				lookY = (pushy * 2) + originPos.y;
 
 				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
-				if (m_unityMapCSV[lookY][lookX] == 3) continue;
+				if (m_unityMapCSV[lookY][lookX] == 3)
+				{
+					//応急処置　目的地がマンホールなら無視する
+					if (goalPos != Vec2(lookX, lookY))
+					{
+						continue;
+					}
+				}
 
 
 				if (lookX < 0 || lookX>m_unityMap.size() - 1)
