@@ -7,10 +7,11 @@
 #include "Project.h"
 
 namespace basecross {
-	StageManager::StageManager(shared_ptr<Stage>& stagePtr,int batteryMax) :
+	StageManager::StageManager(shared_ptr<Stage>& stagePtr,int batteryMax,float repopItemCountTimeMax) :
 		GameObject(stagePtr),
 		m_repopItemFlag(false),
-		m_batteryCountMax(batteryMax)
+		m_batteryCountMax(batteryMax),
+		m_repopItemCountTimeMax(repopItemCountTimeMax)
 	{
 
 	}
@@ -133,7 +134,7 @@ namespace basecross {
 		{
 			m_repopEnemyCountTime += delta;
 			//クールタイム過ぎたら敵がリポップする
-			if (m_repopEnemyCountTime >= 30.0f)
+			if (m_repopEnemyCountTime >= 10.0f)
 			{
 				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]);//リポップ
 				m_repopEnemyCountTime = 0;//カウントリセット
@@ -189,6 +190,9 @@ namespace basecross {
 		auto delta = App::GetApp()->GetElapsedTime();
 		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
 
+		auto player = stage->GetSharedGameObject<Player>(L"Player");
+		int playerBatteryNum = player->GetBatteryCount();//プレイヤーが持っている電池の数
+
 		int countItem = 0;
 		//int batteryCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
 
@@ -205,7 +209,7 @@ namespace basecross {
 				}
 			}
 			//ステージ上に一定数のアイテム数より下回っているならフラグをオンにする			
-			if (countItem < m_batteryCountMax)
+			if (countItem+playerBatteryNum < m_batteryCountMax)
 			{
 				m_repopItemFlag = true;
 			}
@@ -215,7 +219,7 @@ namespace basecross {
 		if (m_repopItemFlag)
 		{
 			m_repopItemCountTime += delta;//時間経過
-			auto m_repopItemCountTimeMax = 5.0f;//リポップする時間
+			//float m_repopItemCountTimeMax = 5.0f;//リポップする時間
 
 			//クールタイム過ぎたら生成する,クールタイムの時間は調整必須
 			if (m_repopItemCountTime >= m_repopItemCountTimeMax)

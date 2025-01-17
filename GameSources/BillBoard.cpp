@@ -15,16 +15,18 @@ namespace basecross{
 		m_Number(Number),
 		m_textureName(L"Clear"),
 		m_pushY(pushY),
-		m_scale(scale)
+		m_scale(scale),
+		m_color(Col4(1.0f,1.0f,1.0f,1.0f))
 	{}
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<GameObject>& actorPtr, wstring spriteName,float pushY,Vec3 scale) :
+		shared_ptr<GameObject>& actorPtr, wstring spriteName,float pushY,Vec3 scale,Col4 color) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(0),
 		m_textureName(spriteName),
 		m_pushY(pushY),
-		m_scale(scale)
+		m_scale(scale),
+		m_color(color)
 	{}
 	BillBoard::~BillBoard() {}
 
@@ -43,25 +45,24 @@ namespace basecross{
 			//変更できるスクエアリソースを作成
 
 			//頂点配列
-			vector<VertexPositionNormalTexture> vertices;
+			//vector<VertexPositionNormalTexture> vertices;
 			//インデックスを作成するための配列
 			vector<uint16_t> indices;
 			//Squareの作成(ヘルパー関数を利用)
-			MeshUtill::CreateSquare(1.0f, vertices, indices);
+			MeshUtill::CreateSquare(1.0f, m_vertices, indices);
 			//UV値の変更
-			float from = ((float)m_Number) / 10.0f;
-			float to = from + (1.0f / 10.0f);
 			//左上頂点
-			vertices[0].textureCoordinate = Vec2(0, 0);
+			m_vertices[0].textureCoordinate = Vec2(0, 0);
 			//右上頂点
-			vertices[1].textureCoordinate = Vec2(1, 0);
+			m_vertices[1].textureCoordinate = Vec2(1, 0);
 			//左下頂点
-			vertices[2].textureCoordinate = Vec2(0, 1.0f);
+			m_vertices[2].textureCoordinate = Vec2(0, 1.0f);
 			//右下頂点
-			vertices[3].textureCoordinate = Vec2(1, 1.0f);
+			m_vertices[3].textureCoordinate = Vec2(1, 1.0f);
+
 			//頂点の型を変えた新しい頂点を作成
 			vector<VertexPositionColorTexture> new_vertices;
-			for (auto& v : vertices) {
+			for (auto& v : m_vertices) {
 				VertexPositionColorTexture nv;
 				nv.position = v.position;
 				nv.color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -100,7 +101,7 @@ namespace basecross{
 			auto PtrCamera = GetStage()->GetView()->GetTargetCamera();
 
 			Quat Qt;
-			//向きをビルボードにする
+			//向きをカメラ目線にする
 			Qt = Billboard(PtrCamera->GetAt() - PtrCamera->GetEye());
 
 			PtrTransform->SetQuaternion(Qt);
@@ -119,6 +120,12 @@ namespace basecross{
 	void BillBoard::SetScale(Vec3 scale)
 	{
 		m_scale = scale;
+	}
+
+	//出現する高さのセッター
+	void BillBoard::SetPushY(float pushY)
+	{
+		m_pushY = pushY;
 	}
 	
 

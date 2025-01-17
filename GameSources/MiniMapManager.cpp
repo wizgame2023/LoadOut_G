@@ -37,9 +37,10 @@ namespace basecross {
 		//m_mapSize = 200;//mapの直径
 		m_mapMagnification = Lenght / m_mapSize;//マップの倍率
 
-		CreateManhole();//マンホールを生成//もしかしたらエラーでる？
+		CreateManhole();//マンホールを生成
 		CreateEnemy();
 		CreatePlayer();
+		CreateWall();
 	}
 
 	void MiniMapManager::OnUpdate()
@@ -48,12 +49,7 @@ namespace basecross {
 		UpdateEnemy();
 	}
 
-	//ミニマップ用の壁を生成
-	void MiniMapManager::CreateWall()
-	{
-
-	}
-
+ 
 	//ミニマップ用のアイテムを生成
 	void MiniMapManager::CreateBattery()
 	{
@@ -179,6 +175,35 @@ namespace basecross {
 
 				stage->AddGameObject<ManholeSprite>(castManhole, L"Bule",Vec2((itemScale.x * m_mapMagnification), (itemScale.z * m_mapMagnification)),
 					Vec3(m_startPos.x + (itemPos.x * m_mapMagnification), m_startPos.y + (itemPos.z * m_mapMagnification), 0.0f), Vec3(0.0f, 0.0f, 0.0f),Col4(1.0f,1.0f,1.0f,1.0f), 10);
+			}
+		}
+
+	}
+
+	//ミニマップの用の壁を作成
+	void MiniMapManager::CreateWall()
+	{
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto obj = stage->GetGameObjectVec();
+
+		////テスト用壁を表示
+		for (auto manhole : obj)
+		{
+			auto castManhole = dynamic_pointer_cast<Wall>(manhole);
+			if (castManhole)//アイテム型にキャストする
+			{
+				auto itemTrans = manhole->GetComponent<Transform>();
+				auto itemPos = itemTrans->GetPosition();
+				auto itemRot = itemTrans->GetRotation();
+				if (itemRot.y > 0)
+				{
+					itemRot.y = XMConvertToRadians(90.0f);
+				}
+				auto itemScale = itemTrans->GetScale();
+
+				stage->AddGameObject<Sprite>(L"White", Vec2((itemScale.x * m_mapMagnification), (itemScale.z * m_mapMagnification)),
+					Vec3(m_startPos.x + (itemPos.x * m_mapMagnification), m_startPos.y + (itemPos.z * m_mapMagnification), 0.0f), Vec3(0.0f, 0.0f, itemRot.y), Col4(1.0f, 1.0f, 1.0f, 1.0f), 10);
 			}
 		}
 

@@ -53,6 +53,8 @@ namespace basecross {
 		void WallCreate();//壁を生成
 		void AddExctraUnity(int addArray);//余分にA*に配列を入れる処理
 		void AddArray(int loop,int num);//配列に数値を入れる処理
+		void MapChange();//マップの形が変わる
+
 
 		void SetUpdataUnityMapFlag(bool flag);
 

@@ -38,7 +38,6 @@ namespace basecross {
 		auto ptrDraw = AddComponent<PNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CYLINDER");
 		ptrDraw->SetTextureResource(L"Manhole");
-
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		//コリジョン生成
@@ -57,7 +56,8 @@ namespace basecross {
 		//GetStage()->AddGameObject<BillBoard>();
 
 		//ビルボードの生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",13.0f,Vec3(5.0f,5.0f,5.0f));
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear", 13.0f, Vec3(5.0f, 5.0f, 5.0f));
+		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 13.0f, Vec3(5.0f, 5.0f, 5.0f));
 
 
 	}
@@ -76,15 +76,20 @@ namespace basecross {
 		//	<< endl;
 		//scene->SetDebugString(wss.str());
 
+		//マンホールに電池が設置されたときのビルボード処理
 		if (m_mapManager.lock()->SelMapNow(m_pos) >= 2)
 		{			
 			m_billBoardTime += delta;
 			if (m_billBoardTime < 0.8f)
 			{
+				m_billBoard->SetPushY(13.0f);
+				m_billBoard->SetScale(Vec3(5.0f, 5.0f, 5.0f));
 				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Hit");
 			}
 			if (m_billBoardTime >= 0.8f)
 			{
+				m_billBoard->SetPushY(13.0f);
+				m_billBoard->SetScale(Vec3(5.0f, 5.0f, 5.0f));
 				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Up");
 			}
 			if (m_billBoardTime >= 1.6f)
@@ -92,9 +97,32 @@ namespace basecross {
 				m_billBoardTime = 0.0f;
 			}
 		}
+
+		if (m_charen == Manhole_Used)
+		{
+			//どのぐらいになったら通行禁止から元に戻るかのゲージ
+			//ゲージカバー
+			m_billBoard->SetPushY(20.0f);
+			m_billBoard->ChangeTexture(L"GaugeCover");
+			m_billBoard->SetScale(Vec3(5.0f, 1.0f, 3.0f));
+			//ゲージバー
+			m_billBoardSecond->SetPushY(20.0f);
+			m_billBoardSecond->ChangeTexture(L"Gauge");
+			m_billBoardSecond->SetScale(Vec3(5.0f, 1.0f, 3.0f));
+
+		}
+
+		//テクスチャリセット
 		if (m_mapManager.lock()->SelMapNow(m_pos) < 2)
 		{
 			m_billBoard->ChangeTexture(L"Clear");
+			m_billBoardSecond->ChangeTexture(L"Clear");
+		}
+
+		//プレイヤーが設置したマンホールから離れた際に少しの間だけ無敵にする
+		if (m_playerStanbyFlag&& m_playerUpTime<0.3f)
+		{
+			m_playerUpTime += delta;
 		}
 
 	}
@@ -169,8 +197,12 @@ namespace basecross {
 		//通行禁止の時の際の処理
 		if (m_charen == Manhole_Used)
 		{
+
 			//クールタイム過ぎたら通れるようにする
 			m_coolTime += delta;
+
+			m_billBoardSecond->SetPercent(m_coolTime / 10.0f);//クールタイムの進行度を渡している
+			
 			if (m_coolTime > 10.0f)//時間が過ぎたら
 			{
 				m_mapManager.lock()->SetUpdataUnityMapFlag(true);//UnityMapデータ更新
@@ -193,6 +225,7 @@ namespace basecross {
 		auto test = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
 		auto player = dynamic_pointer_cast<Player>(other);
+		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 
 		if (test->SelMapNow(m_pos) == 2)
 		{//もし当たったオブジェクトが敵なら
@@ -209,11 +242,14 @@ namespace basecross {
 				GetStage()->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
 
 			}
-			if (player)//プレイヤーなら
+			else if (player)//プレイヤーなら
 			{
-				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
-				GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
+				if (m_playerUpTime > 0.3f)
+				{
+					test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+					GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
+				}
 			}
 		}
 	}
