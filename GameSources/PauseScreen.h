@@ -1,0 +1,13 @@
+/*!
+@file PauseScreen.h
+@brief É|Å[ÉYâÊñ 
+*/
+
+#pragma once
+#include "stdafx.h"
+
+namespace basecross {
+
+
+}
+//end basecross
