@@ -38,7 +38,7 @@ namespace basecross {
 			m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -202.0f, 0.0f));
 			AddGameObject<Sprite>(L"CreditMozi", Vec2(256*0.5, 128*0.5), Vec3(570.0f, -370.0f, 0.0f));//タイトル用のスプライト生成
 			m_Credit = AddGameObject<Sprite>(L"Credit", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//クレジット生成
-			m_break = AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f));
+			m_break = AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f),Vec3(0.0f), Col4(1.0f, 1.0f, 1.0f, 0.0f),2);
 			m_Credit->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
 			m_break->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
 
