@@ -34,8 +34,8 @@ namespace basecross {
 			CreateViewLight();
 			//AddGameObject<Sprite>(L"GameClear", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
 			AddGameObject<Sprite>(L"GameClearText", Vec2(800, 300), Vec3(0.0f, 300.0f, 0.0f));//タイトル用のスプライト生成
-			AddGameObject<Sprite>(L"GameClearTextAButton", Vec2(300, 100), Vec3(-200.0f, -350.0f, 0.0f));//タイトル用のスプライト生成
-			AddGameObject<Sprite>(L"GameClearTextBButton", Vec2(300, 100), Vec3(200.0f, -350.0f, 0.0f));//タイトル用のスプライト生成
+			AddGameObject<Sprite>(L"GameClearTextAButton", Vec2(300, 150), Vec3(-200.0f, -350.0f, 0.0f));//タイトル用のスプライト生成
+			AddGameObject<Sprite>(L"GameClearTextBButton", Vec2(300, 150), Vec3(200.0f, -350.0f, 0.0f));//タイトル用のスプライト生成
 		}
 		catch (...) {
 			throw;
@@ -80,7 +80,7 @@ namespace basecross {
 		playerDraw->UpdateAnimation(delta);
 		
 
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
 			switch (m_lastPlayStage)
 			{
@@ -118,7 +118,7 @@ namespace basecross {
 				break;
 			}
 		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
 		{
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 		}
