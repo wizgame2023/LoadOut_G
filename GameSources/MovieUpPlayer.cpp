@@ -33,11 +33,18 @@ namespace basecross {
 		//‘Å‚¿‚ ‚ª‚éPlayer
 		auto stage = GetStage();
 		auto player = stage->GetSharedGameObject<Player>(L"Player");
-		auto playerPos = player->GetComponent<Transform>()->GetPosition();
+		auto playerTrans = player->GetComponent<Transform>();
+		auto playerPos = playerTrans->GetPosition();
+		auto playerQt = playerTrans->GetQuaternion();
 		player->MoveSwich(false);//‘€ìŒø‚©‚È‚¢‚æ‚¤‚É‚·‚é
 		
 		playerPos.y += 100.0f*delta;
 		player->GetComponent<Transform>()->SetPosition(playerPos);
+
+
+		playerQt = playerQt * Quat(0.0f, 1.0f * (sin(XMConvertToRadians(30.0f) / 2.0f)), 0.0f, cos(XMConvertToRadians(30.0f) / 2.0f));
+		playerTrans->SetQuaternion(playerQt);
+
 
 		m_movieCamera->SetAt(playerPos);
 

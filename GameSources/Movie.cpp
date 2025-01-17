@@ -25,7 +25,7 @@ namespace basecross {
 		m_collsionManager->SetCollisionSwhich(false);//コリジョンオフにする
 
 		auto objVec = stage->GetGameObjectVec();
-		//アクターが親クラスのものだけ取得
+		//アクターを継承しているものだけ取得
 		for (auto actor : objVec)
 		{
 			auto actorCast = dynamic_pointer_cast<Actor>(actor);
@@ -56,6 +56,13 @@ namespace basecross {
 				actorCheck->MoveSwich(true);//動ける
 			}
 		}
+
+		//カメラを戻す処理
+		auto View = GetStage()->CreateView<SingleView>();//ビュー作成
+		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(0.0f, 50.0f, -30.0f));
+
+		View->SetCamera(PtrCamera);//カメラを戻す
+		GetStage()->SetView(View);
 
 		m_collsionManager->SetCollisionSwhich(true);//コリジョンオンにする
 	}
