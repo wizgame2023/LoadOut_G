@@ -22,6 +22,8 @@ namespace basecross {
 		shared_ptr<Sprite> m_StageText;
 		shared_ptr<NuberManager> m_NumberSprite;
 		shared_ptr<BlackOut> m_blackOut;//暗転処理
+		shared_ptr<Sprite>m_spriteMozi;
+		shared_ptr<Sprite>m_spriteB;
 
 		int m_SelectStage;//選択しているステージ
 
