@@ -120,7 +120,7 @@ namespace basecross {
 		}
 
 		//プレイヤーが設置したマンホールから離れた際に少しの間だけ無敵にする
-		if (m_playerStanbyFlag&& m_playerUpTime<0.3f)
+		if (m_playerStanbyFlag&& m_playerUpTime<0.5f)
 		{
 			m_playerUpTime += delta;
 		}
@@ -245,7 +245,7 @@ namespace basecross {
 			}
 			else if (player)//プレイヤーなら
 			{
-				if (m_playerUpTime > 0.3f)
+				if (m_playerUpTime >= 0.5f)
 				{
 					test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
@@ -294,7 +294,7 @@ namespace basecross {
 			}
 			else if (player)//プレイヤーなら
 			{
-				if (m_playerUpTime > 0.3f)
+				if (m_playerUpTime >= 0.5f)
 				{
 					test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");

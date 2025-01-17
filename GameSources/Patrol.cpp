@@ -79,6 +79,7 @@ namespace basecross
 	//巡回ステートの更新処理
 	void Patrol::OnUpdate()
 	{
+		auto delta = App::GetApp()->GetElapsedTime();
 		//CPWallCheck();
 		Math math;
 		auto AS = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");
@@ -97,10 +98,11 @@ namespace basecross
 
 
 
-		//m_time += 1;
+		//m_time += delta;
 
-		//if (m_time > 3)
+		//if (m_time > 0.3f)
 		//{
+		//	m_numbers = 0;
 		//	m_navi = AS->RouteSearch(m_ownerPos, m_destinationPos);
 		//	m_time = 0;
 		//}
@@ -244,7 +246,7 @@ namespace basecross
 						break;
 					}
 				}
-				else if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
+				if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
 				{
 					m_Owner->ChangeState<Tracking>();
 				}
@@ -268,7 +270,7 @@ namespace basecross
 						break;
 					}
 				}
-				else if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
+				if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
 				{
 					m_Owner->ChangeState<Tracking>();
 				}

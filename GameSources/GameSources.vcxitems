@@ -67,6 +67,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BillBoard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NumberManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PauseScreen.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PillarEfect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RandomItem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectStage.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BillBoard.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NumberManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PauseScreen.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PillarEffect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />

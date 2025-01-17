@@ -307,6 +307,9 @@
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEandP.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PauseScreen.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -538,5 +541,8 @@
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameUPEandP.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PauseScreen.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

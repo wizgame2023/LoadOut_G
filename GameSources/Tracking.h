@@ -20,6 +20,7 @@ namespace basecross {
 		Vec3 m_right;
 		float m_time;
 		float m_directionRad;
+		float m_aStarTime;//AStar更新時までのタイム計測用変数
 
 		
 		int m_costRWall;
@@ -91,6 +92,7 @@ namespace basecross {
 		void OnUpdate();
 		void OnExit();
 
+		void AStarMove();//Aスターの移動処理
 		void nextSelLook(int right,int left,int up, int down,Vec2 enemyAStarPos,Vec2 playerAStarPos);//隣に壁か上げているマンホールがあるか確認する
 
 		vector<Vec3> RouteSearch();

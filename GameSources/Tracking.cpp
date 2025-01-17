@@ -20,6 +20,7 @@ namespace basecross {
 	{	
 		//playerを追いかける処理
 		auto app = App::GetApp;
+		float delta = App::GetApp()->GetElapsedTime();
 		Math math;
 		wstringstream wss(L"");
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
@@ -40,25 +41,17 @@ namespace basecross {
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
 		if (playerAStarPos != m_beforPlayerUnity)
 		{
-			m_ownerPos;
-
-			m_unityMap.clear();
-			m_roodCount = 0;
-			m_beforPlayerUnity = playerAStarPos;
-			//MoveCost();
-			//m_tagetRootPos = RouteSearch();//経路探査してる
-			m_tagetRootPos = m_aStar->RouteSearch(m_ownerPos,m_playerPos);
-			if (m_tagetRootPos.size() >= 2)
-			{
-				auto one = m_tagetRootPos[0];
-				auto two = m_tagetRootPos[1];
-				//現在地が１番目よりも、２番目の距離に近かったら１番目の移動処理を無視する
-				if (abs(two.x - m_ownerPos.x) + abs(two.z - m_ownerPos.z) <= abs(two.x - one.x) + abs(two.z - one.z))
-				{
-					m_roodCount++;
-				}
-			}
+			AStarMove();
 		}
+		//一定時間たったらA*処理をする
+		m_aStarTime += delta;
+		if (m_aStarTime >= 0.3f)
+		{
+			m_aStarTime = 0.0f;//タイムリセット
+			AStarMove();
+		}
+		
+
 		//auto cost = MoveCost();
 		//m_directionRad = math.GetAngle(m_ownerPos,cost);
 		//目的地に移動したとみなす
@@ -98,7 +91,7 @@ namespace basecross {
 
 		if (m_Owner->GetDistance(m_ownerPos, m_playerPos) < 7)
 		{
-			m_Owner->ChangeState<Attack>();
+			//m_Owner->ChangeState<Attack>();
 		}
 		//auto a = m_posVec[m_count-1];
 
@@ -140,6 +133,31 @@ namespace basecross {
 	//追跡ステートの最後の処理
 	void Tracking::OnExit()
 	{
+
+	}
+
+	//AStarを使う移動処理
+	void Tracking::AStarMove()
+	{
+		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
+		//Playerの位置をAStarの座標にする
+		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
+		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
+
+		m_unityMap.clear();
+		m_roodCount = 0;
+		m_beforPlayerUnity = playerAStarPos;
+		m_tagetRootPos = m_aStar->RouteSearch(m_ownerPos, m_playerPos);
+		if (m_tagetRootPos.size() >= 2)
+		{
+			auto one = m_tagetRootPos[0];
+			auto two = m_tagetRootPos[1];
+			//現在地が１番目よりも、２番目の距離に近かったら１番目の移動処理を無視する
+			if (abs(two.x - m_ownerPos.x) + abs(two.z - m_ownerPos.z) <= abs(two.x - one.x) + abs(two.z - one.z))
+			{
+				m_roodCount++;
+			}
+		}
 
 	}
 
