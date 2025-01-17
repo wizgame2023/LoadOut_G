@@ -105,19 +105,19 @@ namespace basecross {
 			m_water = AddGameObject<Sprite>(L"water3", Vec2(510, 510 * 0.6), Vec3(257.0f, 190.0f, 0.0f));
 			m_count++;
 		}
-		if (m_count == 6 && m_time >= 1.2f)
+		if (m_count == 6 && m_time >= 1.15f)
 		{
 			RemoveGameObject<Sprite>(m_water);
 			m_water = AddGameObject<Sprite>(L"water2", Vec2(510, 460 * 0.6), Vec3(257.0f, 178.0f, 0.0f));
 			m_count++;
 		}
-		if (m_count == 7 && m_time >= 1.4f)
+		if (m_count == 7 && m_time >= 1.25f)
 		{
 			RemoveGameObject<Sprite>(m_water);
 			m_water = AddGameObject<Sprite>(L"water", Vec2(510, 460 * 0.5), Vec3(257.0f, 140.0f, 0.0f));
 			m_count++;
 		}
-		if (m_count == 8 && m_time >= 1.6f)
+		if (m_count == 8 && m_time >= 1.3f)
 		{
 			RemoveGameObject<Sprite>(m_water);
 			m_water = AddGameObject<Sprite>(L"water0", Vec2(510, 460 * 0.5), Vec3(257.0f, 130.0f, 0.0f));

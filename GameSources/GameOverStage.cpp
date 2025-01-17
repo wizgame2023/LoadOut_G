@@ -33,7 +33,7 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 			AddGameObject<Sprite>(L"GameOverLight", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
-			AddGameObject<Sprite>(L"GameOverText", Vec2(800, 150), Vec3(0.0f, 300.0f, 0.0f));//タイトル用のスプライト生成
+			AddGameObject<Sprite>(L"GameOverText", Vec2(800, 300), Vec3(0.0f, 300.0f, 0.0f));//タイトル用のスプライト生成
 			AddGameObject<Sprite>(L"GameClearTextAButton", Vec2(300, 100), Vec3(-200.0f, -350.0f, 0.0f));//スプライト生成
 			AddGameObject<Sprite>(L"GameClearTextBButton", Vec2(300, 100), Vec3(200.0f, -350.0f, 0.0f));//スプライト生成
 
