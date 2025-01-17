@@ -81,7 +81,7 @@ namespace basecross {
 		//Player‚Ì¶¬
 		CreatePlayer();
 
-		//“G¶¬stage20
+		//“G¶¬
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
 
