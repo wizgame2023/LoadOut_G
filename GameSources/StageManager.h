@@ -24,6 +24,7 @@ namespace basecross {
 		bool m_GameOverFlag;//ゲームオーバー用のフラグ	
 		bool m_repopItemFlag;//アイテムのリポップフラグ
 		bool m_BGMChase;//追いかけられているか保存する変数
+		bool m_updateFlag;//アップデート処理をするかのフラグ
 
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
@@ -54,6 +55,7 @@ namespace basecross {
 		void SetPlayerKeyFlag(int flag);//セッター
 		void SetRepopEnemyPos(Vec3 pos);//セッター
 		void SetRepopRandomItemPos(Vec3 pos);//セッター
+		void SetUpdateFlag(bool flag);//アップデートするかのセッター
 	};
 
 }
