@@ -57,8 +57,8 @@ namespace basecross {
 		//GetStage()->AddGameObject<BillBoard>();
 
 		//ビルボードの生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear", 13.0f, Vec3(5.0f, 5.0f, 5.0f));
-		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 13.0f, Vec3(5.0f, 5.0f, 5.0f));
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",3, 13.0f, Vec3(5.0f, 5.0f, 5.0f));
+		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 3, 13.0f, Vec3(5.0f, 5.0f, 5.0f));
 
 
 	}
