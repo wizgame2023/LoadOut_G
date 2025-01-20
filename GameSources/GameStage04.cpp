@@ -82,7 +82,7 @@ namespace basecross {
 		CreatePlayer();
 
 		//ìGê∂ê¨
-		//CreateEnemy();
+		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
 
 		AddGameObject<MovieGameStart>(mapSize);//ÉÄÅ[ÉrÅ[ê∂ê¨
@@ -125,9 +125,9 @@ namespace basecross {
 		vector<Vec3> posVec =
 		{
 		   Vec3(45.0f, 2.5f, -15.0f),//1
-		   Vec3(5.0f, 2.5f, 25.0f),//2
+		  // Vec3(5.0f, 2.5f, 25.0f),//2
 		   Vec3(5.0f, 2.5f, 5.0f), //3
-		   Vec3(-25.0f, 2.5f, -25.0f),//4
+		   //Vec3(-25.0f, 2.5f, -25.0f),//4
 		   Vec3(45.0f, 2.5f, -35.0f)//5
 		};
 		auto test = posVec.size();

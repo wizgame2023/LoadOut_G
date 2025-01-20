@@ -97,7 +97,7 @@ namespace basecross {
 	//Playerê∂ê¨
 	void GameStage09::CreatePlayer()
 	{
-		auto player = AddGameObject<Player>(Vec3(45.0f, 3.0f, -45.0f), Vec3(0.0f, 0.0f, 0.0f));
+		auto player = AddGameObject<Player>(Vec3(40.0f, 3.0f, -40.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);
 		m_miniMapManager->CreatePlayer();
 	}
