@@ -58,6 +58,11 @@ namespace basecross {
 		ptrColl->SetAfterCollision(AfterCollision::None);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
+		//影を付ける
+		auto ptrShadow = AddComponent<Shadowmap>();
+		ptrShadow->SetMeshResource(L"Boss_Mesh_Kari");
+		ptrShadow->SetMeshToTransformMatrix(spanMat);
+
 		AddTag(L"Enemy");
 
 		m_CurrentSt->OnStart();
@@ -155,9 +160,9 @@ namespace basecross {
 		// オブジェクト自体が破棄される時に現在と次のステート用の変数を空にする
 		m_CurrentSt.reset();
 		m_NextSt.reset();
-		//SE生成 敵の叫び声
-		auto SEManager = App::GetApp()->GetXAudio2Manager();
-		auto SE = SEManager->Start(L"Scream", 0, 0.9f);
+		////SE生成 敵の叫び声
+		//auto SEManager = App::GetApp()->GetXAudio2Manager();
+		//auto SE = SEManager->Start(L"Scream", 0, 0.9f);
 		auto stage = GetStage();
 		auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
 		//自分が鍵を持っているとき
