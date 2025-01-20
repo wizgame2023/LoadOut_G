@@ -88,7 +88,6 @@ namespace basecross{
 			m_pillar = GetStage()->AddGameObject<TrackingPillarEfect>(Vec3(0.0f, 0.0f, 0.0f), L"Clear", Vec2(0.0f, -1.0f));
 			
 		}
-
 	}
 
 	void Player::OnUpdate()
@@ -183,7 +182,7 @@ namespace basecross{
 
 
 		//電池所持数は99個が限界
-		if (m_itemCount >= 100)
+		if (m_itemCount > 99)
 		{
 			m_itemCount = 99;
 		}
