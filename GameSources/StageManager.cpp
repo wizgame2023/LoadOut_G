@@ -39,6 +39,17 @@ namespace basecross {
 
 	void StageManager::OnUpdate()
 	{
+		//ゲームクリアのフラグが立ったら
+		if (m_ClearFlag)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
+		}
+		//ゲームオーバーのフラグが立ったら
+		if (m_GameOverFlag)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバーに移動する
+		}
+
 		//フラグがオンになっているとUpdateできる
 		if (!m_updateFlag) return;
 
@@ -53,17 +64,6 @@ namespace basecross {
 		RepopEnemy();//敵のリポップ処理
 		RepopRandamItem();//ランダムアイテムのリポップ処理
 		PauseEvent();
-		//ゲームクリアのフラグが立ったら
-		if (m_ClearFlag)
-		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameClearStage");//ゲームクリアに移動する
-		}
-		//ゲームオーバーのフラグが立ったら
-		if (m_GameOverFlag)
-		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバーに移動する
-		}
-
 	}
 
 	//BGMを変更する処理
@@ -283,7 +283,7 @@ namespace basecross {
 		{
 			m_repopRamdomItemCountTime += delta;
 			//クールタイム過ぎたら敵がリポップする
-			if (m_repopRamdomItemCountTime >= 3.0f)
+			if (m_repopRamdomItemCountTime >= 60.0f)
 			{
 				stage->AddGameObject<RandomItem>(m_repopRandomItemPos[0]);//リポップ
 				m_repopRamdomItemCountTime = 0;//カウントリセット
