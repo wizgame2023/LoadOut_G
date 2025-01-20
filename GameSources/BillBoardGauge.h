@@ -14,7 +14,7 @@ namespace basecross {
 		float m_parsecond;//全体の何パーセント出すか決める
 	public:
 		BillBoardGauge(const shared_ptr<Stage>& StagePtr, 
-			shared_ptr<GameObject>& actorPtr, wstring spriteName, float pushY = 18.0f, Vec3 scale = Vec3(3.0f, 3.0f, 3.0f));
+			shared_ptr<GameObject>& actorPtr, wstring spriteName,int layer = 2, float pushY = 18.0f, Vec3 scale = Vec3(3.0f, 3.0f, 3.0f));
 		~BillBoardGauge();
 
 		void OnCreate()override;

@@ -8,8 +8,8 @@
 
 namespace basecross {
 	BillBoardGauge::BillBoardGauge(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<GameObject>& actorPtr, wstring spriteName, float pushY, Vec3 scale) :
-		BillBoard(StagePtr, actorPtr, spriteName, pushY, scale)
+		shared_ptr<GameObject>& actorPtr, wstring spriteName,int layer, float pushY, Vec3 scale) :
+		BillBoard(StagePtr, actorPtr, spriteName,layer, pushY, scale)
 	{
 
 	}
@@ -66,7 +66,7 @@ namespace basecross {
 			DrawComp->SetMeshResource(m_SquareMeshResource);
 			DrawComp->SetTextureResource(m_textureName);
 			SetAlphaActive(true);
-			SetDrawLayer(2);
+			SetDrawLayer(m_layer);
 		}
 
 	}

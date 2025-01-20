@@ -47,12 +47,14 @@ namespace basecross{
 
 		float m_pushY;
 
+		int m_layer;
+
 	public:
 		//\’z‚Æ”jŠü
 		BillBoard(const shared_ptr<Stage>& StagePtr,
 			shared_ptr<GameObject>& actorPtr, size_t Number,float pushY = 18.0f, Vec3 scale = Vec3(3.0f, 3.0f, 3.0f));
 		BillBoard(const shared_ptr<Stage>& StagePtr,
-			shared_ptr<GameObject>& actorPtr, wstring spriteName, float pushY = 18.0f,Vec3 scale = Vec3(3.0f,3.0f,3.0f),Col4 color = Col4(1.0f,1.0f,1.0f,1.0f));
+			shared_ptr<GameObject>& actorPtr, wstring spriteName,int layer = 2, float pushY = 18.0f,Vec3 scale = Vec3(3.0f,3.0f,3.0f),Col4 color = Col4(1.0f,1.0f,1.0f,1.0f));
 		virtual ~BillBoard();
 		//‰Šú‰»
 		virtual void OnCreate() override;

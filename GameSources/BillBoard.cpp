@@ -16,17 +16,19 @@ namespace basecross{
 		m_textureName(L"Clear"),
 		m_pushY(pushY),
 		m_scale(scale),
-		m_color(Col4(1.0f,1.0f,1.0f,1.0f))
+		m_color(Col4(1.0f,1.0f,1.0f,1.0f)),
+		m_layer(2)
 	{}
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<GameObject>& actorPtr, wstring spriteName,float pushY,Vec3 scale,Col4 color) :
+		shared_ptr<GameObject>& actorPtr, wstring spriteName,int layer,float pushY,Vec3 scale,Col4 color) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(0),
 		m_textureName(spriteName),
 		m_pushY(pushY),
 		m_scale(scale),
-		m_color(color)
+		m_color(color),
+		m_layer(layer)
 	{}
 	BillBoard::~BillBoard() {}
 
@@ -76,7 +78,7 @@ namespace basecross{
 			DrawComp->SetMeshResource(m_SquareMeshResource);
 			DrawComp->SetTextureResource(m_textureName);
 			SetAlphaActive(true);
-			SetDrawLayer(2);
+			SetDrawLayer(m_layer);
 		}
 
 	}
