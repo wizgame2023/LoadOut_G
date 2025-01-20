@@ -98,14 +98,13 @@ namespace basecross
 
 
 
-		//m_time += delta;
-
-		//if (m_time > 0.3f)
-		//{
-		//	m_numbers = 0;
-		//	m_navi = AS->RouteSearch(m_ownerPos, m_destinationPos);
-		//	m_time = 0;
-		//}
+		m_time += delta;
+		if (m_time > 0.3f)
+		{
+			m_numbers = 0;
+			m_navi = AS->RouteSearch(m_ownerPos, m_destinationPos);
+			m_time = 0;
+		}
 
 		//m_time += app()->GetElapsedTime();//デルタタイム
 		Vision(m_ownerPos, m_playerPos, 8);
@@ -182,7 +181,7 @@ namespace basecross
 			if (angle == 0)
 			{
 				//床セルの場合
-				if ((int)unityPos.y % 2 == 1&& ((int)unityPos.x + i) % 2 == 1)
+				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 == 1)
 				{
 					if (unityMap[unityPos.y][unityPos.x + i] == 3)
 					{
@@ -190,14 +189,14 @@ namespace basecross
 					}
 				}
 				//壁セルの場合
-				if((int)unityPos.y % 2 != 1 || ((int)unityPos.x + i) % 2 != 1)
+				if((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 != 1)
 				{
 					if (unityMap[unityPos.y][unityPos.x + i] == 1)
 					{
 						break;
 					}
 				}
-				else if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
+				if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
 				{
 					m_Owner->ChangeState<Tracking>();
 				}
@@ -215,14 +214,14 @@ namespace basecross
 				}
 
 				//壁セルの場合
-				if ((int)unityPos.y % 2 != 1 || ((int)unityPos.x - i) % 2 != 1)
+				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2 != 1)
 				{
 					if (unityMap[unityPos.y][unityPos.x - i] == 1)
 					{
 						break;
 					}
 				}
-				else if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
+				if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
 				{
 					m_Owner->ChangeState<Tracking>();
 				}
@@ -239,7 +238,7 @@ namespace basecross
 				}
 
 				//壁セルの場合
-				if (((int)unityPos.y - i) % 2 != 1 || (int)unityPos.x - i % 2 != 1)
+				if (((int)unityPos.y - i) % 2 == 0 && (int)unityPos.x % 2 == 1)
 				{
 					if (unityMap[unityPos.y - i][unityPos.x] == 1)
 					{
@@ -254,7 +253,7 @@ namespace basecross
 			if (angle == XM_PI * 0.5)
 			{
 				//床セルの場合
-				if ((int)unityPos.y + i % 2 == 1 && (int)unityPos.x % 2 == 1)
+				if (((int)unityPos.y + i) % 2 == 1 && (int)unityPos.x % 2 == 1)
 				{
 					if (unityMap[unityPos.y + i][unityPos.x] == 3)
 					{
@@ -263,7 +262,7 @@ namespace basecross
 				}
 
 				//壁セルの場合
-				if ((int)unityPos.y + i % 2 != 1 || (int)unityPos.x - i % 2 != 1)
+				if (((int)unityPos.y + i) % 2 == 0 && (int)unityPos.x % 2 == 1)
 				{
 					if (unityMap[unityPos.y + i][unityPos.x] == 1)
 					{
