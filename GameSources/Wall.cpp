@@ -42,6 +42,7 @@ namespace basecross {
 
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
+		ptrDraw->SetOwnShadowActive(true); // 影の映り込みを反映させる
 
 
 		auto ptrColl = AddComponent<CollisionObb>();
@@ -49,6 +50,12 @@ namespace basecross {
 		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
 
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
+
+
+		//影を付ける
+		//auto ptrShadow = AddComponent<Shadowmap>();
+		//ptrShadow->SetMeshResource(L"DEFAULT_CUBE");
+		//ptrShadow->SetMeshToTransformMatrix(spanMat);
 
 
 		GetStage()->SetCollisionPerformanceActive(true);
