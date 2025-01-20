@@ -11,7 +11,8 @@ namespace basecross {
 		GameObject(stagePtr),
 		m_repopItemFlag(false),
 		m_batteryCountMax(batteryMax),
-		m_repopItemCountTimeMax(repopItemCountTimeMax)
+		m_repopItemCountTimeMax(repopItemCountTimeMax),
+		m_updateFlag(true)
 	{
 
 	}
@@ -38,6 +39,9 @@ namespace basecross {
 
 	void StageManager::OnUpdate()
 	{
+		//フラグがオンになっているとUpdateできる
+		if (!m_updateFlag) return;
+
 		EnemyStateCheck();//敵が追いかけてきてるか確認する
 		auto stage = GetStage();
 		auto objVec = stage->GetGameObjectVec();
@@ -383,6 +387,11 @@ namespace basecross {
 	void StageManager::SetRepopRandomItemPos(Vec3 pos)
 	{
 		m_repopRandomItemPos.push_back(pos);
+	}
+	//アップデートするかのセッター
+	void StageManager::SetUpdateFlag(bool flag)
+	{
+		m_updateFlag = flag;
 	}
 
 }

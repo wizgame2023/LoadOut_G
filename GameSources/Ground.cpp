@@ -33,6 +33,7 @@ namespace basecross {
 		ptr->SetRotation(0.0f,0.0f,0.0f);
 		ptr->SetScale(Vec3(10.0f,0.1f,10.0f));
 
+
 		//Transform‚É‘Î‚µ‚Ä‚Ì“™·”—ñ
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
@@ -46,6 +47,7 @@ namespace basecross {
 		auto ptrDraw = AddComponent<PNTStaticInstanceDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		ptrDraw->SetTextureResource(L"Road");
+		ptrDraw->SetOwnShadowActive(true); // ‰e‚Ì‰f‚è‚İ‚ğ”½‰f‚³‚¹‚é
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 

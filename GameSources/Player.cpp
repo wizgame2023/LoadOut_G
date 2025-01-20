@@ -62,6 +62,10 @@ namespace basecross{
 
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 
+		//影を付ける
+		auto ptrShadow = AddComponent<Shadowmap>();
+		ptrShadow->SetMeshResource(L"kid_Mesh");
+		ptrShadow->SetMeshToTransformMatrix(spanMat);
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -101,7 +105,7 @@ namespace basecross{
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 
 
-		KeyBoardMove();//キーボードでのPlayerの動きデバック用
+		//KeyBoardMove();//キーボードでのPlayerの動きデバック用
 
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得

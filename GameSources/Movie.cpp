@@ -37,6 +37,9 @@ namespace basecross {
 			m_actorVec.push_back(actorCast);
 		}
 
+		m_stageManager = stage->GetSharedGameObject<StageManager>(L"StageManaer");
+		m_stageManager->SetUpdateFlag(false);//動かなくする
+
 		CameraChange();//カメラ変更
 	}
 
@@ -65,6 +68,7 @@ namespace basecross {
 		GetStage()->SetView(View);
 
 		m_collsionManager->SetCollisionSwhich(true);//コリジョンオンにする
+		m_stageManager->SetUpdateFlag(true);//ステージマネージャーが動くようにする
 	}
 
 	//ムービー用のカメラに変更させる

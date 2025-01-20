@@ -45,7 +45,7 @@ namespace basecross {
 		m_drawComp = AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
 		m_drawComp->SetTextureResource(m_textureName);//テクスチャの名前指定
 		m_drawComp->SetSamplerState(SamplerState::LinearWrap); // テクスチャを繰り返して貼り付ける設定
-		m_drawComp->SetDiffuse(Col4(1, 1, 1, 1.0f)); // ポリゴンを色を設定する
+		m_drawComp->SetDiffuse(m_color); // ポリゴンを色を設定する
 
 		auto trans = GetComponent<Transform>();
 		trans->SetPosition(m_pos);

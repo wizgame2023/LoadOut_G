@@ -73,17 +73,6 @@ namespace basecross {
 		//コントローラーのアナログスティックの向き
 		m_controler = inputDevice.GetControlerVec()[0];
 
-
-		//ステージ移動処理
-		if (m_controler.wButtons & XINPUT_GAMEPAD_B)
-		{
-			auto SEManager = App::GetApp()->GetXAudio2Manager();
-			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
-
-			m_blackOut->SetSwitch(true);//暗転開始
-			m_decisionFlag = true;//ステージ決定したことを伝える
-		}
-
 		//暗転が終わったらステージ移動
 		if (m_blackOut->GetBlackOutFlag())
 		{
@@ -126,6 +115,16 @@ namespace basecross {
 
 		//決定したら選択するステージは動かないようにする
 		if (m_decisionFlag) return;
+
+		//ステージ移動処理
+		if (m_controler.wButtons & XINPUT_GAMEPAD_B)
+		{
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+
+			m_blackOut->SetSwitch(true);//暗転開始
+			m_decisionFlag = true;//ステージ決定したことを伝える
+		}
 
 		//どのステージにするかのテクスチャの遷移処理
 		SelectionStage();

@@ -7,6 +7,7 @@
 #include "stdafx.h"
 #include "MyCamera.h"
 #include "StageCollisionManager.h"
+#include "StageManager.h"
 
 namespace basecross {
 	class Movie :public GameObject
@@ -16,8 +17,8 @@ namespace basecross {
 	protected:
 		shared_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
 		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら
-		Vec3 testPos;
 		shared_ptr<StageCollisionManager> m_collsionManager;//コリジョンマネージャー
+		shared_ptr<StageManager> m_stageManager;//ステージマネージャー
 		int m_count;
 	public:
 		Movie(shared_ptr<Stage>& stagePtr);
