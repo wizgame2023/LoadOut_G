@@ -52,6 +52,11 @@ namespace basecross {
 		//I—¹ˆ—
 		if (enemyPos.y >= 150.0f)
 		{
+			//SE¶¬ “G‚Ì‹©‚Ñº
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Scream", 0, 0.9f);
+			auto stage = GetStage();
+
 			GetStage()->RemoveGameObject<Enemy>(m_Enemy.lock());
 			GetStage()->RemoveGameObject<MovieUpEnemy>(GetThis<MovieUpEnemy>());//©•ª©g‚ğíœ
 		}
