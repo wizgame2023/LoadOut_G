@@ -37,7 +37,7 @@ namespace basecross {
 			m_actorVec.push_back(actorCast);
 		}
 
-		m_stageManager = stage->GetSharedGameObject<StageManager>(L"StageManaer");
+		m_stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
 		m_stageManager->SetUpdateFlag(false);//“®‚©‚È‚­‚·‚é
 
 		CameraChange();//ƒJƒƒ‰•ÏX
