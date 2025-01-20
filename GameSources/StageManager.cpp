@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	StageManager::StageManager(shared_ptr<Stage>& stagePtr,int batteryMax,float repopItemCountTimeMax) :
+	StageManager::StageManager(shared_ptr<Stage>& stagePtr, int batteryMax, float repopItemCountTimeMax) :
 		GameObject(stagePtr),
 		m_repopItemFlag(false),
 		m_batteryCountMax(batteryMax),
@@ -48,7 +48,7 @@ namespace basecross {
 		RepopItem();//アイテムのリポップ処理
 		RepopEnemy();//敵のリポップ処理
 		RepopRandamItem();//ランダムアイテムのリポップ処理
-		
+		PauseEvent();
 		//ゲームクリアのフラグが立ったら
 		if (m_ClearFlag)
 		{
@@ -118,8 +118,8 @@ namespace basecross {
 			m_BGMChase = false;
 		}
 
-		
-		
+
+
 	}
 
 	//Enemyのリポップ装置
@@ -156,7 +156,7 @@ namespace basecross {
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
 
 			//鍵を手に入れたことを知らせるテクスチャ追加
-			m_KeyGetText = stage->AddGameObject<Sprite>(L"KeyGetText", Vec2(800.0f, 400.0f),Vec3(1000.0f,0.0f,0.0f));
+			m_KeyGetText = stage->AddGameObject<Sprite>(L"KeyGetText", Vec2(800.0f, 400.0f), Vec3(1000.0f, 0.0f, 0.0f));
 
 			//取得したオブジェクトが変換できたら配列に入れる
 			for (auto hatch : objVec)
@@ -228,7 +228,7 @@ namespace basecross {
 				}
 			}
 			//ステージ上に一定数のアイテム数より下回っているならフラグをオンにする			
-			if (countItem+playerBatteryNum < m_batteryCountMax)
+			if (countItem + playerBatteryNum < m_batteryCountMax)
 			{
 				m_repopItemFlag = true;
 			}
@@ -294,6 +294,69 @@ namespace basecross {
 		auto BGM = App::GetApp()->GetXAudio2Manager();
 		BGM->Stop(m_BGM);
 
+	}
+
+	void StageManager::PauseEvent()
+	{
+		auto& cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
+		//auto& keyState = App::GetApp()->GetInputDevice().GetKeyState();
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto obj = stage->GetGameObjectVec();
+		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_count == 0)
+		{
+			m_count++;
+			m_pause = true;
+			m_pauseFlag = true;
+		}
+		else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_count == 1)
+		{
+			m_count--;
+			m_pause=false;
+			m_pauseFlag = true;
+		}
+
+		if (m_pause && m_pauseFlag)
+		{
+			//取得したオブジェクトがアイテムに変換できたら配列に入れる
+			for (auto enemy : obj)
+			{
+				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
+				if (castEnemy)//アイテム型にキャストする
+				{
+					castEnemy->MoveSwich(false);//うごかなくさせる
+				}
+			}
+			for (auto player : obj)
+			{
+				auto castPlayer = dynamic_pointer_cast<Player>(player);
+				if (castPlayer)//アイテム型にキャストする
+				{
+					castPlayer->MoveSwich(false);//うごかなくさせる
+					
+				}
+			}
+		}
+		if (!m_pause && m_pauseFlag)
+		{
+			m_pause = false;
+			for (auto enemy : obj)
+			{
+				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
+				if (castEnemy)//アイテム型にキャストする
+				{
+					castEnemy->MoveSwich(true);//動くようにする
+				}
+			}
+			for (auto player : obj)
+			{
+				auto castPlayer = dynamic_pointer_cast<Player>(player);
+				if (castPlayer)//アイテム型にキャストする
+				{
+					castPlayer->MoveSwich(true);//動くようにする
+				}
+			}
+		}
 	}
 
 	//ClearFlagのセッター
