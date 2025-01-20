@@ -148,8 +148,11 @@ namespace basecross {
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, m_transparency));
 		m_spriteB->SetColor(Col4(1, 0, 0, m_transparency));
 
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B || keyState.m_bPushKeyTbl[VK_SPACE])
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+
 			m_onFaed = true;
 		}
 		if (m_onFaed)
