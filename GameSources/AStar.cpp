@@ -229,7 +229,7 @@ namespace basecross {
 		auto trans = actor->GetComponent<Transform>();
 		auto pos = trans->GetPosition();
 
-		if (routePos.size() > 2&&routeCount == 0)
+		if (routePos.size() >= 2 && routeCount == 0)
 		{
 			auto one = routePos[0];
 			auto two = routePos[1];
