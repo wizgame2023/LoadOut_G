@@ -14,8 +14,8 @@ namespace basecross {
 		int m_PlayerKeyFlag;///Playerが鍵を持ったかのフラグ
 		int m_batteryCountMax;//ステージのバッテリー出現上限
 
+		int m_pausCount;
 		int m_count;
-		int m_co;
 		//int m_KeyTextFlag;//鍵を手に入れているかのフラグ
 
 		float m_repopItemCountTime;//アイテムがリポップするタイムを測る変数
@@ -31,10 +31,20 @@ namespace basecross {
 
 		bool m_pause;
 		bool m_pauseFlag;
+		bool m_stickCheck;
 
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
 		shared_ptr<Sprite> m_KeyGetText;
+
+		shared_ptr<Sprite> m_white;
+
+		shared_ptr<Sprite> PauseScene;
+		shared_ptr<Sprite> m_pauseText;
+		shared_ptr<Sprite> m_pauseText2;
+		shared_ptr<Sprite> m_pauseText3;
+
+		shared_ptr<BlackOut> m_blackOut;//暗転処理
 
 		vector<Vec3> m_repopEnemyPos;//リポップするEnemyのポジション
 		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション
