@@ -181,10 +181,10 @@ namespace basecross{
 		}		
 
 
-		//電池所持数は99個が限界
-		if (m_itemCount > 99)
+		//電池所持数は10個が限界
+		if (m_itemCount > 10)
 		{
-			m_itemCount = 99;
+			m_itemCount = 10;
 		}
 		m_spriteNum->SetNum(m_itemCount);//表示する数字を更新する
 
