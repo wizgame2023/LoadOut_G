@@ -24,7 +24,7 @@ namespace basecross {
 		
 		auto stage = GetStage();
 		auto player = stage->GetSharedGameObject<Player>(L"Player");//プレイヤー取得	
-		player->MoveSwich(false);//playerを動かさない
+		player->MoveSwitch(false);//playerを動かさない
 		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
 		playerDraw->ChangeCurrentAnimation(L"Happey");//うれしいモーションに変更
 
@@ -43,7 +43,7 @@ namespace basecross {
 		//Playerのアニメーション更新
 		playerDraw->UpdateAnimation(delta);
 
-		player->MoveSwich(false);//playerを動かさない
+		player->MoveSwitch(false);//playerを動かさない
 		Vec3 moveVec= Vec3(cameraPos.x - playerPos.x, cameraPos.y - playerPos.y, cameraPos.z - playerPos.z);//カメラとPlayerの距離ベクトル
 		float angle = atan2(moveVec.z, moveVec.x);//角度を取得
 		playerTrans->SetRotation(Vec3(0.0f, -angle, 0.0f));//カメラ目線になるようにする

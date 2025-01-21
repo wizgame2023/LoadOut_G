@@ -29,7 +29,7 @@ namespace basecross {
 
 		m_movieCamera->SetAt(enemyPos);//’Ž‹“_‚ð‘Å‚¿‚ ‚ª‚éEnemy‚ÉŒÅ’è‚·‚é
 
-		m_Enemy.lock()->MoveSwich(false);//“®‚©‚È‚­‚·‚é
+		m_Enemy.lock()->MoveSwitch(false);//“®‚©‚È‚­‚·‚é
 
 	}
 

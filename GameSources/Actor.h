@@ -22,7 +22,7 @@ namespace basecross {
 		virtual float GetAngle();
 		virtual void SetAngle(float angle);
 
-		void MoveSwich(bool onOff);//動いていいかのフラグ
+		void MoveSwitch(bool onOff);//動いていいかのフラグ
 
 		//void OnCreate()override;
 		//void OnUpdate()override;

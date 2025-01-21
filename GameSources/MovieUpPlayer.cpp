@@ -36,7 +36,7 @@ namespace basecross {
 		auto playerTrans = player->GetComponent<Transform>();
 		auto playerPos = playerTrans->GetPosition();
 		auto playerQt = playerTrans->GetQuaternion();
-		player->MoveSwich(false);//‘€ìŒø‚©‚È‚¢‚æ‚¤‚É‚·‚é
+		player->MoveSwitch(false);//‘€ìŒø‚©‚È‚¢‚æ‚¤‚É‚·‚é
 		
 		playerPos.y += 100.0f*delta;
 		player->GetComponent<Transform>()->SetPosition(playerPos);

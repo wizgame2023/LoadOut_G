@@ -19,6 +19,8 @@ namespace basecross {
 		float m_speed;
 		float m_angle;
 
+		bool m_startPop;//最初のスポーンかリポップかを表す変数
+
 		// 現在のステートを入れておく
 		shared_ptr<StateBase> m_CurrentSt;
 
@@ -35,7 +37,7 @@ namespace basecross {
 	public:
 		//コンストラクタ・デストラクタ
 		Enemy(shared_ptr<Stage>& StagePtr);
-		Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos);
+		Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos,bool startpop = true);
 
 		~Enemy();
 
