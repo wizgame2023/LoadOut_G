@@ -25,6 +25,7 @@ namespace basecross {
 		void OnUpdate()override;
 
 		void SetSwitch(bool OnOff);//暗転するときのスイッチ
+		bool GetSwitch();
 
 		bool GetBlackOutFlag();
 		bool GetUnBlackOutFlag();

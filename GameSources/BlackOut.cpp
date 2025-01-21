@@ -27,13 +27,13 @@ namespace basecross {
 		//暗転する際の初期スプライト
 		if (!m_blackorLight)
 		{
-			m_sprite = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0), Vec3(0), Col4(1.0f, 1.0f, 1.0f, 0.0f));
+			m_sprite = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0), Vec3(0), Col4(1.0f, 1.0f, 1.0f, 0.0f),12);
 			m_sprite->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));//色入れる
 		}
 		//明転する際の初期スプライト
 		if (m_blackorLight)
 		{
-			m_sprite = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0), Vec3(0), Col4(1.0f, 1.0f, 1.0f, 1.0f));
+			m_sprite = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0), Vec3(0), Col4(1.0f, 1.0f, 1.0f, 1.0f),12);
 			m_sprite->SetColor(Col4(1.0f, 1.0f, 1.0f, 1.0f));//色入れる
 		}
 
@@ -88,6 +88,10 @@ namespace basecross {
 		m_switch = OnOff;
 	}
 
+	bool BlackOut::GetSwitch()
+	{
+		return m_switch;
+	}
 	//暗転終わったかのゲッタ
 	bool BlackOut::GetBlackOutFlag()
 	{

@@ -34,6 +34,7 @@ namespace basecross {
 		m_BGMChase = 2;
 		m_bgmManager = App::GetApp()->GetXAudio2Manager();
 		m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
+		m_blackOut = GetStage()->AddGameObject<BlackOut>(false);
 		auto a = 0;
 	}
 
@@ -50,7 +51,7 @@ namespace basecross {
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバーに移動する
 		}
 
-		//フラグがオンになっているとUpdateできる
+		//フラグがtrueになっているとUpdateできる
 		if (!m_updateFlag) return;
 
 		EnemyStateCheck();//敵が追いかけてきてるか確認する
@@ -307,17 +308,88 @@ namespace basecross {
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
 		auto obj = stage->GetGameObjectVec();
-		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_count == 0)
+		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_pausCount == 0)
 		{
-			m_count++;
+			m_white = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.5f), 11);
+			PauseScene = GetStage()->AddGameObject<Sprite>(L"PauseScene", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_pauseText= GetStage()->AddGameObject<Sprite>(L"PauseText", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_pauseText2 = GetStage()->AddGameObject<Sprite>(L"PauseText2", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_pauseText3 = GetStage()->AddGameObject<Sprite>(L"PauseText3", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_count = 0;
+			m_pausCount++;
 			m_pause = true;
 			m_pauseFlag = true;
 		}
-		else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_count == 1)
+
+
+		if (m_pausCount == 1)
 		{
-			m_count--;
-			m_pause=false;
-			m_pauseFlag = true;
+			switch (m_count)
+			{
+			case 0:
+				m_pauseText->SetColor(Col4(1, 0, 0, 1));
+				m_pauseText2->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText3->SetColor(Col4(1, 1, 1, 1));
+				break;
+			case 1:
+				m_pauseText->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText2->SetColor(Col4(1, 0, 0, 1));
+				m_pauseText3->SetColor(Col4(1, 1, 1, 1));
+				break;
+			case 2:
+				m_pauseText->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText2->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText3->SetColor(Col4(1, 0, 0, 1));
+				break;
+			}
+
+			if (cntlVec[0].fThumbLY < 0 && !m_stickCheck && m_count < 2)
+			{
+				m_count++;
+				m_stickCheck = true;
+			}
+			if (cntlVec[0].fThumbLY > 0 && !m_stickCheck && m_count > 0)
+			{
+				m_count--;
+				m_stickCheck = true;
+			}
+			if (!cntlVec[0].fThumbLY && !m_blackOut->GetSwitch())
+			{
+				m_stickCheck = false;
+			}
+			if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B)
+			{
+				switch (m_count)
+				{
+				case 0:
+					GetStage()->RemoveGameObject<Sprite>(m_white);
+					GetStage()->RemoveGameObject<Sprite>(PauseScene);
+					GetStage()->RemoveGameObject<Sprite>(m_pauseText);
+					GetStage()->RemoveGameObject<Sprite>(m_pauseText2);
+					GetStage()->RemoveGameObject<Sprite>(m_pauseText3);
+					m_pausCount--;
+					m_pause = false;
+					m_pauseFlag = true;
+					break;
+				case 1:
+					m_stickCheck = true;
+					m_blackOut->SetSwitch(true);
+					break;
+				case 2:
+					m_stickCheck = true;
+					m_blackOut->SetSwitch(true);
+					break;
+				}
+			}
+			if (m_blackOut->GetBlackOutFlag() && m_count == 1)
+			{
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//ゲームシーンに移動する
+			}
+			if (m_blackOut->GetBlackOutFlag() && m_count == 2)
+			{
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//ゲームシーンに移動する
+
+			}
 		}
 
 		if (m_pause && m_pauseFlag)

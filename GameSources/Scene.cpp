@@ -190,6 +190,14 @@ namespace basecross{
 		app->RegisterTexture(L"Gauge", strTexture);
 		strTexture = texPath + L"KeyGetText.png";//ゲージ
 		app->RegisterTexture(L"KeyGetText", strTexture);
+		strTexture = texPath + L"PauseScene.png";//ポーズ画面
+		app->RegisterTexture(L"PauseScene", strTexture);
+		strTexture = texPath + L"PauseText.png";//ポーズ画面文字1
+		app->RegisterTexture(L"PauseText", strTexture);
+		strTexture = texPath + L"PauseText2.png";//ポーズ画面文字2
+		app->RegisterTexture(L"PauseText2", strTexture);
+		strTexture = texPath + L"PauseText3.png";//ポーズ画面文字3
+		app->RegisterTexture(L"PauseText3", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
