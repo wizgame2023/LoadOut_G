@@ -32,6 +32,7 @@ namespace basecross {
 		bool m_pause;
 		bool m_pauseFlag;
 		bool m_stickCheck;
+		bool m_operationFlag;
 
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
@@ -43,7 +44,9 @@ namespace basecross {
 		shared_ptr<Sprite> m_pauseText;
 		shared_ptr<Sprite> m_pauseText2;
 		shared_ptr<Sprite> m_pauseText3;
+		shared_ptr<Sprite> m_pauseText4;
 
+		shared_ptr<Sprite> m_operation;
 		shared_ptr<BlackOut> m_blackOut;//暗転処理
 
 		vector<Vec3> m_repopEnemyPos;//リポップするEnemyのポジション
