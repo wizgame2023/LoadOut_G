@@ -141,7 +141,7 @@ namespace basecross {
 			//クールタイム過ぎたら敵がリポップする
 			if (m_repopEnemyCountTime >= 10.0f)
 			{
-				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]);//リポップ
+				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]+Vec3(0.0f,30.0f,0.0f), false);//リポップ
 				m_repopEnemyCountTime = 0;//カウントリセット
 				m_repopEnemyPos.erase(m_repopEnemyPos.begin());//生成した物は配列から削除する
 			}
