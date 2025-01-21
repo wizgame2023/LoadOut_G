@@ -43,9 +43,9 @@ namespace basecross
 
 			}
 			for (int i = 0; i < 4; i++)
-			{
-				if (m_cPoint[i].x<mapMgr->GetMapSize() * 0.5 &&
-					m_cPoint[i].x>-mapMgr->GetMapSize() * -0.5 &&
+			{//指定している座標がマップ範囲内か確認する
+				if (m_cPoint[i].x < mapMgr->GetMapSize() * 0.5 &&
+					m_cPoint[i].x > mapMgr->GetMapSize() * -0.5 &&
 					m_cPoint[i].z < mapMgr->GetMapSize() * 0.5 &&
 					m_cPoint[i].z > mapMgr->GetMapSize() * -0.5)
 				{
