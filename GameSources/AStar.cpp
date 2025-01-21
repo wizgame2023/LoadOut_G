@@ -41,7 +41,9 @@ namespace basecross {
 
 		vector<Vec2> aStarRood;//移動遷移
 
-		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		//メンバ必須
+		m_mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		auto mapManager = m_mapManager.lock();
 
 
 		m_unityMapCSV = mapManager->GetUnityMap();//AStarマップ取得
@@ -130,7 +132,7 @@ namespace basecross {
 
 
 	//探しているセルがゴールからどれくらい遠いか確認する
-	bool AStar::LookAround(shared_ptr<Node> parent, Vec2 goalPos)
+	bool AStar::LookAround(shared_ptr<Node> parent, Vec2& goalPos)
 	{
 		Vec2 originPos = Vec2(parent->x, parent->y);
 		auto cost = parent->Parent ? parent->Cost + 1 : 1;//コストの計算
@@ -158,11 +160,13 @@ namespace basecross {
 				//読み込んだマップの場所が壁ががあるかないかみて周囲探索済みか見る
 				if (m_unityMapCSV[lookY][lookX] == 3)
 				{
-					//応急処置　目的地がマンホールなら無視する
-					if (goalPos != Vec2(lookX, lookY))
+					//目的地がマンホールなら前の移動地点を目的地にする
+					if (goalPos == Vec2(lookX, lookY))
 					{
-						continue;
+						goalPos = originPos;
+						return true;
 					}
+					continue;
 				}
 
 
