@@ -29,12 +29,12 @@ namespace basecross {
 		//AStar処理をしてくれるクラスを生成
 		auto aStar = stage->AddGameObject<AStar>();
 		stage->SetSharedGameObject(L"AStar", aStar);
-
 		//BGM再生
 		m_BGMChase = 2;
 		m_bgmManager = App::GetApp()->GetXAudio2Manager();
 		m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
 		m_blackOut = GetStage()->AddGameObject<BlackOut>(false);
+		m_pauseButton=GetStage()->AddGameObject<Sprite>(L"PauseButton", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 		auto a = 0;
 	}
 
@@ -317,6 +317,10 @@ namespace basecross {
 			m_pauseText3 = GetStage()->AddGameObject<Sprite>(L"PauseText3", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 			m_pauseText4 = GetStage()->AddGameObject<Sprite>(L"PauseText4", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 			m_operation = GetStage()->AddGameObject<Sprite>(L"Operation", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.0f), 12);
+			m_decisionMozi = GetStage()->AddGameObject<Sprite>(L"DecisionMozi", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 12);
+			m_spriteB = GetStage()->AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f),Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 0.0f, 0.0f, 1.0f), 12);
+			GetStage()->RemoveGameObject<Sprite>(m_pauseButton);
+
 			m_count = 0;
 			m_pausCount++;
 			m_pause = true;
@@ -379,6 +383,7 @@ namespace basecross {
 					m_pausCount--;
 					m_pause = false;
 					m_pauseFlag = true;
+					m_pauseButton = GetStage()->AddGameObject<Sprite>(L"PauseButton", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 					break;
 				case 1:
 					m_operationFlag = true;
@@ -449,6 +454,8 @@ namespace basecross {
 			GetStage()->RemoveGameObject<Sprite>(m_pauseText3);
 			GetStage()->RemoveGameObject<Sprite>(m_pauseText4);
 			GetStage()->RemoveGameObject<Sprite>(m_operation);
+			GetStage()->RemoveGameObject<Sprite>(m_decisionMozi);
+			GetStage()->RemoveGameObject<Sprite>(m_spriteB);
 
 			for (auto enemy : obj)
 			{

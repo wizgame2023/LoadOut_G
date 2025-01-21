@@ -200,9 +200,12 @@ namespace basecross{
 		app->RegisterTexture(L"PauseText3", strTexture);
 		strTexture = texPath + L"PauseText4.png";//ポーズ画面文字4
 		app->RegisterTexture(L"PauseText4", strTexture);
-		strTexture = texPath + L"Operation.png";//ポーズ画面文字4
+		strTexture = texPath + L"Operation.png";//操作確認イラスト
 		app->RegisterTexture(L"Operation", strTexture);
-
+		strTexture = texPath + L"DecisionMozi.png";//操作確認イラスト
+		app->RegisterTexture(L"DecisionMozi", strTexture);
+		strTexture = texPath + L"PauseButton.png";//操作確認イラスト
+		app->RegisterTexture(L"PauseButton", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);

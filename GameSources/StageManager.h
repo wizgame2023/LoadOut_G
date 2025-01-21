@@ -46,6 +46,10 @@ namespace basecross {
 		shared_ptr<Sprite> m_pauseText3;
 		shared_ptr<Sprite> m_pauseText4;
 
+		shared_ptr<Sprite> m_decisionMozi;
+		shared_ptr<Sprite> m_spriteB;
+		shared_ptr<Sprite>m_pauseButton;
+
 		shared_ptr<Sprite> m_operation;
 		shared_ptr<BlackOut> m_blackOut;//ˆÃ“]ˆ—
 
