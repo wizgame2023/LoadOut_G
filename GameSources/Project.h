@@ -19,6 +19,7 @@
 #include"State.h"
 #include"Patrol.h"
 #include"Attack.h"
+#include"RepopEnemy.h"
 
 //親クラス用
 #include"Actor.h"
