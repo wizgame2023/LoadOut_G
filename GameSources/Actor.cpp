@@ -28,7 +28,7 @@ namespace basecross {
 		m_angle = angle;
 	}
 
-	void Actor::MoveSwich(bool onoff)
+	void Actor::MoveSwitch(bool onoff)
 	{
 		m_move = onoff;
 	}

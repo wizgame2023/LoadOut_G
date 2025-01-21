@@ -83,7 +83,8 @@ namespace basecross {
 			m_costDown(0),
 			m_count(0),
 			m_directionCount(0),
-			m_roodCount(0)
+			m_roodCount(0),
+			m_aStarTime(0.0f)
 		{
 		}
 

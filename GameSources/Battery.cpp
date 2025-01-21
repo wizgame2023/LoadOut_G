@@ -11,7 +11,8 @@ namespace basecross {
 	Battery::Battery(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot) :
 		GameObject(stagePtr),
 		m_pos(pos),
-		m_rot(rot)
+		m_rot(rot),
+		m_updateFlag(true)
 	{
 
 	}
@@ -64,6 +65,9 @@ namespace basecross {
 
 	void Battery::OnUpdate()
 	{
+		//オンならアップデートする
+		if (!m_updateFlag) return;
+
 		auto delta = App::GetApp()->GetElapsedTime();
 		//アニメーション再生
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
@@ -95,6 +99,11 @@ namespace basecross {
 	{
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		mapManager->MapDataUpdate(m_pos, 0);//電池がなくなったことを表す
+	}
+
+	void Battery::SetUpdateSwitch(bool onOff)
+	{
+		m_updateFlag = onOff;
 	}
 
 }

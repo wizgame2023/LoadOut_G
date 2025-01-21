@@ -141,7 +141,7 @@ namespace basecross {
 			//クールタイム過ぎたら敵がリポップする
 			if (m_repopEnemyCountTime >= 10.0f)
 			{
-				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]);//リポップ
+				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]+Vec3(0.0f,30.0f,0.0f), false);//リポップ
 				m_repopEnemyCountTime = 0;//カウントリセット
 				m_repopEnemyPos.erase(m_repopEnemyPos.begin());//生成した物は配列から削除する
 			}
@@ -426,7 +426,7 @@ namespace basecross {
 				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
 				if (castEnemy)//アイテム型にキャストする
 				{
-					castEnemy->MoveSwich(false);//うごかなくさせる
+					castEnemy->MoveSwitch(false);//うごかなくさせる
 				}
 			}
 			for (auto player : obj)
@@ -434,7 +434,7 @@ namespace basecross {
 				auto castPlayer = dynamic_pointer_cast<Player>(player);
 				if (castPlayer)//アイテム型にキャストする
 				{
-					castPlayer->MoveSwich(false);//うごかなくさせる
+					castPlayer->MoveSwitch(false);//うごかなくさせる
 					
 				}
 			}
@@ -455,7 +455,7 @@ namespace basecross {
 				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
 				if (castEnemy)//アイテム型にキャストする
 				{
-					castEnemy->MoveSwich(true);//動くようにする
+					castEnemy->MoveSwitch(true);//動くようにする
 				}
 			}
 			for (auto player : obj)
@@ -463,7 +463,7 @@ namespace basecross {
 				auto castPlayer = dynamic_pointer_cast<Player>(player);
 				if (castPlayer)//アイテム型にキャストする
 				{
-					castPlayer->MoveSwich(true);//動くようにする
+					castPlayer->MoveSwitch(true);//動くようにする
 				}
 			}
 		}

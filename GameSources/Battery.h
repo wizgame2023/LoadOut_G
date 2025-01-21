@@ -13,6 +13,8 @@ namespace basecross {
 		Vec3 m_pos;//ポジション
 		Vec3 m_rot;//回転
 
+		bool m_updateFlag;//アップデートするかのフラグ
+
 	public:
 		Battery(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot);
 		~Battery();
@@ -22,6 +24,8 @@ namespace basecross {
 		void OnDestroy()override;
 
 		void OnCollisionEnter(shared_ptr<GameObject>& other)override;
+
+		void SetUpdateSwitch(bool onOff);
 	};
 
 

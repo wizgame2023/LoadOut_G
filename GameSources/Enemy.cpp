@@ -15,16 +15,18 @@ namespace basecross {
 		m_startPos(-95.0f, 2.5f, 95.0f),
 		m_playerPos(0,0,0),
 		m_speed(10),
-		m_angle(0)
+		m_angle(0),
+		m_startPop(true)//初めてのスポーンかどうか
 	{
 	}
-	Enemy::Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos) :
+	Enemy::Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos,bool startPop) :
 		Actor(StagePtr),
 		m_pos(pos),
 		m_startPos(pos),
 		m_playerPos(0, 0, 0),
 		m_speed(10),
-		m_angle(0)
+		m_angle(0),
+		m_startPop(startPop)//初めてのスポーンかどうか
 	{
 	}
 	Enemy::~Enemy()
@@ -43,7 +45,15 @@ namespace basecross {
 
 		m_mapMgr = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 
-		m_CurrentSt = make_shared<Patrol>(GetThis<Enemy>());
+		//初期配置ならパトロール状態再配置なら上から降ってくる演出付き
+		if (m_startPop)
+		{
+			m_CurrentSt = make_shared<Patrol>(GetThis<Enemy>());
+		}
+		if (!m_startPop)
+		{
+			m_CurrentSt = make_shared<RepopEnemy>(GetThis<Enemy>(),0.0f);
+		}
 
 		Mat4x4 spanMat;
 		spanMat.affineTransformation
@@ -70,7 +80,7 @@ namespace basecross {
 		//m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
 		//m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 60.0f);
 
-		MoveSwich(true);//動けるようにする
+		MoveSwitch(true);//動けるようにする
 
 		//ビルボードの生成
 		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0);
