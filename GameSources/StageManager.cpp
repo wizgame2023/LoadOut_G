@@ -311,14 +311,18 @@ namespace basecross {
 		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_pausCount == 0)
 		{
 			m_white = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.5f), 11);
-			PauseScene = GetStage()->AddGameObject<Sprite>(L"PauseScene", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
-			m_pauseText= GetStage()->AddGameObject<Sprite>(L"PauseText", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
-			m_pauseText2 = GetStage()->AddGameObject<Sprite>(L"PauseText2", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
-			m_pauseText3 = GetStage()->AddGameObject<Sprite>(L"PauseText3", Vec2(600, 500), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			PauseScene = GetStage()->AddGameObject<Sprite>(L"PauseScene", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_pauseText= GetStage()->AddGameObject<Sprite>(L"PauseText", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_pauseText2 = GetStage()->AddGameObject<Sprite>(L"PauseText2", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_pauseText3 = GetStage()->AddGameObject<Sprite>(L"PauseText3", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_pauseText4 = GetStage()->AddGameObject<Sprite>(L"PauseText4", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_operation = GetStage()->AddGameObject<Sprite>(L"Operation", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.0f), 12);
 			m_count = 0;
 			m_pausCount++;
 			m_pause = true;
 			m_pauseFlag = true;
+			m_stickCheck = true;
+			m_operationFlag = false;
 		}
 
 
@@ -330,20 +334,30 @@ namespace basecross {
 				m_pauseText->SetColor(Col4(1, 0, 0, 1));
 				m_pauseText2->SetColor(Col4(1, 1, 1, 1));
 				m_pauseText3->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText4->SetColor(Col4(1, 1, 1, 1));
 				break;
 			case 1:
 				m_pauseText->SetColor(Col4(1, 1, 1, 1));
 				m_pauseText2->SetColor(Col4(1, 0, 0, 1));
 				m_pauseText3->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText4->SetColor(Col4(1, 1, 1, 1));
 				break;
 			case 2:
 				m_pauseText->SetColor(Col4(1, 1, 1, 1));
 				m_pauseText2->SetColor(Col4(1, 1, 1, 1));
 				m_pauseText3->SetColor(Col4(1, 0, 0, 1));
+				m_pauseText4->SetColor(Col4(1, 1, 1, 1));
+				break;
+			case 3:
+				m_pauseText->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText2->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText3->SetColor(Col4(1, 1, 1, 1));
+				m_pauseText4->SetColor(Col4(1, 0, 0, 1));
 				break;
 			}
 
-			if (cntlVec[0].fThumbLY < 0 && !m_stickCheck && m_count < 2)
+
+			if (cntlVec[0].fThumbLY < 0 && !m_stickCheck && m_count < 3)
 			{
 				m_count++;
 				m_stickCheck = true;
@@ -362,30 +376,42 @@ namespace basecross {
 				switch (m_count)
 				{
 				case 0:
-					GetStage()->RemoveGameObject<Sprite>(m_white);
-					GetStage()->RemoveGameObject<Sprite>(PauseScene);
-					GetStage()->RemoveGameObject<Sprite>(m_pauseText);
-					GetStage()->RemoveGameObject<Sprite>(m_pauseText2);
-					GetStage()->RemoveGameObject<Sprite>(m_pauseText3);
 					m_pausCount--;
 					m_pause = false;
 					m_pauseFlag = true;
 					break;
 				case 1:
-					m_stickCheck = true;
-					m_blackOut->SetSwitch(true);
+					m_operationFlag = true;
 					break;
 				case 2:
 					m_stickCheck = true;
 					m_blackOut->SetSwitch(true);
 					break;
+				case 3:
+					m_stickCheck = true;
+					m_blackOut->SetSwitch(true);
+					break;
 				}
 			}
-			if (m_blackOut->GetBlackOutFlag() && m_count == 1)
+
+			if (m_count==1)
+			{
+				if (m_operationFlag)
+				{
+					m_stickCheck = true;
+					m_operation->SetColor(Col4(1, 1, 1, 1));
+				}
+				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A && m_operationFlag)
+				{
+					m_operation->SetColor(Col4(1, 1, 1, 0));
+					m_operationFlag = false;
+				}
+			}
+			if (m_blackOut->GetBlackOutFlag() && m_count == 2)
 			{
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//ゲームシーンに移動する
 			}
-			if (m_blackOut->GetBlackOutFlag() && m_count == 2)
+			if (m_blackOut->GetBlackOutFlag() && m_count == 3)
 			{
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//ゲームシーンに移動する
 
@@ -416,6 +442,14 @@ namespace basecross {
 		if (!m_pause && m_pauseFlag)
 		{
 			m_pause = false;
+			GetStage()->RemoveGameObject<Sprite>(m_white);
+			GetStage()->RemoveGameObject<Sprite>(PauseScene);
+			GetStage()->RemoveGameObject<Sprite>(m_pauseText);
+			GetStage()->RemoveGameObject<Sprite>(m_pauseText2);
+			GetStage()->RemoveGameObject<Sprite>(m_pauseText3);
+			GetStage()->RemoveGameObject<Sprite>(m_pauseText4);
+			GetStage()->RemoveGameObject<Sprite>(m_operation);
+
 			for (auto enemy : obj)
 			{
 				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
