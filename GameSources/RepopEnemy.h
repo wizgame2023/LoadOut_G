@@ -10,14 +10,16 @@ namespace basecross {
 	class RepopEnemy :public StateBase
 	{
 	private:
-		
+		float m_goalPosY;//–Ú•W’n“_
+		float m_speed;
 	public:
-		RepopEnemy(shared_ptr<Enemy> ptrOwner);
+		RepopEnemy(const shared_ptr<Enemy> ptrOwner,float goalPosY = 10.0f);
 		~RepopEnemy();
 
-		void OnCreate();
-		void OnUpdate();
-	};
+		void OnStart() override;
+		void OnUpdate() override;
+		void OnExit() override;
+	}; 
 
 }
 //end basecross
