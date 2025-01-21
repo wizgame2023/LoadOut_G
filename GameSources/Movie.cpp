@@ -31,10 +31,26 @@ namespace basecross {
 			auto actorCast = dynamic_pointer_cast<Actor>(actor);
 			if (actorCast)
 			{
-				actorCast->MoveSwich(false);//動けないようにする
-				auto m_actorOne = actorCast;
+				actorCast->MoveSwitch(false);//動けないようにする
+				m_actorVec.push_back(actorCast);
 			}
-			m_actorVec.push_back(actorCast);
+		}
+		//バッテリとマンホールも動かなくする
+		for (auto obj : objVec)
+		{
+			string test = "Actor";
+			auto batteryCast = dynamic_pointer_cast<Battery>(obj);
+			auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
+			if (batteryCast)//バッテリー
+			{
+				batteryCast->SetUpdateSwitch(false);//動けないようにする
+				m_batteryVec.push_back(batteryCast);
+			}
+			if (manholeCast)//マンホール
+			{
+				manholeCast->SetUpdateSwitch(false);//動けないようにする
+				m_manholeVec.push_back(manholeCast);
+			}
 		}
 
 		m_stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
@@ -56,7 +72,23 @@ namespace basecross {
 			auto actorCheck = actor.lock();
 			if (actorCheck)
 			{
-				actorCheck->MoveSwich(true);//動ける
+				actorCheck->MoveSwitch(true);//動ける
+			}
+		}
+		for (auto battery : m_batteryVec)
+		{
+			auto batteryCheck = battery.lock();
+			if (batteryCheck)
+			{
+				batteryCheck->SetUpdateSwitch(true);//動ける
+			}
+		}
+		for (auto manhole : m_manholeVec)
+		{
+			auto manholeCheck = manhole.lock();
+			if (manholeCheck)
+			{
+				manholeCheck->SetUpdateSwitch(true);//動ける
 			}
 		}
 
