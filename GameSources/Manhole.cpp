@@ -10,7 +10,8 @@ namespace basecross {
 	Manhole::Manhole(shared_ptr<Stage>& stagePtr,Vec3 pos) :
 		GameObject(stagePtr),
 		m_pos(pos),
-		m_charen(Manhole_None)
+		m_charen(Manhole_None),
+		m_UpdateFlag(true)
 	{
 
 	}
@@ -65,17 +66,14 @@ namespace basecross {
 
 	void Manhole::OnUpdate()
 	{
+		//オンならアップデートする
+		if (!m_UpdateFlag) return;
+
 		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto stage = GetStage();//ステージ取得
 
 		ManholeTransition();//マンホールの遷移
-
-		//wstringstream wss(L"");
-		//auto scene = App::GetApp()->GetScene<Scene>();
-		//wss << L"時間 : " << m_time
-		//	<< endl;
-		//scene->SetDebugString(wss.str());
 
 		//マンホールに電池が設置されたときのビルボード処理
 		if (m_mapManager.lock()->SelMapNow(m_pos) >= 2)
@@ -333,6 +331,12 @@ namespace basecross {
 			}
 		}
 
+	}
+
+	//アップデートするかのセッター
+	void Manhole::SetUpdateSwitch(bool onOff)
+	{
+		m_UpdateFlag = onOff;
 	}
 
 	int Manhole::GetState()

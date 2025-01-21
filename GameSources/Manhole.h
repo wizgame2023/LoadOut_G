@@ -30,6 +30,7 @@ namespace basecross {
 		float m_playerUpTime;//マンホールから出てプレイヤーが踏むと上がる時間計測
 
 		bool m_playerStanbyFlag;//プレイヤーが踏むかまつフラグ
+		bool m_UpdateFlag;//アップデートするかのフラグ
 
 	public:
 		//マンホールの状態遷移
@@ -55,6 +56,7 @@ namespace basecross {
 		void OnCollisionExit(shared_ptr<GameObject>& other)override;//離れたときに処理
 
 		int GetState();//ゲッター
+		void SetUpdateSwitch(bool onOff);//アップデートするかのセッター
 	};
 
 }
