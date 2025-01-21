@@ -5,7 +5,6 @@
 
 #pragma once
 #include "stdafx.h"
-#include "MapManager.h"
 
 namespace basecross {
 	class Node;
@@ -18,8 +17,6 @@ namespace basecross {
 		vector<vector<shared_ptr<Node>>> m_unityMap;//マップのノード配列
 		vector<vector<int>> m_unityMapCSV;//AStarMapのCSVデータ
 
-		weak_ptr<MapManager> m_mapManager;//マップマネージャー
-
 	public:
 		AStar(shared_ptr<Stage>& stagePtr);//コンストラクタ
 		~AStar();//デストラクタ
@@ -29,7 +26,7 @@ namespace basecross {
 
 		vector<Vec3> RouteSearch(Vec3 startPos,Vec3 goalPos);//経路探査
 		void MoveActor(shared_ptr<Actor> actor,vector<Vec3> routePos,int& routeCount,float speed);//移動処理
-		bool LookAround(shared_ptr<Node> parent, Vec2& goalPos);//周りを確認する処理
+		bool LookAround(shared_ptr<Node> parent, Vec2 goalPos);//周りを確認する処理
 	};
 
 	enum STATUS//ステータス

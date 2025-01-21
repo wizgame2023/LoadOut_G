@@ -62,10 +62,10 @@ namespace basecross {
 		AddTag(L"WaterPillar");//ブロック用のタグこれが基礎のオブジェクト
 
 		//吹っ飛ぶマンホール作成
-		//m_manhole =  GetStage()->AddGameObject<Block>(m_pos-Vec3(0.0f,-m_pos.y,0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		m_manhole =  GetStage()->AddGameObject<Block>(m_pos-Vec3(0.0f,-m_pos.y,0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//m_manhole->GetComponent<CollisionObb>()->SetAfterCollision(AfterCollision::None);
-		//m_manhole->GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//マンホールテクスチャに変更
-		//m_manhole->GetComponent<Transform>()->SetScale(10.0f, 1.0f, 10.0f);//サイズ変更
+		m_manhole->GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//マンホールテクスチャに変更
+		m_manhole->GetComponent<Transform>()->SetScale(10.0f, 1.0f, 10.0f);//サイズ変更
 
 	}
 
@@ -78,20 +78,20 @@ namespace basecross {
 		//Transform作成
 
 		//吹っ飛び用のマンホールのTransformとPos取得
-		//auto manholeTrans = m_manhole->GetComponent<Transform>();
-		//auto manholePos = manholeTrans->GetPosition();
+		auto manholeTrans = m_manhole->GetComponent<Transform>();
+		auto manholePos = manholeTrans->GetPosition();
 
 		//吹っ飛び用のマンホールが一定の高さまで行ったら削除する
-		//if (manholePos.y >= 300.0f && m_manhole)
-		//{
-		//	stage->RemoveGameObject<Block>(m_manhole);
-		//}
-		//else if(m_manhole)
-		//{
-		//	//吹っ飛び用のマンホールを上に上げる
-		//	//manholePos.y += 300 * delta;
-		//	//manholeTrans->SetPosition(manholePos);
-		//}
+		if (manholePos.y >= 300.0f && m_manhole)
+		{
+			stage->RemoveGameObject<Block>(m_manhole);
+		}
+		else if(m_manhole)
+		{
+			//吹っ飛び用のマンホールを上に上げる
+			manholePos.y += 300 * delta;
+			manholeTrans->SetPosition(manholePos);
+		}
 
 		//高さが一定になるまで伸ばす
 		if (m_count == 0)

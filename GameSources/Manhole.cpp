@@ -227,44 +227,30 @@ namespace basecross {
 	//入り続けているとき処理
 	void Manhole::OnCollisionExcute(shared_ptr<GameObject>& other)
 	{
-		auto mapManager = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
+		auto test = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
 		auto player = dynamic_pointer_cast<Player>(other);
-		auto stage = GetStage();
 
-		if (mapManager->SelMapNow(m_pos) == 2)
+		if (test->SelMapNow(m_pos) == 2)
 		{//もし当たったオブジェクトが敵なら
 			if (enemy)
 			{
 				//GetStage()->RemoveGameObject<Enemy>(enemy);//まだ敵をリムーブしない
-				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
 
 				auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
 				auto stageManager = GetStage()->GetSharedGameObject<StageManager>(L"StageManager");
 				stageManager->SetRepopEnemyPos(enemyStartPos);//上の初期位置をStageManagerに渡す
 
-				player = stage->GetSharedGameObject<Player>(L"Player");
-				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
-				auto playerSelPos = mapManager->ConvertSelMap(playerPos);
-				auto selPos = mapManager->ConvertSelMap(m_pos);
-
-				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
-				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
-				{
-					stage->AddGameObject<MovieUpEandP>(enemy, player);
-				}
-				else//敵だけマンホールを踏んでいる映像
-				{
-					stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
-				}
+				GetStage()->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
 
 			}
 			else if (player)//プレイヤーなら
 			{
 				if (m_playerUpTime >= 0.5f)
 				{
-					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+					test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 					GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 				}
@@ -274,17 +260,19 @@ namespace basecross {
 	}
 	void Manhole::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
-		auto mapManager = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
+		auto test = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
 		auto player = dynamic_pointer_cast<Player>(other);
+		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto stage = GetStage();
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 
-		if (mapManager->SelMapNow(m_pos) == 2)
+		if (test->SelMapNow(m_pos) == 2)
 		{//もし当たったオブジェクトが敵なら
 			if (enemy)
 			{
 				//GetStage()->RemoveGameObject<Enemy>(enemy);//まだ敵をリムーブしない
-				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+				test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
 
 				auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
@@ -311,7 +299,7 @@ namespace basecross {
 			{
 				if (m_playerUpTime >= 0.5f)
 				{
-					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+					test->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 					stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 				}

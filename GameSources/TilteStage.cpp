@@ -37,11 +37,9 @@ namespace basecross {
 			m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -200.0f, 0.0f));
 			m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.5f, 150 * 0.5f), Vec3(0.0f, -202.0f, 0.0f));
 			AddGameObject<Sprite>(L"CreditMozi", Vec2(256*0.5, 128*0.5), Vec3(570.0f, -370.0f, 0.0f));//タイトル用のスプライト生成
-			m_Credit = AddGameObject<Sprite>(L"Credit", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//クレジット生成
-			m_break = AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f),Vec3(0.0f), Col4(1.0f, 1.0f, 1.0f, 0.0f),2);
+			m_Credit = AddGameObject<Sprite>(L"Credit", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f), Col4(1.0f, 1.0f, 1.0f, 0.0f),2);//クレジット生成
+			m_black = AddGameObject<BlackOut>(false);
 			m_Credit->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
-			m_break->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.0f));
-
 		}
 		catch (...) {
 			throw;
@@ -148,27 +146,20 @@ namespace basecross {
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, m_transparency));
 		m_spriteB->SetColor(Col4(1, 0, 0, m_transparency));
 
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B && m_creditCount)
 		{
 			auto SEManager = App::GetApp()->GetXAudio2Manager();
 			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+			
+			m_black->SetSwitch(true);//暗転開始
 
-			m_onFaed = true;
 		}
-		if (m_onFaed)
+		if (m_black->GetBlackOutFlag())
 		{
-			float fadeSpeed = 1.0f;
-
-			m_anCollar += fadeSpeed * time;
-
-			m_break->SetColor(Col4(1, 1, 1, m_anCollar));
-			if (m_anCollar>=1.0f)
-			{
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//ゲームシーンに移動する
-			}
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//ゲームシーンに移動する
 		}
 
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_X)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_X&&!m_black->GetSwitch())
 		{
 			if (m_creditCount)
 			{
