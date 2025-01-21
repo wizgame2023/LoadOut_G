@@ -70,7 +70,7 @@ namespace basecross {
 		//m_forwardRay = GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 15.0f);
 		//m_playerRay= GetStage()->AddGameObject<Ray>(GetThis<Enemy>(), 60.0f);
 
-		MoveSwich(true);//動けるようにする
+		MoveSwitch(true);//動けるようにする
 
 		//ビルボードの生成
 		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0);

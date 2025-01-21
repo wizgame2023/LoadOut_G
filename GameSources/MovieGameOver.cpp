@@ -24,7 +24,7 @@ namespace basecross {
 
 		auto stage = GetStage();
 		auto player = stage->GetSharedGameObject<Player>(L"Player");//プレイヤー取得
-		player->MoveSwich(false);//playerを動かさない
+		player->MoveSwitch(false);//playerを動かさない
 		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
 		playerDraw->ChangeCurrentAnimation(L"Player_Down");//やられたモーションに変更
 
@@ -42,7 +42,7 @@ namespace basecross {
 		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
 
 
-		player->MoveSwich(false);//playerを動かさない
+		player->MoveSwitch(false);//playerを動かさない
 
 		if (m_count == 0)//処理①
 		{
