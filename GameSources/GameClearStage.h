@@ -15,7 +15,13 @@ namespace basecross {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
 		shared_ptr<SoundItem> m_BGM;
+		shared_ptr<Sprite> m_clearText1;
+		shared_ptr<Sprite> m_clearText2;
+		shared_ptr<Sprite> m_clearText3;
 
+		int m_count=0;
+		bool m_stickCheck;
+		bool m_buttonCheck;
 	public:
 		//\’z‚Æ”jŠü
 		GameClearStage() :Stage() {}
