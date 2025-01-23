@@ -34,8 +34,9 @@ namespace basecross {
 			CreateViewLight();
 			AddGameObject<Sprite>(L"GameOverLight", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
 			AddGameObject<Sprite>(L"GameOverText", Vec2(800, 300), Vec3(0.0f, 300.0f, 0.0f));//タイトル用のスプライト生成
-			AddGameObject<Sprite>(L"GameClearTextAButton", Vec2(350, 150), Vec3(-200.0f, -350.0f, 0.0f));//スプライト生成
-			AddGameObject<Sprite>(L"GameClearTextBButton", Vec2(350, 150), Vec3(200.0f, -350.0f, 0.0f));//スプライト生成
+			m_clearText1 = AddGameObject<Sprite>(L"GameClearText1", Vec2(300, 150), Vec3(-400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+			m_clearText2 = AddGameObject<Sprite>(L"GameClearText2", Vec2(400, 130), Vec3(0.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+			m_clearText3 = AddGameObject<Sprite>(L"GameClearText3", Vec2(300, 150), Vec3(400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
 
 		}
 		catch (...) {
@@ -86,48 +87,87 @@ namespace basecross {
 
 		auto m_lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
 
-
-		
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
+		if (m_controler.fThumbLX > 0 && !m_stickCheck && m_count < 2)
 		{
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
+			m_count++;
+			m_stickCheck = true;
+
 		}
+		if (m_controler.fThumbLX < 0 && !m_stickCheck && m_count > 0)
+		{
+			m_count--;
+			m_stickCheck = true;
+		}
+		if (!m_controler.fThumbLX)
+		{
+			m_stickCheck = false;
+		}
+		switch (m_count)
+		{
+		case 0:
+			m_clearText1->SetColor(Col4(1, 0, 0, 1));
+			m_clearText2->SetColor(Col4(1, 1, 1, 1));
+			m_clearText3->SetColor(Col4(1, 1, 1, 1));
+			break;
+		case 1:
+			m_clearText1->SetColor(Col4(1, 1, 1, 1));
+			m_clearText2->SetColor(Col4(1, 0, 0, 1));
+			m_clearText3->SetColor(Col4(1, 1, 1, 1));
+			break;
+		case 2:
+			m_clearText1->SetColor(Col4(1, 1, 1, 1));
+			m_clearText2->SetColor(Col4(1, 1, 1, 1));
+			m_clearText3->SetColor(Col4(1, 0, 0, 1));
+			break;
+		}
+		
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
-			switch (m_lastPlayStage)
+			if (m_count == 0)
 			{
-			case 1:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
-				break;
-			case 2:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
-				break;
-			case 3:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
-				break;
-			case 4:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
-				break;
-			case 5:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
-				break;
-			case 6:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
-				break;
-			case 7:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
-				break;
-			case 8:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
-				break;
-			case 9:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
-				break;
-			case 10:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
-				break;
-			default:
-				break;
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
+			}
+			if (m_count == 1)
+			{
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//セレクトシーンに移動する
+			}
+			if (m_count == 2)
+			{
+				switch (m_lastPlayStage)
+				{
+				case 1:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+					break;
+				case 2:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
+					break;
+				case 3:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
+					break;
+				case 4:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
+					break;
+				case 5:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
+					break;
+				case 6:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
+					break;
+				case 7:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
+					break;
+				case 8:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
+					break;
+				case 9:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
+					break;
+				case 10:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
