@@ -133,38 +133,43 @@ namespace basecross {
 
 	void SelectStage::SelectionStage()
 	{
+		auto& cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();//コントローラー取得
 
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)//L
+		//スティックを離したらまた受け取れるようにする
+		if (cntlVec[0].fThumbLX == 0 && !m_stickCheck)
 		{
-			if (m_SelectStage <= 1)
-			{
-				//ぶぶーのSE
-				/*auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Error", 0, 0.9f);*/
-				m_SelectStage = 11;
-			}
+			m_stickCheck = true;
+		}
+		//選択ステージの変更
+		if (cntlVec[0].fThumbLX <= -0.9f && m_stickCheck)//左
+		{
 			if (m_SelectStage >= 2)
 			{
 				auto SEManager = App::GetApp()->GetXAudio2Manager();
 				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_SelectStage--;
-			}
-		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)//R
-		{
-			if (m_SelectStage >= 10)
+			}			
+			if (m_SelectStage <= 1)
 			{
-				//ぶぶーのSE
-				/*auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Error", 0, 0.9f);*/
-				m_SelectStage = 0;
+				m_SelectStage = 10;
 			}
+
+			m_stickCheck = false;//スティックを受け取れないようにする
+		}
+		if (cntlVec[0].fThumbLX >= 0.9f && m_stickCheck)//右
+		{
 			if (m_SelectStage < 10)
 			{
 				auto SEManager = App::GetApp()->GetXAudio2Manager();
 				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_SelectStage++;
 			}
+			if (m_SelectStage >= 10)
+			{
+				m_SelectStage = 1;
+			}
+
+			m_stickCheck = false;//スティックを受け取れないようにする
 		}
 
 		//テクスチャ変更
