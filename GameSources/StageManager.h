@@ -16,6 +16,8 @@ namespace basecross {
 
 		int m_pausCount;
 		int m_count;
+		int m_upEnemyCount;//敵を打ち上げた数
+		int m_clearManagerCount;//クリアマネージャーの処理のカウント
 		//int m_KeyTextFlag;//鍵を手に入れているかのフラグ
 
 		float m_repopItemCountTime;//アイテムがリポップするタイムを測る変数
@@ -75,12 +77,16 @@ namespace basecross {
 
 		void KeyEvent();//鍵関係のイベント
 
+		void ClearMode(int mode,int modeTwoCount = 5);//ステージのクリア条件の管理
+
 		void SetClearFlag(bool flag);//セッター
 		void SetGameOverFlag(bool flag);//セッター
 		void SetPlayerKeyFlag(int flag);//セッター
 		void SetRepopEnemyPos(Vec3 pos);//セッター
 		void SetRepopRandomItemPos(Vec3 pos);//セッター
 		void SetUpdateFlag(bool flag);//アップデートするかのセッター
+
+		void AddUpEnemyCount(int count);//倒した数を追加する
 	};
 
 }
