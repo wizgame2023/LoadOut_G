@@ -172,7 +172,6 @@ namespace basecross {
 				switch (m_upWallMap[h][w])
 				{
 				case 1://横壁生成
-					//GetStage()->AddGameObject<Block>();
 					GetStage()->AddGameObject<Wall>(Vec3((w * 10.0f) - m_push, 5.0f, m_push+5 - (h * 10.0f)), Vec3(0.0f, 0.0f, 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					break;
 				default:
@@ -217,7 +216,6 @@ namespace basecross {
 				{
 				case 1://縦壁生成
 					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - m_push+5 - 10, 5.0f, m_push - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
-					//GetStage()->AddGameObject<Manhole>(Vec3((j * 10.0f) - 95, 0.05f, 95 - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 
 				default:
