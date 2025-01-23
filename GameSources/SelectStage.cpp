@@ -46,6 +46,7 @@ namespace basecross {
 
 		m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -350.0f, 0.0f));
 		m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -352.0f, 0.0f));
+		AddGameObject<Sprite>(L"AButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(600.0f, -352.0f, 0.0f));
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, 1));
 		m_spriteB->SetColor(Col4(1, 0, 0, 1));
 
