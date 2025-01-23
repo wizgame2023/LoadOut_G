@@ -310,6 +310,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PauseScreen.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RepopEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -544,5 +545,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PauseScreen.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RepopEnemy.cpp" />
   </ItemGroup>
 </Project>
