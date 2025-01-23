@@ -84,6 +84,7 @@ namespace basecross{
 
 			//ビルボード生成
 			m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",2, 12.0f);
+			m_billBoard->SetScale(Vec3(0.0f, 0.0f, 0.0f));
 			//ステータス上方下方エフェクト
 			m_pillar = GetStage()->AddGameObject<TrackingPillarEfect>(Vec3(0.0f, 0.0f, 0.0f), L"Clear", Vec2(0.0f, -1.0f));
 			
@@ -102,9 +103,6 @@ namespace basecross{
 			return;
 		}
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
-
-
-		//KeyBoardMove();//キーボードでのPlayerの動きデバック用
 
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
@@ -153,6 +151,7 @@ namespace basecross{
 			}
 		}
 
+		//ハッチ上にいるときのビルボード処理
 		if (selNow == 4)
 		{
 			if (!m_key)
@@ -177,6 +176,7 @@ namespace basecross{
 			if (!m_key)
 			{
 				m_billBoard->ChangeTexture(L"Clear");
+				m_billBoard->SetScale(Vec3(0.0f, 0.0f, 0.0f));
 			}
 		}		
 
@@ -330,24 +330,18 @@ namespace basecross{
 			}
 			if (mapManager->SelMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
 			{
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Error", 0, 0.9f);
+				if (!m_key)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Error", 0, 0.9f);
+				}
+				if (m_key)
+				{
+
+				}
 			}
 
 		}
-
-
-
-
-		//m_time += Delta;
-		//if(m_time >= 0.05f)//レイの処理の実験 実験しなくなったら消してください
-		//{	
-		//	デバック用
-		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), atan2(m_controler.fThumbLY, m_controler.fThumbLX),GetThis<Player>());
-		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX), GetThis<Player>());
-		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX)-0.5f, GetThis<Player>());
-		//}
-
 
 	}
 

@@ -16,6 +16,8 @@ namespace basecross {
 		Vec3 m_pos;
 		const Vec3 m_startPos;
 		Vec3 m_playerPos;
+		Vec3 m_scale;
+
 		float m_speed;
 		float m_angle;
 

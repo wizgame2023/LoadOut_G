@@ -167,11 +167,13 @@ namespace basecross{
 		strTexture = texPath + L"Credit.png";//ハッチのテクスチャ
 		app->RegisterTexture(L"Credit", strTexture);
 		strTexture = texPath + L"GameClear.png";//ゲームクリアのテクスチャ
-		app->RegisterTexture(L"GameClearText", strTexture);
+		app->RegisterTexture(L"GameClearText0", strTexture);
 		strTexture = texPath + L"GameClearText2.png";//ゲームクリアのテクスチャ
-		app->RegisterTexture(L"GameClearTextBButton", strTexture);
+		app->RegisterTexture(L"GameClearText1", strTexture);
+		strTexture = texPath + L"GameClearText.png";//ゲームクリアのテクスチャ
+		app->RegisterTexture(L"GameClearText2", strTexture);
 		strTexture = texPath + L"GameClearText3.png";//ゲームクリアのテクスチャ
-		app->RegisterTexture(L"GameClearTextAButton", strTexture);
+		app->RegisterTexture(L"GameClearText3", strTexture);
 		strTexture = texPath + L"GameOver.png";//ゲームオーバーのテクスチャ
 		app->RegisterTexture(L"GameOverText", strTexture);
 		strTexture = texPath + L"Light.png";//ゲームオーバー用のライト

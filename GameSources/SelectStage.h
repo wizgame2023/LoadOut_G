@@ -30,12 +30,13 @@ namespace basecross {
 		const int m_allStage = 20;
 		
 		bool m_decisionFlag;//選択したかどうかのフラグ
+		bool m_stickCheck;//スティックの傾けた処理を受け取るかのフラグ
 
 		CONTROLER_STATE m_controler;//コントローラー
 
 	public:
 		//構築と破棄
-		SelectStage() :Stage() {}
+		SelectStage() :Stage(),m_stickCheck(true) {}
 		virtual ~SelectStage() {}
 		//初期化
 		virtual void OnCreate()override;

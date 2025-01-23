@@ -214,22 +214,22 @@ namespace basecross {
 	{
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
-		auto obj = stage->GetGameObjectVec();
+		auto objVec = stage->GetGameObjectVec();
 		int count = 0;//生成したミニマップのEnemyの数を数える
 
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
-		for (auto manhole : obj)
+		for (auto obj : objVec)
 		{
-			auto castEnemy = dynamic_pointer_cast<Enemy>(manhole);
+			auto castEnemy = dynamic_pointer_cast<Enemy>(obj);
 			if (castEnemy)//Enemy型にキャストする
 			{
 				float Lenght = 225.0f;//ミニマップの直径
 
-				auto itemTrans = manhole->GetComponent<Transform>();
-				auto itemPos = itemTrans->GetPosition();
-				auto itemScale = itemTrans->GetScale();
+				auto enemyTrans = castEnemy->GetComponent<Transform>();
+				auto enemyPos = enemyTrans->GetPosition();
+				auto enemyScale = enemyTrans->GetScale();
 
-				auto sprite = stage->AddGameObject<MiniMapActor>(castEnemy, L"MiniEnemy", Vec2((itemScale.x / m_mapMagnification) * 3, (itemScale.z / m_mapMagnification) * 3), m_startPos, m_mapSize, Lenght);
+				auto sprite = stage->AddGameObject<MiniMapActor>(castEnemy, L"MiniEnemy", Vec2((enemyScale.x * m_mapMagnification) * 2.0f, (enemyScale.z * m_mapMagnification) * 2.0f), m_startPos, m_mapSize, Lenght);
 				sprite->AddTag(L"MiniMapEnemy");//タグ追加
 				count++;
 

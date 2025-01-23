@@ -58,8 +58,8 @@ namespace basecross {
 		//GetStage()->AddGameObject<BillBoard>();
 
 		//ビルボードの生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",3, 13.0f, Vec3(5.0f, 5.0f, 5.0f));
-		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 3, 13.0f, Vec3(5.0f, 5.0f, 5.0f));
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",3, 13.0f, Vec3(0.0f, 0.0f, 0.0f));
+		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 3, 13.0f, Vec3(0.0f, 0.0f, 0.0f));
 
 
 	}
@@ -114,7 +114,9 @@ namespace basecross {
 		//テクスチャリセット
 		if (m_mapManager.lock()->SelMapNow(m_pos) < 2)
 		{
+			m_billBoard->SetScale(Vec3(0.0f, 0.0f, 0.0f));
 			m_billBoard->ChangeTexture(L"Clear");
+			m_billBoardSecond->SetScale(Vec3(0.0f, 0.0f, 0.0f));
 			m_billBoardSecond->ChangeTexture(L"Clear");
 		}
 
