@@ -181,9 +181,10 @@ namespace basecross {
 		if (this->FindTag(L"Key"))
 		{	
 			//Œ®‚ðPlayer‚É“n‚·
-			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
+			//GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
 			stageManager->SetPlayerKeyFlag(1);
 		}
+		stageManager->AddUpEnemyCount(1);//“G‚ª‚P‘Ì‘Å‚¿‚ ‚ª‚Á‚½‚±‚Æ‚ð’m‚ç‚¹‚é
 
 	}
 
