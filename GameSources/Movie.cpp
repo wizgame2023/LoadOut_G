@@ -26,31 +26,31 @@ namespace basecross {
 
 		auto objVec = stage->GetGameObjectVec();
 		//アクターを継承しているものだけ取得
-		for (auto actor : objVec)
+		for (auto obj : objVec)
 		{
-			auto actorCast = dynamic_pointer_cast<Actor>(actor);
+			auto actorCast = dynamic_pointer_cast<Actor>(obj);
+			auto batteryCast = dynamic_pointer_cast<Battery>(obj);
+			auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
+
+			//アクターを継承しているオブジェクト停止
 			if (actorCast)
 			{
 				actorCast->MoveSwitch(false);//動けないようにする
 				m_actorVec.push_back(actorCast);
 			}
-		}
-		//バッテリとマンホールも動かなくする
-		for (auto obj : objVec)
-		{
-			string test = "Actor";
-			auto batteryCast = dynamic_pointer_cast<Battery>(obj);
-			auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
-			if (batteryCast)//バッテリー
-			{
-				batteryCast->SetUpdateSwitch(false);//動けないようにする
-				m_batteryVec.push_back(batteryCast);
-			}
-			if (manholeCast)//マンホール
-			{
-				manholeCast->SetUpdateSwitch(false);//動けないようにする
-				m_manholeVec.push_back(manholeCast);
-			}
+			////バッテリーオブジェクト停止
+			//if (batteryCast)//バッテリー
+			//{
+			//	batteryCast->SetUpdateSwitch(false);//動けないようにする
+			//	m_batteryVec.push_back(batteryCast);
+			//}
+			////マンホールオブジェクト停止
+			//if (manholeCast)//マンホール
+			//{
+			//	manholeCast->SetUpdateSwitch(false);//動けないようにする
+			//	m_manholeVec.push_back(manholeCast);
+			//}
+
 		}
 
 		m_stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
@@ -75,22 +75,22 @@ namespace basecross {
 				actorCheck->MoveSwitch(true);//動ける
 			}
 		}
-		for (auto battery : m_batteryVec)
-		{
-			auto batteryCheck = battery.lock();
-			if (batteryCheck)
-			{
-				batteryCheck->SetUpdateSwitch(true);//動ける
-			}
-		}
-		for (auto manhole : m_manholeVec)
-		{
-			auto manholeCheck = manhole.lock();
-			if (manholeCheck)
-			{
-				manholeCheck->SetUpdateSwitch(true);//動ける
-			}
-		}
+		//for (auto battery : m_batteryVec)
+		//{
+		//	auto batteryCheck = battery.lock();
+		//	if (batteryCheck)
+		//	{
+		//		batteryCheck->SetUpdateSwitch(true);//動ける
+		//	}
+		//}
+		//for (auto manhole : m_manholeVec)
+		//{
+		//	auto manholeCheck = manhole.lock();
+		//	if (manholeCheck)
+		//	{
+		//		manholeCheck->SetUpdateSwitch(true);//動ける
+		//	}
+		//}
 
 		//カメラを戻す処理
 		auto View = GetStage()->CreateView<SingleView>();//ビュー作成

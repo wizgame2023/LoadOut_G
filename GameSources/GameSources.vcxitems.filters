@@ -31,12 +31,6 @@
     <Filter Include="Headers\System">
       <UniqueIdentifier>{31594912-3df9-4392-99f1-9851f96f7b0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headers\AI">
-      <UniqueIdentifier>{a98a2c21-93ab-4ea7-b250-b07276dd4497}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\AI">
-      <UniqueIdentifier>{f6d240e1-bd2d-4003-8ac9-fe0fbc209341}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\UI">
       <UniqueIdentifier>{691e1999-5330-437d-bcac-3512a2b77cf7}</UniqueIdentifier>
     </Filter>
@@ -73,6 +67,12 @@
     <Filter Include="Headers\Effect">
       <UniqueIdentifier>{10c7b071-6c3f-4a66-8319-3c033361a501}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\StateEnemy">
+      <UniqueIdentifier>{f6d240e1-bd2d-4003-8ac9-fe0fbc209341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\StateEnemy">
+      <UniqueIdentifier>{a98a2c21-93ab-4ea7-b250-b07276dd4497}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
@@ -106,16 +106,16 @@
       <Filter>Headers\System</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h">
-      <Filter>Headers\AI</Filter>
+      <Filter>Headers\StateEnemy</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Patrol.h">
-      <Filter>Headers\AI</Filter>
+      <Filter>Headers\StateEnemy</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h">
-      <Filter>Headers\AI</Filter>
+      <Filter>Headers\StateEnemy</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Attack.h">
-      <Filter>Headers\AI</Filter>
+      <Filter>Headers\StateEnemy</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h">
       <Filter>Headers\Manager</Filter>
@@ -306,9 +306,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BillBoardGauge.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEandP.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PauseScreen.h">
       <Filter>Headers\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEandP.h">
+      <Filter>Headers\Movie</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RepopEnemy.h">
+      <Filter>Headers\StateEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -343,16 +348,16 @@
       <Filter>Sources\System</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp">
-      <Filter>Sources\AI</Filter>
+      <Filter>Sources\StateEnemy</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Patrol.cpp">
-      <Filter>Sources\AI</Filter>
+      <Filter>Sources\StateEnemy</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp">
-      <Filter>Sources\AI</Filter>
+      <Filter>Sources\StateEnemy</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Attack.cpp">
-      <Filter>Sources\AI</Filter>
+      <Filter>Sources\StateEnemy</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp">
       <Filter>Sources\Manager</Filter>
@@ -540,9 +545,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BillBoardGauge.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameUPEandP.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PauseScreen.cpp">
       <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieGameUPEandP.cpp">
+      <Filter>Sources\Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RepopEnemy.cpp">
+      <Filter>Sources\StateEnemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

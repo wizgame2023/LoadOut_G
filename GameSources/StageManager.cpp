@@ -12,7 +12,9 @@ namespace basecross {
 		m_repopItemFlag(false),
 		m_batteryCountMax(batteryMax),
 		m_repopItemCountTimeMax(repopItemCountTimeMax),
-		m_updateFlag(true)
+		m_updateFlag(true),
+		m_BGMChase(false),
+		m_BGMhow(2)
 	{
 
 	}
@@ -30,7 +32,6 @@ namespace basecross {
 		auto aStar = stage->AddGameObject<AStar>();
 		stage->SetSharedGameObject(L"AStar", aStar);
 		//BGM再生
-		m_BGMChase = 2;
 		m_bgmManager = App::GetApp()->GetXAudio2Manager();
 		m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
 		m_blackOut = GetStage()->AddGameObject<BlackOut>(false);
@@ -55,9 +56,9 @@ namespace basecross {
 		if (!m_updateFlag) return;
 
 		EnemyStateCheck();//敵が追いかけてきてるか確認する
-		auto stage = GetStage();
-		auto objVec = stage->GetGameObjectVec();
-		auto delta = App::GetApp()->GetElapsedTime();
+		//auto stage = GetStage();
+		//auto objVec = stage->GetGameObjectVec();
+		//auto delta = App::GetApp()->GetElapsedTime();
 
 		BGMChange();//BGMを変更する処理
 		KeyEvent();//鍵関連のイベント
@@ -217,8 +218,7 @@ namespace basecross {
 		auto player = stage->GetSharedGameObject<Player>(L"Player");
 		int playerBatteryNum = player->GetBatteryCount();//プレイヤーが持っている電池の数
 
-		int countItem = 0;
-		//int batteryCountMax = 5;//ステージにあるアイテムの上限 メンバ変数にする
+		int countItem = 0;//ステージ上の乾電池の数を数える
 
 		//取得したオブジェクトが変換できたら配列に入れる
 		if (!m_repopItemFlag)//リポップする条件を満たしいない限り見る
@@ -273,6 +273,7 @@ namespace basecross {
 
 	}
 
+	//ランダムアイテムのリポップ処理
 	void StageManager::RepopRandamItem()
 	{
 		auto delta = App::GetApp()->GetElapsedTime();
@@ -307,7 +308,7 @@ namespace basecross {
 		//auto& keyState = App::GetApp()->GetInputDevice().GetKeyState();
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
-		auto obj = stage->GetGameObjectVec();
+		auto objVec = stage->GetGameObjectVec();
 		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_pausCount == 0)
 		{
 			m_white = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.5f), 11);
@@ -436,22 +437,30 @@ namespace basecross {
 		if (m_pause && m_pauseFlag)
 		{
 			//取得したオブジェクトがアイテムに変換できたら配列に入れる
-			for (auto enemy : obj)
+			for (auto obj : objVec)
 			{
-				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
-				if (castEnemy)//アイテム型にキャストする
+				auto castEnemy = dynamic_pointer_cast<Enemy>(obj);
+				auto castPlayer = dynamic_pointer_cast<Player>(obj);
+				auto castManhole = dynamic_pointer_cast<Manhole>(obj);
+				auto castBattery = dynamic_pointer_cast<Battery>(obj);
+
+				if (castEnemy)
 				{
 					castEnemy->MoveSwitch(false);//うごかなくさせる
 				}
-			}
-			for (auto player : obj)
-			{
-				auto castPlayer = dynamic_pointer_cast<Player>(player);
-				if (castPlayer)//アイテム型にキャストする
+				if (castPlayer)
 				{
 					castPlayer->MoveSwitch(false);//うごかなくさせる
-					
 				}
+				if (castManhole)
+				{
+					castManhole->SetUpdateSwitch(false);//うごかなくさせる
+				}
+				if (castBattery)
+				{
+					castBattery->SetUpdateSwitch(false);////動くようにする
+				}
+
 			}
 		}
 		if (!m_pause && m_pauseFlag)
@@ -467,21 +476,30 @@ namespace basecross {
 			GetStage()->RemoveGameObject<Sprite>(m_decisionMozi);
 			GetStage()->RemoveGameObject<Sprite>(m_spriteB);
 
-			for (auto enemy : obj)
+			for (auto obj : objVec)
 			{
-				auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
-				if (castEnemy)//アイテム型にキャストする
+				auto castEnemy = dynamic_pointer_cast<Enemy>(obj);
+				auto castPlayer = dynamic_pointer_cast<Player>(obj);
+				auto castManhole = dynamic_pointer_cast<Manhole>(obj);
+				auto castBattery = dynamic_pointer_cast<Battery>(obj);
+
+				if (castEnemy)
 				{
 					castEnemy->MoveSwitch(true);//動くようにする
 				}
-			}
-			for (auto player : obj)
-			{
-				auto castPlayer = dynamic_pointer_cast<Player>(player);
-				if (castPlayer)//アイテム型にキャストする
+				if (castPlayer)
 				{
 					castPlayer->MoveSwitch(true);//動くようにする
 				}
+				if (castManhole)
+				{
+					castManhole->SetUpdateSwitch(true);////動くようにする
+				}
+				if (castBattery)
+				{
+					castBattery->SetUpdateSwitch(true);////動くようにする
+				}
+
 			}
 		}
 	}

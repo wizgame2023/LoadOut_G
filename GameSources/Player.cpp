@@ -103,9 +103,6 @@ namespace basecross{
 		}
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 
-
-		//KeyBoardMove();//キーボードでのPlayerの動きデバック用
-
 		// インプットデバイスオブジェクト
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーの取得
@@ -153,6 +150,7 @@ namespace basecross{
 			}
 		}
 
+		//ハッチ上にいるときのビルボード処理
 		if (selNow == 4)
 		{
 			if (!m_key)
@@ -330,24 +328,18 @@ namespace basecross{
 			}
 			if (mapManager->SelMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
 			{
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Error", 0, 0.9f);
+				if (!m_key)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Error", 0, 0.9f);
+				}
+				if (m_key)
+				{
+
+				}
 			}
 
 		}
-
-
-
-
-		//m_time += Delta;
-		//if(m_time >= 0.05f)//レイの処理の実験 実験しなくなったら消してください
-		//{	
-		//	デバック用
-		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), atan2(m_controler.fThumbLY, m_controler.fThumbLX),GetThis<Player>());
-		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX), GetThis<Player>());
-		//	GetStage()->AddGameObject<RaySphere>(GetComponent<Transform>()->GetPosition(), -atan2(m_controler.fThumbLY, m_controler.fThumbLX)-0.5f, GetThis<Player>());
-		//}
-
 
 	}
 
