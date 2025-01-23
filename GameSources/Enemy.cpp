@@ -13,6 +13,7 @@ namespace basecross {
 		Actor(StagePtr),
 		m_pos(-95.0f,2.5f,95.0f),
 		m_startPos(-95.0f, 2.5f, 95.0f),
+		m_scale(3.5f,3.5f,3.5f),
 		m_playerPos(0,0,0),
 		m_speed(10),
 		m_angle(0),
@@ -23,6 +24,7 @@ namespace basecross {
 		Actor(StagePtr),
 		m_pos(pos),
 		m_startPos(pos),
+		m_scale(3.5f, 3.5f, 3.5f),
 		m_playerPos(0, 0, 0),
 		m_speed(10),
 		m_angle(0),
@@ -36,7 +38,7 @@ namespace basecross {
 
 	void Enemy::OnCreate()
 	{
-		GetComponent<Transform>()->SetScale(5.0f,5.0f,5.0f);
+		GetComponent<Transform>()->SetScale(m_scale);
 		GetComponent<Transform>()->SetPosition(m_pos);
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
