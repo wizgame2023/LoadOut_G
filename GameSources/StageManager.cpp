@@ -317,8 +317,8 @@ namespace basecross {
 			m_pauseText3 = GetStage()->AddGameObject<Sprite>(L"PauseText3", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 			m_pauseText4 = GetStage()->AddGameObject<Sprite>(L"PauseText4", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 			m_operation = GetStage()->AddGameObject<Sprite>(L"Operation", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.0f), 12);
-			m_decisionMozi = GetStage()->AddGameObject<Sprite>(L"DecisionMozi", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 12);
-			m_spriteB = GetStage()->AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f),Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 0.0f, 0.0f, 1.0f), 12);
+			m_decisionMozi = GetStage()->AddGameObject<Sprite>(L"DecisionMozi", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+			m_spriteB = GetStage()->AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f),Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 0.0f, 0.0f, 1.0f), 11);
 			GetStage()->RemoveGameObject<Sprite>(m_pauseButton);
 
 			m_count = 0;
@@ -328,7 +328,13 @@ namespace basecross {
 			m_stickCheck = true;
 			m_operationFlag = false;
 		}
-
+		else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_pausCount == 1)
+		{
+			m_pausCount--;
+			m_pause = false;
+			m_pauseFlag = true;
+			m_pauseButton = GetStage()->AddGameObject<Sprite>(L"PauseButton", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+		}
 
 		if (m_pausCount == 1)
 		{
@@ -403,11 +409,15 @@ namespace basecross {
 			{
 				if (m_operationFlag)
 				{
+					GetStage()->RemoveGameObject<Sprite>(m_spriteB);
+					GetStage()->RemoveGameObject<Sprite>(m_decisionMozi);
 					m_stickCheck = true;
 					m_operation->SetColor(Col4(1, 1, 1, 1));
 				}
 				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A && m_operationFlag)
 				{
+					m_decisionMozi = GetStage()->AddGameObject<Sprite>(L"DecisionMozi", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
+					m_spriteB = GetStage()->AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 0.0f, 0.0f, 1.0f), 11);
 					m_operation->SetColor(Col4(1, 1, 1, 0));
 					m_operationFlag = false;
 				}
