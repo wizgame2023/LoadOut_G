@@ -117,7 +117,7 @@ namespace basecross {
 		if (m_decisionFlag) return;
 
 		//ステージ移動処理
-		if (m_controler.wButtons & XINPUT_GAMEPAD_B)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
 			auto SEManager = App::GetApp()->GetXAudio2Manager();
 			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
