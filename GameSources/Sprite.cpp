@@ -47,9 +47,9 @@ namespace basecross {
 		m_drawComp->SetSamplerState(SamplerState::LinearWrap); // テクスチャを繰り返して貼り付ける設定
 		m_drawComp->SetDiffuse(m_color); // ポリゴンを色を設定する
 
-		auto trans = GetComponent<Transform>();
-		trans->SetPosition(m_pos);
-		trans->SetRotation(m_rot);
+		m_trans = GetComponent<Transform>();
+		m_trans->SetPosition(m_pos);
+		m_trans->SetRotation(m_rot);
 
 
 		// アルファブレンド(透過処理)を有効にする

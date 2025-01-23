@@ -5,6 +5,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include"SpriteMove.h"
 
 namespace basecross {
 	class StageManager :public GameObject
@@ -36,7 +37,7 @@ namespace basecross {
 
 		shared_ptr<SoundItem> m_BGM;
 		shared_ptr<XAudio2Manager> m_bgmManager;
-		shared_ptr<Sprite> m_KeyGetText;
+		shared_ptr<SpriteMove> m_KeyGetText;
 
 		shared_ptr<Sprite> m_white;
 

@@ -162,7 +162,7 @@ namespace basecross {
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
 
 			//鍵を手に入れたことを知らせるテクスチャ追加
-			m_KeyGetText = stage->AddGameObject<Sprite>(L"KeyGetText", Vec2(800.0f, 400.0f), Vec3(1000.0f, 0.0f, 0.0f));
+			m_KeyGetText = stage->AddGameObject<SpriteMove>(L"KeyGetText", Vec2(800.0f, 400.0f), Vec3(1000.0f, 0.0f, 0.0f), Vec3(0.0f), Col4(1), -500, 3);
 
 			//取得したオブジェクトが変換できたら配列に入れる
 			for (auto hatch : objVec)
@@ -194,15 +194,16 @@ namespace basecross {
 		{
 			auto GetTextTrans = m_KeyGetText->GetComponent<Transform>();
 			auto GetTextPos = GetTextTrans->GetPosition();
-			GetTextPos.x -= 500 * delta;//移動
-			GetTextTrans->SetPosition(GetTextPos);
+			//GetTextPos.x -= 500 * delta;//移動
+			//GetTextTrans->SetPosition(GetTextPos);
 
-			//テキストが画面範囲外に移動したら移動処理をしないようにする
-			if (GetTextPos.x >= 1000)
-			{
-				m_PlayerKeyFlag = 3;//この処理をしないようにする
-				stage->RemoveGameObject<Sprite>(m_KeyGetText);
-			}
+		//	//テキストが画面範囲外に移動したら移動処理をしないようにする
+		//	if (GetTextPos.x >= 1000)
+		//	{
+		//		m_PlayerKeyFlag = 3;//この処理をしないようにする
+		//		stage->RemoveGameObject<Sprite>(m_KeyGetText);
+		//	}
+		//}
 		}
 
 	}
