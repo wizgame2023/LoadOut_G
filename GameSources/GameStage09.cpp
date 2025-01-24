@@ -87,6 +87,8 @@ namespace basecross {
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
 
+		stageManager->ClearMode(1);//特定の敵を倒すと鍵が手に入るモード
+
 		AddGameObject<MovieGameStart>(mapSize);//ムービー生成
 	}
 
@@ -120,7 +122,7 @@ namespace basecross {
 			auto enemy = AddGameObject<Enemy>(posVec[i]);
 			enemyVec.push_back(enemy);
 		}
-		enemyVec[0]->AddTag(L"Key");//鍵を持っていることにする
+		//enemyVec[0]->AddTag(L"Key");//鍵を持っていることにする
 	}
 
 	//アイテム生成

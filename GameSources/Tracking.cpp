@@ -71,7 +71,6 @@ namespace basecross {
 
 		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//player‚ÉŒü‚©‚Á‚ÄˆÚ“®
 		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
-		m_ownerPos.y = 2.5f;
 		
 		auto CircleRange = math.GetCircleRange(40, m_ownerPos, m_playerPos);
 		if (CircleRange)

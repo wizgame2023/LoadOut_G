@@ -7,14 +7,19 @@
 #include "Project.h"
 
 namespace basecross {
-	StageManager::StageManager(shared_ptr<Stage>& stagePtr, int batteryMax, float repopItemCountTimeMax) :
+	StageManager::StageManager(shared_ptr<Stage>& stagePtr, int batteryMax, float repopItemCountTimeMax,
+							   float repopEnemyCountTimeMax, float repopRamdomItemCountTimeMax
+								) :
 		GameObject(stagePtr),
 		m_repopItemFlag(false),
 		m_batteryCountMax(batteryMax),
 		m_repopItemCountTimeMax(repopItemCountTimeMax),
+		m_repopEnemyCountTimeMax(repopEnemyCountTimeMax),
+		m_repopRamdomItemCountTimeMax(repopRamdomItemCountTimeMax),
 		m_updateFlag(true),
 		m_BGMChase(false),
-		m_BGMhow(2)
+		m_BGMhow(2),
+		m_EnemyUpClearNum(0)
 	{
 
 	}
@@ -60,12 +65,23 @@ namespace basecross {
 		//auto objVec = stage->GetGameObjectVec();
 		//auto delta = App::GetApp()->GetElapsedTime();
 
+		//決まった数敵を打ち上げたら鍵を入手できる(関数にする)
+		if (m_stageMode == 2)
+		{
+			if (m_upEnemyCount >= m_EnemyUpClearNum)
+			{
+				m_PlayerKeyFlag = true;//プレイヤーに鍵を持たせるフラグを渡す	
+				m_clearManagerCount = 1;//もうクリアマネージャーの処理はしない
+			}
+		}
+
+
 		BGMChange();//BGMを変更する処理
 		KeyEvent();//鍵関連のイベント
 		RepopItem();//アイテムのリポップ処理
 		RepopEnemy();//敵のリポップ処理
 		RepopRandamItem();//ランダムアイテムのリポップ処理
-		PauseEvent();
+		PauseEvent();//ポーズ処理
 	}
 
 	//BGMを変更する処理
@@ -140,7 +156,7 @@ namespace basecross {
 		{
 			m_repopEnemyCountTime += delta;
 			//クールタイム過ぎたら敵がリポップする
-			if (m_repopEnemyCountTime >= 10.0f)
+			if (m_repopEnemyCountTime >= m_repopEnemyCountTimeMax)
 			{
 				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]+Vec3(0.0f,30.0f,0.0f), false);//リポップ
 				m_repopEnemyCountTime = 0;//カウントリセット
@@ -156,9 +172,10 @@ namespace basecross {
 		auto objVec = stage->GetGameObjectVec();
 		auto delta = App::GetApp()->GetElapsedTime();
 
-		//もし、Playerが鍵を入手したら
+		//もし、Playerが鍵を入手するフラグが立ったら
 		if (m_PlayerKeyFlag == 1)
 		{
+			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);//Playerに鍵を渡す
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
 
 			//鍵を手に入れたことを知らせるテクスチャ追加
@@ -206,6 +223,46 @@ namespace basecross {
 		//}
 		}
 
+	}
+
+	//ステージのクリア条件を決める関数
+	void StageManager::ClearMode(int mode,int modeTwoCountMax)
+	{			
+		auto stage = GetStage();
+		auto delta = App::GetApp()->GetElapsedTime();
+		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
+		//m_EnemyUpClearNum = modeTwoCountMax;//たおさないと行けない数を決める
+
+		//敵が鍵を持っているモード
+		if (mode == 1&& m_clearManagerCount == 0)
+		{
+			m_stageMode = mode;
+			auto objVec = stage->GetGameObjectVec();
+			vector<weak_ptr<Enemy>> enemyVec;
+			//ステージからオブジェクトを取得し、その中で取得できた敵の中からランダムに鍵を持たせる
+			for (auto obj : objVec)
+			{
+				auto castEnemy = dynamic_pointer_cast<Enemy>(obj);
+				if (castEnemy)//キャスト成功したら
+				{
+					enemyVec.push_back(castEnemy);//配列に入れる
+				}
+			}
+
+			//鍵を持つ敵をランダムに決める
+			int haveKeyNum = rand() % enemyVec.size();
+
+			//決まった敵に鍵をもつタグを付ける
+			enemyVec[haveKeyNum].lock()->AddTag(L"Key");
+
+			m_clearManagerCount = 1;//もうクリアマネージャーの処理はしない
+		}
+		//敵を複数倒すと鍵を入手できるモード
+		if (mode == 2 && m_clearManagerCount == 0)
+		{
+			m_EnemyUpClearNum = modeTwoCountMax;//たおさないと行けない数を決める
+			m_stageMode = mode;
+		}
 	}
 
 	//乾電池のリポップ
@@ -286,7 +343,7 @@ namespace basecross {
 		{
 			m_repopRamdomItemCountTime += delta;
 			//クールタイム過ぎたら敵がリポップする
-			if (m_repopRamdomItemCountTime >= 60.0f)
+			if (m_repopRamdomItemCountTime >= m_repopRamdomItemCountTimeMax)
 			{
 				stage->AddGameObject<RandomItem>(m_repopRandomItemPos[0]);//リポップ
 				m_repopRamdomItemCountTime = 0;//カウントリセット
@@ -534,6 +591,11 @@ namespace basecross {
 	void StageManager::SetUpdateFlag(bool flag)
 	{
 		m_updateFlag = flag;
+	}
+
+	void StageManager::AddUpEnemyCount(int count)
+	{
+		m_upEnemyCount += count;
 	}
 
 }

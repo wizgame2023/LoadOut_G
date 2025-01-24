@@ -94,13 +94,14 @@ namespace basecross {
 		//AddGameObject<Enemy>(Vec3(-95.0f, 2.5f, -95.0f));
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
-
+		stageManager->ClearMode(1);//クリア条件を決める
 
 		AddGameObject<MovieGameStart>(mapSize);//ムービー生成
 	}
 
 	void GameStage::OnUpdate()
 	{
+		//GetSharedGameObject<StageManager>(L"StageManager")->ClearMode(2);//クリア条件を決める
 	}
 
 	//Player生成
@@ -127,7 +128,7 @@ namespace basecross {
 			auto enemy = AddGameObject<Enemy>(posVec[i]);
 			enemyVec.push_back(enemy);
 		}
-		enemyVec[0]->AddTag(L"Key");//鍵を持っていることにする
+		//enemyVec[0]->AddTag(L"Key");//鍵を持っていることにする
 	}
 
 	//アイテム生成

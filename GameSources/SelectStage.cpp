@@ -46,6 +46,7 @@ namespace basecross {
 
 		m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -350.0f, 0.0f));
 		m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -352.0f, 0.0f));
+		AddGameObject<Sprite>(L"AButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(600.0f, -352.0f, 0.0f));
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, 1));
 		m_spriteB->SetColor(Col4(1, 0, 0, 1));
 
@@ -143,13 +144,13 @@ namespace basecross {
 		//選択ステージの変更
 		if (cntlVec[0].fThumbLX <= -0.9f && m_stickCheck)//左
 		{
-			if (m_SelectStage >= 2)
+			if (m_SelectStage > 1)
 			{
 				auto SEManager = App::GetApp()->GetXAudio2Manager();
 				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_SelectStage--;
-			}			
-			if (m_SelectStage <= 1)
+			}
+			else if (m_SelectStage == 1)
 			{
 				m_SelectStage = 10;
 			}
@@ -157,14 +158,14 @@ namespace basecross {
 			m_stickCheck = false;//スティックを受け取れないようにする
 		}
 		if (cntlVec[0].fThumbLX >= 0.9f && m_stickCheck)//右
-		{
+		{			
 			if (m_SelectStage < 10)
 			{
 				auto SEManager = App::GetApp()->GetXAudio2Manager();
 				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_SelectStage++;
-			}
-			if (m_SelectStage >= 10)
+			}		
+			else if (m_SelectStage == 10)
 			{
 				m_SelectStage = 1;
 			}

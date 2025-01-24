@@ -85,7 +85,7 @@ namespace basecross {
 		MoveSwitch(true);//“®‚¯‚é‚æ‚¤‚É‚·‚é
 
 		//ƒrƒ‹ƒ{[ƒh‚Ì¶¬
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0);
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0,13.0f);
 	}
 
 	void Enemy::OnUpdate()
@@ -181,9 +181,10 @@ namespace basecross {
 		if (this->FindTag(L"Key"))
 		{	
 			//Œ®‚ðPlayer‚É“n‚·
-			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
+			//GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
 			stageManager->SetPlayerKeyFlag(1);
 		}
+		stageManager->AddUpEnemyCount(1);//“G‚ª‚P‘Ì‘Å‚¿‚ ‚ª‚Á‚½‚±‚Æ‚ð’m‚ç‚¹‚é
 
 	}
 

@@ -208,6 +208,8 @@ namespace basecross{
 		app->RegisterTexture(L"DecisionMozi", strTexture);
 		strTexture = texPath + L"PauseButton.png";//操作確認イラスト
 		app->RegisterTexture(L"PauseButton", strTexture);
+		strTexture = texPath + L"AButton.png";//Aボタンで戻ることを知らせるイラスト
+		app->RegisterTexture(L"AButton", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);

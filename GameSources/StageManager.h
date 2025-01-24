@@ -14,15 +14,21 @@ namespace basecross {
 		int m_BGMhow;//今なにのBGMを流れているか保存する変数
 		int m_PlayerKeyFlag;///Playerが鍵を持ったかのフラグ
 		int m_batteryCountMax;//ステージのバッテリー出現上限
+		int m_EnemyUpClearNum;//敵を倒す目標数
 
 		int m_pausCount;
 		int m_count;
+		int m_upEnemyCount;//敵を打ち上げた数
+		int m_clearManagerCount;//クリアマネージャーの処理のカウント
+		int m_stageMode;//ステージのモードを決める変数
 		//int m_KeyTextFlag;//鍵を手に入れているかのフラグ
 
 		float m_repopItemCountTime;//アイテムがリポップするタイムを測る変数
-		float m_repopItemCountTimeMax;//アイテムがリポップするまでの時間
-		float m_repopEnemyCountTime;//敵がリポップするタイム
-		float m_repopRamdomItemCountTime;//ランダムアイテムがリポップするタイム
+		float m_repopItemCountTimeMax;//アイテムがリポップする時間
+		float m_repopEnemyCountTime;//敵がリポップするタイムを測る変数
+		float m_repopEnemyCountTimeMax;//敵がリポップする時間
+		float m_repopRamdomItemCountTime;//ランダムアイテムがリポップする時間を測る変数
+		float m_repopRamdomItemCountTimeMax;//ランダムアイテムがリポップする時間
 
 		bool m_ClearFlag;//クリアのフラグ判定
 		bool m_GameOverFlag;//ゲームオーバー用のフラグ	
@@ -58,7 +64,9 @@ namespace basecross {
 		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション
 
 	public:
-		StageManager(shared_ptr<Stage>& stagePtr, int batteryMax = 5, float repopItemCountTimeMax = 15.0f);
+		StageManager(shared_ptr<Stage>& stagePtr, int batteryMax = 5, float repopItemCountTimeMax = 15.0f,float repopEnemyCountTimeMax = 15.0f,
+					 float repopRamdomItemCountTimeMax = 60.0f
+					);
 		~StageManager();
 
 		void OnCreate()override;
@@ -76,12 +84,16 @@ namespace basecross {
 
 		void KeyEvent();//鍵関係のイベント
 
+		void ClearMode(int mode,int modeTwoCount = 5);//ステージのクリア条件の管理
+
 		void SetClearFlag(bool flag);//セッター
 		void SetGameOverFlag(bool flag);//セッター
 		void SetPlayerKeyFlag(int flag);//セッター
 		void SetRepopEnemyPos(Vec3 pos);//セッター
 		void SetRepopRandomItemPos(Vec3 pos);//セッター
 		void SetUpdateFlag(bool flag);//アップデートするかのセッター
+
+		void AddUpEnemyCount(int count);//倒した数を追加する
 	};
 
 }
