@@ -85,7 +85,7 @@ namespace basecross {
 		MoveSwitch(true);//動けるようにする
 
 		//ビルボードの生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0,13.0f);
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0);
 	}
 
 	void Enemy::OnUpdate()
