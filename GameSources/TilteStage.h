@@ -33,6 +33,7 @@ namespace basecross {
 		
 		bool m_transparent = false;
 		bool m_creditCount=true;
+		bool m_bPush = true;//Bボタンを押して反応していいかのフラグ
 	public:
 		//構築と破棄
 		TilteStage() :Stage() {}
