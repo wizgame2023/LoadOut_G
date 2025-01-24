@@ -146,12 +146,13 @@ namespace basecross {
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, m_transparency));
 		m_spriteB->SetColor(Col4(1, 0, 0, m_transparency));
 
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B && m_creditCount)
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B && m_creditCount && m_bPush)
 		{
 			auto SEManager = App::GetApp()->GetXAudio2Manager();
 			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
 			
 			m_black->SetSwitch(true);//暗転開始
+			m_bPush = false;//Bボタンを押しても反応しないようにする
 
 		}
 		if (m_black->GetBlackOutFlag())
