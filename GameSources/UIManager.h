@@ -10,7 +10,8 @@ namespace basecross {
 	class UIManager :public GameObject
 	{
 	private:
-
+		shared_ptr<StageManager> m_stageManager;//ステージマネージャー
+		shared_ptr<SpriteNum> m_spriteNum;//スプライト
 	public:
 		UIManager(shared_ptr<Stage> &stagePtr);//コンストラクタ
 		~UIManager();//デストラクタ
