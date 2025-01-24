@@ -86,7 +86,7 @@ namespace basecross {
 		//敵生成
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
-		stageManager->ClearMode(1);//特定の敵を倒すと鍵が手に入るモード
+		stageManager->ClearMode(2);//一定数敵を倒すと鍵が手に入るモード
 
 		AddGameObject<MovieGameStart>(mapSize);//ムービー生成
 	}
