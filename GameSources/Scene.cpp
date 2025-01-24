@@ -214,6 +214,16 @@ namespace basecross{
 		app->RegisterTexture(L"EnemyUpText", strTexture);
 		strTexture = texPath + L"Slash.png";//スラッシュ
 		app->RegisterTexture(L"Slash", strTexture);
+
+		strTexture = texPath + L"LStick.png";//スラッシュ
+		app->RegisterTexture(L"LStick", strTexture);
+		strTexture = texPath + L"LStick2.png";//スラッシュ
+		app->RegisterTexture(L"LStick2", strTexture);
+		strTexture = texPath + L"LStickLeft.png";//スラッシュ
+		app->RegisterTexture(L"LStickLeft", strTexture);
+		strTexture = texPath + L"LStickRight.png";//スラッシュ
+		app->RegisterTexture(L"LStickRight", strTexture);
+
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);

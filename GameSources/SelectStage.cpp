@@ -41,9 +41,6 @@ namespace basecross {
 		m_StagePhoto = AddGameObject<Sprite>(L"Stage01_HiShot", Vec2(900, 500), Vec3(0.0f, 100.0f, 0.0f));//タイトル用のスプライト生成
 		m_StageText = AddGameObject<Sprite>(L"StageText", Vec2(800, 150), Vec3(-120.0f, -300.0f, 0.0f));//タイトル用のスプライト生成
 		m_NumberSprite = AddGameObject<NuberManager>(1, Vec2(150, 150), Vec3(+260, -300.0f, 0.0f),true,80.0f);
-		m_StageText = AddGameObject<Sprite>(L"RightArrow", Vec2(200, 200), Vec3(550.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
-		m_StageText = AddGameObject<Sprite>(L"LeftArrow", Vec2(200, 200), Vec3(-550.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
-
 		m_spriteMozi = AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -350.0f, 0.0f));
 		m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -352.0f, 0.0f));
 		AddGameObject<Sprite>(L"AButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(600.0f, -352.0f, 0.0f));
@@ -73,6 +70,44 @@ namespace basecross {
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーのアナログスティックの向き
 		m_controler = inputDevice.GetControlerVec()[0];
+
+		auto time = App::GetApp()->GetElapsedTime();
+		if (m_count == 0 && m_time >= 0)
+		{
+			m_LStick1= AddGameObject<Sprite>(L"LStick", Vec2(150 , 150), Vec3(-530.0f, 0.0f, 0.0f));
+			m_LStick2 = AddGameObject<Sprite>(L"LStick2", Vec2(150, 150), Vec3(530.0f, 0.0f, 0.0f));
+
+			m_count++;
+		}
+		if (m_count == 1 && m_time >= 0.4f)
+		{
+			RemoveGameObject<Sprite>(m_LStick1);
+			RemoveGameObject<Sprite>(m_LStick2);
+			m_LStickLeft = AddGameObject<Sprite>(L"LStickLeft", Vec2(150, 150), Vec3(-550.0f, 0.0f, 0.0f));
+			m_LStickRight = AddGameObject<Sprite>(L"LStickRight", Vec2(150, 150), Vec3(550.0f, 0.0f, 0.0f));
+			m_StageText1 = AddGameObject<Sprite>(L"RightArrow", Vec2(200, 200), Vec3(520.0f, 120.0f, 0.0f));//タイトル用のスプライト生成
+			m_StageText2 = AddGameObject<Sprite>(L"LeftArrow", Vec2(200, 200), Vec3(-520.0f, 120.0f, 0.0f));//タイトル用のスプライト生成
+
+			m_count++;
+		}
+		if (m_count == 2 && m_time >= 0.8f)
+		{
+			RemoveGameObject<Sprite>(m_LStickLeft);
+			RemoveGameObject<Sprite>(m_LStickRight);
+			RemoveGameObject<Sprite>(m_StageText1);
+			RemoveGameObject<Sprite>(m_StageText2);
+			m_LStick1 = AddGameObject<Sprite>(L"LStick", Vec2(150, 150), Vec3(-530.0f, 0.0f, 0.0f));
+			m_LStick2 = AddGameObject<Sprite>(L"LStick2", Vec2(150, 150), Vec3(530.0f, 0.0f, 0.0f));
+			m_count++;
+		}
+		if (m_count == 3)
+		{
+			m_count = 1;
+			m_time = 0;
+		}
+
+
+		m_time += time;
 
 		//暗転が終わったらステージ移動
 		if (m_blackOut->GetBlackOutFlag())

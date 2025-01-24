@@ -20,11 +20,21 @@ namespace basecross {
 
 		shared_ptr<Sprite> m_StagePhoto;
 		shared_ptr<Sprite> m_StageText;
+		shared_ptr<Sprite> m_StageText1;
+		shared_ptr<Sprite> m_StageText2;
 		shared_ptr<NuberManager> m_NumberSprite;
 		shared_ptr<BlackOut> m_blackOut;//暗転処理
 		shared_ptr<Sprite>m_spriteMozi;
 		shared_ptr<Sprite>m_spriteB;
 
+		shared_ptr<Sprite> m_LStick1;
+		shared_ptr<Sprite> m_LStick2;
+		shared_ptr<Sprite> m_LStickLeft;
+		shared_ptr<Sprite> m_LStickRight;
+
+		float m_time = 0;
+
+		int m_count = 0;
 		int m_SelectStage;//選択しているステージ
 
 		const int m_allStage = 20;
