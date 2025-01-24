@@ -63,6 +63,7 @@ namespace basecross {
 		{				
 			auto SEManager = App::GetApp()->GetXAudio2Manager();
 			auto randam = rand() % 4;
+			//auto randam = 3;
 			switch (randam)
 			{
 			case 0:
