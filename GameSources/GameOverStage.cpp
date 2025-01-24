@@ -34,9 +34,9 @@ namespace basecross {
 			CreateViewLight();
 			AddGameObject<Sprite>(L"GameOverLight", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f));//タイトル用のスプライト生成
 			AddGameObject<Sprite>(L"GameOverText", Vec2(800, 300), Vec3(0.0f, 300.0f, 0.0f));//タイトル用のスプライト生成
-			m_clearText1 = AddGameObject<Sprite>(L"GameClearText1", Vec2(300, 150), Vec3(-400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+			m_clearText1 = AddGameObject<Sprite>(L"GameClearText3", Vec2(300, 150), Vec3(-400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
 			m_clearText2 = AddGameObject<Sprite>(L"GameClearText2", Vec2(400, 130), Vec3(0.0f, -350.0f, 0.0f));//クリア用のスプライト生成
-			m_clearText3 = AddGameObject<Sprite>(L"GameClearText3", Vec2(300, 150), Vec3(400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+			m_clearText3 = AddGameObject<Sprite>(L"GameClearText1", Vec2(300, 150), Vec3(400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
 
 		}
 		catch (...) {
@@ -123,7 +123,7 @@ namespace basecross {
 		
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
-			if (m_count == 0)
+			if (m_count == 2)
 			{
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
 			}
@@ -131,7 +131,7 @@ namespace basecross {
 			{
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//セレクトシーンに移動する
 			}
-			if (m_count == 2)
+			if (m_count == 0)
 			{
 				switch (m_lastPlayStage)
 				{
