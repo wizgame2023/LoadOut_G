@@ -141,7 +141,7 @@ namespace basecross{
 		{
 			if (m_itemCount > 0)
 			{
-				m_billBoard->SetScale(Vec3(8.0f, 3.0f, 3.0f));
+				m_billBoard->SetScale(Vec3(8.0f, 8.0f, 3.0f));
 				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Push");
 			}
 			if (m_itemCount <= 0)
