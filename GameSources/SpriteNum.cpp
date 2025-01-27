@@ -7,12 +7,14 @@
 #include "Project.h"
 
 namespace basecross {
-	SpriteNum::SpriteNum(shared_ptr<Stage>& stagePtr, wstring textureName, Vec2 size,int num,Vec3 pos, Vec3 rot):
-		GameObject(stagePtr),
-		m_textureName(textureName),
-		m_size(size),
-		m_pos(pos),
-		m_rot(rot),
+	SpriteNum::SpriteNum(shared_ptr<Stage>& stagePtr, wstring textureName, 
+		Vec2 size,int num,Vec3 pos, Vec3 rot,Col4 color,int layer):
+		Sprite(stagePtr,textureName,size,pos,rot,color,layer),
+		//GameObject(stagePtr),
+		//m_textureName(textureName),
+		//m_size(size),
+		//m_pos(pos),
+		//m_rot(rot),
 		m_num(num)
 	{
 
@@ -46,7 +48,7 @@ namespace basecross {
 		m_drawComp = AddComponent<PCTSpriteDraw>(m_vertices, m_indices); // スプライト用のドローコンポーネント
 		m_drawComp->SetTextureResource(m_textureName);//テクスチャの名前指定
 		m_drawComp->SetSamplerState(SamplerState::LinearWrap); // テクスチャを繰り返して貼り付ける設定
-		m_drawComp->SetDiffuse(Col4(1, 1, 1, 1.0f)); // ポリゴンを色を設定する
+		m_drawComp->SetDiffuse(m_color); // ポリゴンを色を設定する
 
 		auto trans = GetComponent<Transform>();
 		trans->SetPosition(m_pos);
@@ -56,6 +58,7 @@ namespace basecross {
 		// アルファブレンド(透過処理)を有効にする
 		SetAlphaActive(true); // true:透過を有効、false:透過を無効
 
+		SetDrawLayer(m_layer);
 		//m_vertices[0].textureCoordinate = Vec2(0.0f, 0.0f);
 
 		////時間経過で数値が変わるようにする
