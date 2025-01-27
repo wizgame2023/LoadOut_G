@@ -45,6 +45,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage18.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage19.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage20.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStart.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Ground.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)happysky.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Hatch.h" />
@@ -128,6 +129,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage18.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage19.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage20.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStart.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ground.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)happysky.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hatch.cpp" />
