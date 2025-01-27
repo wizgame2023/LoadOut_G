@@ -7,7 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross {
-	class MiniMapItem :public GameObject
+	class MiniMapItem :public Sprite
 	{
 	protected:
 		//画像の表示サイズ
@@ -25,10 +25,12 @@ namespace basecross {
 		weak_ptr<Battery> m_parentObj;//元となるオブジェクトを保管する変数
 
 	public:
-		MiniMapItem(shared_ptr<Stage>& stagePtr,weak_ptr<Battery> parentObj, wstring textureName, Vec2 size,int layer = 1, Vec3 pos = Vec3(0.0f, 0.0f, 0.0f), Vec3 rot = Vec3(0.0f, 0.0f, 0.0f));//コンストラクタ
+		MiniMapItem(shared_ptr<Stage>& stagePtr,weak_ptr<Battery> parentObj, wstring textureName, 
+			Vec2 size, Vec3 pos = Vec3(0.0f, 0.0f, 0.0f), Vec3 rot = Vec3(0.0f, 0.0f, 0.0f), 
+			Col4 color = Col4(1.0f, 1.0f, 1.0f, 1.0f), int layer = 1);//コンストラクタ
 		virtual ~MiniMapItem();//デストラクタ
 
-		virtual void OnCreate()override;//作成
+		//virtual void OnCreate()override;//作成
 		virtual void OnUpdate()override;//更新
 
 	};

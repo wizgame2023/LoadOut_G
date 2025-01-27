@@ -212,9 +212,10 @@ namespace basecross{
 		app->RegisterTexture(L"AButton", strTexture);
 		strTexture = texPath + L"EnemyUpText.png";//テキスト(敵を倒した数)
 		app->RegisterTexture(L"EnemyUpText", strTexture);
+		strTexture = texPath + L"EnemyUpText2.png";//テキスト(敵を打ち上げろ！)
+		app->RegisterTexture(L"EnemyUpText2", strTexture);
 		strTexture = texPath + L"Slash.png";//スラッシュ
 		app->RegisterTexture(L"Slash", strTexture);
-
 		strTexture = texPath + L"LStick.png";//スラッシュ
 		app->RegisterTexture(L"LStick", strTexture);
 		strTexture = texPath + L"LStick2.png";//スラッシュ
@@ -223,13 +224,14 @@ namespace basecross{
 		app->RegisterTexture(L"LStickLeft", strTexture);
 		strTexture = texPath + L"LStickRight.png";//スラッシュ
 		app->RegisterTexture(L"LStickRight", strTexture);
-
 		strTexture = texPath + L"BackMozi.png";//スラッシュ
 		app->RegisterTexture(L"BackMozi", strTexture);
 		strTexture = texPath + L"BackMozi2.png";//スラッシュ
 		app->RegisterTexture(L"BackMozi2", strTexture);
-
-
+		strTexture = texPath + L"ClearConditionsText1.png";//鍵を入手する条件テクスチャ1
+		app->RegisterTexture(L"ClearConditionsText1", strTexture);
+		strTexture = texPath + L"ClearConditionsText2.png";//鍵を入手する条件テクスチャ2
+		app->RegisterTexture(L"ClearConditionsText2", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);

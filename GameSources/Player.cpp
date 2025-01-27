@@ -161,7 +161,7 @@ namespace basecross{
 			}
 			if (m_key)
 			{
-				m_billBoard->SetScale(Vec3(8.0f, 3.0f, 3.0f));
+				m_billBoard->SetScale(Vec3(8.0f, 8.0f, 3.0f));
 				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Push");
 			}
 		}	
@@ -325,7 +325,7 @@ namespace basecross{
 				if (m_itemCount <= 0)
 				{
 					auto SEManager = App::GetApp()->GetXAudio2Manager();
-					auto SE = SEManager->Start(L"Error", 0, 0.9f);
+					auto SE = SEManager->Start(L"Error", 0, 1.3f);
 				}
 			}
 			if (mapManager->SelMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
@@ -333,7 +333,7 @@ namespace basecross{
 				if (!m_key)
 				{
 					auto SEManager = App::GetApp()->GetXAudio2Manager();
-					auto SE = SEManager->Start(L"Error", 0, 0.9f);
+					auto SE = SEManager->Start(L"Error", 0, 1.3f);
 				}
 				if (m_key)
 				{

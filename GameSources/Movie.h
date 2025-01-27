@@ -14,8 +14,9 @@ namespace basecross {
 	{
 	private:
 		vector<weak_ptr<Actor>> m_actorVec;//動くオブジェクトを入れる配列
-		vector<weak_ptr<Battery>> m_batteryVec;//バッテリーを入れる配列
-		vector<weak_ptr<Manhole>> m_manholeVec;//バッテリーを入れる配列
+		//vector<weak_ptr<Battery>> m_batteryVec;//バッテリーを入れる配列
+		//vector<weak_ptr<Manhole>> m_manholeVec;//バッテリーを入れる配列
+		vector<weak_ptr<Sprite>> m_spriteVec;//スプライトをを入れる配列
 	protected:
 		shared_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
 		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら

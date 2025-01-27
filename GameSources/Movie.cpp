@@ -31,6 +31,7 @@ namespace basecross {
 			auto actorCast = dynamic_pointer_cast<Actor>(obj);
 			auto batteryCast = dynamic_pointer_cast<Battery>(obj);
 			auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
+			auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
 
 			//アクターを継承しているオブジェクト停止
 			if (actorCast)
@@ -38,18 +39,12 @@ namespace basecross {
 				actorCast->MoveSwitch(false);//動けないようにする
 				m_actorVec.push_back(actorCast);
 			}
-			////バッテリーオブジェクト停止
-			//if (batteryCast)//バッテリー
-			//{
-			//	batteryCast->SetUpdateSwitch(false);//動けないようにする
-			//	m_batteryVec.push_back(batteryCast);
-			//}
-			////マンホールオブジェクト停止
-			//if (manholeCast)//マンホール
-			//{
-			//	manholeCast->SetUpdateSwitch(false);//動けないようにする
-			//	m_manholeVec.push_back(manholeCast);
-			//}
+			//スプライトを継承しているオブジェクトを透明にする
+			if (spriteCast)
+			{
+				spriteCast->OnClear(true);//透明にする
+				m_spriteVec.push_back(spriteCast);
+			}
 
 		}
 
@@ -75,22 +70,15 @@ namespace basecross {
 				actorCheck->MoveSwitch(true);//動ける
 			}
 		}
-		//for (auto battery : m_batteryVec)
-		//{
-		//	auto batteryCheck = battery.lock();
-		//	if (batteryCheck)
-		//	{
-		//		batteryCheck->SetUpdateSwitch(true);//動ける
-		//	}
-		//}
-		//for (auto manhole : m_manholeVec)
-		//{
-		//	auto manholeCheck = manhole.lock();
-		//	if (manholeCheck)
-		//	{
-		//		manholeCheck->SetUpdateSwitch(true);//動ける
-		//	}
-		//}
+		//スプライトを透明から解除する
+		for (auto sprite : m_spriteVec)
+		{
+			auto spriteCheck = sprite.lock();
+			if (spriteCheck)
+			{
+				spriteCheck->OnClear(false);//透明から戻す
+			}
+		}
 
 		//カメラを戻す処理
 		auto View = GetStage()->CreateView<SingleView>();//ビュー作成

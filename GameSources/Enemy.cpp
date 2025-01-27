@@ -13,7 +13,7 @@ namespace basecross {
 		Actor(StagePtr),
 		m_pos(-95.0f,2.5f,95.0f),
 		m_startPos(-95.0f, 2.5f, 95.0f),
-		m_scale(5.0f),
+		m_scale(3.5f),
 		m_playerPos(0,0,0),
 		m_speed(10),
 		m_angle(0),
@@ -24,7 +24,7 @@ namespace basecross {
 		Actor(StagePtr),
 		m_pos(pos),
 		m_startPos(pos),
-		m_scale(5.0f),
+		m_scale(3.5f),
 		m_playerPos(0, 0, 0),
 		m_speed(10),
 		m_angle(0),
@@ -85,7 +85,7 @@ namespace basecross {
 		MoveSwitch(true);//動けるようにする
 
 		//ビルボードの生成
-		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),0);
+		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),L"Clear",2,13.0f);
 	}
 
 	void Enemy::OnUpdate()
