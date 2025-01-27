@@ -224,6 +224,12 @@ namespace basecross{
 		strTexture = texPath + L"LStickRight.png";//スラッシュ
 		app->RegisterTexture(L"LStickRight", strTexture);
 
+		strTexture = texPath + L"BackMozi.png";//スラッシュ
+		app->RegisterTexture(L"BackMozi", strTexture);
+		strTexture = texPath + L"BackMozi2.png";//スラッシュ
+		app->RegisterTexture(L"BackMozi2", strTexture);
+
+
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
