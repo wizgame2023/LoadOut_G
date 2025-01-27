@@ -11,7 +11,8 @@ namespace basecross {
 		GameObject(stage),
 		m_number(number),
 		m_scale(scale),
-		m_pos(pos)
+		m_pos(pos),
+		m_destroyFlag(false)
 	{
 		if (m_number < 10)
 		{
@@ -49,6 +50,8 @@ namespace basecross {
 	}
 	void NuberManager::OnUpdate()
 	{		
+		auto stage = GetStage();
+
 		if (!m_numLength)
 		{
 			m_spriteOne->SetNum(m_number);
@@ -59,6 +62,34 @@ namespace basecross {
 			m_spriteOne->SetNum(m_number % 10);
 		}
 
+		//削除フラグがオンになったら
+		if (m_destroyFlag)
+		{
+			stage->RemoveGameObject<NuberManager>(GetThis<NuberManager>());//自分を消去
+			//生成したスプライトを削除
+			if (!m_numLength)
+			{
+				stage->RemoveGameObject<SpriteNum>(m_spriteOne);
+			}
+			if (m_numLength)
+			{
+				stage->RemoveGameObject<SpriteNum>(m_spriteOne);
+				stage->RemoveGameObject<SpriteNum>(m_spriteTen);
+			}
+
+		}
+
+	}
+
+	//消去時処理
+	void NuberManager::OnDestroy()
+	{
+
+	}
+
+	void NuberManager::SetDestroyFlag(bool OnOff)
+	{
+		m_destroyFlag = OnOff;
 	}
 
 	void NuberManager::SetNum(int number)

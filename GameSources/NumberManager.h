@@ -13,6 +13,7 @@ namespace basecross{
 		int m_number;
 		float m_between;//数字と数字の間
 		bool m_numLength;//1桁にするか2桁にするか
+		bool m_destroyFlag;//削除フラグ
 
 		Vec3 m_pos;
 		Vec2 m_scale;
@@ -27,6 +28,9 @@ namespace basecross{
 
 		void OnCreate()override;//作成
 		void OnUpdate()override;//更新
+
+		void OnDestroy()override;//削除時処理
+		void SetDestroyFlag(bool OnOff);//削除フラグのセッター
 
 		void SetNum(int number);//セッター
 
