@@ -45,8 +45,9 @@ namespace basecross {
 			throw;
 		}
 
+		//BGM
 		auto BGM = App::GetApp()->GetXAudio2Manager();
-		m_BGM = BGM->Start(L"TIlteStage", 0, 0.9f);
+		m_BGM = BGM->Start(L"TIlteStage", XAUDIO2_LOOP_INFINITE, 0.9f);
 
 	}
 

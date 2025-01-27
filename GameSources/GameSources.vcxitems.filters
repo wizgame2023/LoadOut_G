@@ -318,6 +318,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteMove.h">
       <Filter>Headers\UI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStart.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -559,6 +562,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteMove.cpp">
       <Filter>Sources\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStart.cpp">
+      <Filter>Sources\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
