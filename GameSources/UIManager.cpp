@@ -20,22 +20,43 @@ namespace basecross {
 
 	//ì¬
 	void UIManager::OnCreate()
-	{		
-		//auto stage = GetStage();
-		//m_stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
-		//int enemyUpCount = m_stageManager->GetUpEnemyCount();//“G‚ð‘Å‚¿ã‚°‚½“G‚Ì”Žæ“¾
-		//int enemyUpCountMax = m_stageManager->GetUpEnemyCountMax();//“G‚ð‘Å‚¿ã‚°‚é‚×‚«“G‚Ì”Žæ“¾
+	{
+		auto stage = GetStage();
+		m_stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+		int enemyUpCount = m_stageManager->GetUpEnemyCount();//“G‚ð‘Å‚¿ã‚°‚½“G‚Ì”Žæ“¾
+		int enemyUpCountMax = m_stageManager->GetUpEnemyCountMax();//“G‚ð‘Å‚¿ã‚°‚é‚×‚«“G‚Ì”Žæ“¾
+		int StageMode = m_stageManager->GetStageMode();//ƒXƒe[ƒWƒ‹[ƒ‹Žæ“¾
 
-		//GetStage()->AddGameObject<Sprite>(L"EnemyUpText", Vec2(120.0f, 60.0f), Vec3(-580.0f, 100.0f, 0.0f));//“G‚ð“|‚µ‚½”(ƒeƒLƒXƒg)
-		//GetStage()->AddGameObject<Sprite>(L"Slash", Vec2(20.0f, 20.0f), Vec3(-640.0f+147.0f, 100.0f, 0.0f));//ƒXƒ‰ƒbƒVƒ…
-		//auto m_spriteNum = stage->AddGameObject<NuberManager>(enemyUpCount, Vec2(20.0f, 20.0f), Vec3(-640.0f + 130.0f, 400 - 300.0f, 0.0f), false);//“G‚ð‘Å‚¿ã‚°‚é‡Œv”
-		//auto m_spriteNum2 = stage->AddGameObject<NuberManager>(enemyUpCountMax, Vec2(20.0f, 20.0f), Vec3(-640.0f + 165.0f, 400 - 300.0f, 0.0f), false);//“G‚ð‘Å‚¿ã‚°‚é–Ú•W”
+		//“Á’è‚Ì“G‚ð“|‚µ‚ÄŒ®‚ð“üŽè‚·‚éƒ‚[ƒhˆ—
+		if (StageMode == 1)
+		{
+			GetStage()->AddGameObject<Sprite>(L"EnemyUpText2", Vec2(180.0f, 100.0f), Vec3(-540.0f, 100.0f, 0.0f));//“G‚ð“|‚µ‚½”(ƒeƒLƒXƒg)
+		}
+		//•¡”“G‚ð“|‚µ‚ÄŒ®‚ð“üŽè‚·‚éƒ‚[ƒhˆ—
+		if (StageMode == 2)
+		{
+			GetStage()->AddGameObject<Sprite>(L"EnemyUpText", Vec2(120.0f, 60.0f), Vec3(-580.0f, 100.0f, 0.0f));//“G‚ð“|‚µ‚½”(ƒeƒLƒXƒg)
+			GetStage()->AddGameObject<Sprite>(L"Slash", Vec2(20.0f, 20.0f), Vec3(-640.0f+147.0f, 100.0f, 0.0f));//ƒXƒ‰ƒbƒVƒ…
+			m_spriteNum = stage->AddGameObject<NuberManager>(enemyUpCount, Vec2(20.0f, 20.0f), Vec3(-640.0f + 130.0f, 400 - 300.0f, 0.0f), false);//“G‚ð‘Å‚¿ã‚°‚é‡Œv”
+			auto m_spriteNum2 = stage->AddGameObject<NuberManager>(enemyUpCountMax, Vec2(20.0f, 20.0f), Vec3(-640.0f + 165.0f, 400 - 300.0f, 0.0f), false);//“G‚ð‘Å‚¿ã‚°‚é–Ú•W”
+		}
 	}
 
 	//XV
 	void UIManager::OnUpdate()
 	{
+		int StageMode = m_stageManager->GetStageMode();//ƒXƒe[ƒWƒ‹[ƒ‹Žæ“¾
+		//“Á’è‚Ì“G‚ð“|‚µ‚ÄŒ®‚ð“üŽè‚·‚éƒ‚[ƒhˆ—
+		if (StageMode == 1)
+		{
 
+		}
+		//•¡”“G‚ð“|‚µ‚ÄŒ®‚ð“üŽè‚·‚éƒ‚[ƒhˆ—
+		if (StageMode == 2)
+		{
+			int enemyUpCount = m_stageManager->GetUpEnemyCount();
+			m_spriteNum->SetNum(enemyUpCount);
+		}
 	}
 
 	void UIManager::BatteryHow()
