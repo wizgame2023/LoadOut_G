@@ -38,7 +38,7 @@ namespace basecross {
 	{
 		//初期化をする
 		m_unityMap.clear();
-
+		m_roopCount = 0.0f;
 		vector<Vec2> aStarRood;//移動遷移
 
 		//メンバ必須
@@ -106,6 +106,14 @@ namespace basecross {
 				}
 			}
 
+			//無限ループしてしまったら
+			if (m_roopCount >= 99)
+			{
+				//目的地を現在地にする
+				goalPos = originPos;
+				root = true;
+			}
+
 		}
 
 		//ルートが見つかったらどう進めばいいかを伝える
@@ -134,6 +142,7 @@ namespace basecross {
 	//探しているセルがゴールからどれくらい遠いか確認する
 	bool AStar::LookAround(shared_ptr<Node> parent, Vec2& goalPos)
 	{
+		m_roopCount++;//経路探索を何回しているか数える
 		Vec2 originPos = Vec2(parent->x, parent->y);
 		auto cost = parent->Parent ? parent->Cost + 1 : 1;//コストの計算
 

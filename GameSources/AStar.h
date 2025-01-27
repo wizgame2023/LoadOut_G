@@ -12,6 +12,8 @@ namespace basecross {
 	class AStar :public GameObject
 	{
 	private:
+		int m_roopCount;//Œo˜H’T¸‚µ‚½‰ñ”‚ğ”‚¦‚é•Ï”
+
 		//‘O‚ÌPlayer‚ÌAStarÀ•W
 		Vec2 m_beforPlayerUnity;
 
