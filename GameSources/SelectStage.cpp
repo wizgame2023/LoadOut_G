@@ -43,11 +43,11 @@ namespace basecross {
 		m_NumberSprite = AddGameObject<NuberManager>(1, Vec2(150, 150), Vec3(+260, -300.0f, 0.0f),true,80.0f);
 		m_spriteMozi = AddGameObject<Sprite>(L"BackMozi2", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -350.0f, 0.0f));
 		m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -352.0f, 0.0f));
-		AddGameObject<Sprite>(L"BackMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(550.0f, -350.0f, 0.0f), Vec3(0.0f),Col4(0.1,0.1,0.1,1));
+		AddGameObject<Sprite>(L"BackMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(550.0f, -350.0f, 0.0f), Vec3(0.0f),Col4(0.3,0.3,0.3,1));
 		AddGameObject<Sprite>(L"AButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(550.0f, -352.0f, 0.0f));
 
 
-		m_spriteMozi->SetColor(Col4(0.1, 0.1, 0.1, 1));
+		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, 1));
 		m_spriteB->SetColor(Col4(1, 0, 0, 1));
 
 		//BGM
@@ -115,40 +115,49 @@ namespace basecross {
 		//暗転が終わったらステージ移動
 		if (m_blackOut->GetBlackOutFlag())
 		{
-			switch (m_SelectStage)
+			if (m_decisionFlag)
 			{
-			case 1:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
-				break;
-			case 2:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
-				break;
-			case 3:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
-				break;
-			case 4:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
-				break;
-			case 5:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
-				break;
-			case 6:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
-				break;
-			case 7:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
-				break;
-			case 8:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
-				break;
-			case 9:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
-				break;
-			case 10:
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
-				break;
-			default:
-				break;
+
+
+				switch (m_SelectStage)
+				{
+				case 1:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+					break;
+				case 2:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
+					break;
+				case 3:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
+					break;
+				case 4:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
+					break;
+				case 5:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
+					break;
+				case 6:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
+					break;
+				case 7:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
+					break;
+				case 8:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
+					break;
+				case 9:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
+					break;
+				case 10:
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
+					break;
+				default:
+					break;
+				}
+			}
+			else 
+			{
+				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//ゲームシーンに移動する
 			}
 		}
 
@@ -164,11 +173,23 @@ namespace basecross {
 			m_blackOut->SetSwitch(true);//暗転開始
 			m_decisionFlag = true;//ステージ決定したことを伝える
 		}
+		//ステージ移動処理
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)
+		{
+			m_decisionFlag = false;//ステージ決定したことを伝える
+
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+
+			m_blackOut->SetSwitch(true);//暗転開始
+
+		}
 
 		//どのステージにするかのテクスチャの遷移処理
 		SelectionStage();
 
 	}
+
 
 	void SelectStage::SelectionStage()
 	{
