@@ -19,7 +19,8 @@ namespace basecross {
 		m_updateFlag(true),
 		m_BGMChase(false),
 		m_BGMhow(2),
-		m_EnemyUpClearNum(0)
+		m_EnemyUpClearNum(0),
+		m_startFlag(false)
 	{
 
 	}
@@ -60,17 +61,24 @@ namespace basecross {
 		//フラグがtrueになっているとUpdateできる
 		if (!m_updateFlag) return;
 
+		//ゲームスタートしていなければ
+		if (!m_startFlag)
+		{
+			GetStage()->AddGameObject<GameStart>(m_stageMode, m_EnemyUpClearNum);
+			m_startFlag = true;
+		}
+
 		EnemyStateCheck();//敵が追いかけてきてるか確認する
 		//auto stage = GetStage();
 		//auto objVec = stage->GetGameObjectVec();
 		//auto delta = App::GetApp()->GetElapsedTime();
 
 		//決まった数敵を打ち上げたら鍵を入手できる(関数にする)
-		if (m_stageMode == 2)
+		if (m_stageMode == 2 && m_clearManagerCount == 0)
 		{
 			if (m_upEnemyCount >= m_EnemyUpClearNum)
 			{
-				m_PlayerKeyFlag = true;//プレイヤーに鍵を持たせるフラグを渡す	
+				m_PlayerKeyFlag = 1;//プレイヤーに鍵を持たせるフラグを渡す	
 				m_clearManagerCount = 1;//もうクリアマネージャーの処理はしない
 			}
 		}
@@ -591,6 +599,34 @@ namespace basecross {
 	void StageManager::SetUpdateFlag(bool flag)
 	{
 		m_updateFlag = flag;
+	}
+
+	//ステージ進行度のセッター
+	void StageManager::SetStartFlag(bool flag)
+	{
+		m_startFlag = flag;
+	}
+
+	//ステージ開始したかのゲッタ
+	bool StageManager::GetStartFlag()
+	{
+		return m_startFlag;
+	}
+
+	//今のゲームモードを渡す
+	int StageManager::GetStageMode()
+	{
+		return m_stageMode;
+	}
+
+	int StageManager::GetUpEnemyCount()
+	{
+		return m_upEnemyCount;
+	}
+
+	int StageManager::GetUpEnemyCountMax()
+	{
+		return m_EnemyUpClearNum;
 	}
 
 	void StageManager::AddUpEnemyCount(int count)

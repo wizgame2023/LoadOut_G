@@ -21,7 +21,6 @@ namespace basecross {
 		int m_upEnemyCount;//敵を打ち上げた数
 		int m_clearManagerCount;//クリアマネージャーの処理のカウント
 		int m_stageMode;//ステージのモードを決める変数
-		//int m_KeyTextFlag;//鍵を手に入れているかのフラグ
 
 		float m_repopItemCountTime;//アイテムがリポップするタイムを測る変数
 		float m_repopItemCountTimeMax;//アイテムがリポップする時間
@@ -29,7 +28,8 @@ namespace basecross {
 		float m_repopEnemyCountTimeMax;//敵がリポップする時間
 		float m_repopRamdomItemCountTime;//ランダムアイテムがリポップする時間を測る変数
 		float m_repopRamdomItemCountTimeMax;//ランダムアイテムがリポップする時間
-
+		
+		bool m_startFlag;//ゲームスタート開始したかのフラグ
 		bool m_ClearFlag;//クリアのフラグ判定
 		bool m_GameOverFlag;//ゲームオーバー用のフラグ	
 		bool m_repopItemFlag;//アイテムのリポップフラグ
@@ -92,7 +92,12 @@ namespace basecross {
 		void SetRepopEnemyPos(Vec3 pos);//セッター
 		void SetRepopRandomItemPos(Vec3 pos);//セッター
 		void SetUpdateFlag(bool flag);//アップデートするかのセッター
+		void SetStartFlag(bool Step);//ゲームが開始したかのセッター
 
+		bool GetStartFlag();//ゲームが開始したかのゲッター
+		int GetStageMode();//ステージモードを取得
+		int GetUpEnemyCount();//倒した敵の数を渡す
+		int GetUpEnemyCountMax();//倒すべき敵の数を渡す
 		void AddUpEnemyCount(int count);//倒した数を追加する
 	};
 
