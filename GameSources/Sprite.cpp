@@ -64,6 +64,21 @@ namespace basecross {
 		
 	}
 
+	void Sprite::OnClear(bool OnOff)
+	{
+		m_Clear = OnOff;
+		if (OnOff == true)//オンなら
+		{
+			m_color = m_drawComp->GetDiffuse();
+			m_drawComp->SetDiffuse(Col4(0.0f, 0.0f, 0.0f, 0.0f));//透明にする
+		}
+		if (OnOff == false)//オフなら
+		{
+			m_drawComp->SetDiffuse(m_color);//透明でなかった時の色に戻る
+		}
+	}
+
+
 	//カラーの数値を変更する
 	void Sprite::SetTexture(wstring texture)
 	{
