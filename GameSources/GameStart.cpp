@@ -107,8 +107,11 @@ namespace basecross {
 					spriteCast->OnClear(false);//透明から戻す
 				}
 			}
-
-			m_nuberManager->SetDestroyFlag(true);//ナンバーマネージャを削除するフラグを立てる
+			//ステージモードが複数の敵を倒すモードなら
+			if (m_stageMode == 2)
+			{
+				m_nuberManager->SetDestroyFlag(true);//ナンバーマネージャを削除するフラグを立てる
+			}
 
 
 		}
