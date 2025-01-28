@@ -48,6 +48,9 @@ namespace basecross {
 
 	void MovieGameStart::OnUpdate()
 	{
+		//ステージカメラを取得できなかったらreturn
+		if (!m_stageCamera) return;
+
 		auto cameraPos = m_movieCamera->GetEye();//カメラのポジションを取得
 		auto tagetPos = Vec3(0.0f, 0.0f, m_mapSize/2);//目的地
 

@@ -31,6 +31,9 @@ namespace basecross {
 
 	void MovieUpEandP::OnUpdate()
 	{
+		//ステージカメラを取得できなかったらreturn
+		if (!m_stageCamera) return;
+
 		auto enemy = m_Enemy.lock();
 		auto player = m_Player.lock();
 

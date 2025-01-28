@@ -28,7 +28,10 @@ namespace basecross {
 	}
 
 	void MovieUpPlayer::OnUpdate()
-	{
+	{		
+		//ステージカメラを取得できなかったらreturn
+		if (!m_stageCamera) return;
+
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		//打ちあがるPlayer
 		auto stage = GetStage();
