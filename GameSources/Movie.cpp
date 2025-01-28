@@ -97,6 +97,12 @@ namespace basecross {
 		auto startPos = Vec3(0.0f, 200.0f, -200.0f);//初期位置
 
 		m_stageCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());//ステージ用のカメラを取得
+		//もしステージ用のカメラを取得できなかったらreturnして自分を削除します
+		if (!m_stageCamera)
+		{
+			GetStage()->RemoveGameObject<Movie>(GetThis<Movie>());
+			return;
+		}
 		auto a = m_stageCamera->GetEye();
 		m_movieCamera = ObjectFactory::Create<Camera>();//カメラ作成
 		m_movieCamera->SetEye(m_stageCamera->GetEye());//初期位置
