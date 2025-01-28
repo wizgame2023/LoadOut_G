@@ -211,6 +211,8 @@ namespace basecross {
 			}
 			else if (m_SelectStage == 1)
 			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_SelectStage = 10;
 			}
 
@@ -226,6 +228,8 @@ namespace basecross {
 			}		
 			else if (m_SelectStage == 10)
 			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_SelectStage = 1;
 			}
 
