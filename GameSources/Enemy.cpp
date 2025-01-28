@@ -20,7 +20,7 @@ namespace basecross {
 		m_startPop(true)//初めてのスポーンかどうか
 	{
 	}
-	Enemy::Enemy(shared_ptr<Stage>& StagePtr,Vec3 pos,bool startPop) :
+	Enemy::Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startPop, int ability) :
 		Actor(StagePtr),
 		m_pos(pos),
 		m_startPos(pos),
@@ -28,7 +28,8 @@ namespace basecross {
 		m_playerPos(0, 0, 0),
 		m_speed(10),
 		m_angle(0),
-		m_startPop(startPop)//初めてのスポーンかどうか
+		m_startPop(startPop),//初めてのスポーンかどうか
+		m_ability(ability)//Enemyの能力の宣言用
 	{
 	}
 	Enemy::~Enemy()
@@ -198,6 +199,10 @@ namespace basecross {
 		return  m_angle;
 	}
 
+	int Enemy::GetAbility()
+	{
+		return m_ability;
+	}
 	void Enemy::SetAngle(float angle)
 	{
 		m_angle = angle;
@@ -211,6 +216,7 @@ namespace basecross {
 
 		return  sqrtf(numX * numX + numY * numY + numZ * numZ);
 	}
+
 
 	Vec3 Enemy::GetPlayerPos()
 	{
@@ -244,7 +250,6 @@ namespace basecross {
 	{
 		GetStage()->AddGameObject<MovieGameOver>();
 	}
-
 
 }
 //end basecross

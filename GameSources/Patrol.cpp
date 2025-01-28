@@ -162,6 +162,7 @@ namespace basecross
 		Vec3 n_target = target;
 		int n_vision = vision;
 
+		auto ability = m_Owner->GetAbility();
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		auto angle = m_Owner->GetAngle();
 
@@ -176,106 +177,210 @@ namespace basecross
 		auto sellTargetPos = mapMgr->ConvertSelMap(n_target);
 		auto unityTargetPos = mapMgr->ConvertUnityMap(sellTargetPos);
 
-		for (int i = 1; i < n_vision; i++)
+		switch (ability)
 		{
-			if (angle == 0)
+		case normal:
+			for (int i = 1; i < n_vision; i++)
 			{
-				//床セルの場合
-				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 == 1)
+				if (angle == 0)
 				{
-					if (unityMap[unityPos.y][unityPos.x + i] == 3)
+					//床セルの場合
+					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 == 1)
 					{
-						break;
+						if (unityMap[unityPos.y][unityPos.x + i] == 3)
+						{
+							break;
+						}
+					}
+					//壁セルの場合
+					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 != 1)
+					{
+						if (unityMap[unityPos.y][unityPos.x + i] == 1)
+						{
+							break;
+						}
+					}
+					if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
+					{
+						m_Owner->ChangeState<Tracking>();
+					}
+
+				}
+				if (angle == XM_PI)
+				{
+					//床セルの場合
+					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2)
+					{
+						if (unityMap[unityPos.y][unityPos.x - i] == 3)
+						{
+							break;
+						}
+					}
+
+					//壁セルの場合
+					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2 != 1)
+					{
+						if (unityMap[unityPos.y][unityPos.x - i] == 1)
+						{
+							break;
+						}
+					}
+					if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
+					{
+						m_Owner->ChangeState<Tracking>();
 					}
 				}
-				//壁セルの場合
-				if((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 != 1)
+				if (angle == XMConvertToRadians(270))
 				{
-					if (unityMap[unityPos.y][unityPos.x + i] == 1)
+					//床セルの場合
+					if (((int)unityPos.y - i) % 2 == 1 && (int)unityPos.x % 2 == 1)
 					{
-						break;
+						if (unityMap[unityPos.y - i][unityPos.x] == 3)
+						{
+							break;
+						}
+					}
+
+					//壁セルの場合
+					if (((int)unityPos.y - i) % 2 == 0 && (int)unityPos.x % 2 == 1)
+					{
+						if (unityMap[unityPos.y - i][unityPos.x] == 1)
+						{
+							break;
+						}
+					}
+					if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
+					{
+						m_Owner->ChangeState<Tracking>();
 					}
 				}
-				if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
+				if (angle == XM_PI * 0.5)
 				{
-					m_Owner->ChangeState<Tracking>();
+					//床セルの場合
+					if (((int)unityPos.y + i) % 2 == 1 && (int)unityPos.x % 2 == 1)
+					{
+						if (unityMap[unityPos.y + i][unityPos.x] == 3)
+						{
+							break;
+						}
+					}
+
+					//壁セルの場合
+					if (((int)unityPos.y + i) % 2 == 0 && (int)unityPos.x % 2 == 1)
+					{
+						if (unityMap[unityPos.y + i][unityPos.x] == 1)
+						{
+							break;
+						}
+					}
+					if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
+					{
+						m_Owner->ChangeState<Tracking>();
+					}
 				}
-						
 			}
-			if (angle == XM_PI)
+			break;
+		case perspective:
+			for (int i = 1; i < (n_vision * 3) / 2; i++)
 			{
-				//床セルの場合
-				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2)
+				if (angle == 0)
 				{
-					if (unityMap[unityPos.y][unityPos.x - i] == 3)
+					////床セルの場合
+					//if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 == 1)
+					//{
+					//	if (unityMap[unityPos.y][unityPos.x + i] == 3)
+					//	
+					//		break;
+					//	}
+					//}
+					////壁セルの場合
+					//if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 != 1)
+					//{
+					//	if (unityMap[unityPos.y][unityPos.x + i] == 1)
+					//	{
+					//		break;
+					//	}
+					//}
+					if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
 					{
-						break;
+						m_Owner->ChangeState<Tracking>();
 					}
-				}
 
-				//壁セルの場合
-				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2 != 1)
+				}
+				if (angle == XM_PI)
 				{
-					if (unityMap[unityPos.y][unityPos.x - i] == 1)
+					////床セルの場合
+					//if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2)
+					//{
+					//	if (unityMap[unityPos.y][unityPos.x - i] == 3)
+					//	{
+					//		break;
+					//	}
+					//}
+
+					////壁セルの場合
+					//if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2 != 1)
+					//{
+					//	if (unityMap[unityPos.y][unityPos.x - i] == 1)
+					//	{
+					//		break;
+					//	}
+					//}
+					if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
 					{
-						break;
+						m_Owner->ChangeState<Tracking>();
 					}
 				}
-				if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
+				if (angle == XMConvertToRadians(270))
 				{
-					m_Owner->ChangeState<Tracking>();
+					////床セルの場合
+					//if (((int)unityPos.y - i) % 2 == 1 && (int)unityPos.x % 2 == 1)
+					//{
+					//	if (unityMap[unityPos.y - i][unityPos.x] == 3)
+					//	{
+					//		break;
+					//	}
+					//}
+
+					////壁セルの場合
+					//if (((int)unityPos.y - i) % 2 == 0 && (int)unityPos.x % 2 == 1)
+					//{
+					//	if (unityMap[unityPos.y - i][unityPos.x] == 1)
+					//	{
+					//		break;
+					//	}
+					//}
+					if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
+					{
+						m_Owner->ChangeState<Tracking>();
+					}
+				}
+				if (angle == XM_PI * 0.5)
+				{
+					////床セルの場合
+					//if (((int)unityPos.y + i) % 2 == 1 && (int)unityPos.x % 2 == 1)
+					//{
+					//	if (unityMap[unityPos.y + i][unityPos.x] == 3)
+					//	{
+					//		break;
+					//	}
+					//}
+
+					////壁セルの場合
+					//if (((int)unityPos.y + i) % 2 == 0 && (int)unityPos.x % 2 == 1)
+					//{
+					//	if (unityMap[unityPos.y + i][unityPos.x] == 1)
+					//	{
+					//		break;
+					//	}
+					//}
+					if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
+					{
+						m_Owner->ChangeState<Tracking>();
+					}
 				}
 			}
-			if (angle == XMConvertToRadians(270))
-			{
-				//床セルの場合
-				if (((int)unityPos.y - i) % 2 == 1 && (int)unityPos.x % 2 == 1)
-				{
-					if (unityMap[unityPos.y - i][unityPos.x] == 3)
-					{
-						break;
-					}
-				}
-
-				//壁セルの場合
-				if (((int)unityPos.y - i) % 2 == 0 && (int)unityPos.x % 2 == 1)
-				{
-					if (unityMap[unityPos.y - i][unityPos.x] == 1)
-					{
-						break;
-					}
-				}
-				if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
-				{
-					m_Owner->ChangeState<Tracking>();
-				}
-			}
-			if (angle == XM_PI * 0.5)
-			{
-				//床セルの場合
-				if (((int)unityPos.y + i) % 2 == 1 && (int)unityPos.x % 2 == 1)
-				{
-					if (unityMap[unityPos.y + i][unityPos.x] == 3)
-					{
-						break;
-					}
-				}
-
-				//壁セルの場合
-				if (((int)unityPos.y + i) % 2 == 0 && (int)unityPos.x % 2 == 1)
-				{
-					if (unityMap[unityPos.y + i][unityPos.x] == 1)
-					{
-						break;
-					}
-				}
-				if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
-				{
-					m_Owner->ChangeState<Tracking>();
-				}
-			}
-			
-
+			break;
 		}
 
 	}
