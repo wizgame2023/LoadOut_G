@@ -89,6 +89,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TrackingBoar.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TubakiStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UIManager.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TrackingBoar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TrackingPillarEfect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TubakiStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp" />

@@ -20,6 +20,7 @@
 #include"Patrol.h"
 #include"Attack.h"
 #include"RepopEnemy.h"
+#include"TrackingBoar.h"
 
 //親クラス用
 #include"Actor.h"
