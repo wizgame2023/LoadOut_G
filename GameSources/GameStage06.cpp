@@ -60,10 +60,10 @@ namespace basecross {
 
         //コリジョンマネージャー作成
 		auto collisionManager = AddGameObject<StageCollisionManager>();
-		SetSharedGameObject(L"CollsionManager", collisionManager);		
+		SetSharedGameObject(L"CollsionManager", collisionManager);
 		
 		//ステージマネージャー生成
-		auto stageManager = AddGameObject<StageManager>();
+		auto stageManager = AddGameObject<StageManager>(3,15.0f);
 		SetSharedGameObject(L"StageManager", stageManager);
 
 		//ミニマップマネージャ生成
@@ -131,11 +131,11 @@ namespace basecross {
 	{
 		vector<Vec3> posVec =
 		{
-		   Vec3(40.0f, 2.5f, -20.0f),//1
+		  // Vec3(40.0f, 2.5f, -20.0f),//1
 		   Vec3(30.0f, 2.5f, 30.0f),//2
-		   Vec3(-20.0f, 2.5f, 40.0f), //3
+		   Vec3(-20.0f, 2.5f, 40.0f),//3
 		   Vec3(-60.0f, 2.5f, 0.0f),//4
-		   Vec3(40.0f, 2.5f, 60.0f)//5
+		   //Vec3(40.0f, 2.5f, 60.0f)//5
 		};
 		auto test = posVec.size();
 
