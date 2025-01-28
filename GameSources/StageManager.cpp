@@ -377,6 +377,8 @@ namespace basecross {
 		auto objVec = stage->GetGameObjectVec();
 		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_pausCount == 0)
 		{
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
 			m_white = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.5f), 11);
 			PauseScene = GetStage()->AddGameObject<Sprite>(L"PauseScene", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 			m_pauseText= GetStage()->AddGameObject<Sprite>(L"PauseText", Vec2(700, 600), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
@@ -436,11 +438,15 @@ namespace basecross {
 
 			if (cntlVec[0].fThumbLY < 0 && !m_stickCheck && m_count < 3)
 			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_count++;
 				m_stickCheck = true;
 			}
 			if (cntlVec[0].fThumbLY > 0 && !m_stickCheck && m_count > 0)
 			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 				m_count--;
 				m_stickCheck = true;
 			}
@@ -450,6 +456,8 @@ namespace basecross {
 			}
 			if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B)
 			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Decision", 0, 0.9f);
 				switch (m_count)
 				{
 				case 0:
@@ -483,6 +491,8 @@ namespace basecross {
 				}
 				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A && m_operationFlag)
 				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Decision", 0, 0.9f);
 					m_decisionMozi = GetStage()->AddGameObject<Sprite>(L"DecisionMozi", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 1.0f), 11);
 					m_spriteB = GetStage()->AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.3f), Vec3(570.0f, -370.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 0.0f, 0.0f, 1.0f), 11);
 					m_operation->SetColor(Col4(1, 1, 1, 0));

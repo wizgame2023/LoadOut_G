@@ -82,12 +82,16 @@ namespace basecross {
 
 		if (m_controler.fThumbLX > 0 && !m_stickCheck && m_count < 2)
 		{
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 			m_count++;
 			m_stickCheck = true;
 
 		}
 		if (m_controler.fThumbLX < 0 && !m_stickCheck && m_count > 0)
 		{
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Choice", 0, 0.9f);
 			m_count--;
 			m_stickCheck = true;
 		}
@@ -116,6 +120,8 @@ namespace basecross {
 
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
 		{
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
 			if (m_count == 0)
 			{
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
