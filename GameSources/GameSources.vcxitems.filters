@@ -321,6 +321,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStart.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TrackingBoar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -566,5 +567,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStart.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TrackingBoar.cpp" />
   </ItemGroup>
 </Project>

@@ -33,6 +33,9 @@ namespace basecross {
 
 	void MovieGameOver::OnUpdate()
 	{
+		//ステージカメラを取得できなかったらreturn
+		if (!m_stageCamera) return;
+
 		auto stage = GetStage();
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto cameraPos = m_movieCamera->GetEye();

@@ -35,6 +35,9 @@ namespace basecross {
 
 	void MovieUpEnemy::OnUpdate()
 	{
+		//ステージカメラを取得できなかったらreturn
+		if (!m_stageCamera) return;
+
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		//打ちあがるEnemyのコンポーネント取得
 		auto enemyTrans = m_Enemy.lock()->GetComponent<Transform>();
