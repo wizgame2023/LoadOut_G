@@ -281,7 +281,7 @@ namespace basecross
 			}
 			break;
 		case perspective:
-			for (int i = 1; i < (n_vision * 3) / 2; i++)
+			for (int i = 1; i < (n_vision * 3) / 4; i++)
 			{
 				if (angle == 0)
 				{
