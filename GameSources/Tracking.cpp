@@ -18,6 +18,8 @@ namespace basecross {
 	//追跡ステートの更新処理
 	void Tracking::OnUpdate()
 	{	
+		//AStar a;
+		
 		//playerを追いかける処理
 		auto app = App::GetApp;
 		float delta = App::GetApp()->GetElapsedTime();
@@ -35,7 +37,6 @@ namespace basecross {
 		//Playerの位置をAStarの座標にする
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
 		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
-
 		//A*の処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//マップマネージャー取得
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
@@ -58,12 +59,30 @@ namespace basecross {
 		if (abs(m_ownerPos.x - m_tagetRootPos[m_roodCount].x) <= 1.0f && abs(m_ownerPos.z - m_tagetRootPos[m_roodCount].z) <= 1.0f)
 		{
 			m_ownerPos = m_tagetRootPos[m_roodCount];
-			m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
+			m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 			if (m_roodCount < m_tagetRootPos.size()-1)//この先に進まないといけない先がある場合
 			{
 				m_roodCount++;//目的地を変える
 			}
 		}
+		//目的地に移動したとみなす処理２//思いつかない！！！どうしよう！！！！
+		//if (m_tagetRootPos.size() - 1 >= m_roodCount + 1)//指定する配列数が配列範囲内であるか確認する
+		//{
+		//	//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+		//	if (abs(m_tagetRootPos[m_roodCount + 1].x - m_ownerPos.x) <=
+		//		abs(m_tagetRootPos[m_roodCount + 1].x - m_tagetRootPos[m_roodCount].x)+1.0f)
+		//	{
+		//		if (abs(m_tagetRootPos[m_roodCount + 1].z - m_ownerPos.z) <=
+		//			abs(m_tagetRootPos[m_roodCount + 1].z - m_tagetRootPos[m_roodCount].z)+1.0f)
+		//		{
+		//			m_ownerPos = m_tagetRootPos[m_roodCount];
+		//			m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
+
+		//			m_roodCount++;//目的地を変える
+		//		}
+		//	}
+		//}
+
 		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

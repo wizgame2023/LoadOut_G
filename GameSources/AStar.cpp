@@ -254,7 +254,7 @@ namespace basecross {
 
 		}
 
-		//目的地に移動したとみなす
+		//目的地に移動したとみなす処理１
 		if (abs(pos.x - routePos[routeCount].x) <= 1.0f && abs(pos.z - routePos[routeCount].z) <= 1.0f)
 		{
 			pos = routePos[routeCount];
@@ -264,6 +264,18 @@ namespace basecross {
 				routeCount++;//目的地を変える
 			}
 		}
+		////目的地に移動したとみなす処理２//馬場先生との話し合いが終わったらやる
+		//if (routePos.size() - 1 >= routeCount + 1)//指定する配列数が配列範囲内であるか確認する
+		//{
+		//	//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+		//	if (abs(routePos[routeCount + 1].x - pos.x) + abs(routePos[routeCount + 1].z - pos.z)
+		//		<
+		//		abs(routePos[routeCount + 1].x - routePos[routeCount].x) + abs(routePos[routeCount + 1].z - routePos[routeCount].z))
+		//	{
+		//		routeCount++;//目的地を変える
+		//	}
+		//}
+
 		auto delta = App::GetApp()->GetElapsedTime();
 		Math math;	
 		auto angle = math.GetAngle(pos, routePos[routeCount]);
