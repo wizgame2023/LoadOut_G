@@ -44,6 +44,7 @@ namespace basecross {
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->AddAnimation(L"Default", 6, 10, true, 20.0f);
 		ptrDraw->AddAnimation(L"Ran", 6, 20, true, 20.0f);
+		ptrDraw->AddAnimation(L"All", 0, 100, true, 10.0f);
 
 		m_mapMgr = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 
@@ -86,6 +87,8 @@ namespace basecross {
 
 		//ビルボードの生成
 		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),L"Clear",2,13.0f);
+
+
 	}
 
 	void Enemy::OnUpdate()
@@ -164,6 +167,7 @@ namespace basecross {
 		//アニメーションの更新
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		auto delta = App::GetApp()->GetElapsedTime();
+		//アニメーション変更
 		ptrDraw->UpdateAnimation(delta);
 
 	}
