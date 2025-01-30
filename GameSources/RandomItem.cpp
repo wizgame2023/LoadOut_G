@@ -44,6 +44,10 @@ namespace basecross {
 		//コリジョン設定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetDrawActive(false);
+
+		//Map情報更新
+		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		mapManager->MapDataUpdate(m_pos, 7);//ランダムアイテムはここに出現することを表す消えたときにもこの数値は変わらない
 		
 	}
 
