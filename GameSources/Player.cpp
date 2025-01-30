@@ -221,6 +221,24 @@ namespace basecross{
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)//L
 		{
 			auto test = 0;
+
+			//auto objVec = GetStage()->GetGameObjectVec();
+			////アクターを継承しているものだけ取得
+			//for (auto obj : objVec)
+			//{
+			//	auto actorCast = dynamic_pointer_cast<Actor>(obj);
+			//	auto batteryCast = dynamic_pointer_cast<Battery>(obj);
+			//	auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
+			//	auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
+
+			//	//スプライトを継承しているオブジェクトを透明にする
+			//	if (spriteCast)
+			//	{
+			//		spriteCast->OnClear(true);//透明にする
+			//	}
+
+			//}
+
 		}
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)//R
 		{
@@ -228,6 +246,24 @@ namespace basecross{
 			//デバック用
 			//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 			//mapManager->MapChange();
+			
+			//auto objVec = GetStage()->GetGameObjectVec();
+			////アクターを継承しているものだけ取得
+			//for (auto obj : objVec)
+			//{
+			//	auto actorCast = dynamic_pointer_cast<Actor>(obj);
+			//	auto batteryCast = dynamic_pointer_cast<Battery>(obj);
+			//	auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
+			//	auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
+
+			//	//スプライトを継承しているオブジェクトを透明にする
+			//	if (spriteCast)
+			//	{
+			//		spriteCast->OnClear(false);//透明から戻す
+			//	}
+
+			//}
+
 		}
 		////////////////////////////////////////////////////////////////////////
 
@@ -252,6 +288,8 @@ namespace basecross{
 		//	<<L"\nKey"<<m_key
 		//	<<L"\nm_pushSpeedCountTime:"<< m_pushSpeedCountTime
 		//	<< endl;
+
+
 
 		//scene->SetDebugString(wss.str());
 
