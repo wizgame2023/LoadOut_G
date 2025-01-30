@@ -26,7 +26,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTilteStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameClearStage");
 
 			GameResourses();
 
@@ -174,6 +174,8 @@ namespace basecross{
 		app->RegisterTexture(L"GameClearText2", strTexture);
 		strTexture = texPath + L"GameClearText3.png";//ゲームクリアのテクスチャ
 		app->RegisterTexture(L"GameClearText3", strTexture);
+		strTexture = texPath + L"GameClearText4.png";//ゲームクリアのテクスチャ
+		app->RegisterTexture(L"GameClearText4", strTexture);
 		strTexture = texPath + L"GameOver.png";//ゲームオーバーのテクスチャ
 		app->RegisterTexture(L"GameOverText", strTexture);
 		strTexture = texPath + L"Light.png";//ゲームオーバー用のライト
@@ -216,17 +218,17 @@ namespace basecross{
 		app->RegisterTexture(L"EnemyUpText2", strTexture);
 		strTexture = texPath + L"Slash.png";//スラッシュ
 		app->RegisterTexture(L"Slash", strTexture);
-		strTexture = texPath + L"LStick.png";//スラッシュ
+		strTexture = texPath + L"LStick.png";//Lスティック（青）
 		app->RegisterTexture(L"LStick", strTexture);
-		strTexture = texPath + L"LStick2.png";//スラッシュ
+		strTexture = texPath + L"LStick2.png";//Lスティック（赤）
 		app->RegisterTexture(L"LStick2", strTexture);
-		strTexture = texPath + L"LStickLeft.png";//スラッシュ
+		strTexture = texPath + L"LStickLeft.png";//Lスティック（右に倒す）
 		app->RegisterTexture(L"LStickLeft", strTexture);
-		strTexture = texPath + L"LStickRight.png";//スラッシュ
+		strTexture = texPath + L"LStickRight.png";//Lスティック（左に倒す）
 		app->RegisterTexture(L"LStickRight", strTexture);
-		strTexture = texPath + L"BackMozi.png";//スラッシュ
+		strTexture = texPath + L"BackMozi.png";//セレクトステージに表示する文字
 		app->RegisterTexture(L"BackMozi", strTexture);
-		strTexture = texPath + L"BackMozi2.png";//スラッシュ
+		strTexture = texPath + L"BackMozi2.png";//セレクトステージに表示する文字
 		app->RegisterTexture(L"BackMozi2", strTexture);
 		strTexture = texPath + L"ClearConditionsText1.png";//鍵を入手する条件テクスチャ1
 		app->RegisterTexture(L"ClearConditionsText1", strTexture);

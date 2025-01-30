@@ -20,6 +20,8 @@ namespace basecross {
 		shared_ptr<Sprite> m_clearText3;
 
 		int m_count=0;
+
+		int m_lastPlayStage;
 		bool m_stickCheck;
 		bool m_buttonCheck;
 	public:
