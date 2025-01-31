@@ -74,10 +74,18 @@ namespace basecross {
 		//コントローラーのアナログスティックの向き
 		m_controler = inputDevice.GetControlerVec()[0];
 
+		m_countTime += App::GetApp()->GetElapsedTime();
+		//Lstickの傾いてる時間が１秒超えたら
+		if (m_countTime > 1.0f)
+		{
+			m_stickLongCheck = true;//Lstickの長押し処理に切り替える
+			m_controllerTime += App::GetApp()->GetElapsedTime();//次のステージに切り替える時間を計測
+		}
+
 		auto time = App::GetApp()->GetElapsedTime();
 		if (m_count == 0 && m_time >= 0)
 		{
-			m_LStick1= AddGameObject<Sprite>(L"LStick", Vec2(150 , 150), Vec3(-530.0f, 0.0f, 0.0f));
+			m_LStick1= AddGameObject<Sprite>(L"LStick2", Vec2(150 , 150), Vec3(-530.0f, 0.0f, 0.0f));
 			m_LStick2 = AddGameObject<Sprite>(L"LStick2", Vec2(150, 150), Vec3(530.0f, 0.0f, 0.0f));
 
 			m_count++;
@@ -99,7 +107,7 @@ namespace basecross {
 			RemoveGameObject<Sprite>(m_LStickRight);
 			RemoveGameObject<Sprite>(m_StageText1);
 			RemoveGameObject<Sprite>(m_StageText2);
-			m_LStick1 = AddGameObject<Sprite>(L"LStick", Vec2(150, 150), Vec3(-530.0f, 0.0f, 0.0f));
+			m_LStick1 = AddGameObject<Sprite>(L"LStick2", Vec2(150, 150), Vec3(-530.0f, 0.0f, 0.0f));
 			m_LStick2 = AddGameObject<Sprite>(L"LStick2", Vec2(150, 150), Vec3(530.0f, 0.0f, 0.0f));
 			m_count++;
 		}
@@ -194,46 +202,74 @@ namespace basecross {
 	void SelectStage::SelectionStage()
 	{
 		auto& cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();//コントローラー取得
-
 		//スティックを離したらまた受け取れるようにする
 		if (cntlVec[0].fThumbLX == 0 && !m_stickCheck)
 		{
+			//初期化
+			m_countTime = 0;
 			m_stickCheck = true;
+			m_stickLongCheck = false;
 		}
-		//選択ステージの変更
-		if (cntlVec[0].fThumbLX <= -0.9f && m_stickCheck)//左
+		//Lstickの長押し処理に切り替わったら
+		if (m_stickLongCheck)
 		{
-			if (m_SelectStage > 1)
+			//0.1秒ごとに
+			if (m_controllerTime > 0.1f)
 			{
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
-				m_SelectStage--;
-			}
-			else if (m_SelectStage == 1)
-			{
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
-				m_SelectStage = 10;
-			}
+				//Lstickが左にかたむいたら
+				if (cntlVec[0].fThumbLX <= -0.9f && m_SelectStage > 1)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+					m_SelectStage--;
 
-			m_stickCheck = false;//スティックを受け取れないようにする
+				}
+				//Lstickが右にかたむいたら
+				else if (cntlVec[0].fThumbLX >= 0.9f && m_SelectStage < 10)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+					m_SelectStage++;
+
+				}
+				m_stickCheck = false;
+				m_controllerTime = 0;
+			}
 		}
-		if (cntlVec[0].fThumbLX >= 0.9f && m_stickCheck)//右
-		{			
-			if (m_SelectStage < 10)
+		else if (!m_stickLongCheck)
+		{
+			if (cntlVec[0].fThumbLX <= -0.9f && m_stickCheck)//左
 			{
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
-				m_SelectStage++;
-			}		
-			else if (m_SelectStage == 10)
-			{
-				auto SEManager = App::GetApp()->GetXAudio2Manager();
-				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
-				m_SelectStage = 1;
+				if (m_SelectStage > 1)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+					m_SelectStage--;
+				}
+				else if (m_SelectStage == 1)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+					m_SelectStage = 10;
+				}
+				m_stickCheck = false;//スティックを受け取れないようにする
 			}
-
-			m_stickCheck = false;//スティックを受け取れないようにする
+			if (cntlVec[0].fThumbLX >= 0.9f && m_stickCheck)//右
+			{
+				if (m_SelectStage < 10)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+					m_SelectStage++;
+				}
+				else if (m_SelectStage == 10)
+				{
+					auto SEManager = App::GetApp()->GetXAudio2Manager();
+					auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+					m_SelectStage = 1;
+				}
+				m_stickCheck = false;//スティックを受け取れないようにする
+			}
 		}
 
 		//テクスチャ変更
