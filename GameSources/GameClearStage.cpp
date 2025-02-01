@@ -32,10 +32,21 @@ namespace basecross {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
+			//m_lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
+
+			m_lastPlayStage = 10;
 			AddGameObject<Sprite>(L"GameClearText0", Vec2(800, 300), Vec3(0.0f, 300.0f, 0.0f));//クリア用のスプライト生成
-			m_clearText1 = AddGameObject<Sprite>(L"GameClearText1", Vec2(300, 130), Vec3(-400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
-			m_clearText2 = AddGameObject<Sprite>(L"GameClearText2", Vec2(500, 400), Vec3(0.0f, -350.0f, 0.0f));//クリア用のスプライト生成
-			m_clearText3 = AddGameObject<Sprite>(L"GameClearText3", Vec2(300, 130), Vec3(400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+			if (m_lastPlayStage < 10)
+			{
+				m_clearText1 = AddGameObject<Sprite>(L"GameClearText4", Vec2(400, 110), Vec3(-400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+				m_clearText2 = AddGameObject<Sprite>(L"GameClearText2", Vec2(500, 400), Vec3(0.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+				m_clearText3 = AddGameObject<Sprite>(L"GameClearText1", Vec2(400, 120), Vec3(400.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+			}
+			else
+			{
+				m_clearText2 = AddGameObject<Sprite>(L"GameClearText2", Vec2(500, 400), Vec3(250.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+				m_clearText3 = AddGameObject<Sprite>(L"GameClearText1", Vec2(400, 120), Vec3(-250.0f, -350.0f, 0.0f));//クリア用のスプライト生成
+			}
 		}
 		catch (...) {
 			throw;
@@ -65,7 +76,6 @@ namespace basecross {
 	void GameClearStage::OnUpdate()
 	{
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
-		auto m_lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
 
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 		// インプットデバイスオブジェクト
@@ -79,93 +89,145 @@ namespace basecross {
 		//Playerのアニメーション更新
 		playerDraw->UpdateAnimation(delta);
 		
+		if (m_lastPlayStage < 10)
+		{
 
-		if (m_controler.fThumbLX > 0 && !m_stickCheck && m_count < 2)
-		{
-			auto SEManager = App::GetApp()->GetXAudio2Manager();
-			auto SE = SEManager->Start(L"Choice", 0, 0.9f);
-			m_count++;
-			m_stickCheck = true;
 
-		}
-		if (m_controler.fThumbLX < 0 && !m_stickCheck && m_count > 0)
-		{
-			auto SEManager = App::GetApp()->GetXAudio2Manager();
-			auto SE = SEManager->Start(L"Choice", 0, 0.9f);
-			m_count--;
-			m_stickCheck = true;
-		}
-		if (!m_controler.fThumbLX)
-		{
-			m_stickCheck = false;
-		}
-		switch (m_count)
-		{
-		case 0:
-			m_clearText1->SetColor(Col4(1, 0, 0, 1));
-			m_clearText2->SetColor(Col4(1, 1, 1, 1));
-			m_clearText3->SetColor(Col4(1, 1, 1, 1));
-			break;
-		case 1:
-			m_clearText1->SetColor(Col4(1, 1, 1, 1));
-			m_clearText2->SetColor(Col4(1, 0, 0, 1));
-			m_clearText3->SetColor(Col4(1, 1, 1, 1));
-			break;
-		case 2:
-			m_clearText1->SetColor(Col4(1, 1, 1, 1));
-			m_clearText2->SetColor(Col4(1, 1, 1, 1));
-			m_clearText3->SetColor(Col4(1, 0, 0, 1));
-			break;
-		}
-
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
-		{
-			auto SEManager = App::GetApp()->GetXAudio2Manager();
-			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
-			if (m_count == 0)
+			if (m_controler.fThumbLX > 0 && !m_stickCheck && m_count < 2)
 			{
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+				m_count++;
+				m_stickCheck = true;
+
 			}
-			if (m_count == 1)
+			if (m_controler.fThumbLX < 0 && !m_stickCheck && m_count > 0)
 			{
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//セレクトシーンに移動する
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+				m_count--;
+				m_stickCheck = true;
 			}
-			if (m_count == 2)
+			if (!m_controler.fThumbLX)
 			{
-				switch (m_lastPlayStage)
+				m_stickCheck = false;
+			}
+			switch (m_count)
+			{
+			case 0:
+				m_clearText1->SetColor(Col4(1, 0, 0, 1));
+				m_clearText2->SetColor(Col4(1, 1, 1, 1));
+				m_clearText3->SetColor(Col4(1, 1, 1, 1));
+				break;
+			case 1:
+				m_clearText1->SetColor(Col4(1, 1, 1, 1));
+				m_clearText2->SetColor(Col4(1, 0, 0, 1));
+				m_clearText3->SetColor(Col4(1, 1, 1, 1));
+				break;
+			case 2:
+				m_clearText1->SetColor(Col4(1, 1, 1, 1));
+				m_clearText2->SetColor(Col4(1, 1, 1, 1));
+				m_clearText3->SetColor(Col4(1, 0, 0, 1));
+				break;
+			}
+
+			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
+			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+				if (m_count == 2)
 				{
-				case 1:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
-					break;
-				case 2:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
-					break;
-				case 3:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
-					break;
-				case 4:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
-					break;
-				case 5:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
-					break;
-				case 6:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
-					break;
-				case 7:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
-					break;
-				case 8:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
-					break;
-				case 9:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
-					break;
-				case 10:
-					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
-					break;
-				default:
-					break;
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
+				}
+				if (m_count == 1)
+				{
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//セレクトシーンに移動する
+				}
+				if (m_count == 0)
+				{
+					switch (m_lastPlayStage + 1)
+					{
+					case 1:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage");//ゲームシーンに移動する
+						break;
+					case 2:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage02");//ゲームシーンに移動する
+						break;
+					case 3:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage03");//ゲームシーンに移動する
+						break;
+					case 4:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage04");//ゲームシーンに移動する
+						break;
+					case 5:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage05");//ゲームシーンに移動する
+						break;
+					case 6:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage06");//ゲームシーンに移動する
+						break;
+					case 7:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage07");//ゲームシーンに移動する
+						break;
+					case 8:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage08");//ゲームシーンに移動する
+						break;
+					case 9:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage09");//ゲームシーンに移動する
+						break;
+					case 10:
+						PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameStage10");//ゲームシーンに移動する
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+
+			if (m_controler.fThumbLX > 0 && !m_stickCheck && m_count < 1)
+			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+				m_count++;
+				m_stickCheck = true;
+
+			}
+			if (m_controler.fThumbLX < 0 && !m_stickCheck && m_count > 0)
+			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Choice", 0, 0.9f);
+				m_count--;
+				m_stickCheck = true;
+			}
+			if (!m_controler.fThumbLX)
+			{
+				m_stickCheck = false;
+			}
+			switch (m_count)
+			{
+			case 0:
+				m_clearText2->SetColor(Col4(1, 1, 1, 1));
+				m_clearText3->SetColor(Col4(1, 0, 0, 1));
+				break;
+			case 1:
+				m_clearText2->SetColor(Col4(1, 0, 0, 1));
+				m_clearText3->SetColor(Col4(1, 1, 1, 1));
+				break;
+			}
+
+			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
+			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();
+				auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+				if (m_count == 0)
+				{
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTilteStage");//タイトルシーンに移動する
+				}
+				if (m_count == 1)
+				{
+					PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToSelectStage");//セレクトシーンに移動する
 				}
 			}
 		}

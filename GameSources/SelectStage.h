@@ -33,14 +33,20 @@ namespace basecross {
 		shared_ptr<Sprite> m_LStickRight;
 
 		float m_time = 0;
+		float m_controllerTime = 0;
+		float m_countTime = 0;
+
 
 		int m_count = 0;
+		int m_controllerCount = 0;
 		int m_SelectStage;//選択しているステージ
 
 		const int m_allStage = 20;
 		
 		bool m_decisionFlag;//選択したかどうかのフラグ
 		bool m_stickCheck;//スティックの傾けた処理を受け取るかのフラグ
+		bool m_stickLongCheck;
+
 
 		CONTROLER_STATE m_controler;//コントローラー
 
