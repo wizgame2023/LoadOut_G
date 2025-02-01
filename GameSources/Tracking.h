@@ -10,6 +10,13 @@ namespace basecross {
 	class Ray;
 	class VecAStarIndex;
 	class Node;
+
+	enum MoveXorZ
+	{
+		move_X,
+		move_Z
+	};
+
 	class Tracking :public StateBase
 	{
 	private:
@@ -18,6 +25,9 @@ namespace basecross {
 		Vec3 m_playerPos;
 		Vec3 m_forward;
 		Vec3 m_right;
+
+		Vec2 m_moveSelPos;//どう移動しているか保存する変数
+
 		float m_time;
 		float m_directionRad;
 		float m_aStarTime;//AStar更新時までのタイム計測用変数
@@ -36,6 +46,10 @@ namespace basecross {
 		int m_directionCount;
 
 		int m_roodCount;//今A*の移動でどの段階にいるか決める変数
+		int m_moveXorZ;//x方向に移動しているかz方向に移動しているか保存する変数
+		Vec3 m_ownerPosBefor = m_ownerPos;//Enemyの前の座標を取得する
+		Vec3 m_targetPos;////現在の目的地を保存する変数
+		Vec3 m_movePos;//どう移動するか覚える変数(中の変数は-1か1,0のみ入れて良いものとする)
 
 		bool m_rightFlag;
 		bool m_leftFlag;
@@ -84,7 +98,8 @@ namespace basecross {
 			m_count(0),
 			m_directionCount(0),
 			m_roodCount(0),
-			m_aStarTime(0.0f)
+			m_aStarTime(0.0f),
+			m_moveXorZ(move_X)
 		{
 		}
 
@@ -101,6 +116,7 @@ namespace basecross {
 		bool LookAround(shared_ptr<Node> node, Vec2 goalPos);
 
 	};
+
 
 
 	//AStar管理用の専用配列
