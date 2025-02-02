@@ -140,162 +140,149 @@ namespace basecross {
 			if (m_tagetRootPos[m_roodCount].x - m_tagetRootPos[m_roodCount + 1].x != 0)
 			{
 				//今x移動中なら
-				if (m_moveXorZ == move_X)
+				switch ((int)m_movePos.x)
 				{
-					switch ((int)m_movePos.x)
+				case 1://右方向に進んでいるなら
+
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
 					{
-					case 1://右方向に進んでいるなら
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+						//m_ownerPos = m_tagetRootPos[m_roodCount];
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
-						//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-						if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
-							//m_ownerPos = m_tagetRootPos[m_roodCount];
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_X;//今x移動中だと伝える
-						}
-						break;
-					case -1://左方向に進んでいるなら
-
-						//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-						if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
-							//m_ownerPos = m_tagetRootPos[m_roodCount];
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_X;//今x移動中だと伝える
-						}
-						break;
-					default:
-						break;
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_X;//今x移動中だと伝える
 					}
+					break;
+				case -1://左方向に進んでいるなら
+
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
+					{
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+						//m_ownerPos = m_tagetRootPos[m_roodCount];
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
+
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_X;//今x移動中だと伝える
+					}
+					break;
+				default:
+					break;
 				}
 				//今z移動中なら
-				if (m_moveXorZ == move_Z)
+				switch ((int)m_movePos.z)
 				{
-					auto test = 0;//デバック用
-					switch ((int)m_movePos.z)
+				case 1://上に進んでいるなら
+					if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
 					{
-					case 1://上に進んでいるなら
-						if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-							m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
+						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_X;//今x移動中だと伝える
-						}
-						break;
-					case -1://下に進んでいるなら
-						if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
-
-							m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_X;//今x移動中だと伝える
-						}
-						break;
-					default:
-						break;
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_X;//今x移動中だと伝える
 					}
+					break;
+				case -1://下に進んでいるなら
+					if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
+					{
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+
+						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
+
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_X;//今x移動中だと伝える
+					}
+					break;
+				default:
+					break;
 				}
 			}
 			else if (m_tagetRootPos[m_roodCount].z - m_tagetRootPos[m_roodCount + 1].z != 0)//次移動するのがz移動の場合
 			{
 				//今x移動中なら
-				if (m_moveXorZ == move_X)
+				switch ((int)m_movePos.x)//xをどの方向に移動しているか確認する
 				{
-					switch ((int)m_movePos.x)//xをどの方向に移動しているか確認する
+				case 1://右方向に進んでいるなら
+
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
 					{
-					case 1://右方向に進んでいるなら
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-						if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
-							m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_Z;//今x移動中だと伝える
-						}
-						break;
-					case -1://左方向に進んでいるなら
-
-						//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-						if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
-
-							m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_Z;//今z移動中だと伝える
-						}
-						break;
-					default:
-						break;
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_Z;//今x移動中だと伝える
 					}
+					break;
+				case -1://左方向に進んでいるなら
+
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
+					{
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+
+						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
+
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_Z;//今z移動中だと伝える
+					}
+					break;
+				default:
+					break;
 				}
 				//今z移動中なら
-				if (m_moveXorZ == move_Z)
+				switch ((int)m_movePos.z)
 				{
-					switch ((int)m_movePos.z)
+				case 1://上に進んでいるなら
+					if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
 					{
-					case 1://上に進んでいるなら
-						if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-							//m_ownerPos = m_tagetRootPos[m_roodCount];
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
+						//m_ownerPos = m_tagetRootPos[m_roodCount];
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_Z;//今z移動中だと伝える
-						}
-						break;
-					case -1://下に進んでいるなら
-						if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
-						{
-							m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
-
-							//m_ownerPos = m_tagetRootPos[m_roodCount];
-							//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-							//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
-							m_roodCount++;//目的地を変える
-							m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-							m_moveXorZ = move_Z;//今z移動中だと伝える
-						}
-						break;
-					default:
-						break;
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_Z;//今z移動中だと伝える
 					}
+					break;
+				case -1://下に進んでいるなら
+					if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
+					{
+						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+
+						//m_ownerPos = m_tagetRootPos[m_roodCount];
+						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
+						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
+
+						m_roodCount++;//目的地を変える
+						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+						m_moveXorZ = move_Z;//今z移動中だと伝える
+					}
+					break;
+				default:
+					break;
 				}
 			}
 
