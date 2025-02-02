@@ -102,6 +102,8 @@ namespace basecross{
 		{
 			return;
 		}
+		Actor::OnUpdate();//親クラスのアップデート処理
+
 		auto keyState = App::GetApp()->GetInputDevice().GetKeyState();//キーボードデバック用
 
 		// インプットデバイスオブジェクト
@@ -501,6 +503,7 @@ namespace basecross{
 	{
 		return m_key;
 	}
+
 
 	//鍵を持っているかのセッター
 	void Player::SetKey(bool key)
