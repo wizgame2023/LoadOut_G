@@ -98,6 +98,8 @@ namespace basecross {
 			return;
 		}
 
+		Actor::OnUpdate();//親クラスのアップデート処理
+
 		auto trans = GetComponent<Transform>();
 		auto app = App::GetApp;
 		m_CurrentSt->OnUpdate();//現在のステート更新処理
@@ -138,7 +140,7 @@ namespace basecross {
 		if (dynamic_pointer_cast<Tracking>(state))
 		{
 			m_billBoard->ChangeTexture(L"Wow");
-			m_speed = 20.0f;
+			m_speed = 21.0f;
 		}
 
 		//float angle = playerVec - m_angle;

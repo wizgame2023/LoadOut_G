@@ -9,7 +9,6 @@
 #include "BillBoard.h"
 
 namespace basecross {
-
 	class Enemy :public Actor
 	{
 	private:
