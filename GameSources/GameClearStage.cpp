@@ -32,9 +32,9 @@ namespace basecross {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
-			//m_lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
+			m_lastPlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
 
-			m_lastPlayStage = 10;
+			//m_lastPlayStage = 10;
 			AddGameObject<Sprite>(L"GameClearText0", Vec2(800, 300), Vec3(0.0f, 300.0f, 0.0f));//クリア用のスプライト生成
 			if (m_lastPlayStage < 10)
 			{
