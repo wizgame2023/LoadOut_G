@@ -17,7 +17,7 @@ namespace basecross {
 		move_Z
 	};
 
-	class Tracking :public StateBase
+	class Tracking :public StateBase,public AStar
 	{
 	private:
 		Vec3 m_ownerPos;
@@ -79,6 +79,7 @@ namespace basecross {
 	public:
 		Tracking(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
+			AStar(),
 			m_ownerPos(0, 0, 0),
 			m_ownerRot(0, 0, 0),
 			m_playerPos(0, 0, 0),
@@ -110,7 +111,7 @@ namespace basecross {
 		void AStarMove();//Aスターの移動処理
 		void nextSelLook(int right,int left,int up, int down,Vec2 enemyAStarPos,Vec2 playerAStarPos);//隣に壁か上げているマンホールがあるか確認する
 
-		vector<Vec3> RouteSearch();
+		vector<Vec3> RouteSearchNotA();
 
 		bool LookAround(shared_ptr<Node> node, Vec2 goalPos);
 

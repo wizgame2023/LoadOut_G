@@ -18,7 +18,6 @@ namespace basecross {
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のポジションを取得
 
-		m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//AStar処理取得
 		AStarMove();//Aスター処理
 
 		m_targetPos = m_tagetRootPos[m_roodCount];//現在の目的地
@@ -40,8 +39,6 @@ namespace basecross {
 	//追跡ステートの更新処理
 	void Tracking::OnUpdate()
 	{	
-		//AStar a;
-		
 		//playerを追いかける処理
 		auto app = App::GetApp;
 		float delta = App::GetApp()->GetElapsedTime();
@@ -60,7 +57,7 @@ namespace basecross {
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
 		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
 		//A*の処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//AStar処理取得
+		//m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//AStar処理取得
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
 		bool aStarStart = false;//AStarの再計算処理がされているか見る変数
 		if (playerAStarPos != m_beforPlayerUnity)
@@ -77,7 +74,6 @@ namespace basecross {
 			AStarMove();
 		}
 		
-
 		//auto cost = MoveCost();
 		//m_directionRad = math.GetAngle(m_ownerPos,cost);
 		//目的地に移動したとみなす
@@ -328,7 +324,7 @@ namespace basecross {
 		m_unityMap.clear();
 		m_roodCount = 0;
 		m_beforPlayerUnity = playerAStarPos;
-		m_tagetRootPos = m_aStar->RouteSearch(m_ownerPos, m_playerPos);
+		m_tagetRootPos = RouteSearch(m_ownerPos, m_playerPos);//経路探索
 		if (m_tagetRootPos.size() >= 2)
 		{
 			auto one = m_tagetRootPos[0];
@@ -406,7 +402,8 @@ namespace basecross {
 		}
 	}
 
-	vector<Vec3> Tracking::RouteSearch()
+	//もう使わない
+	vector<Vec3> Tracking::RouteSearchNotA()
 	{		
 		vector<Vec2> aStarRood;//移動遷移
 
