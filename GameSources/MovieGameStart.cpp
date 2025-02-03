@@ -29,8 +29,13 @@ namespace basecross {
 		for (auto enemy : obj)
 		{
 			auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
-			if (castEnemy)//アイテム型にキャストする
+			if (castEnemy)//Enemy型にキャストする
 			{
+				//アニメーション変更		
+				castEnemy->GetComponent<PNTBoneModelDraw>()->ChangeCurrentAnimation(L"All");
+				//アニメーション更新
+				castEnemy->GetComponent<PNTBoneModelDraw>()->UpdateAnimation(0.55f);
+
 				castEnemy->MoveSwitch(false);//うごかなくさせる
 			}
 		}
@@ -40,6 +45,11 @@ namespace basecross {
 			if (castPlayer)//アイテム型にキャストする
 			{
 				castPlayer->MoveSwitch(false);//うごかなくさせる
+				//アニメーション変更
+				castPlayer->GetComponent<PNTBoneModelDraw>()->ChangeCurrentAnimation(L"Stand");
+				//アニメーション再生
+				castPlayer->GetComponent<PNTBoneModelDraw>()->UpdateAnimation(0);
+
 			}
 		}
 
@@ -106,6 +116,26 @@ namespace basecross {
 				}
 			}
 
+		}
+
+	}
+
+	void MovieGameStart::OnDestroy()
+	{
+		Movie::OnDestroy();//親クラスのデストロイ処理
+
+		auto stage = GetStage();
+		//ステージのオブジェクトを全て取得
+		auto obj = stage->GetGameObjectVec();
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto enemy : obj)
+		{
+			auto castEnemy = dynamic_pointer_cast<Enemy>(enemy);
+			if (castEnemy)//Enemy型にキャストする
+			{
+				//アニメーション変更		
+				castEnemy->GetComponent<PNTBoneModelDraw>()->ChangeCurrentAnimation(L"Default");//アニメーションを元に戻す
+			}
 		}
 
 	}

@@ -45,6 +45,7 @@ namespace basecross {
 		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
 		ptrDraw->AddAnimation(L"Default", 6, 10, true, 20.0f);
 		ptrDraw->AddAnimation(L"Ran", 6, 20, true, 20.0f);
+		ptrDraw->AddAnimation(L"All", 0, 100, true, 10.0f);
 
 		m_mapMgr = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 
@@ -87,6 +88,8 @@ namespace basecross {
 
 		//ビルボードの生成
 		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),L"Clear",2,13.0f);
+
+
 	}
 
 	void Enemy::OnUpdate()
@@ -95,6 +98,8 @@ namespace basecross {
 		{
 			return;
 		}
+
+		Actor::OnUpdate();//親クラスのアップデート処理
 
 		auto trans = GetComponent<Transform>();
 		auto app = App::GetApp;
@@ -136,7 +141,7 @@ namespace basecross {
 		if (dynamic_pointer_cast<Tracking>(state))
 		{
 			m_billBoard->ChangeTexture(L"Wow");
-			m_speed = 20.0f;
+			m_speed = 21.0f;
 		}
 
 		//float angle = playerVec - m_angle;
@@ -165,6 +170,7 @@ namespace basecross {
 		//アニメーションの更新
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		auto delta = App::GetApp()->GetElapsedTime();
+		//アニメーション変更
 		ptrDraw->UpdateAnimation(delta);
 
 	}

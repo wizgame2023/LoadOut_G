@@ -82,7 +82,7 @@ namespace basecross
 		auto delta = App::GetApp()->GetElapsedTime();
 		//CPWallCheck();
 		Math math;
-		auto AS = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");
+		//auto AS = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//Œp³‚µ‚Ä‚ ‚é‚Ì‚ÅŽg‚í‚È‚¢
 		auto player = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");
 
 		//Š—LŽÒ(Enemy)‚ÌˆÚ“®ˆ—
@@ -102,7 +102,7 @@ namespace basecross
 		if (m_time > 0.3f)
 		{
 			m_numbers = 0;
-			m_navi = AS->RouteSearch(m_ownerPos, m_destinationPos);
+			m_navi = RouteSearch(m_ownerPos, m_destinationPos);
 			m_time = 0;
 		}
 
@@ -112,7 +112,7 @@ namespace basecross
 		//m_ownerRot.y = rnd;
 		if (m_destinationDecision)
 		{
-			AS->MoveActor(m_Owner, m_navi, m_numbers, m_Owner->GetSpeed());
+			MoveActor(m_Owner, m_navi, m_numbers, m_Owner->GetSpeed());
 			if (math.GetDistance(m_ownerPos, m_destinationPos) < 3)
 			{
 				m_destinationDecision = false;
@@ -145,7 +145,7 @@ namespace basecross
 				}
 			}
 			m_numbers = 0;
-			m_navi = AS->RouteSearch(m_ownerPos, m_destinationPos);
+			m_navi = RouteSearch(m_ownerPos, m_destinationPos);
 		}
 
 	}

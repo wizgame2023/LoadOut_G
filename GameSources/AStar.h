@@ -9,25 +9,25 @@
 
 namespace basecross {
 	class Node;
-	class AStar :public GameObject
+	class AStar
 	{
 	private:
+		bool m_aStarFirst;//AStarの移動処理が始めてか保存する変数
+
 		int m_roopCount;//経路探査した回数を数える変数
 
-		//前のPlayerのAStar座標
-		Vec2 m_beforPlayerUnity;
+		Vec3 m_targetPos;//目的地のワールド座標
+		Vec3 m_movePos;//どう移動するか覚える変数(中の変数は-1か1,0のみ入れて良いものとする)
 
 		vector<vector<shared_ptr<Node>>> m_unityMap;//マップのノード配列
 		vector<vector<int>> m_unityMapCSV;//AStarMapのCSVデータ
+		vector<Vec3> m_tagetRootPos;//通る道の配列
 
 		weak_ptr<MapManager> m_mapManager;//マップマネージャー
 
 	public:
-		AStar(shared_ptr<Stage>& stagePtr);//コンストラクタ
+		AStar();//コンストラクタ
 		~AStar();//デストラクタ
-
-		void OnCreate() override;//作成
-		void OnUpdate() override;//更新
 
 		vector<Vec3> RouteSearch(Vec3 startPos,Vec3 goalPos);//経路探査
 		void MoveActor(shared_ptr<Actor> actor,vector<Vec3> routePos,int& routeCount,float speed);//移動処理

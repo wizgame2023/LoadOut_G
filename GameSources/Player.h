@@ -17,6 +17,7 @@ namespace basecross{
 		Vec3 m_Pos;//ポジション
 		Vec3 m_Rot;//回転度
 
+
 		int m_itemCount;//アイテムの所持数、この数の分だけマンホールを上げれる
 		int m_hp = 3;//Playerの体力
 
@@ -60,6 +61,7 @@ namespace basecross{
 		void SetKey(bool key);//鍵を持っているかどうか渡す
 		bool GetKey();//鍵を持っているかどうか渡す
 		void SetPushSpeed(float pushSpeed);//追加するスピードを渡す
+
 
 		//bool m_move;//動くか動かないかのフラグ
 

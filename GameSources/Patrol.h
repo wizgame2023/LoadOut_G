@@ -9,7 +9,7 @@
 
 namespace basecross {
 
-	class Patrol :public StateBase
+	class Patrol :public StateBase, public AStar
 	{
 	private:
 		//Vec3型のメンバー変数
@@ -55,6 +55,7 @@ namespace basecross {
 		//コンストラクタの宣言
 		Patrol(const shared_ptr<Enemy> ptrOwner) :
 			StateBase(ptrOwner),
+			AStar(),
 			m_ownerPos(0, 0, 0),
 			m_fowanerPos(0,0,0),
 			m_playerPos(0,0,0),
