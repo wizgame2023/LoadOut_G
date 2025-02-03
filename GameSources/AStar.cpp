@@ -9,9 +9,13 @@
 namespace basecross {
 	//コンストラクタ
 	AStar::AStar(shared_ptr<Stage>& stagePtr) :
-		GameObject(stagePtr)
+		GameObject(stagePtr),
+		m_unityMap(vector<vector<shared_ptr<Node>>>()),
+		m_unityMapCSV(vector<vector<int>>()),//AStarMapのCSVデータ
+		m_roopCount(0),//経路探査した回数を数える変数
+		m_mapManager(weak_ptr<MapManager>())
 	{
-
+		//m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManaegr");
 	}
 
 	//デストラクタ
@@ -118,8 +122,9 @@ namespace basecross {
 
 		//ルートが見つかったらどう進めばいいかを伝える
 		vector<Vec3> rootVec;
-		//まず、AStarの座標をワールド座標に戻す作業をする
-		rootVec.push_back(goalWPos);
+		//まず、目標地点であるPlayerのセル座標をワールド座標に変更する
+		auto goalwolrdPos = m_mapManager.lock()->ConvertWorldMap(playerSelPos);
+		rootVec.push_back(goalwolrdPos);
 		auto parentSel = m_unityMap[goalPos.y][goalPos.x]->Parent;
 		while (parentSel != NULL)
 		{
@@ -135,6 +140,7 @@ namespace basecross {
 			rootReverse.push_back(rootVec[i]);
 		}
 		auto a = mapManager->ConvertUnityMap(Vec2(6, 6));
+		m_aStarFirst = true;//AStarを更新したことを伝える
 		return rootReverse;
 	}
 
@@ -246,6 +252,7 @@ namespace basecross {
 		{
 			auto one = routePos[0];
 			auto two = routePos[1];
+
 			//現在地が１番目よりも、２番目の距離に近かったら１番目の移動処理を無視する
 			if (abs(two.x - pos.x) + abs(two.z - pos.z) <= abs(two.x - one.x) + abs(two.z - one.z))
 			{
@@ -254,27 +261,163 @@ namespace basecross {
 
 		}
 
-		//目的地に移動したとみなす処理１
-		if (abs(pos.x - routePos[routeCount].x) <= 1.0f && abs(pos.z - routePos[routeCount].z) <= 1.0f)
-		{
-			pos = routePos[routeCount];
-			trans->SetPosition(pos);//所有者(Enemy)のポジションの更新
-			if (routeCount < routePos.size() - 1)//この先に進まないといけない先がある場合
-			{
-				routeCount++;//目的地を変える
-			}
-		}
-		////目的地に移動したとみなす処理２//馬場先生との話し合いが終わったらやる
-		//if (routePos.size() - 1 >= routeCount + 1)//指定する配列数が配列範囲内であるか確認する
+		////目的地に移動したとみなす処理１
+		//if (abs(pos.x - routePos[routeCount].x) <= 1.0f && abs(pos.z - routePos[routeCount].z) <= 1.0f)
 		//{
-		//	//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-		//	if (abs(routePos[routeCount + 1].x - pos.x) + abs(routePos[routeCount + 1].z - pos.z)
-		//		<
-		//		abs(routePos[routeCount + 1].x - routePos[routeCount].x) + abs(routePos[routeCount + 1].z - routePos[routeCount].z))
+		//	pos = routePos[routeCount];
+		//	trans->SetPosition(pos);//所有者(Enemy)のポジションの更新
+		//	if (routeCount < routePos.size() - 1)//この先に進まないといけない先がある場合
 		//	{
 		//		routeCount++;//目的地を変える
 		//	}
 		//}
+
+		//目的地に移動したとみなす処理２複数敵が出ると瞬間移動してしまうバグ発生中
+		if (routePos.size() - 1 >= routeCount + 1)//指定する配列数が配列範囲内であるか確認する
+		{
+			//ルートサーチを最初にした場合の移動方法の検索処理
+			if (m_aStarFirst)
+			{
+				m_movePos = routePos[routeCount] - pos;//現在の座標と目的地の差を確認する
+				m_aStarFirst = false;//ルートサーチの一番最初の状態ではなくなった
+			}
+
+			//数値を１やー１に固定化する 三項演算子は０の場合だと問題になるため使わない
+			if (m_movePos.x > 0)//正の数なら
+			{
+				m_movePos.x = 1;//１にする
+			}
+			if (m_movePos.x < 0)//負の数なら
+			{
+				m_movePos.x = -1;//-１にする
+			}
+			if (m_movePos.z > 0)//正の数なら
+			{
+				m_movePos.z = 1;//１にする
+			}
+			if (m_movePos.z < 0)//負の数なら
+			{
+				m_movePos.z = -1;//-１にする
+			}
+
+			//次移動するのがx移動の場合
+			if (routePos[routeCount].x - routePos[routeCount + 1].x != 0)
+			{
+				//今x移動中なら
+				switch ((int)m_movePos.x)
+				{
+				case 1://右方向に進んでいるなら
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (pos.x >= routePos[routeCount].x)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				case -1://左方向に進んでいるなら
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (pos.x <= routePos[routeCount].x)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				default:
+					break;
+				}
+
+				//今z移動中なら
+				switch ((int)m_movePos.z)
+				{
+				case 1://上に進んでいるなら
+					if (pos.z >= routePos[routeCount].z)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						pos = routePos[routeCount];//瞬間移動
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				case -1://下に進んでいるなら
+					if (pos.z <= routePos[routeCount].z)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						pos = routePos[routeCount];//瞬間移動
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				default:
+					break;
+				}
+			}
+			else if (routePos[routeCount].z - routePos[routeCount + 1].z != 0)//次移動するのがz移動の場合
+			{
+				//今x移動中なら
+				switch ((int)m_movePos.x)//xをどの方向に移動しているか確認する
+				{
+				case 1://右方向に進んでいるなら
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (pos.x >= routePos[routeCount].x)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						pos = routePos[routeCount];//瞬間移動
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				case -1://左方向に進んでいるなら
+					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+					if (pos.x <= routePos[routeCount].x)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						pos = routePos[routeCount];//瞬間移動
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				default:
+					break;
+				}
+
+				//今z移動中なら
+				switch ((int)m_movePos.z)
+				{
+				case 1://上に進んでいるなら
+					if (pos.z >= routePos[routeCount].z)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				case -1://下に進んでいるなら
+					if (pos.z <= routePos[routeCount].z)
+					{
+						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
+
+						routeCount++;//目的地を変える
+						m_targetPos = routePos[routeCount];//目的地を更新
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
 
 		auto delta = App::GetApp()->GetElapsedTime();
 		Math math;	
