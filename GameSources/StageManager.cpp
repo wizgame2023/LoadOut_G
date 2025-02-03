@@ -35,8 +35,8 @@ namespace basecross {
 		auto stage = GetStage();
 
 		//AStar処理をしてくれるクラスを生成
-		auto aStar = stage->AddGameObject<AStar>();
-		stage->SetSharedGameObject(L"AStar", aStar);
+		//auto aStar = stage->AddGameObject<AStar>();GameObjectを継承しなくなったので使わない
+		//stage->SetSharedGameObject(L"AStar", aStar);
 		//BGM再生
 		m_bgmManager = App::GetApp()->GetXAudio2Manager();
 		m_BGM = m_bgmManager->Start(L"StageBGM", XAUDIO2_LOOP_INFINITE, 0.9f);
