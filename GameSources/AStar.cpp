@@ -8,8 +8,7 @@
 
 namespace basecross {
 	//コンストラクタ
-	AStar::AStar(shared_ptr<Stage>& stagePtr) :
-		GameObject(stagePtr),
+	AStar::AStar() :
 		m_unityMap(vector<vector<shared_ptr<Node>>>()),
 		m_unityMapCSV(vector<vector<int>>()),//AStarMapのCSVデータ
 		m_roopCount(0),//経路探査した回数を数える変数
@@ -23,19 +22,6 @@ namespace basecross {
 	{
 
 	}
-
-	//作成
-	void AStar::OnCreate()
-	{
-
-	}
-
-	//更新
-	void AStar::OnUpdate()
-	{
-
-	}
-
 
 	//経路探査処理
 	vector<Vec3> AStar::RouteSearch(Vec3 startWPos,Vec3 goalWPos)
