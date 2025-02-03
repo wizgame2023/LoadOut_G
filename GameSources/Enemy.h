@@ -14,6 +14,7 @@ namespace basecross {
 	{
 		normal,
 		perspective,
+		rush,
 	};
 	class Enemy :public Actor
 	{
@@ -65,6 +66,7 @@ namespace basecross {
 			m_NextSt = make_shared<NextState>(GetThis<Enemy>());
 		}
 		float GetSpeed();
+		void SetSpeed(float speed);
 		float GetAngle();
 		int GetAbility();
 		float GetDistance(Vec3 a, Vec3 b);

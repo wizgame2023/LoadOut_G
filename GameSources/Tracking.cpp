@@ -285,6 +285,15 @@ namespace basecross {
 
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
+		auto ability = m_Owner->GetAbility();
+
+		if (ability==rush)
+		{
+			m_waitTime+= app()->GetElapsedTime();
+			RushMove(m_ownerPos, 8);
+
+		}
+
 		////デバックログ
 		//auto scene = App::GetApp()->GetScene<Scene>();
 		//wss /*<< L"プレイヤーPos.x : " << m_playerPos.x
@@ -320,7 +329,6 @@ namespace basecross {
 		//Playerの位置をAStarの座標にする
 		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
 		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
-
 		m_unityMap.clear();
 		m_roodCount = 0;
 		m_beforPlayerUnity = playerAStarPos;
@@ -577,6 +585,162 @@ namespace basecross {
 		return false;
 	}
 
+
+	void Tracking::RushMove(Vec3 pos, int vision)
+	{
+		Vec3 n_pos = pos;
+
+		int n_vision = vision;
+
+		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		auto angle = m_Owner->GetAngle();
+
+		auto unityMap = mapMgr->GetUnityMap();
+
+		auto sellPos = mapMgr->ConvertSelMap(n_pos);
+		auto unityPos = mapMgr->ConvertUnityMap(sellPos);
+
+		for (int i = 1; i <= n_vision; i++)
+		{
+			if (angle == 0)
+			{
+				//床セルの場合
+				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 == 1)
+				{
+					if (unityMap[unityPos.y][unityPos.x + i] == 3)
+					{
+						m_waitTime = 0;
+						break;
+					}
+				}
+				//壁セルの場合
+				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 != 1)
+				{
+					if (unityMap[unityPos.y][unityPos.x + i] == 1)
+					{
+						m_waitTime = 0;
+
+						break;
+					}
+				}
+				if (i == n_vision)
+				{
+					if (unityMap[unityPos.y][unityPos.x + i]== 0)
+					{
+						if (m_waitTime > 1 && m_waitTime < 3)
+						{
+							m_Owner->SetSpeed(0);
+						}
+						if (m_waitTime > 3)
+						{
+							m_Owner->SetSpeed(40);
+						}
+					}
+				}
+				if (angle == XM_PI)
+				{
+					//床セルの場合
+					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2)
+					{
+						if (unityMap[unityPos.y][unityPos.x - i] == 3)
+						{
+							break;
+						}
+					}
+
+					//壁セルの場合
+					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2 != 1)
+					{
+						if (unityMap[unityPos.y][unityPos.x - i] == 1)
+						{
+							break;
+						}
+					}
+					if (i == n_vision)
+					{
+						if ((int)unityPos.x - i == 0)
+						{
+
+							if (m_waitTime > 1 && m_waitTime < 3)
+							{
+								m_Owner->SetSpeed(0);
+							}
+							if (m_waitTime > 3)
+							{
+								m_Owner->SetSpeed(40);
+							}
+						}
+					}
+				}
+				if (angle == XMConvertToRadians(270))
+				{
+					//床セルの場合
+					if (((int)unityPos.y - i) % 2 == 1 && (int)unityPos.x % 2 == 1)
+					{
+						if (unityMap[unityPos.y - i][unityPos.x] == 3)
+						{
+							break;
+						}
+					}
+
+					//壁セルの場合
+					if (((int)unityPos.y - i) % 2 == 0 && (int)unityPos.x % 2 == 1)
+					{
+						if (unityMap[unityPos.y - i][unityPos.x] == 1)
+						{
+							break;
+						}
+					}
+					if ((int)unityPos.y + n_vision == 0)
+					{
+
+						if (m_waitTime > 1 && m_waitTime < 3)
+						{
+							m_Owner->SetSpeed(0);
+						}
+						if (m_waitTime > 3)
+						{
+							m_Owner->SetSpeed(40);
+						}
+					}
+				}
+				if (angle == XM_PI * 0.5)
+				{
+					//床セルの場合
+					if (((int)unityPos.y + i) % 2 == 1 && (int)unityPos.x % 2 == 1)
+					{
+						if (unityMap[unityPos.y + i][unityPos.x] == 3)
+						{
+							break;
+						}
+					}
+
+					//壁セルの場合
+					if (((int)unityPos.y + i) % 2 == 0 && (int)unityPos.x % 2 == 1)
+					{
+						if (unityMap[unityPos.y + i][unityPos.x] == 1)
+						{
+							break;
+						}
+					}
+					if ((int)unityPos.y - n_vision == 0)
+					{
+
+						if (m_waitTime > 1 && m_waitTime < 3)
+						{
+							m_Owner->SetSpeed(0);
+						}
+						if (m_waitTime > 3)
+						{
+							m_Owner->SetSpeed(40);
+						}
+					}
+				}
+
+			}
+		}
+
+	}
 	//Vec3 Tracking::MoveCost()
 	//{
 	//	Math math;

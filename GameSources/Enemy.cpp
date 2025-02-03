@@ -200,6 +200,10 @@ namespace basecross {
 		return m_speed;
 	}
 
+	void Enemy::SetSpeed(float speed)
+	{
+		m_speed = speed;
+	}
 	float Enemy::GetAngle()
 	{
 		return  m_angle;
