@@ -21,6 +21,7 @@ namespace basecross {
 		float m_time;
 		float m_directionRad;
 		float m_aStarTime;//AStar更新時までのタイム計測用変数
+		float m_waitTime;
 
 		
 		int m_costRWall;
@@ -72,6 +73,7 @@ namespace basecross {
 			m_forward(0, 0, 1),
 			m_right(1, 0, 0),
 			m_time(0),
+			m_waitTime(0.0f),
 			m_directionRad(0),
 			m_costRWall(0),
 			m_costLWall(0),
@@ -99,6 +101,8 @@ namespace basecross {
 		vector<Vec3> RouteSearch();
 
 		bool LookAround(shared_ptr<Node> node, Vec2 goalPos);
+		void RushMove(Vec3 pos, int vision);
+
 
 	};
 
@@ -135,6 +139,7 @@ namespace basecross {
 		int Score;//スコア
 		shared_ptr<AStarIndex> Parent;//親のポインタ
 
+
 		AStarIndex(int x, int y, int Status, int Cost, int HeuristicCost, int Score, shared_ptr<AStarIndex> parent) :
 			x(x),
 			y(y),
@@ -149,6 +154,7 @@ namespace basecross {
 		~AStarIndex()
 		{
 		}
+
 
 	};
 }

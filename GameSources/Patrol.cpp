@@ -179,8 +179,8 @@ namespace basecross
 
 		switch (ability)
 		{
-		case normal:
-			for (int i = 1; i < n_vision; i++)
+		default:
+			for (int i = 0; i < n_vision; i++)
 			{
 				if (angle == 0)
 				{
@@ -281,7 +281,7 @@ namespace basecross
 			}
 			break;
 		case perspective:
-			for (int i = 1; i < (n_vision * 3) / 4; i++)
+			for (int i = 0; i < (n_vision * 3) / 4; i++)
 			{
 				if (angle == 0)
 				{
