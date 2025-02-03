@@ -17,7 +17,6 @@ namespace basecross {
 		wstringstream wss(L"");
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のポジションを取得
-		m_ownerPosBefor = m_ownerPos;//Enemyの前の座標を取得する
 
 		m_aStar = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<AStar>(L"AStar");//AStar処理取得
 		AStarMove();//Aスター処理
@@ -92,22 +91,15 @@ namespace basecross {
 		//	}
 		//}
 		
-		//目的地に移動したとみなす処理２//瞬間移動バグ発生中原因
+		//目的地に移動したとみなす処理２
 		if (m_tagetRootPos.size() - 1 >= m_roodCount + 1)//指定する配列数が配列範囲内であるか確認する
 		{
-			//Vec3 targetPos = m_tagetRootPos[m_roodCount];//現在の目的地
-			
 			//ルートサーチを最初にした場合の移動方法の検索処理
 			if (aStarStart)
 			{
 				m_movePos = m_tagetRootPos[m_roodCount] - m_ownerPos;//現在の座標と目的地の差を確認する
 				aStarStart = false;//ルートサーチの一番最初の状態ではなくなった
 			}
-			//下のどう移動すればいいかの処理はルートサーチをした際は使えない(前いた座標を元にどう移動しているか判断できないため)
-			//if (!aStarStart)
-			//{
-			//	m_movePos = m_ownerPos - m_ownerPosBefor;//今の座標から前の座標を引いてどう移動したのかを保存する
-			//}
 
 			//数値を１やー１に固定化する 三項演算子は０の場合だと問題になるため使わない
 			if (m_movePos.x > 0)//正の数なら
@@ -127,15 +119,6 @@ namespace basecross {
 				m_movePos.z = -1;//-１にする
 			}
 
-
-			//もし、どう移動しているのかが分からなかったら前の座標から引いてどう移動しているのか見る
-			//if (MoveSelPos == Vec2(0.0f,0.0f))
-			//{
-			//	ownerSelPos = m_Owner->GetSelPosBefor();//Enemyの一個前のセル座標を取得
-			//	MoveSelPos = targetSelPos - ownerSelPos;
-			//}
-			//MoveSelPos.y = -MoveSelPos.y;//反対にする
-
 			//次移動するのがx移動の場合
 			if (m_tagetRootPos[m_roodCount].x - m_tagetRootPos[m_roodCount + 1].x != 0)
 			{
@@ -143,14 +126,10 @@ namespace basecross {
 				switch ((int)m_movePos.x)
 				{
 				case 1://右方向に進んでいるなら
-
 					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
 					if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
 					{
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
-						//m_ownerPos = m_tagetRootPos[m_roodCount];
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
@@ -158,14 +137,10 @@ namespace basecross {
 					}
 					break;
 				case -1://左方向に進んでいるなら
-
 					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
 					if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
 					{
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
-						//m_ownerPos = m_tagetRootPos[m_roodCount];
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
@@ -184,8 +159,6 @@ namespace basecross {
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
 						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
@@ -198,8 +171,6 @@ namespace basecross {
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
 						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
@@ -223,8 +194,6 @@ namespace basecross {
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
 						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
@@ -239,8 +208,6 @@ namespace basecross {
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
 						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
@@ -258,10 +225,6 @@ namespace basecross {
 					{
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						//m_ownerPos = m_tagetRootPos[m_roodCount];
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
 						m_moveXorZ = move_Z;//今z移動中だと伝える
@@ -272,10 +235,6 @@ namespace basecross {
 					{
 						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						//m_ownerPos = m_tagetRootPos[m_roodCount];
-						//m_targetSelPosBefor = mapManager->ConvertSelMap(m_ownerPos);//前の目標地点のセル座標更新
-						//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
 						m_moveXorZ = move_Z;//今z移動中だと伝える
@@ -285,21 +244,6 @@ namespace basecross {
 					break;
 				}
 			}
-
-
-			////今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する//いったんコメントアウト
-			//if (abs(m_tagetRootPos[m_roodCount + 1].x - m_ownerPos.x) <=
-			//	abs(m_tagetRootPos[m_roodCount + 1].x - m_tagetRootPos[m_roodCount].x))
-			//{
-			//	if (abs(m_tagetRootPos[m_roodCount + 1].z - m_ownerPos.z) <=
-			//		abs(m_tagetRootPos[m_roodCount + 1].z - m_tagetRootPos[m_roodCount].z))
-			//	{
-			//		m_ownerPos = m_tagetRootPos[m_roodCount];
-			//		m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新 
-
-			//		m_roodCount++;//目的地を変える
-			//	}
-			//}
 		}
 
 		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
@@ -307,7 +251,6 @@ namespace basecross {
 
 		m_ownerRot.y = m_directionRad;
 
-		m_ownerPosBefor = m_ownerPos;//Posが更新される前に保存する
 		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
 		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
 		

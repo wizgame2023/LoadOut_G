@@ -47,7 +47,6 @@ namespace basecross {
 
 		int m_roodCount;//今A*の移動でどの段階にいるか決める変数
 		int m_moveXorZ;//x方向に移動しているかz方向に移動しているか保存する変数
-		Vec3 m_ownerPosBefor = m_ownerPos;//Enemyの前の座標を取得する
 		Vec3 m_targetPos;////現在の目的地を保存する変数
 		Vec3 m_movePos;//どう移動するか覚える変数(中の変数は-1か1,0のみ入れて良いものとする)
 
