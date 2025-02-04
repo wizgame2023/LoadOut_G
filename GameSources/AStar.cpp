@@ -229,7 +229,7 @@ namespace basecross {
 	}
 
 	//AStar用の移動処理
-	void AStar::MoveActor(shared_ptr<Actor> actor, vector<Vec3> routePos,int& routeCount,float speed)
+	bool AStar::MoveActor(shared_ptr<Actor> actor, vector<Vec3> routePos,int& routeCount,float speed)
 	{
 		auto trans = actor->GetComponent<Transform>();
 		auto pos = trans->GetPosition();
@@ -404,6 +404,75 @@ namespace basecross {
 				}
 			}
 		}
+		else//移動処理がこれで最後の場合
+		{
+			//数値を１やー１に固定化する 三項演算子は０の場合だと問題になるため使わない
+			if (m_movePos.x > 0)//正の数なら
+			{
+				m_movePos.x = 1;//１にする
+			}
+			if (m_movePos.x < 0)//負の数なら
+			{
+				m_movePos.x = -1;//-１にする
+			}
+			if (m_movePos.z > 0)//正の数なら
+			{
+				m_movePos.z = 1;//１にする
+			}
+			if (m_movePos.z < 0)//負の数なら
+			{
+				m_movePos.z = -1;//-１にする
+			}
+
+
+			//今x移動中なら
+			switch ((int)m_movePos.x)
+			{
+			case 1://右方向に進んでいるなら
+				//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+				if (pos.x >= routePos[routeCount].x)
+				{
+					pos = routePos[routeCount];//瞬間移動
+					trans->SetPosition(pos);
+					return true;//移動が終わったことを伝える
+				}
+				break;
+			case -1://左方向に進んでいるなら
+				//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+				if (pos.x <= routePos[routeCount].x)
+				{
+					pos = routePos[routeCount];//瞬間移動
+					trans->SetPosition(pos);
+					return true;//移動が終わったことを伝える
+				}
+				break;
+			default:
+				break;
+			}
+
+			//今z移動中なら
+			switch ((int)m_movePos.z)
+			{
+			case 1://上に進んでいるなら
+				if (pos.z >= routePos[routeCount].z)
+				{
+					pos = routePos[routeCount];//瞬間移動
+					trans->SetPosition(pos);
+					return true;//移動が終わったことを伝える
+				}
+				break;
+			case -1://下に進んでいるなら
+				if (pos.z <= routePos[routeCount].z)
+				{
+					pos = routePos[routeCount];//瞬間移動
+					trans->SetPosition(pos);
+					return true;//移動が終わったことを伝える
+				}
+				break;
+			default:
+				break;
+			}
+		}
 
 		auto delta = App::GetApp()->GetElapsedTime();
 		Math math;	
@@ -422,6 +491,7 @@ namespace basecross {
 		//角度を渡す
 		actor->SetAngle(angle + XMConvertToRadians(90.0f));
 
+		return false;//目的地にたどり着けてなかったらfalse
 	}
 
 }
