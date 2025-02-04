@@ -87,6 +87,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StageCollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)State.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TargetLost.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TilteStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TrackingBoar.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StageCollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StageManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)State.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TargetLost.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TilteStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Tracking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TrackingBoar.cpp" />
