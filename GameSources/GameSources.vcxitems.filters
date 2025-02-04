@@ -321,7 +321,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStart.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TrackingBoar.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TargetLost.h">
+      <Filter>Headers\StateEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TrackingBoar.h">
+      <Filter>Headers\StateEnemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -567,6 +572,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStart.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TrackingBoar.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TargetLost.cpp">
+      <Filter>Sources\StateEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TrackingBoar.cpp">
+      <Filter>Sources\StateEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
