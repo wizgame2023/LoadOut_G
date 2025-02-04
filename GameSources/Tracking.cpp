@@ -129,7 +129,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_X;//今x移動中だと伝える
 					}
 					break;
 				case -1://左方向に進んでいるなら
@@ -140,7 +139,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_X;//今x移動中だと伝える
 					}
 					break;
 				default:
@@ -158,7 +156,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_X;//今x移動中だと伝える
 					}
 					break;
 				case -1://下に進んでいるなら
@@ -170,7 +167,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_X;//今x移動中だと伝える
 					}
 					break;
 				default:
@@ -193,7 +189,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_Z;//今x移動中だと伝える
 					}
 					break;
 				case -1://左方向に進んでいるなら
@@ -207,7 +202,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_Z;//今z移動中だと伝える
 					}
 					break;
 				default:
@@ -223,7 +217,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_Z;//今z移動中だと伝える
 					}
 					break;
 				case -1://下に進んでいるなら
@@ -233,7 +226,6 @@ namespace basecross {
 
 						m_roodCount++;//目的地を変える
 						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-						m_moveXorZ = move_Z;//今z移動中だと伝える
 					}
 					break;
 				default:
@@ -246,7 +238,7 @@ namespace basecross {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		m_ownerRot.y = m_directionRad;
-
+		auto speedtest = m_Owner->GetSpeed();
 		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
 		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
 		
@@ -261,9 +253,10 @@ namespace basecross {
 		}
 
 
-		if (m_time >= 3)
+		if (m_time >= 1)
 		{
-			m_Owner->ChangeState<Patrol>();
+			//Playerを見失った処理に変更
+			m_Owner->ChangeState<TargetLost>();
 		}
 
 		if (m_Owner->GetDistance(m_ownerPos, m_playerPos) < 7)
