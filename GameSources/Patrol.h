@@ -77,9 +77,11 @@ namespace basecross {
 		}
 		virtual ~Patrol() {}
 
-		void OnStart();
-		void OnUpdate();
-		void OnExit();
+		virtual void OnStart();
+		virtual void OnUpdate();
+		virtual void OnExit();
+
+		Vec3 MuchPosConvert(Vec3 worldPos);
 
 		void Vision(Vec3 pos,Vec3 target,int vision);
 

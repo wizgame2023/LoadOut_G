@@ -8,7 +8,6 @@
 
 namespace basecross
 {
-
 	//巡回ステートの最初の処理
 	void Patrol::OnStart()
 	{
@@ -21,23 +20,41 @@ namespace basecross
 		{
 			if (m_ownerPos.z > 0)
 			{
+				//指定している座標がセルマスの感覚とずれないようにする
+				Vec3 first = MuchPosConvert(m_ownerPos);
+				Vec3 second = Vec3(m_ownerPos.x - m_point, m_ownerPos.y, m_ownerPos.z);
+				second = MuchPosConvert(second);
+				Vec3 third = Vec3(m_ownerPos.x - m_point, m_ownerPos.y, m_ownerPos.z - m_point);
+				third = MuchPosConvert(third);
+				Vec3 fourth = Vec3(m_ownerPos.x, m_ownerPos.y, m_ownerPos.z - m_point);
+				fourth = MuchPosConvert(fourth);
+
 				m_cPoint =
 				{
-					{m_ownerPos},
-					{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z},
-					{m_ownerPos.x - m_point,m_ownerPos.y,m_ownerPos.z - m_point},
-					{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z - m_point},
+					first,
+					second,
+					third,
+					fourth,
 
 				};
 			}
 			if (m_ownerPos.z < 0)
 			{
+				//指定している座標がセルマスの感覚とずれないようにする
+				Vec3 first = MuchPosConvert(m_ownerPos);
+				Vec3 second = Vec3(m_ownerPos.x + m_point, m_ownerPos.y, m_ownerPos.z);
+				second = MuchPosConvert(second);
+				Vec3 third = Vec3(m_ownerPos.x + m_point, m_ownerPos.y, m_ownerPos.z + m_point);
+				third = MuchPosConvert(third);
+				Vec3 fourth = Vec3(m_ownerPos.x, m_ownerPos.y, m_ownerPos.z + m_point);
+				fourth = MuchPosConvert(fourth);
+
 				m_cPoint =
 				{
-					{m_ownerPos},
-					{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z},
-					{m_ownerPos.x + m_point,m_ownerPos.y,m_ownerPos.z + m_point},
-					{m_ownerPos.x ,m_ownerPos.y,m_ownerPos.z + m_point},
+					first,
+					second,
+					third,
+					fourth,
 
 				};
 
@@ -70,7 +87,6 @@ namespace basecross
 						m_cPoint[i].z += 10;
 					}
 					m_checkPoint.push_back(m_cPoint[i]);
-
 				}
 			}
 		}
@@ -384,5 +400,17 @@ namespace basecross
 		}
 
 	}
+
+	//指定している座標がセルマスの感覚とずれないようにする関数
+	Vec3 Patrol::MuchPosConvert(Vec3 worldPos)
+	{
+		auto mapMgr = m_Owner->GetMapMgr();//マップマネージャー
+		//座標をセルのポジションに変換してからワールド座標に再変換する
+		Vec2 selPos = mapMgr->ConvertSelMap(worldPos);
+		Vec3 muchPos = mapMgr->ConvertWorldMap(selPos);
+
+		return muchPos;
+	}
+
 }//end basecross
 
