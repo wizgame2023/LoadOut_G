@@ -184,6 +184,9 @@ namespace basecross {
 		if (m_PlayerKeyFlag == 1)
 		{
 			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);//Playerに鍵を渡す
+			//SEを鳴らす
+			m_bgmManager->Start(L"KeySE", 0, 0.9f);
+
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
 
 			//鍵を手に入れたことを知らせるテクスチャ追加
