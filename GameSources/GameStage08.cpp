@@ -96,6 +96,17 @@ namespace basecross {
 
 	void GameStage08::OnUpdate()
 	{
+		//////デバック用
+		//wstringstream wss(L"");
+		//auto scene = App::GetApp()->GetScene<Scene>();
+		////auto gameStage = scene->GetGameStage();
+
+		//auto delta = App::GetApp()->GetElapsedTime();
+		//wss /* << L"デバッグ用文字列 "*/
+		//	<< L"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFPS:" << 1.0f / delta
+		//	<< endl;
+
+		//scene->SetDebugString(wss.str());
 	}
 
 	//Player生成
