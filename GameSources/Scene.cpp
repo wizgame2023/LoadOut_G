@@ -238,6 +238,8 @@ namespace basecross{
 		app->RegisterTexture(L"Check", strTexture);
 		strTexture = texPath + L"Spanner.png";//スパナのテクスチャ
 		app->RegisterTexture(L"Spanner", strTexture);
+		strTexture = texPath + L"Spanner_HaveNo.png";//スパナを持ってないと知らせるテクスチャ
+		app->RegisterTexture(L"Spanner_HaveNo", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
