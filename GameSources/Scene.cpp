@@ -330,6 +330,8 @@ namespace basecross{
 		//ボーンモデル
 		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"enemy_ver1.0.bmf");//敵のメッシュ警棒もってないバージョン
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
+		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"spec_enemy_ver1.0.bmf");//敵のメッシュ透視する敵
+		app->RegisterResource(L"Boss_Mesh_Spec", boneModelMesh);
 		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"kid_ver2.0.bmf");//プレイヤーのメッシュ
 		app->RegisterResource(L"kid_Mesh", boneModelMesh);
 		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"Spana_v1.0.bmf");//スパナに変更
