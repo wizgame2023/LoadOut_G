@@ -28,7 +28,7 @@ namespace basecross {
 
 			return numX * numX + numY * numY + numZ * numZ <= r * r;
 		}
-
+		//リファクタリング対象です(戻り値の関数の引数が逆なため)
 		float GetAngle(Vec3 a,Vec3 b)
 		{
 			float numX = a.x - b.x;
