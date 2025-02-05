@@ -258,7 +258,7 @@ namespace basecross {
 		//	}
 		//}
 
-		//目的地に移動したとみなす処理２複数敵が出ると瞬間移動してしまうバグ発生中
+		//目的地に移動したとみなす処理２バグが出ている可能性があるため注意すべし
 		if (routePos.size() - 1 >= routeCount + 1)//指定する配列数が配列範囲内であるか確認する
 		{
 			//ルートサーチを最初にした場合の移動方法の検索処理
@@ -324,7 +324,9 @@ namespace basecross {
 					{
 						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
 
-						pos = routePos[routeCount];//瞬間移動
+						//瞬間移動
+						pos = routePos[routeCount];
+						trans->SetPosition(pos);
 
 						routeCount++;//目的地を変える
 						m_targetPos = routePos[routeCount];//目的地を更新
@@ -335,7 +337,9 @@ namespace basecross {
 					{
 						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
 
-						pos = routePos[routeCount];//瞬間移動
+						//瞬間移動
+						pos = routePos[routeCount];
+						trans->SetPosition(pos);
 
 						routeCount++;//目的地を変える
 						m_targetPos = routePos[routeCount];//目的地を更新
@@ -356,7 +360,9 @@ namespace basecross {
 					{
 						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
 
-						pos = routePos[routeCount];//瞬間移動
+						//瞬間移動
+						pos = routePos[routeCount];
+						trans->SetPosition(pos);
 
 						routeCount++;//目的地を変える
 						m_targetPos = routePos[routeCount];//目的地を更新
@@ -368,7 +374,9 @@ namespace basecross {
 					{
 						m_movePos = routePos[routeCount + 1] - routePos[routeCount];//新たにどう移動すればいいか計算する
 
-						pos = routePos[routeCount];//瞬間移動
+						//瞬間移動
+						pos = routePos[routeCount];
+						trans->SetPosition(pos);
 
 						routeCount++;//目的地を変える
 						m_targetPos = routePos[routeCount];//目的地を更新
@@ -404,7 +412,7 @@ namespace basecross {
 				}
 			}
 		}
-		else//移動処理がこれで最後の場合
+		else if(routePos.size() - 1 <= routeCount + 1)//移動処理がこれで最後の場合
 		{
 			//数値を１やー１に固定化する 三項演算子は０の場合だと問題になるため使わない
 			if (m_movePos.x > 0)//正の数なら
@@ -478,9 +486,15 @@ namespace basecross {
 		Math math;	
 		auto angle = math.GetAngle(pos, routePos[routeCount]);
 
-		//移動処理
-		pos.x += -sin(angle) * speed * delta;
-		pos.z += -cos(angle) * speed * delta;
+		//移動処理先生になぜここがxもプラスされるか聞く
+		if (m_movePos.x != 0)
+		{
+			pos.x += -sin(angle) * speed * delta;
+		}
+		if (m_movePos.z != 0)
+		{
+			pos.z += -cos(angle) * speed * delta;
+		}
 		trans->SetPosition(pos);		
 		
 		//回転を進む方向に合わせる
