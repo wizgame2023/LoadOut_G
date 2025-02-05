@@ -30,6 +30,12 @@ namespace basecross {
 		m_ownerPos = ownerTrans->GetPosition();//所有者(Enemy)のPositionを取得
 		auto startPos = m_Owner->GetStartPos();//初期位置を取得
 		m_ownerRot = ownerTrans->GetRotation();//所有者(Enemy)のRotationを取得
+		m_Owner->SetSpeed(10.0f);//ターゲットロスト状態のスピードに変更(パトロールと同じ)
+
+		//Player取得
+		auto player = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");
+		m_playerPos = player->GetComponent<Transform>()->GetPosition();
+
 
 		m_targetPos = MuchPosConvert(startPos);//目的地を決める
 	
@@ -48,6 +54,10 @@ namespace basecross {
 	void TargetLost::OnUpdate()
 	{
 		auto delta = App::GetApp()->GetElapsedTime();
+
+		//Player取得
+		auto player = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<Player>(L"Player");
+		m_playerPos = player->GetComponent<Transform>()->GetPosition();
 
 		auto ownerTrans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = ownerTrans->GetPosition();//所有者(Enemy)のPositionを取得
