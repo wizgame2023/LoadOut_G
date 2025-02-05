@@ -240,9 +240,6 @@ namespace basecross {
 				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
 
-				auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
-				auto stageManager = GetStage()->GetSharedGameObject<StageManager>(L"StageManager");
-				stageManager->SetRepopEnemyPos(enemyStartPos);//上の初期位置をStageManagerに渡す
 
 				player = stage->GetSharedGameObject<Player>(L"Player");
 				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
@@ -287,9 +284,9 @@ namespace basecross {
 				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
 
-				auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
-				auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
-				stageManager->SetRepopEnemyPos(enemyStartPos);//上の初期位置をStageManagerに渡す
+				//auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
+				//auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+				//stageManager->SetRepopEnemyPos(enemyStartPos);//上の初期位置をStageManagerに渡す
 
 				player = stage->GetSharedGameObject<Player>(L"Player");
 				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
