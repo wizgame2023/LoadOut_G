@@ -136,12 +136,10 @@ namespace basecross {
 		if (!dynamic_pointer_cast<Tracking>(state))
 		{
 			m_billBoard->ChangeTexture(L"search");
-			m_speed = 10.0f;
 		}
 		if (dynamic_pointer_cast<Tracking>(state))
 		{
 			m_billBoard->ChangeTexture(L"Wow");
-			m_speed = 21.0f;
 		}
 
 		//float angle = playerVec - m_angle;
