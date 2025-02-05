@@ -116,7 +116,7 @@ namespace basecross {
 
 		for (int i = 0; i < posVec.size(); i++)
 		{
-			auto enemy = AddGameObject<Enemy>(posVec[i],true, rush);
+			auto enemy = AddGameObject<Enemy>(posVec[i],true, normal);
 			enemyVec.push_back(enemy);
 		}
 		//enemyVec[0]->AddTag(L"Key");//Œ®‚ğ‚Á‚Ä‚¢‚é‚±‚Æ‚É‚·‚é
