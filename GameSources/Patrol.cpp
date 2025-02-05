@@ -90,6 +90,9 @@ namespace basecross
 				}
 			}
 		}
+
+		m_Owner->SetSpeed(10);//パトロール用のスピードに変更する
+
 	}
 
 	//巡回ステートの更新処理
@@ -128,8 +131,8 @@ namespace basecross
 		//m_ownerRot.y = rnd;
 		if (m_destinationDecision)
 		{
-			MoveActor(m_Owner, m_navi, m_numbers, m_Owner->GetSpeed());
-			if (math.GetDistance(m_ownerPos, m_destinationPos) < 3)
+			bool distanceflag = MoveActor(m_Owner, m_navi, m_numbers, m_Owner->GetSpeed());
+			if (distanceflag)
 			{
 				m_destinationDecision = false;
 				m_ownerPos = m_destinationPos;
@@ -198,7 +201,7 @@ namespace basecross
 		default:
 			for (int i = 0; i < n_vision; i++)
 			{
-				if (angle == 0)
+				if (angle == 0)//右
 				{
 					//床セルの場合
 					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 == 1)
@@ -222,7 +225,7 @@ namespace basecross
 					}
 
 				}
-				if (angle == XM_PI)
+				if (angle == XM_PI)//左
 				{
 					//床セルの場合
 					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2)
@@ -246,7 +249,7 @@ namespace basecross
 						m_Owner->ChangeState<Tracking>();
 					}
 				}
-				if (angle == XMConvertToRadians(270))
+				if (angle == XMConvertToRadians(270))//上
 				{
 					//床セルの場合
 					if (((int)unityPos.y - i) % 2 == 1 && (int)unityPos.x % 2 == 1)
@@ -270,7 +273,7 @@ namespace basecross
 						m_Owner->ChangeState<Tracking>();
 					}
 				}
-				if (angle == XM_PI * 0.5)
+				if (angle == XM_PI * 0.5)//下
 				{
 					//床セルの場合
 					if (((int)unityPos.y + i) % 2 == 1 && (int)unityPos.x % 2 == 1)
