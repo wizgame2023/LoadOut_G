@@ -238,7 +238,6 @@ namespace basecross {
 	{			
 		auto stage = GetStage();
 		auto delta = App::GetApp()->GetElapsedTime();
-		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
 		//m_EnemyUpClearNum = modeTwoCountMax;//たおさないと行けない数を決める
 
 		//敵が鍵を持っているモード
@@ -309,7 +308,6 @@ namespace basecross {
 		if (m_repopItemFlag)
 		{
 			m_repopItemCountTime += delta;//時間経過
-			//float m_repopItemCountTimeMax = 5.0f;//リポップする時間
 
 			//クールタイム過ぎたら生成する,クールタイムの時間は調整必須
 			if (m_repopItemCountTime >= m_repopItemCountTimeMax)
