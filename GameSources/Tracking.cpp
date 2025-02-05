@@ -17,6 +17,7 @@ namespace basecross {
 		wstringstream wss(L"");
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のポジションを取得
+		m_Owner->SetSpeed(21.0f);//トラッキングのスピードに変更
 
 		AStarMove();//Aスター処理
 
