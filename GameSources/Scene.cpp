@@ -248,6 +248,21 @@ namespace basecross{
 		app->RegisterTexture(L"3Tex", strTexture);
 		strTexture = texPath + L"StartTex.png";//カウントダウンの３のテクスチャ
 		app->RegisterTexture(L"StartTex", strTexture);
+
+		strTexture = texPath + L"Wow_AngerLow.png";//発見時の怒りマークのテクスチャ(弱)
+		app->RegisterTexture(L"Wow_AngerLow", strTexture);
+		strTexture = texPath + L"Wow_AngerMiddle.png";//発見時の怒りマークのテクスチャ(中)
+		app->RegisterTexture(L"Wow_AngerMiddle", strTexture);	
+		strTexture = texPath + L"Wow_Anger.png";//発見時の怒りマークのテクスチャ(強)
+		app->RegisterTexture(L"Wow_AngerHi", strTexture);
+
+		strTexture = texPath + L"QuestionMark_AngerLow.png";//パトロール中の怒りマークのテクスチャ(弱)
+		app->RegisterTexture(L"search_AngerLow", strTexture);
+		strTexture = texPath + L"QuestionMark_AngerMiddle.png";//パトロール中の怒りマークのテクスチャ(中)
+		app->RegisterTexture(L"search_AngerMiddle", strTexture);	
+		strTexture = texPath + L"QuestionMark_AngerHi.png";//パトロール中の怒りマークのテクスチャ(強)
+		app->RegisterTexture(L"search_AngerHi", strTexture);
+
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
