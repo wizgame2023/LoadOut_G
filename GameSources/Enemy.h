@@ -16,6 +16,15 @@ namespace basecross {
 		perspective,
 		rush,
 	};
+
+	enum ANGER
+	{
+		ANGER_NONE,
+		ANGER_LOW,
+		ANGER_MIDDLE,
+		ANGER_HI
+	};
+
 	class Enemy :public Actor
 	{
 	private:
@@ -28,6 +37,7 @@ namespace basecross {
 		float m_angle;
 
 		int m_ability;
+		int m_anger;//どれくらい怒っているのかを表す変数(ステータスが上がる)
 
 		bool m_startPop;//最初のスポーンかリポップかを表す変数
 
@@ -49,7 +59,7 @@ namespace basecross {
 	public:
 		//コンストラクタ・デストラクタ
 		Enemy(shared_ptr<Stage>& StagePtr);
-		Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startpop = true, int ability = normal);
+		Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startpop = true, int ability = normal,int anger = 0);
 
 		~Enemy();
 		//生成・更新・削除
@@ -69,6 +79,7 @@ namespace basecross {
 		void SetSpeed(float speed);
 		float GetAngle();
 		int GetAbility();
+		int GetAnger();//怒り値を渡す
 		float GetDistance(Vec3 a, Vec3 b);
 		void SetAngle(float angle);
 		void GetGameOverScene();

@@ -17,7 +17,25 @@ namespace basecross {
 		wstringstream wss(L"");
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のポジションを取得
-		m_Owner->SetSpeed(21.0f);//トラッキングのスピードに変更
+		int anger = m_Owner->GetAnger();//怒り値を取得
+		//怒り値によってトラッキング時ののスピードを変更する
+		switch (anger)
+		{
+		case ANGER_NONE://怒ってない
+			m_Owner->SetSpeed(21.0f);
+			break;
+		case ANGER_LOW://怒ってる(弱)
+			m_Owner->SetSpeed(21.0f*1.05f);
+			break;
+		case ANGER_MIDDLE://怒ってる(中)
+			m_Owner->SetSpeed(21.0f*1.12f);
+			break;
+		case ANGER_HI://怒ってる(強)
+			m_Owner->SetSpeed(21.0f*1.2f);
+			break;
+		default:
+			break;
+		}
 
 		AStarMove();//Aスター処理
 

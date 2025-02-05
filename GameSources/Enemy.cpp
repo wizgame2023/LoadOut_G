@@ -17,10 +17,11 @@ namespace basecross {
 		m_playerPos(0,0,0),
 		m_speed(10),
 		m_angle(0),
-		m_startPop(true)//初めてのスポーンかどうか
+		m_startPop(true),//初めてのスポーンかどうか
+		m_anger(ANGER_NONE)
 	{
 	}
-	Enemy::Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startPop, int ability) :
+	Enemy::Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startPop, int ability,int anger) :
 		Actor(StagePtr),
 		m_pos(pos),
 		m_startPos(pos),
@@ -29,8 +30,14 @@ namespace basecross {
 		m_speed(10),
 		m_angle(0),
 		m_startPop(startPop),//初めてのスポーンかどうか
-		m_ability(ability)//Enemyの能力の宣言用
+		m_ability(ability),//Enemyの能力の宣言用
+		m_anger(anger)//どれくらい怒っているか(ステータスをどの位上げるか)
 	{
+		//もし怒り値が上限よりも上なら上限値に戻す
+		if (m_anger > ANGER_HI)
+		{
+			m_anger = ANGER_HI;
+		}
 	}
 	Enemy::~Enemy()
 	{
@@ -133,14 +140,54 @@ namespace basecross {
 
 		auto state = GetNowState();
 		//auto castEnemy = dynamic_pointer_cast<Enemy>(manhole);
-		if (!dynamic_pointer_cast<Tracking>(state))
+
+		//ビルボートの見た目変更どのくらい怒っているかで変更する
+		switch (m_anger)
 		{
-			m_billBoard->ChangeTexture(L"search");
+		case ANGER_NONE://怒ってない時
+			if (!dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"search");
+			}
+			if (dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"Wow");
+			}
+			break;
+		case ANGER_LOW://怒っている時(弱)
+			if (!dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"search_AngerLow");
+			}
+			if (dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"Wow_AngerLow");
+			}
+			break;
+		case ANGER_MIDDLE://怒っている時(中)
+			if (!dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"search_AngerMiddle");
+			}
+			if (dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"Wow_AngerMiddle");
+			}
+			break;
+		case ANGER_HI://怒っているとき(強)
+			if (!dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"search_AngerHi");
+			}
+			if (dynamic_pointer_cast<Tracking>(state))
+			{
+				m_billBoard->ChangeTexture(L"Wow_AngerHi");
+			}
+			break;
+		default:
+			break;
 		}
-		if (dynamic_pointer_cast<Tracking>(state))
-		{
-			m_billBoard->ChangeTexture(L"Wow");
-		}
+
 
 		//float angle = playerVec - m_angle;
 		//視界の作成
@@ -182,13 +229,19 @@ namespace basecross {
 		//auto SE = SEManager->Start(L"Scream", 0, 0.9f);
 		auto stage = GetStage();
 		auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+
+
 		//自分が鍵を持っているとき
 		if (this->FindTag(L"Key"))
 		{	
 			//鍵をPlayerに渡す
 			//GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
 			stageManager->SetPlayerKeyFlag(1);
-		}
+		}		
+		
+		//リポップ処理の予約
+		stageManager->SetRepopEnemyPos(m_startPos);//上の初期位置をStageManagerに渡す
+		stageManager->SetRepopEnemyAnger(++m_anger);//怒り値をプラスして渡す
 		stageManager->AddUpEnemyCount(1);//敵が１体打ちあがったことを知らせる
 
 	}
@@ -211,6 +264,13 @@ namespace basecross {
 	{
 		return m_ability;
 	}
+
+	//怒り値を渡す
+	int Enemy::GetAnger()
+	{
+		return m_anger;
+	}
+
 	void Enemy::SetAngle(float angle)
 	{
 		m_angle = angle;
