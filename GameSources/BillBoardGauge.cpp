@@ -9,7 +9,8 @@
 namespace basecross {
 	BillBoardGauge::BillBoardGauge(const shared_ptr<Stage>& StagePtr,
 		shared_ptr<GameObject>& actorPtr, wstring spriteName,int layer, float pushY, Vec3 scale) :
-		BillBoard(StagePtr, actorPtr, spriteName,layer, pushY, scale)
+		BillBoard(StagePtr, actorPtr, spriteName,layer, pushY, scale),
+		m_indices(vector<uint16_t>())
 	{
 
 	}
@@ -33,12 +34,8 @@ namespace basecross {
 			PtrTransform->SetQuaternion(SeekTransPtr->GetQuaternion());
 			//変更できるスクエアリソースを作成
 
-			//頂点配列
-			//vector<VertexPositionNormalTexture> vertices;
-			//インデックスを作成するための配列
-			vector<uint16_t> indices;
 			//Squareの作成(ヘルパー関数を利用)
-			MeshUtill::CreateSquare(1.0f, m_vertices, indices);
+			MeshUtill::CreateSquare(1.0f, m_vertices, m_indices);
 
 			//UV値の変更
 			//左上頂点
@@ -60,7 +57,7 @@ namespace basecross {
 				new_vertices.push_back(nv);
 			}
 			//新しい頂点を使ってメッシュリソースの作成
-			m_SquareMeshResource = MeshResource::CreateMeshResource<VertexPositionColorTexture>(new_vertices, indices, true);
+			m_SquareMeshResource = MeshResource::CreateMeshResource<VertexPositionColorTexture>(new_vertices, m_indices, true);
 
 			auto DrawComp = AddComponent<PCTStaticDraw>();
 			DrawComp->SetMeshResource(m_SquareMeshResource);
@@ -81,10 +78,10 @@ namespace basecross {
 			auto SeekPtr = m_actor.lock();
 			auto SeekTransPtr = SeekPtr->GetComponent<Transform>();
 
-			//インデックスを作成するための配列
-			vector<uint16_t> indices;
-			//Squareの作成(ヘルパー関数を利用)
-			MeshUtill::CreateSquare(1.0f, m_vertices, indices);
+			////インデックスを作成するための配列
+			//vector<uint16_t> indices;
+			////Squareの作成(ヘルパー関数を利用)
+			//MeshUtill::CreateSquare(1.0f, m_vertices, indices);
 
 			//アニメーション処理/////////////////////////////////////////
 			auto test = m_vertices[1].position;
@@ -108,7 +105,9 @@ namespace basecross {
 				new_vertices.push_back(nv);
 			}
 			//新しい頂点を使ってメッシュリソースの作成
-			m_SquareMeshResource = MeshResource::CreateMeshResource<VertexPositionColorTexture>(new_vertices, indices, true);
+			//m_SquareMeshResource
+			m_SquareMeshResource = MeshResource::CreateMeshResource<VertexPositionColorTexture>(new_vertices, m_indices, true);
+			//GetStage()->RemoveGameObject<VertexPositionColorTexture>(m_SquareMeshResource);
 
 
 			auto PtrTransform = GetComponent<Transform>();
