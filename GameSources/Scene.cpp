@@ -236,6 +236,8 @@ namespace basecross{
 		app->RegisterTexture(L"ClearConditionsText2", strTexture);
 		strTexture = texPath + L"Check.png";//チェックのテクスチャ
 		app->RegisterTexture(L"Check", strTexture);
+		strTexture = texPath + L"Spanner.png";//スパナのテクスチャ
+		app->RegisterTexture(L"Spanner", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
@@ -324,11 +326,11 @@ namespace basecross{
 
 
 		//ボーンモデル
-		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"police_ver1.1.bmf");//敵のメッシュ
+		auto boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"enemy_ver1.0.bmf");//敵のメッシュ警棒もってないバージョン
 		app->RegisterResource(L"Boss_Mesh_Kari", boneModelMesh);
 		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"kid_ver2.0.bmf");//プレイヤーのメッシュ
 		app->RegisterResource(L"kid_Mesh", boneModelMesh);
-		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"battry_ver1.2.bmf");//電池用のメッシュ
+		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"Spana_v1.0.bmf");//スパナに変更
 		app->RegisterResource(L"Battry", boneModelMesh);
 
 		//ボーンマルチメッシュ

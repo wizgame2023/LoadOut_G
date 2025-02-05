@@ -30,7 +30,7 @@ namespace basecross {
 		//Transform‚É‘Î‚µ‚Ä‚Ì“™·”—ñ
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
-			Vec3(0.25f, 0.25f, 0.25f),
+			Vec3(0.5f, 0.5f, 0.5f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)

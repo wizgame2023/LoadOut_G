@@ -78,7 +78,7 @@ namespace basecross{
 		{
 			//電池をどれくらい持っているかを表す
 			GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
-			GetStage()->AddGameObject<Sprite>(L"Battery1", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
+			GetStage()->AddGameObject<Sprite>(L"Spanner", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
 			m_spriteNum = GetStage()->AddGameObject<NuberManager>(m_itemCount, Vec2(30.0f, 30.0f), Vec3(-640.0f + 100.0f, 400 - 250.0f, 0.0f), true);//個数
 			MoveSwitch(true);
 
@@ -149,7 +149,7 @@ namespace basecross{
 			if (m_itemCount <= 0)
 			{
 				m_billBoard->SetScale(Vec3(3.0f, 3.0f, 3.0f));
-				m_billBoard->ChangeTexture(L"Battery_HaveNo");
+				m_billBoard->ChangeTexture(L"Spanner_HaveNo");
 			}
 		}
 
