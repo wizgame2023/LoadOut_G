@@ -234,6 +234,8 @@ namespace basecross{
 		app->RegisterTexture(L"ClearConditionsText1", strTexture);
 		strTexture = texPath + L"ClearConditionsText2.png";//鍵を入手する条件テクスチャ2
 		app->RegisterTexture(L"ClearConditionsText2", strTexture);
+		strTexture = texPath + L"Check.png";//チェックのテクスチャ
+		app->RegisterTexture(L"Check", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
