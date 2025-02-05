@@ -10,7 +10,8 @@ namespace basecross {
 	GameStart::GameStart(shared_ptr<Stage>& ptrStage,int mode,int enemyUpClearNum) :
 		GameObject(ptrStage),
 		m_stageMode(mode),
-		m_EnemyUpClearNum(enemyUpClearNum)
+		m_EnemyUpClearNum(enemyUpClearNum),
+		m_step(GAMESTART_Start)
 	{
 
 	}
@@ -84,20 +85,107 @@ namespace basecross {
 		auto inputDevice = App::GetApp()->GetInputDevice(); // 様々な入力デバイスを管理しているオブジェクトを取得
 		//コントローラーの取得
 		auto m_controler = inputDevice.GetControlerVec()[0];
-		auto Stage = GetStage();
+		auto stage = GetStage();
+		bool removeFlag = false;
+		auto delta = App::GetApp()->GetElapsedTime();
 
-		//Bボタンを押したらゲームスタート
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
+		//Bボタンを押したらカウントダウンをする
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B && m_step == GAMESTART_Start)
 		{
-			Stage->RemoveGameObject<GameStart>(GetThis<GameStart>());
 			//生成したスプライトを削除する処理
 			for (auto sprite : m_spriteVec)
 			{
-				auto test = dynamic_pointer_cast<Sprite>(sprite);
-				Stage->RemoveGameObject<Sprite>(test);
+				auto castSprite = dynamic_pointer_cast<Sprite>(sprite);
+				if (castSprite)
+				{
+					stage->RemoveGameObject<Sprite>(castSprite);
+				}
+			}
+			m_spriteVec.clear();//スプライト配列のリセット
+
+			m_step = GAMESTART_CountDown_One;//ステップ更新
+
+			//カウントダウンSE再生
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			SEManager->Start(L"CountDownSE", 0, 3.5f);
+
+		}
+
+		//カウントダウン
+		if (m_step == GAMESTART_CountDown_One)
+		{			
+			m_CountDownTimeCount += delta;
+			//出てくる時間に少しラグを付けて3を出す
+			if (m_CountDownTimeCount > 0.1f)
+			{
+				m_spriteCountDown = stage->AddGameObject<Sprite>(L"3Tex", Vec2(500, 500));
+				m_spriteVec.push_back(m_spriteCountDown);
+				m_step = GAMESTART_CountDown_Two;//ステップ更新
+			}
+		}
+
+		if (m_step == GAMESTART_CountDown_Two)
+		{
+			m_CountDownTimeCount += delta;
+			//2を出す
+			if (m_CountDownTimeCount > 1.0f)
+			{
+				m_spriteCountDown->SetTexture(L"2Tex");
+				m_step = GAMESTART_CountDown_Three;//ステップ更新
+			}
+		}
+
+		if (m_step == GAMESTART_CountDown_Three)
+		{
+			m_CountDownTimeCount += delta;
+			//1を出す
+			if (m_CountDownTimeCount > 2.0f)
+			{
+				m_spriteCountDown->SetTexture(L"1Tex");
+				m_step = GAMESTART_CountDown_Start;//ステップ更新
+
+			}
+		}
+
+		if (m_step == GAMESTART_CountDown_Start)
+		{
+			m_CountDownTimeCount += delta;
+			//Startを出す
+			if (m_CountDownTimeCount > 3.0f)
+			{
+				m_spriteCountDown->SetTexture(L"Clear");//透明スプライトに置き換え
+				m_spriteCountDown = stage->AddGameObject<Sprite>(L"StartTex", Vec2(1000, 1000));
+				m_spriteVec.push_back(m_spriteCountDown);
+
+				m_step = GAMESTART_End;//ステップ更新
+			}
+		}
+
+		if (m_step == GAMESTART_End)
+		{
+			m_CountDownTimeCount += delta;
+			//ある程度Startのテクスチャを見せたら
+			if (m_CountDownTimeCount > 3.5f)
+			{
+				removeFlag = true;//削除を開始する
+			}
+		}
+
+		//カウントダウンが終わったら消去処理をする
+		if (removeFlag)
+		{
+			stage->RemoveGameObject<GameStart>(GetThis<GameStart>());
+			//生成したスプライトを削除する処理
+			for (auto sprite : m_spriteVec)
+			{
+				auto castSprite = dynamic_pointer_cast<Sprite>(sprite);
+				if (castSprite)
+				{
+					stage->RemoveGameObject<Sprite>(castSprite);
+				}
 			}
 
-			auto objVec = Stage->GetGameObjectVec();
+			auto objVec = stage->GetGameObjectVec();
 			for (auto obj : objVec)
 			{
 				auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
@@ -112,9 +200,8 @@ namespace basecross {
 			{
 				m_nuberManager->SetDestroyFlag(true);//ナンバーマネージャを削除するフラグを立てる
 			}
-
-
 		}
+
 	}
 
 	//削除時処理
