@@ -300,7 +300,9 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"Scream2", soundWav);
 		soundWav = SoundPath + L"SetManhole.wav";//ã©‚ðƒZƒbƒg‚·‚éSE
 		App::GetApp()->RegisterWav(L"SetManhole", soundWav);
-	
+		soundWav = SoundPath + L"KeySE.wav";//Œ®‚ðŽè‚É“ü‚ê‚½SE
+		App::GetApp()->RegisterWav(L"KeySE", soundWav);
+
 		soundWav = SoundPath + L"Enemyded.wav";
 		App::GetApp()->RegisterWav(L"EnemyDed", soundWav);
 		soundWav = SoundPath + L"TIlteStage.wav";
