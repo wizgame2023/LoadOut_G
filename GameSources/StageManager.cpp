@@ -166,9 +166,10 @@ namespace basecross {
 			//クールタイム過ぎたら敵がリポップする
 			if (m_repopEnemyCountTime >= m_repopEnemyCountTimeMax)
 			{
-				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]+Vec3(0.0f,30.0f,0.0f), false);//リポップ
+				stage->AddGameObject<Enemy>(m_repopEnemyPos[0]+Vec3(0.0f,30.0f,0.0f), false,normal,m_repopEnemyAnger[0]);//リポップ
 				m_repopEnemyCountTime = 0;//カウントリセット
 				m_repopEnemyPos.erase(m_repopEnemyPos.begin());//生成した物は配列から削除する
+				m_repopEnemyAnger.erase(m_repopEnemyAnger.begin());//生成した物は配列から削除する
 			}
 		}
 	}
@@ -600,6 +601,11 @@ namespace basecross {
 	void StageManager::SetRepopEnemyPos(Vec3 pos)
 	{
 		m_repopEnemyPos.push_back(pos);
+	}
+	//repopEnemyAngerのセッター
+	void StageManager::SetRepopEnemyAnger(int anger)
+	{
+		m_repopEnemyAnger.push_back(anger);
 	}
 	//repopRandomItemPosのセッター
 	void StageManager::SetRepopRandomItemPos(Vec3 pos)

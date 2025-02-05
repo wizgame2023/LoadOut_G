@@ -63,6 +63,8 @@ namespace basecross {
 		vector<Vec3> m_repopEnemyPos;//リポップするEnemyのポジション
 		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション
 
+		vector<int> m_repopEnemyAnger;//リポップするEnemyの怒り値の配列
+
 	public:
 		StageManager(shared_ptr<Stage>& stagePtr, int batteryMax = 5, float repopItemCountTimeMax = 15.0f,float repopEnemyCountTimeMax = 15.0f,
 					 float repopRamdomItemCountTimeMax = 60.0f
@@ -90,6 +92,7 @@ namespace basecross {
 		void SetGameOverFlag(bool flag);//セッター
 		void SetPlayerKeyFlag(int flag);//セッター
 		void SetRepopEnemyPos(Vec3 pos);//セッター
+		void SetRepopEnemyAnger(int anger);//リポップする敵の怒り値のセッター
 		void SetRepopRandomItemPos(Vec3 pos);//セッター
 		void SetUpdateFlag(bool flag);//アップデートするかのセッター
 		void SetStartFlag(bool Step);//ゲームが開始したかのセッター
