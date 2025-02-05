@@ -77,9 +77,9 @@ namespace basecross{
 		if (m_gameStageFlag)
 		{
 			//電池をどれくらい持っているかを表す
-			GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 50.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
-			GetStage()->AddGameObject<Sprite>(L"Spanner", Vec2(30.0f, 50.0f), Vec3(-640.0f + 20.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
-			m_spriteNum = GetStage()->AddGameObject<NuberManager>(m_itemCount, Vec2(30.0f, 30.0f), Vec3(-640.0f + 100.0f, 400 - 250.0f, 0.0f), true);//個数
+			GetStage()->AddGameObject<Sprite>(L"Cross", Vec2(30.0f, 30.0f), Vec3(-640.0f + 60.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//クロス
+			GetStage()->AddGameObject<Sprite>(L"Spanner", Vec2(40.0f, 40.0f), Vec3(-640.0f + 25.0f, 400 - 250.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));//電池のテクスチャ
+			m_spriteNum = GetStage()->AddGameObject<NuberManager>(m_itemCount, Vec2(30.0f, 30.0f), Vec3(-640.0f + 105.0f, 400 - 250.0f, 0.0f), true);//個数
 			MoveSwitch(true);
 
 			//ビルボード生成
