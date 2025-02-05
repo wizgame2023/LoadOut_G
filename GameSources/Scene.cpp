@@ -240,6 +240,14 @@ namespace basecross{
 		app->RegisterTexture(L"Spanner", strTexture);
 		strTexture = texPath + L"Spanner_HaveNo.png";//スパナを持ってないと知らせるテクスチャ
 		app->RegisterTexture(L"Spanner_HaveNo", strTexture);
+		strTexture = texPath + L"1Tex.png";//カウントダウンの１のテクスチャ
+		app->RegisterTexture(L"1Tex", strTexture);
+		strTexture = texPath + L"2Tex.png";//カウントダウンの２のテクスチャ
+		app->RegisterTexture(L"2Tex", strTexture);
+		strTexture = texPath + L"3Tex.png";//カウントダウンの３のテクスチャ
+		app->RegisterTexture(L"3Tex", strTexture);
+		strTexture = texPath + L"StartTex.png";//カウントダウンの３のテクスチャ
+		app->RegisterTexture(L"StartTex", strTexture);
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
@@ -323,6 +331,8 @@ namespace basecross{
 		App::GetApp()->RegisterWav(L"Choice", soundWav);
 		soundWav = SoundPath + L"Decision.wav";//決定
 		App::GetApp()->RegisterWav(L"Decision", soundWav);
+		soundWav = SoundPath + L"CountDown.wav";//カウントダウン
+		App::GetApp()->RegisterWav(L"CountDownSE", soundWav);
 
 		//モデルテクスチャ
 		wstring modelTexture = modPath + L"Boss.png";//敵(仮)のテクスチャ
