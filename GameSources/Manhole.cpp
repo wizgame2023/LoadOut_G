@@ -255,7 +255,7 @@ namespace basecross {
 					if (castEnemy)
 					{
 						Vec3 castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
-						if (abs(m_pos.x - castEnemyPos.x) <= 11.0f && abs(m_pos.z - castEnemyPos.z) <= 11.0f)
+						if (abs(m_pos.x - castEnemyPos.x) <= 8.0f || abs(m_pos.z - castEnemyPos.z) <= 8.0f)
 						{
 							m_upEnemyVec.push_back(castEnemy);
 						}
@@ -316,11 +316,11 @@ namespace basecross {
 				{
 					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
 
-					//マンホールの座標が近ければ同じなら打ち上げる配列に入れる
+					//マンホールの座標から近ければ同じなら打ち上げる配列に入れる
 					if (castEnemy)
-					{
+					{			
 						Vec3 castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
-						if (abs(m_pos.x - castEnemyPos.x) <= 11.0f && abs(m_pos.z - castEnemyPos.z) <= 11.0f)
+						if (abs(m_pos.x - castEnemyPos.x) <= 8.0f && abs(m_pos.z - castEnemyPos.z) <= 8.0f)
 						{
 							m_upEnemyVec.push_back(castEnemy);
 						}
