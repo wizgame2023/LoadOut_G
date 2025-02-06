@@ -327,6 +327,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TrackingBoar.h">
       <Filter>Headers\StateEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEnemyMulti.h">
+      <Filter>Headers\Movie</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -577,6 +580,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TrackingBoar.cpp">
       <Filter>Sources\StateEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpEnemyMulti.cpp">
+      <Filter>Sources\Movie</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
