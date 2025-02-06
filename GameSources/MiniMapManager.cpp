@@ -41,6 +41,7 @@ namespace basecross {
 		CreateEnemy();
 		CreatePlayer();
 		CreateWall();
+		//CreateHatch();
 	}
 
 	void MiniMapManager::OnUpdate()
@@ -179,6 +180,28 @@ namespace basecross {
 			}
 		}
 
+	}
+
+	//ミニマップ用のハッチを作成
+	void MiniMapManager::CreateHatch()
+	{
+		auto stage = GetStage();//ステージ取得
+		//ステージのオブジェクトを全て取得
+		auto objVec = stage->GetGameObjectVec();
+		//取得したオブジェクトがアイテムに変換できたら配列に入れる
+		for (auto obj : objVec)
+		{
+			auto castHatch = dynamic_pointer_cast<Hatch>(obj);
+			if (castHatch)//アイテム型にキャストする
+			{
+				auto hatchTrans = castHatch->GetComponent<Transform>();
+				auto hatchPos = hatchTrans->GetPosition();
+				auto hatchScale = hatchTrans->GetScale();
+
+				stage->AddGameObject<MiniMapHatch>(L"White", Vec2((hatchScale.x * m_mapMagnification), (hatchScale.z * m_mapMagnification)),
+					Vec3(m_startPos.x + (hatchPos.x * m_mapMagnification), m_startPos.y + (hatchPos.z * m_mapMagnification), 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(0.35f, 1.0f, 0.1f, 1.0f), 10);//緑
+			}
+		}
 	}
 
 	//ミニマップの用の壁を作成

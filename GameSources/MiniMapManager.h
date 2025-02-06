@@ -12,6 +12,8 @@ namespace basecross {
 	private:
 		Vec3 m_startPos;//初期位置(ピポット)
 
+		//weak_ptr<Hatch> m_spriteHatch;//ミニマップのハッチ
+
 		int m_beforeItemNum;//前のアイテムの個数
 		int m_beforeEnemyNum;//前の敵の数
 
@@ -28,6 +30,7 @@ namespace basecross {
 		void CreateWall();//ミニマップの壁を生成する
 		void CreateBattery();//ミニマップのアイテムを生成する
 		void CreateManhole();//ミニマップのマンホールを生成する
+		void CreateHatch();//ミニマップのハッチを生成する
 		//void CreateWall();//ミニマップの壁を生成する
 		void CreateEnemy();//ミニマップの敵を生成する
 		void CreatePlayer();//ミニマップのプレイヤーを生成する
