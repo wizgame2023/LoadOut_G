@@ -262,7 +262,8 @@ namespace basecross {
 				if (m_playerUpTime >= 0.5f)
 				{
 					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+					m_charen = Manhole_Up;//マンホールが上がる状態にする
+					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
 					GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 				}
 			}
@@ -309,6 +310,7 @@ namespace basecross {
 				if (m_playerUpTime >= 0.5f)
 				{
 					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+					m_charen = Manhole_Up;//マンホールが上がる状態にする
 					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 					stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 				}
