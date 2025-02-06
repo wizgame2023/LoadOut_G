@@ -38,7 +38,7 @@ namespace basecross {
 		virtual void OnCreate()override;//作成
 		virtual void OnUpdate()override;//更新
 
-		void OnClear(bool OnOff);//透明になる関数
+		virtual void OnClear(bool OnOff);//透明になる関数
 
 		void SetColor(Col4 coler);//セッター
 		void SetTexture(wstring Texture);//セッター
