@@ -251,16 +251,14 @@ namespace basecross {
 				{
 					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
 
-					//キャストできたならposを見てマンホールのセル座標同じなら打ち上げる配列に入れる
-					if (castEnemy) continue;
-
-					auto castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
-					auto castEnemySelPos = mapManager->ConvertSelMap(castEnemyPos);
-
-					//Enemyのセル座標を見てマンホールのセル座標同じなら打ち上げる配列に入れる
-					if (castEnemySelPos == selPos)
+					//マンホールの座標が近ければ同じなら打ち上げる配列に入れる
+					if (castEnemy)
 					{
-						m_upEnemyVec.push_back(castEnemy);//配列に入れる
+						Vec3 castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
+						if (abs(m_pos.x - castEnemyPos.x) <= 11.0f && abs(m_pos.z - castEnemyPos.z) <= 11.0f)
+						{
+							m_upEnemyVec.push_back(castEnemy);
+						}
 					}
 				}
 
@@ -295,6 +293,7 @@ namespace basecross {
 	{
 		auto mapManager = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
+		//auto enemyPos = enemy->GetComponent<Transform>()->GetPosition();
 		auto player = dynamic_pointer_cast<Player>(other);
 		auto stage = GetStage();
 
@@ -317,16 +316,13 @@ namespace basecross {
 				{
 					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
 
-					//キャストできたならposを見てマンホールのセル座標同じなら打ち上げる配列に入れる
+					//マンホールの座標が近ければ同じなら打ち上げる配列に入れる
 					if (castEnemy)
 					{
-						auto castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
-						auto castEnemySelPos = mapManager->ConvertSelMap(castEnemyPos);
-
-						//Enemyのセル座標を見てマンホールのセル座標同じなら打ち上げる配列に入れる
-						if (castEnemySelPos == selPos)
+						Vec3 castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
+						if (abs(m_pos.x - castEnemyPos.x) <= 11.0f && abs(m_pos.z - castEnemyPos.z) <= 11.0f)
 						{
-							m_upEnemyVec.push_back(castEnemy);//配列に入れる
+							m_upEnemyVec.push_back(castEnemy);
 						}
 					}
 				}
