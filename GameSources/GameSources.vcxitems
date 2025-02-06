@@ -54,6 +54,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ManholeSprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MapManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MathTools.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapHatch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MIniMapItem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapActor.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Manhole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ManholeSprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapHatch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapItem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapActor.cpp" />
