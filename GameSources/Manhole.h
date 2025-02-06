@@ -21,6 +21,8 @@ namespace basecross {
 		shared_ptr<BillBoard> m_billBoard;//ビルボード
 		shared_ptr<BillBoardGauge> m_billBoardSecond;//2つめのビルボード
 
+		vector<weak_ptr<Enemy>> m_upEnemyVec;//打ち上げる敵ポインタの配列
+
 		int m_charen;//進行度
 
 		float m_coolTime;//時間を測るために必要

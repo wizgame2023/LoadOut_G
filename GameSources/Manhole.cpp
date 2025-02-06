@@ -236,26 +236,47 @@ namespace basecross {
 		{//もし当たったオブジェクトが敵なら
 			if (enemy)
 			{
-				//GetStage()->RemoveGameObject<Enemy>(enemy);//まだ敵をリムーブしない
 				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
-
 
 				player = stage->GetSharedGameObject<Player>(L"Player");
 				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
 				auto playerSelPos = mapManager->ConvertSelMap(playerPos);
 				auto selPos = mapManager->ConvertSelMap(m_pos);
 
+				//ステージのオブジェクトを全て取得
+				auto objVec = stage->GetGameObjectVec();
+				//取得したオブジェクトがアイテムに変換できたら配列に入れる
+				for (auto obj : objVec)
+				{
+					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
+
+					//キャストできたならposを見てマンホールのセル座標同じなら打ち上げる配列に入れる
+					if (castEnemy) continue;
+
+					auto castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
+					auto castEnemySelPos = mapManager->ConvertSelMap(castEnemyPos);
+
+					//Enemyのセル座標を見てマンホールのセル座標同じなら打ち上げる配列に入れる
+					if (castEnemySelPos == selPos)
+					{
+						m_upEnemyVec.push_back(castEnemy);//配列に入れる
+					}
+				}
+
 				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
 				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
 				{
 					stage->AddGameObject<MovieUpEandP>(enemy, player);
 				}
+				else if (m_upEnemyVec.size() >= 2)//打ちあがる敵が２体以上いたら
+				{
+					stage->AddGameObject<MovieUpEnemyMulti>(m_upEnemyVec);//複数の敵が打ちあがる時のムービー
+				}
 				else//敵だけマンホールを踏んでいる映像
 				{
 					stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
 				}
-
 			}
 			else if (player)//プレイヤーなら
 			{
@@ -281,28 +302,49 @@ namespace basecross {
 		{//もし当たったオブジェクトが敵なら
 			if (enemy)
 			{
-				//GetStage()->RemoveGameObject<Enemy>(enemy);//まだ敵をリムーブしない
 				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
-
-				//auto enemyStartPos = enemy->GetStartPos();//敵の初期位置を取得
-				//auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
-				//stageManager->SetRepopEnemyPos(enemyStartPos);//上の初期位置をStageManagerに渡す
 
 				player = stage->GetSharedGameObject<Player>(L"Player");
 				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
 				auto playerSelPos = mapManager->ConvertSelMap(playerPos);
 				auto selPos = mapManager->ConvertSelMap(m_pos);
 
+				//ステージのオブジェクトを全て取得
+				auto objVec = stage->GetGameObjectVec();
+				//取得したオブジェクトがアイテムに変換できたら配列に入れる
+				for (auto obj : objVec)
+				{
+					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
+
+					//キャストできたならposを見てマンホールのセル座標同じなら打ち上げる配列に入れる
+					if (castEnemy)
+					{
+						auto castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
+						auto castEnemySelPos = mapManager->ConvertSelMap(castEnemyPos);
+
+						//Enemyのセル座標を見てマンホールのセル座標同じなら打ち上げる配列に入れる
+						if (castEnemySelPos == selPos)
+						{
+							m_upEnemyVec.push_back(castEnemy);//配列に入れる
+						}
+					}
+				}
+
 				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
 				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
 				{
 					stage->AddGameObject<MovieUpEandP>(enemy, player);
 				}
+				else if (m_upEnemyVec.size() >= 2)//打ちあがる敵が２体以上いたら
+				{
+					stage->AddGameObject<MovieUpEnemyMulti>(m_upEnemyVec);//複数の敵が打ちあがる時のムービー
+				}
 				else//敵だけマンホールを踏んでいる映像
 				{
 					stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
 				}
+				m_upEnemyVec.clear();//使い終わったor使わないので削除する
 
 			}
 			else if (player)//プレイヤーなら
