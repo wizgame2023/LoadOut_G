@@ -101,6 +101,12 @@ namespace basecross {
 					stage->RemoveGameObject<Sprite>(castSprite);
 				}
 			}
+			//ステージモードが複数の敵を倒すモードなら
+			if (m_stageMode == 2)
+			{
+				m_nuberManager->SetDestroyFlag(true);//ナンバーマネージャを削除するフラグを立てる
+			}
+
 			m_spriteVec.clear();//スプライト配列のリセット
 
 			m_step = GAMESTART_CountDown_One;//ステップ更新
@@ -194,11 +200,6 @@ namespace basecross {
 				{
 					spriteCast->OnClear(false);//透明から戻す
 				}
-			}
-			//ステージモードが複数の敵を倒すモードなら
-			if (m_stageMode == 2)
-			{
-				m_nuberManager->SetDestroyFlag(true);//ナンバーマネージャを削除するフラグを立てる
 			}
 		}
 
