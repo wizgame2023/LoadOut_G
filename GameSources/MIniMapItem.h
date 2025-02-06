@@ -30,7 +30,6 @@ namespace basecross {
 			Col4 color = Col4(1.0f, 1.0f, 1.0f, 1.0f), int layer = 1);//コンストラクタ
 		virtual ~MiniMapItem();//デストラクタ
 
-		//virtual void OnCreate()override;//作成
 		virtual void OnUpdate()override;//更新
 
 	};
