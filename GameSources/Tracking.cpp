@@ -28,10 +28,10 @@ namespace basecross {
 			m_Owner->SetSpeed(21.0f*1.05f);
 			break;
 		case ANGER_MIDDLE://“{‚Á‚Ä‚é(’†)
-			m_Owner->SetSpeed(21.0f*1.12f);
+			m_Owner->SetSpeed(21.0f*1.2f);
 			break;
 		case ANGER_HI://“{‚Á‚Ä‚é(‹­)
-			m_Owner->SetSpeed(21.0f*1.2f);
+			m_Owner->SetSpeed(21.0f*1.35f);
 			break;
 		default:
 			break;
