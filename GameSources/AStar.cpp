@@ -414,6 +414,13 @@ namespace basecross {
 		}
 		else if(routePos.size() - 1 <= routeCount + 1)//移動処理がこれで最後の場合
 		{
+			//ルートサーチを最初にした場合の移動方法の検索処理
+			if (m_aStarFirst)
+			{
+				m_movePos = routePos[routeCount] - pos;//現在の座標と目的地の差を確認する
+				m_aStarFirst = false;//ルートサーチの一番最初の状態ではなくなった
+			}
+
 			//数値を１やー１に固定化する 三項演算子は０の場合だと問題になるため使わない
 			if (m_movePos.x > 0)//正の数なら
 			{
