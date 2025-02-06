@@ -187,6 +187,8 @@ namespace basecross {
 			GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);//Playerに鍵を渡す
 			//SEを鳴らす
 			m_bgmManager->Start(L"KeySE", 0, 0.9f);
+			//ハッチの場所をミニマップに出現させる
+			stage->GetSharedGameObject<MiniMapManager>(L"MiniMapManager")->CreateHatch();
 
 			m_PlayerKeyFlag = 2;//一度しかこの処理をしないようにする
 
