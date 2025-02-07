@@ -86,7 +86,7 @@ namespace basecross{
 			m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",2, 12.0f);
 			m_billBoard->SetScale(Vec3(0.0f, 0.0f, 0.0f));
 			//ステータス上方下方エフェクト
-			m_pillar = GetStage()->AddGameObject<TrackingPillarEfect>(Vec3(0.0f, 0.0f, 0.0f), L"Clear", Vec2(0.0f, -1.0f));
+			m_pillar = GetStage()->AddGameObject<TrackingPillarEfect>(GetThis<Actor>(),Vec3(0.0f, 0.0f, 0.0f), L"Clear", Vec2(0.0f, -1.0f));
 			
 		}
 	}
