@@ -8,8 +8,9 @@
 
 namespace basecross {
 	//コンストラクタ
-	TrackingPillarEfect::TrackingPillarEfect(const shared_ptr<Stage>& stagePtr, Vec3 pos, wstring textureName, Vec2 velocity, int square) :
-		PillarEffect(stagePtr,pos,textureName,velocity,square)
+	TrackingPillarEfect::TrackingPillarEfect(const shared_ptr<Stage>& stagePtr,weak_ptr<Actor> actor, Vec3 pos, wstring textureName, Vec2 velocity, int square) :
+		PillarEffect(stagePtr,pos,textureName,velocity,square),
+		m_actor(actor)
 	{
 
 	}
@@ -22,8 +23,16 @@ namespace basecross {
 	//更新
 	void TrackingPillarEfect::OnUpdate()
 	{
-		auto player = GetStage()->GetSharedGameObject<Player>(L"Player");
-		auto playerPos = player->GetComponent<Transform>()->GetPosition();
+		//auto player = GetStage()->GetSharedGameObject<Player>(L"Player");
+		auto actor = m_actor.lock();
+		//追尾する元がいなくなれば自分もいなくなる
+		if (!actor)
+		{
+			GetStage()->RemoveGameObject<TrackingPillarEfect>(GetThis<TrackingPillarEfect>());
+			return;
+		}
+
+		auto actorPos = actor->GetComponent<Transform>()->GetPosition();
 		float delta = App::GetApp()->GetElapsedTime();
 
 		for (auto& vertex : m_vertices)
@@ -34,8 +43,8 @@ namespace basecross {
 		//m_test += m_scrollVelocity * delta;//uv座標をずらしている
 		auto Trans = GetComponent<Transform>();
 		auto pos = GetComponent<Transform>()->GetPosition();
-		playerPos.y = pos.y;
-		pos = playerPos;
+		actorPos.y = pos.y;
+		pos = actorPos;
 		Trans->SetPosition(pos);
 
 		if (m_isUpdate)
