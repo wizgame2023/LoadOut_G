@@ -147,9 +147,6 @@ namespace basecross {
 		{
 			m_BGMChase = false;
 		}
-
-
-
 	}
 
 	//Enemyのリポップ装置
