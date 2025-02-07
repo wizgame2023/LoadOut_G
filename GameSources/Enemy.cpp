@@ -96,6 +96,21 @@ namespace basecross {
 		//ビルボードの生成
 		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(),L"Clear",2,13.0f);
 
+		//怒り値が１以上かかわかりやすくするためのエフェクト
+		switch (m_anger)
+		{
+		case ANGER_LOW:
+			GetStage()->AddGameObject<TrackingPillarEfect>(GetThis<Actor>(), Vec3(0.0f, 0.0f, 0.0f), L"AngerEffectLow", Vec2(0.0f, +1.0f));
+			break;
+		case ANGER_MIDDLE:
+			GetStage()->AddGameObject<TrackingPillarEfect>(GetThis<Actor>(), Vec3(0.0f, 0.0f, 0.0f), L"AngerEffectMiddle", Vec2(0.0f, +1.0f));
+			break;
+		case ANGER_HI:
+			GetStage()->AddGameObject<TrackingPillarEfect>(GetThis<Actor>(), Vec3(0.0f, 0.0f, 0.0f), L"AngerEffectHi", Vec2(0.0f, +1.0f));
+			break;
+		default:
+			break;
+		}
 
 	}
 
