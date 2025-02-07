@@ -63,7 +63,7 @@ namespace basecross {
 		SetSharedGameObject(L"CollsionManager", collisionManager);		
 		
 		//ステージマネージャー生成
-		auto stageManager = AddGameObject<StageManager>(4);
+		auto stageManager = AddGameObject<StageManager>(4,15.0f,12.0f);
 		SetSharedGameObject(L"StageManager", stageManager);
 
 		//ミニマップマネージャ生成
@@ -87,7 +87,7 @@ namespace basecross {
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
 
-		stageManager->ClearMode(2,4);//一定数敵を倒すと鍵が手に入るモード
+		stageManager->ClearMode(2,5);//一定数敵を倒すと鍵が手に入るモード
 
 		AddGameObject<UIManager>();//UIマネージャーの生成
 
