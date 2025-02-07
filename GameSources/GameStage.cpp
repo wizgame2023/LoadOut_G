@@ -83,7 +83,7 @@ namespace basecross {
 		//敵生成
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
-		stageManager->ClearMode(1);//クリア条件を決める
+		stageManager->ClearMode(2,1);//クリア条件を決める
 
 		AddGameObject<UIManager>();
 
