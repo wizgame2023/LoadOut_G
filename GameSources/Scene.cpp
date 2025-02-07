@@ -263,6 +263,13 @@ namespace basecross{
 		strTexture = texPath + L"QuestionMark_AngerHi.png";//パトロール中の怒りマークのテクスチャ(強)
 		app->RegisterTexture(L"search_AngerHi", strTexture);
 
+		strTexture = texPath + L"AngerEffectLow.png";//Enemyが怒った時のエフェクトテクスチャ(弱)
+		app->RegisterTexture(L"AngerEffectLow", strTexture);
+		strTexture = texPath + L"AngerEffectMiddle.png";//Enemyが怒った時のエフェクトテクスチャ(中)
+		app->RegisterTexture(L"AngerEffectMiddle", strTexture);
+		strTexture = texPath + L"AngerEffectHi.png";//Enemyが怒った時のエフェクトテクスチャ(強)
+		app->RegisterTexture(L"AngerEffectHi", strTexture);
+
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
