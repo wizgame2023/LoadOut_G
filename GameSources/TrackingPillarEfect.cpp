@@ -43,7 +43,7 @@ namespace basecross {
 		//m_test += m_scrollVelocity * delta;//uvÀ•W‚ğ‚¸‚ç‚µ‚Ä‚¢‚é
 		auto Trans = GetComponent<Transform>();
 		auto pos = GetComponent<Transform>()->GetPosition();
-		actorPos.y = pos.y;
+		//actorPos.y = pos.y;
 		pos = actorPos;
 		Trans->SetPosition(pos);
 
