@@ -42,10 +42,10 @@ namespace basecross {
 		ptrDraw->SetOwnShadowActive(true); // 影の映り込みを反映させる
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
-		//コリジョン生成
-		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
+		////コリジョン生成
+		//auto ptrColl = AddComponent<CollisionObb>();
+		//ptrColl->SetAfterCollision(AfterCollision::None);
+		//ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -64,19 +64,12 @@ namespace basecross {
 		auto nowYuka = mapManager->SelMapNow(pos);//今のセル座標はどの状態かを見る
 		if (nowYuka == 5)//ハッチが開かれている状態であれば
 		{
-			//色を変える
-			auto ptrDraw = GetComponent<PNTStaticDraw>();
-			ptrDraw->SetTextureResource(L"Black");
-
 			if (m_count == 0)
 			{
 				m_count = 1;
 				stage->AddGameObject<MovieGameClear>();//デバック用
 
 			}
-
-
-			
 
 			//ステージマネージャーにゲームクリアのフラグを渡す
 			//auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");

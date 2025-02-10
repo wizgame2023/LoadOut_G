@@ -131,11 +131,7 @@ namespace basecross{
 		{
 			if (selNow == 4)//今いる床がハッチなら
 			{
-				if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
-				{
-					mapManager->MapDataUpdate(pos, 5);//脱出状態にする
-
-				}
+				mapManager->MapDataUpdate(pos, 5);//脱出状態にする
 			}
 		}
 		//バッテリーが1以上でマンホールの上にいるならBを押して設置するビルボードを出す
@@ -160,11 +156,6 @@ namespace basecross{
 			{
 				m_billBoard->SetScale(Vec3(3.0f, 3.0f, 3.0f));
 				m_billBoard->ChangeTexture(L"Key_HaveNo");
-			}
-			if (m_key)
-			{
-				m_billBoard->SetScale(Vec3(8.0f, 8.0f, 3.0f));
-				m_billBoard->ChangeTexture(L"Manhole_BillBoard_Push");
 			}
 		}	
 		
