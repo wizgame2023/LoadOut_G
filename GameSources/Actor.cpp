@@ -8,7 +8,8 @@
 
 namespace basecross {
 	Actor::Actor(shared_ptr<Stage>& stagePtr):
-		GameObject(stagePtr)
+		GameObject(stagePtr),
+		m_move(true)
 	{
 
 	}
