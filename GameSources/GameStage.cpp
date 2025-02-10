@@ -62,7 +62,7 @@ namespace basecross {
 		SetSharedGameObject(L"CollsionManager", collisionManager);		
 		
 		//ステージマネージャー生成
-		auto stageManager = AddGameObject<StageManager>(3,15.0f);
+		auto stageManager = AddGameObject<StageManager>(3,15.0f,10.0f);
 		SetSharedGameObject(L"StageManager", stageManager);
 
 		//ミニマップマネージャ生成
