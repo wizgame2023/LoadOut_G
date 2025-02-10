@@ -252,7 +252,7 @@ namespace basecross {
 			//Œ®‚ğPlayer‚É“n‚·
 			//GetStage()->GetSharedGameObject<Player>(L"Player")->SetKey(true);
 			stageManager->SetPlayerKeyFlag(1);
-		}		
+		}
 		
 		//ƒŠƒ|ƒbƒvˆ—‚Ì—\–ñ
 		stageManager->SetRepopEnemyPos(m_startPos);//ã‚Ì‰ŠúˆÊ’u‚ğStageManager‚É“n‚·
