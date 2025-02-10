@@ -63,7 +63,7 @@ namespace basecross {
 
 		vector<Vec3>m_posVec;
 		vector<Vec3> m_tagetRootPos;//通る道の配列
-		Vec3 m_tagetPos;//目的地のワールド座標
+		Vec3 m_tagetPos;//目的地のワールド座標(使用していない)
 
 
 		//AStarMapの情報を入れる配列
