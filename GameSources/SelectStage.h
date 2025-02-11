@@ -45,14 +45,20 @@ namespace basecross {
 		
 		bool m_decisionFlag;//選択したかどうかのフラグ
 		bool m_stickCheck;//スティックの傾けた処理を受け取るかのフラグ
-		bool m_stickLongCheck;
+		bool m_stickLongCheck;//長く傾けているかのフラグ
+
+		bool m_updateFlag;//アップデートのフラグ
 
 
 		CONTROLER_STATE m_controler;//コントローラー
 
 	public:
 		//構築と破棄
-		SelectStage() :Stage(),m_stickCheck(true) {}
+		SelectStage() :
+			Stage(),
+			m_stickCheck(true),
+			m_updateFlag(true)
+		{}
 		virtual ~SelectStage() {}
 		//初期化
 		virtual void OnCreate()override;
@@ -61,6 +67,7 @@ namespace basecross {
 		void SelectionStage();//どのステージにするかの選択処理
 
 		void OnDestroy()override;
+		void SetUpdateFlag(bool onOff);//アップデートするかのセッター
 
 	};
 

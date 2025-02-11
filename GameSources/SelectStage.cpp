@@ -74,6 +74,9 @@ namespace basecross {
 		//コントローラーのアナログスティックの向き
 		m_controler = inputDevice.GetControlerVec()[0];
 
+		//フラグがオンになったらアップデートする
+		if (!m_updateFlag) return;
+
 		m_countTime += App::GetApp()->GetElapsedTime();
 		//Lstickの傾いてる時間が１秒超えたら
 		if (m_countTime > 1.0f)
@@ -125,8 +128,6 @@ namespace basecross {
 		{
 			if (m_decisionFlag)
 			{
-
-
 				switch (m_SelectStage)
 				{
 				case 1:
@@ -171,6 +172,12 @@ namespace basecross {
 
 		//決定したら選択するステージは動かないようにする
 		if (m_decisionFlag) return;
+
+		//ゲームの流れを説明するするオブジェクト生成
+		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_X)
+		{
+			AddGameObject<GameExplanation>();
+		}
 
 		//ステージ移動処理
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)
@@ -319,6 +326,11 @@ namespace basecross {
 			break;
 		}
 
+	}
+
+	void SelectStage::SetUpdateFlag(bool onOff)
+	{
+		m_updateFlag = onOff;
 	}
 
 }
