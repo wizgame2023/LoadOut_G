@@ -46,6 +46,9 @@ namespace basecross {
 			}
 		}
 
+		auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
+		stageManager->SetUpdateFlag(false);//更新できないようにする
+
 		//特定の敵を打ち上げると鍵を入手できるモード
 		if (m_stageMode == 1)
 		{
@@ -217,6 +220,9 @@ namespace basecross {
 				actorCheck->MoveSwitch(true);//動ける
 			}
 		}
+		auto stageManager = GetStage()->GetSharedGameObject<StageManager>(L"StageManager");
+		stageManager->SetUpdateFlag(true);//更新できるようにする
+
 
 	}
 
