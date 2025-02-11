@@ -33,11 +33,31 @@ namespace basecross {
 			auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
 			auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
 
-			//アクターを継承しているオブジェクト停止
+			//アクターを継承しているエフェクト以外のオブジェクト停止
 			if (actorCast)
 			{
-				actorCast->MoveSwitch(false);//動けないようにする
-				m_actorVec.push_back(actorCast);
+				if (!actorCast->FindTag(L"Effect"))
+				{
+					actorCast->MoveSwitch(false);//動けないようにする
+					m_actorVec.push_back(actorCast);
+				}
+			}	
+			//マンホール停止
+			if (manholeCast)
+			{
+				//ムービー発生源でないマンホールは停止する
+				if (!manholeCast->FindTag(L"MovieManhole"))
+				{
+					manholeCast->SetUpdateSwitch(false);//動けないようにする
+					m_manholeVec.push_back(manholeCast);
+				}
+				RemoveTag(L"MovieManhole");//このタグが必要なくなったので削除する
+			}
+			//バッテリー停止
+			if (batteryCast)
+			{
+				batteryCast->SetUpdateSwitch(false);//動けないようにする
+				m_batteryVec.push_back(batteryCast);
 			}
 			//スプライトを継承しているオブジェクトを透明にする
 			if (spriteCast)
@@ -69,6 +89,25 @@ namespace basecross {
 			{
 				actorCheck->MoveSwitch(true);//動ける
 			}
+		}
+		//バッテリーを動けるようにする
+		for (auto battery : m_batteryVec)
+		{
+			auto batteryCheck = battery.lock();
+			if (batteryCheck)
+			{
+				batteryCheck->SetUpdateSwitch(true);//動ける
+			}
+		}
+		//マンホールを動けるようにする
+		for (auto manhole : m_manholeVec)
+		{
+			auto manholeCheck = manhole.lock();
+			if (manholeCheck)
+			{
+				manholeCheck->SetUpdateSwitch(true);//動ける
+			}
+
 		}
 		//スプライトを透明から解除する
 		for (auto sprite : m_spriteVec)
