@@ -91,6 +91,8 @@
 #include"TrackingPillarEfect.h"
 #include"SpriteMove.h"
 #include"GameStart.h"//ステージ開始時処理
+#include"TutorialBoard.h"//チュートリアル用の板
+#include"GameExplanation.h";//ゲームの流れを説明する処理
 
 //マネージャー用
 #include"MiniMapManager.h"//ミニマップ生成
