@@ -7,8 +7,8 @@
 #include "Project.h"
 
 namespace basecross {
-	RandomItem::RandomItem(const shared_ptr<Stage>& stagePtr, Vec3 pos) :
-		GameObject(stagePtr),
+	RandomItem::RandomItem(shared_ptr<Stage>& stagePtr, Vec3 pos) :
+		Actor(stagePtr),
 		m_pos(pos)
 	{
 
