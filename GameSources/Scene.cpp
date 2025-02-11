@@ -270,6 +270,24 @@ namespace basecross{
 		strTexture = texPath + L"AngerEffectHi.png";//Enemyが怒った時のエフェクトテクスチャ(強)
 		app->RegisterTexture(L"AngerEffectHi", strTexture);
 
+		strTexture = texPath + L"Tutorial_Manhole.png";//チュートリアル用のテクスチャ(マンホール)
+		app->RegisterTexture(L"Tutorial_Manhole", strTexture);
+		strTexture = texPath + L"Tutorial_Manhole2.png";//チュートリアル用のテクスチャ(マンホール)
+		app->RegisterTexture(L"Tutorial_Manhole2", strTexture);
+		strTexture = texPath + L"Tutorial_Manhole3.png";//チュートリアル用のテクスチャ(マンホール)
+		app->RegisterTexture(L"Tutorial_Manhole3", strTexture);
+		strTexture = texPath + L"Tutorial_Manhole4.png";//チュートリアル用のテクスチャ(マンホール)
+		app->RegisterTexture(L"Tutorial_Manhole4", strTexture);
+
+		strTexture = texPath + L"GameExplanationTex0.png";//ゲームの流れを説明するためのテクスチャ(タイトル)
+		app->RegisterTexture(L"GameExplanationTex0", strTexture);
+		strTexture = texPath + L"GameExplanationTex1.png";//ゲームの流れを説明するためのテクスチャ
+		app->RegisterTexture(L"GameExplanationTex1", strTexture);
+		strTexture = texPath + L"GameExplanationTex2.png";//ゲームの流れを説明するためのテクスチャ
+		app->RegisterTexture(L"GameExplanationTex2", strTexture);
+		strTexture = texPath + L"GameExplanationTex3.png";//ゲームの流れを説明するためのテクスチャ
+		app->RegisterTexture(L"GameExplanationTex3", strTexture);
+
 		//マンホールビルボードのテクスチャ////////////////////////////////////////////////////
 		strTexture = texPath + L"Manhole_BillBoard_Push.png";
 		app->RegisterTexture(L"Manhole_BillBoard_Push", strTexture);
