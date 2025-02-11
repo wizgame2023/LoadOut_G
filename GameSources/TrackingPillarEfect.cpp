@@ -8,7 +8,7 @@
 
 namespace basecross {
 	//コンストラクタ
-	TrackingPillarEfect::TrackingPillarEfect(const shared_ptr<Stage>& stagePtr,weak_ptr<Actor> actor, Vec3 pos, wstring textureName, Vec2 velocity, int square) :
+	TrackingPillarEfect::TrackingPillarEfect(shared_ptr<Stage>& stagePtr,weak_ptr<Actor> actor, Vec3 pos, wstring textureName, Vec2 velocity, int square) :
 		PillarEffect(stagePtr,pos,textureName,velocity,square),
 		m_actor(actor)
 	{

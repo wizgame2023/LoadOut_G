@@ -7,7 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross {
-	class PillarEffect : public GameObject
+	class PillarEffect : public Actor
 	{
 	private:
 
@@ -35,7 +35,7 @@ namespace basecross {
 		Vec2 m_test;
 
 	public:
-		PillarEffect(const shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velovity, int square = 36);
+		PillarEffect(shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velovity, int square = 36);
 		~PillarEffect();
 
 		virtual void OnCreate() override;

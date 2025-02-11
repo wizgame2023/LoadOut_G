@@ -8,8 +8,8 @@
 
 namespace basecross {
 	//コンストラクタ
-	PillarEffect::PillarEffect(const shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velocity, int square):
-		GameObject(stagePtr),
+	PillarEffect::PillarEffect(shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velocity, int square):
+		Actor(stagePtr),
 		m_height(10.0f),
 		m_topRadius(4.5f),
 		m_bottomRadius(4.5f),
@@ -92,6 +92,7 @@ namespace basecross {
 		SetAlphaActive(true);
 		m_isUpdate = false;
 
+		AddTag(L"Effect");//エフェクト用のタグをつける
 	}
 
 	void PillarEffect::OnUpdate()
