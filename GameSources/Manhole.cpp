@@ -262,6 +262,7 @@ namespace basecross {
 					}
 				}
 
+				AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
 				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
 				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
 				{
@@ -282,7 +283,8 @@ namespace basecross {
 				{
 					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 					m_charen = Manhole_Up;//マンホールが上がる状態にする
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
+					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする					
+					AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
 					GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 				}
 			}
@@ -327,6 +329,7 @@ namespace basecross {
 					}
 				}
 
+				AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
 				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
 				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
 				{
@@ -340,6 +343,7 @@ namespace basecross {
 				{
 					stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
 				}
+
 				m_upEnemyVec.clear();//使い終わったor使わないので削除する
 
 			}
@@ -351,6 +355,7 @@ namespace basecross {
 					m_charen = Manhole_Up;//マンホールが上がる状態にする
 					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
 					stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
+					AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
 				}
 			}
 		}
