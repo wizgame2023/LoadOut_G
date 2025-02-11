@@ -55,7 +55,7 @@ namespace basecross{
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 
-		auto ptrColl = AddComponent<CollisionObb>();
+		auto ptrColl = AddComponent<CollisionSphere>();//コリジョンスフィアの方が壁にぶつかる判定に違和感がない
 		//ptrColl->SetFixed(true);
 		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
 		ptrColl->SetAfterCollision(AfterCollision::Auto);
