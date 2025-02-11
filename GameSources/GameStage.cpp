@@ -80,6 +80,11 @@ namespace basecross {
 		//PlayerÇÃê∂ê¨
 		CreatePlayer();
 
+		AddGameObject<TutorialBoard>(Vec3(10.0f, 5.5f + 10.0f, 10.0f));
+		AddGameObject<TutorialBoard>(Vec3(-30.0f, 5.5f + 10.0f, 50.0f));
+		AddGameObject<TutorialBoard>(Vec3(-30.0f, 5.5f + 10.0f, 0.0f));
+		AddGameObject<TutorialBoard>(Vec3(25.0f, 5.5f + 10.0f, -20.0f));
+
 		//ìGê∂ê¨
 		CreateEnemy();
 		m_miniMapManager->CreateEnemy();
