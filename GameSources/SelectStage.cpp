@@ -60,8 +60,8 @@ namespace basecross {
 		//暗転処理
 		m_blackOut = AddGameObject<BlackOut>(false);
 
-
-		m_SelectStage = 1;
+		//最後にプレイしたステージにセットする
+		m_SelectStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
 	}
 
 	void SelectStage::OnDestroy()
