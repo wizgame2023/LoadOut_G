@@ -58,6 +58,7 @@ namespace basecross {
 			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToGameOverStage");//ゲームオーバーに移動する
 		}
 
+
 		//フラグがtrueになっているとUpdateできる
 		if (!m_updateFlag) return;
 
@@ -88,7 +89,7 @@ namespace basecross {
 		KeyEvent();//鍵関連のイベント
 		RepopItem();//アイテムのリポップ処理
 		RepopEnemy();//敵のリポップ処理
-		RepopRandamItem();//ランダムアイテムのリポップ処理
+		RepopRandamItem();//ランダムアイテムのリポップ処理	
 		PauseEvent();//ポーズ処理
 	}
 
@@ -369,6 +370,7 @@ namespace basecross {
 
 	}
 
+	//ポーズ処理
 	void StageManager::PauseEvent()
 	{
 		auto& cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
@@ -516,18 +518,13 @@ namespace basecross {
 			//取得したオブジェクトがアイテムに変換できたら配列に入れる
 			for (auto obj : objVec)
 			{
-				auto castEnemy = dynamic_pointer_cast<Enemy>(obj);
-				auto castPlayer = dynamic_pointer_cast<Player>(obj);
+				auto castActor = dynamic_pointer_cast<Actor>(obj);
 				auto castManhole = dynamic_pointer_cast<Manhole>(obj);
 				auto castBattery = dynamic_pointer_cast<Battery>(obj);
 
-				if (castEnemy)
+				if (castActor)
 				{
-					castEnemy->MoveSwitch(false);//うごかなくさせる
-				}
-				if (castPlayer)
-				{
-					castPlayer->MoveSwitch(false);//うごかなくさせる
+					castActor->MoveSwitch(false);//うごかなくさせる
 				}
 				if (castManhole)
 				{
@@ -535,7 +532,7 @@ namespace basecross {
 				}
 				if (castBattery)
 				{
-					castBattery->SetUpdateSwitch(false);////動くようにする
+					castBattery->SetUpdateSwitch(false);////動かなくさせる
 				}
 
 			}
@@ -555,18 +552,13 @@ namespace basecross {
 
 			for (auto obj : objVec)
 			{
-				auto castEnemy = dynamic_pointer_cast<Enemy>(obj);
-				auto castPlayer = dynamic_pointer_cast<Player>(obj);
+				auto castActor = dynamic_pointer_cast<Actor>(obj);
 				auto castManhole = dynamic_pointer_cast<Manhole>(obj);
 				auto castBattery = dynamic_pointer_cast<Battery>(obj);
 
-				if (castEnemy)
+				if (castActor)
 				{
-					castEnemy->MoveSwitch(true);//動くようにする
-				}
-				if (castPlayer)
-				{
-					castPlayer->MoveSwitch(true);//動くようにする
+					castActor->MoveSwitch(true);//動くようにする
 				}
 				if (castManhole)
 				{
@@ -578,6 +570,9 @@ namespace basecross {
 				}
 
 			}
+
+			//ステージマネージャーもアップデート復活
+			SetUpdateFlag(true);
 		}
 	}
 

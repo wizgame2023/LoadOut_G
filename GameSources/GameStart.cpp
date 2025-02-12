@@ -49,6 +49,13 @@ namespace basecross {
 		auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
 		stageManager->SetUpdateFlag(false);//更新できないようにする
 
+		//auto m_StageText = stage->AddGameObject<Sprite>(L"StageText", Vec2(800/2, 150/2), Vec3(-105.0f, 250.0f, 0.0f));//タイトル用のスプライト生成
+		//m_StageText->SetDrawLayer(2);
+		
+		//最後にプレイしているステージを渡す
+		int PlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();
+		m_StageNum = stage->AddGameObject<NuberManager>(PlayStage, Vec2(150/2, 150/2), Vec3(-75.0f, 150.0f, 0.0f), true, 35.0f,2);//現在のステージ数出現
+
 		//特定の敵を打ち上げると鍵を入手できるモード
 		if (m_stageMode == 1)
 		{
@@ -109,6 +116,7 @@ namespace basecross {
 			{
 				m_nuberManager->SetDestroyFlag(true);//ナンバーマネージャを削除するフラグを立てる
 			}
+			m_StageNum->SetDestroyFlag(true);//ナンバーマネージャを削除するフラグを立てる
 
 			m_spriteVec.clear();//スプライト配列のリセット
 
