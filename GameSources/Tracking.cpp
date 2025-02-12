@@ -106,160 +106,163 @@ namespace basecross {
 		//	}
 		//}
 		
-		//目的地に移動したとみなす処理２
-		if (m_tagetRootPos.size() - 1 >= m_roodCount + 1)//指定する配列数が配列範囲内であるか確認する
-		{
-			//ルートサーチを最初にした場合の移動方法の検索処理
-			if (aStarStart)
-			{
-				m_movePos = m_tagetRootPos[m_roodCount] - m_ownerPos;//現在の座標と目的地の差を確認する
-				aStarStart = false;//ルートサーチの一番最初の状態ではなくなった
-			}
+		////目的地に移動したとみなす処理２
+		//if (m_tagetRootPos.size() - 1 >= m_roodCount + 1)//指定する配列数が配列範囲内であるか確認する
+		//{
+		//	//ルートサーチを最初にした場合の移動方法の検索処理
+		//	if (aStarStart)
+		//	{
+		//		m_movePos = m_tagetRootPos[m_roodCount] - m_ownerPos;//現在の座標と目的地の差を確認する
+		//		aStarStart = false;//ルートサーチの一番最初の状態ではなくなった
+		//	}
 
-			//数値を１やー１に固定化する 三項演算子は０の場合だと問題になるため使わない
-			if (m_movePos.x > 0)//正の数なら
-			{
-				m_movePos.x = 1;//１にする
-			}
-			if (m_movePos.x < 0)//負の数なら
-			{
-				m_movePos.x = -1;//-１にする
-			}
-			if (m_movePos.z > 0)//正の数なら
-			{
-				m_movePos.z = 1;//１にする
-			}
-			if (m_movePos.z < 0)//負の数なら
-			{
-				m_movePos.z = -1;//-１にする
-			}
+		//	//数値を１やー１に固定化する 三項演算子は０の場合だと問題になるため使わない
+		//	if (m_movePos.x > 0)//正の数なら
+		//	{
+		//		m_movePos.x = 1;//１にする
+		//	}
+		//	if (m_movePos.x < 0)//負の数なら
+		//	{
+		//		m_movePos.x = -1;//-１にする
+		//	}
+		//	if (m_movePos.z > 0)//正の数なら
+		//	{
+		//		m_movePos.z = 1;//１にする
+		//	}
+		//	if (m_movePos.z < 0)//負の数なら
+		//	{
+		//		m_movePos.z = -1;//-１にする
+		//	}
 
-			//次移動するのがx移動の場合
-			if (m_tagetRootPos[m_roodCount].x - m_tagetRootPos[m_roodCount + 1].x != 0)
-			{
-				//今x移動中なら
-				switch ((int)m_movePos.x)
-				{
-				case 1://右方向に進んでいるなら
-					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-					if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//	//次移動するのがx移動の場合
+		//	if (m_tagetRootPos[m_roodCount].x - m_tagetRootPos[m_roodCount + 1].x != 0)
+		//	{
+		//		//今x移動中なら
+		//		switch ((int)m_movePos.x)
+		//		{
+		//		case 1://右方向に進んでいるなら
+		//			//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+		//			if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				case -1://左方向に進んでいるなら
-					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-					if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		case -1://左方向に進んでいるなら
+		//			//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+		//			if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				default:
-					break;
-				}
-				//今z移動中なら
-				switch ((int)m_movePos.z)
-				{
-				case 1://上に進んでいるなら
-					if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		default:
+		//			break;
+		//		}
+		//		//今z移動中なら
+		//		switch ((int)m_movePos.z)
+		//		{
+		//		case 1://上に進んでいるなら
+		//			if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+		//				m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				case -1://下に進んでいるなら
-					if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		case -1://下に進んでいるなら
+		//			if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+		//				m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				default:
-					break;
-				}
-			}
-			else if (m_tagetRootPos[m_roodCount].z - m_tagetRootPos[m_roodCount + 1].z != 0)//次移動するのがz移動の場合
-			{
-				//今x移動中なら
-				switch ((int)m_movePos.x)//xをどの方向に移動しているか確認する
-				{
-				case 1://右方向に進んでいるなら
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		default:
+		//			break;
+		//		}
+		//	}
+		//	else if (m_tagetRootPos[m_roodCount].z - m_tagetRootPos[m_roodCount + 1].z != 0)//次移動するのがz移動の場合
+		//	{
+		//		//今x移動中なら
+		//		switch ((int)m_movePos.x)//xをどの方向に移動しているか確認する
+		//		{
+		//		case 1://右方向に進んでいるなら
 
-					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-					if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//			//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+		//			if (m_ownerPos.x >= m_tagetRootPos[m_roodCount].x)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+		//				m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				case -1://左方向に進んでいるなら
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		case -1://左方向に進んでいるなら
 
-					//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
-					if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//			//今いる位置が目的地を通り過ぎた場合目的地に移動したとみなし次の目的地に変更する
+		//			if (m_ownerPos.x <= m_tagetRootPos[m_roodCount].x)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
+		//				m_ownerPos = m_tagetRootPos[m_roodCount];//瞬間移動
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				default:
-					break;
-				}
-				//今z移動中なら
-				switch ((int)m_movePos.z)
-				{
-				case 1://上に進んでいるなら
-					if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		default:
+		//			break;
+		//		}
+		//		//今z移動中なら
+		//		switch ((int)m_movePos.z)
+		//		{
+		//		case 1://上に進んでいるなら
+		//			if (m_ownerPos.z >= m_tagetRootPos[m_roodCount].z)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				case -1://下に進んでいるなら
-					if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
-					{
-						m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		case -1://下に進んでいるなら
+		//			if (m_ownerPos.z <= m_tagetRootPos[m_roodCount].z)
+		//			{
+		//				m_movePos = m_tagetRootPos[m_roodCount + 1] - m_tagetRootPos[m_roodCount];//新たにどう移動すればいいか計算する
 
-						m_roodCount++;//目的地を変える
-						m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
-					}
-					break;
-				default:
-					break;
-				}
-			}
-		}
+		//				m_roodCount++;//目的地を変える
+		//				m_targetPos = m_tagetRootPos[m_roodCount];//目的地を更新
+		//			}
+		//			break;
+		//		default:
+		//			break;
+		//		}
+		//	}
+		//}
 
-		m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//m_directionRad = math.GetAngle(m_ownerPos,m_tagetRootPos[m_roodCount]);
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		m_ownerRot.y = m_directionRad;
-		auto speedtest = m_Owner->GetSpeed();
-		m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
-		m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
+		//m_ownerRot.y = m_directionRad;
+		//auto speedtest = m_Owner->GetSpeed();
+		//m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
+		//m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
+		
+		//AStarを使った移動処理使えない
+		MoveActor(m_Owner, m_tagetRootPos, m_roodCount, m_Owner->GetSpeed());
 		
 		auto CircleRange = math.GetCircleRange(40, m_ownerPos, m_playerPos);
 		if (CircleRange)
@@ -291,12 +294,13 @@ namespace basecross {
 		auto sellPos = mapMgr->ConvertSelMap(pos);
 		auto AStarPos = mapMgr->ConvertUnityMap(sellPos);
 
-		m_trans->SetRotation(m_ownerRot);//所有者(Enemy)のローテーションの更新
-		m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
-		m_Owner->SetAngle(m_directionRad + XM_PI * 0.5f);
+		//m_trans->SetRotation(m_ownerRot);//所有者(Enemy)のローテーションの更新
+		//m_trans->SetPosition(m_ownerPos);//所有者(Enemy)のポジションの更新
+		//m_Owner->SetAngle(m_directionRad + XM_PI * 0.5f);
 
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
+		//イノシシモードの処理
 		auto ability = m_Owner->GetAbility();
 
 		if (ability==rush)
