@@ -12,7 +12,8 @@ namespace basecross {
 		m_number(number),
 		m_scale(scale),
 		m_pos(pos),
-		m_destroyFlag(false)
+		m_destroyFlag(false),
+		m_layer(1)
 	{
 		if (m_number < 10)
 		{
@@ -23,13 +24,14 @@ namespace basecross {
 			m_numLength = true;
 		}
 	}
-	NuberManager::NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos,bool numLenght,float between) :
+	NuberManager::NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos,bool numLenght,float between,int layer) :
 		GameObject(stage),
 		m_number(number),
 		m_scale(scale),
 		m_pos(pos),
 		m_numLength(numLenght),
-		m_between(between)
+		m_between(between),
+		m_layer(layer)
 	{
 	}
 	NuberManager::~NuberManager()
@@ -38,14 +40,18 @@ namespace basecross {
 
 	void NuberManager::OnCreate()
 	{
+		//フラグによって２桁か１桁か決める
 		if (!m_numLength)
 		{
 			m_spriteOne = GetStage()->AddGameObject<SpriteNum>(L"Number", m_scale, m_number, m_pos);
+			m_spriteOne->SetDrawLayer(m_layer);//レイヤー順番を決める
 		}
 		if (m_numLength)
 		{
 			m_spriteTen = GetStage()->AddGameObject<SpriteNum>(L"Number", m_scale , m_number / 10, Vec3(m_pos.x - m_between, m_pos.y, m_pos.z));
+			m_spriteTen->SetDrawLayer(m_layer);//レイヤー順番を決める
 			m_spriteOne = GetStage()->AddGameObject<SpriteNum>(L"Number", m_scale, m_number % 10, Vec3(m_pos.x + m_between, m_pos.y, m_pos.z));
+			m_spriteOne->SetDrawLayer(m_layer);//レイヤー順番を決める
 		}
 	}
 	void NuberManager::OnUpdate()

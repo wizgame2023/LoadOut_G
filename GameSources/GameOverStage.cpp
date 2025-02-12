@@ -12,11 +12,11 @@ namespace basecross {
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
 	void GameOverStage::CreateViewLight() {
-		const Vec3 eye(0.0f, 5.0f, -5.0f);
-		const Vec3 at(0.0f);
+		const Vec3 eye(Vec3(2.0f, 15.0f, -10.0f)+ Vec3(5.0f, 4.5f, 26.0f));
+		const Vec3 at(Vec3(5.0f, 3.0f, 25.0f));
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
-		auto PtrCamera = ObjectFactory::Create<MyCamera>(Vec3(2.0f, 20.0f, -10.0f));
+		auto PtrCamera = ObjectFactory::Create<Camera>();
 		PtrView->SetCamera(PtrCamera);
 		PtrCamera->SetEye(eye);
 		PtrCamera->SetAt(at);
@@ -55,7 +55,7 @@ namespace basecross {
 		auto mapSize = mapManager->GetMapSize();
 
 
-		auto player = AddGameObject<Player>(Vec3(5.0f, 0.0f, 25.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), false);
+		auto player = AddGameObject<Player>(Vec3(5.0f, 0.0f, 26.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), false);
 		SetSharedGameObject(L"Player", player);
 		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
 		playerDraw->ChangeCurrentAnimation(L"Player_Down");//倒れるモーションに変更

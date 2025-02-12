@@ -49,6 +49,9 @@ namespace basecross {
 		auto BGM = App::GetApp()->GetXAudio2Manager();
 		m_BGM = BGM->Start(L"TIlteStage", XAUDIO2_LOOP_INFINITE, 0.9f);
 
+		//最後にプレイしたステージをリセットする
+		App::GetApp()->GetScene<Scene>()->SetLastPlayStage(1);
+
 	}
 
 	void TilteStage::OnDestroy()
