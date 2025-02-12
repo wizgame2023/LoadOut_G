@@ -41,11 +41,13 @@ namespace basecross {
 		m_StagePhoto = AddGameObject<Sprite>(L"Stage01_HiShot", Vec2(900, 500), Vec3(0.0f, 100.0f, 0.0f));//タイトル用のスプライト生成
 		m_StageText = AddGameObject<Sprite>(L"StageText", Vec2(800, 150), Vec3(-120.0f, -300.0f, 0.0f));//タイトル用のスプライト生成
 		m_NumberSprite = AddGameObject<NuberManager>(1, Vec2(150, 150), Vec3(+260, -300.0f, 0.0f),true,80.0f);
-		m_spriteMozi = AddGameObject<Sprite>(L"BackMozi2", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -350.0f, 0.0f));
-		m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-500.0f, -352.0f, 0.0f));
-		AddGameObject<Sprite>(L"BackMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(550.0f, -350.0f, 0.0f), Vec3(0.0f),Col4(0.3,0.3,0.3,1));
-		AddGameObject<Sprite>(L"AButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(550.0f, -352.0f, 0.0f));
+		m_spriteMozi = AddGameObject<Sprite>(L"BackMozi2", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-507.0f, -300.0f, 0.0f));
+		m_spriteB = AddGameObject<Sprite>(L"StartMoziB", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-507.0f, -302.0f, 0.0f));
+		AddGameObject<Sprite>(L"BackMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-550.0f, -350.0f, 0.0f), Vec3(0.0f),Col4(0.3,0.3,0.3,1));
+		AddGameObject<Sprite>(L"AButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-550.0f, -352.0f, 0.0f));
 
+		AddGameObject<Sprite>(L"BackMozi3", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(500.0f, -330.0f, 0.0f), Vec3(0.0f), Col4(0.3, 0.3, 0.3, 1));
+		AddGameObject<Sprite>(L"XButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(500.0f, -332.0f, 0.0f));
 
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, 1));
 		m_spriteB->SetColor(Col4(1, 0, 0, 1));

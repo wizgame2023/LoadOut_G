@@ -230,6 +230,10 @@ namespace basecross{
 		app->RegisterTexture(L"BackMozi", strTexture);
 		strTexture = texPath + L"BackMozi2.png";//セレクトステージに表示する文字
 		app->RegisterTexture(L"BackMozi2", strTexture);
+		strTexture = texPath + L"BackMozi3.png";//セレクトステージに表示する文字
+		app->RegisterTexture(L"BackMozi3", strTexture);
+		strTexture = texPath + L"XButton.png";//セレクトステージに表示する文字
+		app->RegisterTexture(L"XButton", strTexture);
 		strTexture = texPath + L"ClearConditionsText1.png";//鍵を入手する条件テクスチャ1
 		app->RegisterTexture(L"ClearConditionsText1", strTexture);
 		strTexture = texPath + L"ClearConditionsText2.png";//鍵を入手する条件テクスチャ2
