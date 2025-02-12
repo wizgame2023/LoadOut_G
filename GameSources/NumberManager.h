@@ -11,6 +11,7 @@ namespace basecross{
 	class NuberManager :public GameObject
 	{
 		int m_number;
+		int m_layer;//レイヤー順番の決定
 		float m_between;//数字と数字の間
 		bool m_numLength;//1桁にするか2桁にするか
 		bool m_destroyFlag;//削除フラグ
@@ -22,7 +23,7 @@ namespace basecross{
 		shared_ptr<SpriteNum> m_spriteTen;//十の位
 
 	public:
-		NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos, bool numLength,float between = 18.0f);
+		NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos, bool numLength,float between = 18.0f,int layer = 1);
 		NuberManager(shared_ptr<Stage>& stage, int number, Vec2 scale, Vec3 pos);
 		~NuberManager();
 
