@@ -46,8 +46,9 @@ namespace basecross {
 		AddGameObject<Sprite>(L"BackMozi", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-550.0f, -350.0f, 0.0f), Vec3(0.0f),Col4(0.3,0.3,0.3,1));
 		AddGameObject<Sprite>(L"AButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(-550.0f, -352.0f, 0.0f));
 
-		AddGameObject<Sprite>(L"BackMozi3", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(500.0f, -330.0f, 0.0f), Vec3(0.0f), Col4(0.3, 0.3, 0.3, 1));
-		AddGameObject<Sprite>(L"XButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(500.0f, -332.0f, 0.0f));
+		//XÇ≈ê‡ñæ
+		AddGameObject<Sprite>(L"BackMozi3", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(620.0f, -350.0f, 0.0f), Vec3(0.0f), Col4(0.3, 0.3, 0.3, 1));
+		AddGameObject<Sprite>(L"XButton", Vec2(900 * 0.3f, 150 * 0.5f), Vec3(620.0f, -352.0f, 0.0f));
 
 		m_spriteMozi->SetColor(Col4(0.3, 0.3, 0.3, 1));
 		m_spriteB->SetColor(Col4(1, 0, 0, 1));
