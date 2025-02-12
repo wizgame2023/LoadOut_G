@@ -19,6 +19,7 @@ namespace basecross {
 		shared_ptr<NuberManager> m_nuberManager;
 		shared_ptr<Sprite> m_sprite;
 		shared_ptr<Sprite> m_spriteCountDown;//カウントダウン用のスプライト
+		shared_ptr<NuberManager> m_StageNum;//現在のプレイステージのカウント
 	public:
 		GameStart(shared_ptr<Stage>& StagePtr,int mode,int enemyUpClearNum);
 		~GameStart();
