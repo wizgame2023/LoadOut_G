@@ -392,7 +392,7 @@ namespace basecross{
 		app->RegisterResource(L"kid_Mesh", boneModelMesh);
 		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"Spana_v1.0.bmf");//スパナに変更
 		app->RegisterResource(L"Battry", boneModelMesh);
-		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"waterpiller_ver1.2.bmf");//水柱のメッシュ
+		boneModelMesh = MeshResource::CreateBoneModelMesh(modPath, L"waterpiller_ver1.3.bmf");//水柱のメッシュ
 		app->RegisterResource(L"WaterPillerMesh", boneModelMesh);
 
 		//ボーンマルチメッシュ
