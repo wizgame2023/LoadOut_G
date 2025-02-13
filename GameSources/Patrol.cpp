@@ -196,6 +196,18 @@ namespace basecross
 		auto sellTargetPos = mapMgr->ConvertSelMap(n_target);
 		auto unityTargetPos = mapMgr->ConvertUnityMap(sellTargetPos);
 
+		auto delta = App::GetApp()->GetElapsedTime();
+
+		//“G‚ªPlayer‚ð”­Œ©‚µ‚½Û­‚µ‚½‚Á‚Ä‚©‚ç’Ç‚¢‚©‚¯‚é
+		if (m_playerDiscovery)
+		{
+			m_trackingCountTime += delta;
+			if (m_trackingCountTime > 0.1f)
+			{
+				m_Owner->ChangeState<Tracking>();
+			}
+		}
+
 		switch (ability)
 		{
 		default:
@@ -221,7 +233,8 @@ namespace basecross
 					}
 					if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
 					{
-						m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
+						//m_Owner->ChangeState<Tracking>();
 					}
 
 				}
@@ -246,7 +259,8 @@ namespace basecross
 					}
 					if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
 					{
-						m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
+						//m_Owner->ChangeState<Tracking>();
 					}
 				}
 				if (angle == XMConvertToRadians(270))//ã
@@ -270,7 +284,8 @@ namespace basecross
 					}
 					if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
 					{
-						m_Owner->ChangeState<Tracking>();
+						//m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
 					}
 				}
 				if (angle == XM_PI * 0.5)//‰º
@@ -294,7 +309,8 @@ namespace basecross
 					}
 					if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
 					{
-						m_Owner->ChangeState<Tracking>();
+						//m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
 					}
 				}
 			}
@@ -322,7 +338,8 @@ namespace basecross
 					//}
 					if (unityPos.x + i == unityTargetPos.x && unityPos.x < unityTargetPos.x && unityPos.y == unityTargetPos.y)
 					{
-						m_Owner->ChangeState<Tracking>();
+						//m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
 					}
 
 				}
@@ -347,7 +364,8 @@ namespace basecross
 					//}
 					if (unityPos.x - i == unityTargetPos.x && unityPos.x > unityTargetPos.x && unityPos.y == unityTargetPos.y)
 					{
-						m_Owner->ChangeState<Tracking>();
+						//m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
 					}
 				}
 				if (angle == XMConvertToRadians(270))
@@ -371,7 +389,8 @@ namespace basecross
 					//}
 					if (unityPos.y - i == unityTargetPos.y && unityPos.y > unityTargetPos.y && unityPos.x == unityTargetPos.x)
 					{
-						m_Owner->ChangeState<Tracking>();
+						//m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
 					}
 				}
 				if (angle == XM_PI * 0.5)
@@ -395,7 +414,8 @@ namespace basecross
 					//}
 					if (unityPos.y + i == unityTargetPos.y && unityPos.y < unityTargetPos.y && unityPos.x == unityTargetPos.x)
 					{
-						m_Owner->ChangeState<Tracking>();
+						//m_Owner->ChangeState<Tracking>();
+						m_playerDiscovery = true;
 					}
 				}
 			}
