@@ -12,7 +12,7 @@ namespace basecross {
 	{
 	private:
 		bool m_plusColorFlag;//色をの透明度を足すか決めるフラグ
-		bool m_updateFlag;
+		//bool m_updateFlag;
 	public:
 		MiniMapHatch(shared_ptr<Stage>& stagePtr,wstring textureName,Vec2 size, Vec3 pos = Vec3(0.0f,0.0f,0.0f),Vec3 rot = Vec3(0.0f,0.0f,0.0f),Col4 color = Col4(1.0f,1.0f,1.0f,1.0f),int layer = 1);
 		~MiniMapHatch();
