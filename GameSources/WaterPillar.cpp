@@ -36,16 +36,18 @@ namespace basecross {
 		//Transformに対しての等差数列
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(1.0f, 0.28f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f)
+			Vec3(0.0f, -1.5f, 0.0f)
 		);
 
 		//メッシュ生成
-		auto ptrDraw = AddComponent<PNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CYLINDER");
-		ptrDraw->SetTextureResource(L"Water");
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		ptrDraw->SetMeshResource(L"WaterPillerMesh");
+		ptrDraw->AddAnimation(L"Defalt", 0, 30, true, 30.0f);//アニメーション追加
+
+		//ptrDraw->SetTextureResource(L"Water");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
@@ -74,6 +76,11 @@ namespace basecross {
 		auto stage = GetStage();
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto ptr = GetComponent<Transform>();//Transform取得
+
+		//アニメーション再生
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		ptrDraw->UpdateAnimation(delta);
+
 		//ptr->SetScale()
 		//Transform作成
 
@@ -96,10 +103,14 @@ namespace basecross {
 		//高さが一定になるまで伸ばす
 		if (m_count == 0)
 		{
-			m_scale.y += 100*delta;//大きさをyを１づつ増やす
-			ptr->SetScale(m_scale);
-			m_pos.y = m_originPos.y + (m_scale.y / 2);//オブジェクトの半分ずらすことで
-			ptr->SetPosition(m_pos);
+			if (m_count == 0)
+			{
+				m_scale.y += 110*delta;//大きさをyを１づつ増やす
+				ptr->SetScale(m_scale);
+				m_pos.y = m_originPos.y + (m_scale.y / 2);//オブジェクトの半分ずらすことで
+				ptr->SetPosition(m_pos);
+			}
+
 			if (m_scale.y >= 30)
 			{
 				m_count = 1;//柱を伸ばす段階を終了
