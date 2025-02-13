@@ -197,7 +197,7 @@ namespace basecross {
 			m_blinkingTime = 0;//点滅のクールタイムをリセットする
 
 			//水柱が発生する
-			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(3.2f, 0.02f, 3.2f));
+			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(3.0f, 0.02f, 3.0f));
 		}
 
 		//通行禁止の時の際の処理
