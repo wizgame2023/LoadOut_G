@@ -97,6 +97,9 @@ namespace basecross {
 
 	void PillarEffect::OnUpdate()
 	{
+		//フラグがオンになったらアップデートする
+		if (!m_move) return;
+
 		float delta = App::GetApp()->GetElapsedTime();
 		for (auto& vertex : m_vertices)
 		{

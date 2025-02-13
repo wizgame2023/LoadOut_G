@@ -19,6 +19,9 @@ namespace basecross {
 
 	void ManholeSprite::OnUpdate()
 	{
+		//フラグがオンになったらアップデートする
+		if (!m_updateFlag) return;
+
 		auto lock = m_parent.lock();
 		if (lock)
 		{
