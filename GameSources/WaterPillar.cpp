@@ -39,7 +39,7 @@ namespace basecross {
 			Vec3(1.0f, 0.28f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, -1.5f, 0.0f)
+			Vec3(0.0f, -1.0f, 0.0f)
 		);
 
 		//メッシュ生成
@@ -136,12 +136,12 @@ namespace basecross {
 			m_pos.y = m_originPos.y + (m_scale.y / 2);//オブジェクトの半分ずらすことで
 			ptr->SetPosition(m_pos);
 
-			if (m_scale.y <= 15.0f)
+			if (m_scale.y <= 10.0f)
 			{
 				m_count = 2;//柱を縮ませる段階を終了
 
 				//伸ばしたい長さぴったりにする
-				m_scale.y = 15.0f;
+				m_scale.y = 10.0f;
 				ptr->SetScale(m_scale);
 				m_pos.y = m_originPos.y + (m_scale.y / 2);//オブジェクトの半分ずらすことで
 				ptr->SetPosition(m_pos);
