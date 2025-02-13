@@ -14,7 +14,8 @@ namespace basecross {
 		m_pos(pos),
 		m_rot(rot),
 		m_color(color),
-		m_layer(layer)
+		m_layer(layer),
+		m_updateFlag(true)
 	{
 
 	}
@@ -59,11 +60,6 @@ namespace basecross {
 
 	}
 
-	void Sprite::OnUpdate()
-	{
-		
-	}
-
 	void Sprite::OnClear(bool OnOff)
 	{
 		m_Clear = OnOff;
@@ -91,6 +87,13 @@ namespace basecross {
 		m_color = color;
 		m_drawComp->SetDiffuse(m_color);
 	}
+
+	//アップデートするかの処理
+	void Sprite::SetUpdateFlag(bool onOff)
+	{
+		m_updateFlag = onOff;
+	}
+
 	//カラーの数値を取得させる
 	Col4 Sprite::GetColor()
 	{
