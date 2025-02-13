@@ -20,7 +20,8 @@ namespace basecross {
 		m_BGMChase(false),
 		m_BGMhow(2),
 		m_EnemyUpClearNum(0),
-		m_startFlag(false)
+		m_startFlag(false),
+		m_RepopTimeCountFlag(true)
 	{
 
 	}
@@ -86,11 +87,16 @@ namespace basecross {
 
 
 		BGMChange();//BGMを変更する処理
-		KeyEvent();//鍵関連のイベント
-		RepopItem();//アイテムのリポップ処理
-		RepopEnemy();//敵のリポップ処理
-		RepopRandamItem();//ランダムアイテムのリポップ処理	
+		KeyEvent();//鍵関連のイベント		
 		PauseEvent();//ポーズ処理
+
+		//リポップ処理が許されている時のみリポップの時間が進む
+		if (m_RepopTimeCountFlag)
+		{
+			RepopItem();//アイテムのリポップ処理
+			RepopEnemy();//敵のリポップ処理
+			RepopRandamItem();//ランダムアイテムのリポップ処理	
+		}
 	}
 
 	//BGMを変更する処理
@@ -378,8 +384,12 @@ namespace basecross {
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
 		auto objVec = stage->GetGameObjectVec();
+
+		//ポーズ処理を開始する処理
 		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_pausCount == 0)
-		{
+		{		
+			m_RepopTimeCountFlag = false;//リポップの時間計測を一時停止する
+
 			auto SEManager = App::GetApp()->GetXAudio2Manager();
 			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
 			m_white = GetStage()->AddGameObject<Sprite>(L"Black", Vec2(1280, 800), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Col4(1.0f, 1.0f, 1.0f, 0.5f), 11);
@@ -399,7 +409,7 @@ namespace basecross {
 			m_pauseFlag = true;
 			m_stickCheck = true;
 			m_operationFlag = false;
-		}
+		}//ポーズ処理を終了する処理
 		else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_START && m_pausCount == 1)
 		{
 			m_pausCount--;
@@ -521,6 +531,7 @@ namespace basecross {
 				auto castActor = dynamic_pointer_cast<Actor>(obj);
 				auto castManhole = dynamic_pointer_cast<Manhole>(obj);
 				auto castBattery = dynamic_pointer_cast<Battery>(obj);
+				auto castSprite = dynamic_pointer_cast<Sprite>(obj);
 
 				if (castActor)
 				{
@@ -532,7 +543,11 @@ namespace basecross {
 				}
 				if (castBattery)
 				{
-					castBattery->SetUpdateSwitch(false);////動かなくさせる
+					castBattery->SetUpdateSwitch(false);//動かなくさせる
+				}
+				if (castSprite)
+				{
+					castSprite->SetUpdateFlag(false);//動かなくさせる
 				}
 
 			}
@@ -555,6 +570,7 @@ namespace basecross {
 				auto castActor = dynamic_pointer_cast<Actor>(obj);
 				auto castManhole = dynamic_pointer_cast<Manhole>(obj);
 				auto castBattery = dynamic_pointer_cast<Battery>(obj);
+				auto castSprite = dynamic_pointer_cast<Sprite>(obj);
 
 				if (castActor)
 				{
@@ -568,11 +584,17 @@ namespace basecross {
 				{
 					castBattery->SetUpdateSwitch(true);////動くようにする
 				}
+				if (castSprite)
+				{
+					castSprite->SetUpdateFlag(true);//動くようにする
+				}
 
 			}
 
 			//ステージマネージャーもアップデート復活
 			SetUpdateFlag(true);
+			//リポップの時間計測を復活させる
+			m_RepopTimeCountFlag = true;
 		}
 	}
 
