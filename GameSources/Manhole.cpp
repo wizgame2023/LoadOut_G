@@ -59,7 +59,11 @@ namespace basecross {
 
 		//ビルボードの生成
 		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",3, 13.0f, Vec3(0.0f, 0.0f, 0.0f));
-		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 3, 13.0f, Vec3(0.0f, 0.0f, 0.0f));
+		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 3, 18.0f, Vec3(0.0f, 0.0f, 0.0f));
+
+
+		//水柱が発生するデバック用
+		//m_waterPillar = GetStage()->AddGameObject<WaterPillar>(m_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(3.2f, 0.1f, 3.2f));
 
 
 	}
@@ -193,7 +197,7 @@ namespace basecross {
 			m_blinkingTime = 0;//点滅のクールタイムをリセットする
 
 			//水柱が発生する
-			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(8.5f, 10.0f, 8.5f));
+			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(3.2f, 0.02f, 3.2f));
 		}
 
 		//通行禁止の時の際の処理
