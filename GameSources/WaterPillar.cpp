@@ -8,8 +8,8 @@
 #include "Project.h"
 
 namespace basecross {
-	WaterPillar::WaterPillar(const shared_ptr<Stage>& StagePtr, const Vec3& pos, const Vec3& rot,Vec3 scale) :
-		GameObject(StagePtr),
+	WaterPillar::WaterPillar(shared_ptr<Stage>& StagePtr, const Vec3& pos, const Vec3& rot,Vec3 scale) :
+		Actor(StagePtr),
 		m_pos(pos),
 		m_originPos(pos),
 		m_rot(rot),
@@ -73,6 +73,9 @@ namespace basecross {
 
 	void WaterPillar::OnUpdate()
 	{
+		//フラグがオンになったらアップデートする
+		if (!m_move) return;
+
 		auto stage = GetStage();
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
 		auto ptr = GetComponent<Transform>();//Transform取得
