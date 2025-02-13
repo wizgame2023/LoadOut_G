@@ -168,6 +168,9 @@ namespace basecross {
 		{
 			if (m_creditCount)
 			{
+				auto SEManager = App::GetApp()->GetXAudio2Manager();//クレジット開いたときのみSE流す
+				auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+
 				m_creditCount = false;
 				m_Credit->SetColor(Col4(1.0f, 1.0f, 1.0f, 1.0f));
 			}
