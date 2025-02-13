@@ -53,6 +53,8 @@ namespace basecross {
 
 	void RandomItem::OnUpdate()
 	{
+		//フラグがオンになったらアップデートする
+		if (!m_move) return;
 		float delta = App::GetApp()->GetElapsedTime();
 		//アニメーション再生
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
