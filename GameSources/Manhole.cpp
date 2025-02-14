@@ -357,9 +357,9 @@ namespace basecross {
 				{
 					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 					m_charen = Manhole_Up;//マンホールが上がる状態にする
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
-					stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
+					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");		
 					AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
+					stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
 				}
 			}
 		}
