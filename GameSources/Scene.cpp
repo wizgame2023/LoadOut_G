@@ -114,7 +114,7 @@ namespace basecross{
 		app->RegisterTexture(L"Bule", strTexture);
 		strTexture = texPath + L"RordOutGameClear.png";//アイテムの仮の色
 		app->RegisterTexture(L"GameClear", strTexture);
-		strTexture = texPath + L"Number.png";//数字のテクスチャ
+		strTexture = texPath + L"NumberVer1.2.png";//数字のテクスチャ
 		app->RegisterTexture(L"Number", strTexture);
 		strTexture = texPath + L"Cross.png";//数字のテクスチャ
 		app->RegisterTexture(L"Cross", strTexture);
