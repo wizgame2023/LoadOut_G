@@ -40,9 +40,9 @@ namespace basecross {
 		if (StageMode == 2)
 		{
 			m_text = GetStage()->AddGameObject<Sprite>(L"EnemyUpText", Vec2(120.0f*1.2f, 60.0f*1.2f), Vec3(-560.0f, 100.0f, 0.0f));//敵を倒した数(テキスト)
-			m_sprite = GetStage()->AddGameObject<Sprite>(L"Slash", Vec2(20.0f, 20.0f), Vec3(-640.0f+176.0f, 100.0f, 0.0f));//スラッシュ
-			m_spriteNum = stage->AddGameObject<NuberManager>(enemyUpCount, Vec2(20.0f, 20.0f), Vec3(-640.0f + 160.0f, 400 - 300.0f, 0.0f), false);//敵を打ち上げた合計数
-			m_spriteNumSecond = stage->AddGameObject<NuberManager>(enemyUpCountMax, Vec2(20.0f, 20.0f), Vec3(-640.0f + 190.0f, 400 - 300.0f, 0.0f), false);//敵を打ち上げる目標数
+			m_sprite = GetStage()->AddGameObject<Sprite>(L"Slash", Vec2(20.0f, 20.0f), Vec3(-635.0f+176.0f, 100.0f, 0.0f));//スラッシュ
+			m_spriteNum = stage->AddGameObject<NuberManager>(enemyUpCount, Vec2(20.0f, 20.0f), Vec3(-635.0f + 160.0f, 400 - 300.0f, 0.0f), false);//敵を打ち上げた合計数
+			m_spriteNumSecond = stage->AddGameObject<NuberManager>(enemyUpCountMax, Vec2(20.0f, 20.0f), Vec3(-635.0f + 190.0f, 400 - 300.0f, 0.0f), false);//敵を打ち上げる目標数
 		}
 	}
 
