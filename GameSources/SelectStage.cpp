@@ -179,6 +179,9 @@ namespace basecross {
 		//ゲームの流れを説明するするオブジェクト生成
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_X)
 		{
+			auto SEManager = App::GetApp()->GetXAudio2Manager();
+			auto SE = SEManager->Start(L"Decision", 0, 0.9f);
+
 			AddGameObject<GameExplanation>();
 		}
 

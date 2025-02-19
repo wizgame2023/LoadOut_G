@@ -9,8 +9,7 @@
 namespace basecross {
 	MiniMapHatch::MiniMapHatch(shared_ptr<Stage>& stagePtr, wstring textureName, Vec2 size, Vec3 pos, Vec3 rot, Col4 color, int layer) :
 		Sprite(stagePtr, textureName, size, pos, rot, color, layer),
-		m_plusColorFlag(false),
-		m_updateFlag(true)
+		m_plusColorFlag(false)
 	{
 
 	}

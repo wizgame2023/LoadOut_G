@@ -22,6 +22,9 @@ namespace basecross {
 	}
 	void SpriteMove::OnUpdate()
 	{
+		//フラグがオンになったらアップデートする
+		if (!m_updateFlag) return;
+
 		float time = App::GetApp()->GetElapsedTime();
 		//スプライトの移動
 		m_pos.x += m_speed * time;

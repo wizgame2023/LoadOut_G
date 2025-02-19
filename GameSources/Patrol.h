@@ -30,6 +30,7 @@ namespace basecross {
 		//float型メンバー変数
 		float m_time;
 		float m_distance;
+		float m_trackingCountTime;//Trakingに移行する時間を測るもの
 		const float m_point;
 
 		//bool型メンバー変数
@@ -37,6 +38,7 @@ namespace basecross {
 		bool m_rightCheck;
 		bool m_forwardCheck;
 		bool m_minus;
+		bool m_playerDiscovery;//敵がPlayerを見つけたフラグ
 
 		//shared_ptr型メンバー変数
 		shared_ptr<Transform> m_trans;
@@ -68,10 +70,12 @@ namespace basecross {
 			m_time(0.0f),
 			m_distance(0.0f),
 			m_point(60.0f),
+			m_trackingCountTime(0.0f),
 			m_destinationDecision(false),
 			m_rightCheck(false),
 			m_forwardCheck(false),
-			m_minus(false)
+			m_minus(false),
+			m_playerDiscovery(false)
 
 		{
 		}

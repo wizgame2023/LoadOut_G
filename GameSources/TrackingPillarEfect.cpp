@@ -23,6 +23,9 @@ namespace basecross {
 	//更新
 	void TrackingPillarEfect::OnUpdate()
 	{
+		//フラグがオンになったらアップデートする
+		if (!m_move) return;
+
 		//auto player = GetStage()->GetSharedGameObject<Player>(L"Player");
 		auto actor = m_actor.lock();
 		//追尾する元がいなくなれば自分もいなくなる

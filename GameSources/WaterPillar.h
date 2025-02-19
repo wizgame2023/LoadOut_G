@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 namespace basecross {
-	class WaterPillar :public GameObject
+	class WaterPillar :public Actor
 	{
 		Vec3 m_pos;//ポジション
 		Vec3 m_originPos;//元々の指定されていた位置
@@ -17,7 +17,7 @@ namespace basecross {
 		shared_ptr<Block> m_manhole;//マンホール用のポインタ変数
 	public:
 
-		WaterPillar(const shared_ptr<Stage>& StagePtr, const Vec3& pos, const Vec3& rot,Vec3 scale);//コンストラクタ
+		WaterPillar(shared_ptr<Stage>& StagePtr, const Vec3& pos, const Vec3& rot,Vec3 scale);//コンストラクタ
 		~WaterPillar();//デストラクタ
 
 		virtual void OnCreate() override;//開始する際に呼び出す関数

@@ -35,6 +35,7 @@ namespace basecross {
 		bool m_repopItemFlag;//アイテムのリポップフラグ
 		bool m_BGMChase;//追いかけられているか保存する変数
 		bool m_updateFlag;//アップデート処理をするかのフラグ
+		bool m_RepopTimeCountFlag;//リポップ時間を測っていいかのフラグ
 
 		bool m_pause;
 		bool m_pauseFlag;

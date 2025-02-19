@@ -18,6 +18,7 @@ namespace basecross {
 		shared_ptr<PCTSpriteDraw> m_drawComp;//ドローコンポーネント
 
 		bool m_Clear;//透明にするかしないかの変数
+		bool m_updateFlag;//アップデートするかしないかの変数
 
 		//vector<VertexPositionColorTexture> m_vertices;
 		//vector<uint16_t> m_indices;
@@ -36,12 +37,12 @@ namespace basecross {
 		virtual ~Sprite();//デストラクタ
 
 		virtual void OnCreate()override;//作成
-		virtual void OnUpdate()override;//更新
 
 		virtual void OnClear(bool OnOff);//透明になる関数
 
 		void SetColor(Col4 coler);//セッター
 		void SetTexture(wstring Texture);//セッター
+		void SetUpdateFlag(bool onOff);//アップデートするかしないかのセッター
 		void MyDestroy();//自分自身を消す
 		Col4 GetColor();//ゲッター
 
