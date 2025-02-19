@@ -13,6 +13,7 @@ namespace basecross {
 	{
 	private:
 		bool m_aStarFirst;//AStarの移動処理が始めてか保存する変数
+		bool m_XorZ;//X(false)方向に進んでいるかZ(true)方向に進んでいるかの変数
 
 		int m_roopCount;//経路探査した回数を数える変数
 
@@ -32,6 +33,7 @@ namespace basecross {
 		vector<Vec3> RouteSearch(Vec3 startPos,Vec3 goalPos);//経路探査
 		bool MoveActor(shared_ptr<Actor> actor,vector<Vec3> routePos,int& routeCount,float speed);//移動処理
 		bool LookAround(shared_ptr<Node> parent, Vec2& goalPos);//周りを確認する処理
+		bool GetMoveXorZ();//今X,Zのどっちの方向に進んでいるか渡す関数
 	};
 
 	enum STATUS//ステータス

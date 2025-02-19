@@ -39,7 +39,7 @@ namespace basecross {
 
 		AStarMove();//Aスター処理
 
-		m_targetPos = m_tagetRootPos[m_roodCount];//現在の目的地
+		//m_targetPos = m_tagetRootPos[m_roodCount];//現在の目的地
 
 		//移動処理
 		m_directionRad = math.GetAngle(m_ownerPos, m_tagetRootPos[m_roodCount]);
@@ -61,6 +61,8 @@ namespace basecross {
 		//playerを追いかける処理
 		auto app = App::GetApp;
 		float delta = App::GetApp()->GetElapsedTime();
+		m_delta = App::GetApp()->GetElapsedTime();
+
 		Math math;
 		wstringstream wss(L"");
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
@@ -261,7 +263,7 @@ namespace basecross {
 		//m_ownerPos.x += -sin(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();//playerに向かって移動
 		//m_ownerPos.z += -cos(m_directionRad) * m_Owner->GetSpeed() * app()->GetElapsedTime();
 		
-		//AStarを使った移動処理使えない
+		//AStarを使った移動処理
 		MoveActor(m_Owner, m_tagetRootPos, m_roodCount, m_Owner->GetSpeed());
 		
 		auto CircleRange = math.GetCircleRange(40, m_ownerPos, m_playerPos);
@@ -300,13 +302,18 @@ namespace basecross {
 
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
 
-		//イノシシモードの処理
+		//ラッシュの処理
 		auto ability = m_Owner->GetAbility();
 
 		if (ability==rush)
-		{
+		{			
+			if (m_rushMoveFlag == false)
+			{
+				m_rushMoveFlag = RushMoveChack(m_ownerPos, 3);
+			}
+
 			m_waitTime+= app()->GetElapsedTime();
-			RushMove(m_ownerPos, 8);
+			RushMove(m_rushMoveFlag);
 
 		}
 
@@ -601,337 +608,135 @@ namespace basecross {
 		return false;
 	}
 
+	//RushMoveの処理
+	void Tracking::RushMove(bool onOff)
+	{
+		//RushMoveしていい場合の処理(２回目以降の処理)
+		if (onOff && m_rushFlow == Rush_Continue)
+		{
+			//進む方向が別になっていたらラッシュ状態をやめる
+			if (m_XorZBefor != GetMoveXorZ())
+			{
+				m_rushMoveFlag = false;//ラッシュ状態をやめる
+				m_Owner->SetSpeed(21.0f);
+				m_rushFlow = Rush_Start;//リセットする
+				m_rushSetSpeedCountTime = 0.0f;//ラッシュ状態の待機時間もリセット
+			}
+		}
+		else if (onOff && m_rushFlow == Rush_SetSpeed)//加速処理(一番最初の処理)
+		{
+			m_rushSetSpeedCountTime += m_delta;
 
-	void Tracking::RushMove(Vec3 pos, int vision)
+			if(m_rushSetSpeedCountTime >= 0.15f)
+			{
+				m_Owner->SetSpeed(42.0f);//ラッシュ状態の待機状態にする	
+				m_rushFlow = Rush_Continue;//この処理を終わらせたら継続処理に遷移する
+			}
+		}
+		else if (onOff && m_rushFlow == Rush_Start)//RushMoveしていい場合の処理(一番最初の処理)
+		{
+			//いま走っている方向を覚える
+			m_XorZBefor = GetMoveXorZ();
+			m_Owner->SetSpeed(0.0f);//ラッシュ状態の待機状態にする
+			
+			m_rushFlow = Rush_SetSpeed;//この処理を終わらせたら加速する処理に遷移する
+		}
+
+		//RushMove出来なくなったとき
+		if (!onOff && m_rushFlow == Rush_Continue)
+		{
+			m_Owner->SetSpeed(21.0f);
+			m_rushFlow = Rush_Start;//リセットする
+			m_rushSetSpeedCountTime = 0.0f;//ラッシュ状態の待機時間もリセット
+		}
+	}
+
+	//RushMoveしていいか確認する関数
+	bool Tracking::RushMoveChack(Vec3 pos, int vision)
 	{
 		Vec3 n_pos = pos;
 
 		int n_vision = vision;
+		int lineRootCount = 0;//直線の道がどのくらい続いているか記録する変数
 
 		auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
 		auto angle = m_Owner->GetAngle();
 
-		auto unityMap = mapMgr->GetUnityMap();
+		//x方向に進んでいるかz方向に進んでいるか確認する falseがx,trueがz
+		bool XorZ=false;
+		//前回はx方向に進んでいるかz方向に進んでいるか確認する falseがx,trueがz
+		bool XorZBetor = false;
+		//まっすく進んでいる経路か確認する変数
+		bool straightLine = true;
 
-		auto sellPos = mapMgr->ConvertSelMap(n_pos);
-		auto unityPos = mapMgr->ConvertUnityMap(sellPos);
 
-		for (int i = 1; i <= n_vision; i++)
-		{
-			if (angle == 0)
+		//突進するのに現在の進む経路が距離が足りているか
+		if (m_roodCount + vision < m_tagetRootPos.size())
+		{		
+			//経路探索の方向と今進んでいる方向が同じか確認する
+			bool XorZ = GetMoveXorZ();
+			Vec3 rootVec = m_tagetRootPos[0] - m_tagetRootPos[1];
+			if (!XorZ)//x方向に進んでいるなら
 			{
-				//床セルの場合
-				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 == 1)
+				//経路探索では次どの方向に進むか確認する
+				if (rootVec.x == 0) return false;
+			}
+			if (XorZ)//z方向に進んでいるなら
+			{
+				//経路探索では次どの方向に進むか確認する
+				if (rootVec.z == 0) return false;
+			}
+
+			//今進む経路はvisionの数値程直線が続いているか確認する
+			for (int i = 0; i <= vision; i++)
+			{
+				//今の座標と目標地点の座標の差を測る変数
+				Vec3 distance = Vec3(0.0f, 0.0f, 0.0f);
+				if (i == 0)
 				{
-					if (unityMap[unityPos.y][unityPos.x + i] == 3)
-					{
-						m_waitTime = 0;
-						break;
-					}
+					distance = m_tagetRootPos[m_roodCount+i] - m_ownerPos;
 				}
-				//壁セルの場合
-				if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x + i) % 2 != 1)
+				if (i > 0)
 				{
-					if (unityMap[unityPos.y][unityPos.x + i] == 1)
-					{
-						m_waitTime = 0;
-
-						break;
-					}
+					distance = m_tagetRootPos[m_roodCount + i] - m_tagetRootPos[m_roodCount + lineRootCount];
 				}
-				if (i == n_vision)
+
+				//xかz方向どっちに進んでいるか見る
+				if (distance.x != 0.0f)
 				{
-					if (unityMap[unityPos.y][unityPos.x + i]== 0)
-					{
-						if (m_waitTime > 1 && m_waitTime < 3)
-						{
-							m_Owner->SetSpeed(0);
-						}
-						if (m_waitTime > 3)
-						{
-							m_Owner->SetSpeed(40);
-						}
-					}
+					XorZ = true;
 				}
-				if (angle == XM_PI)
+				if (distance.z != 0.0f)
 				{
-					//床セルの場合
-					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2)
-					{
-						if (unityMap[unityPos.y][unityPos.x - i] == 3)
-						{
-							break;
-						}
-					}
-
-					//壁セルの場合
-					if ((int)unityPos.y % 2 == 1 && ((int)unityPos.x - i) % 2 != 1)
-					{
-						if (unityMap[unityPos.y][unityPos.x - i] == 1)
-						{
-							break;
-						}
-					}
-					if (i == n_vision)
-					{
-						if ((int)unityPos.x - i == 0)
-						{
-
-							if (m_waitTime > 1 && m_waitTime < 3)
-							{
-								m_Owner->SetSpeed(0);
-							}
-							if (m_waitTime > 3)
-							{
-								m_Owner->SetSpeed(40);
-							}
-						}
-					}
+					XorZ = false;
 				}
-				if (angle == XMConvertToRadians(270))
+
+				//１回目ならX方向Z方向どっちに進んでいるか保存する
+				if (i == 0)
 				{
-					//床セルの場合
-					if (((int)unityPos.y - i) % 2 == 1 && (int)unityPos.x % 2 == 1)
-					{
-						if (unityMap[unityPos.y - i][unityPos.x] == 3)
-						{
-							break;
-						}
-					}
-
-					//壁セルの場合
-					if (((int)unityPos.y - i) % 2 == 0 && (int)unityPos.x % 2 == 1)
-					{
-						if (unityMap[unityPos.y - i][unityPos.x] == 1)
-						{
-							break;
-						}
-					}
-					if ((int)unityPos.y + n_vision == 0)
-					{
-
-						if (m_waitTime > 1 && m_waitTime < 3)
-						{
-							m_Owner->SetSpeed(0);
-						}
-						if (m_waitTime > 3)
-						{
-							m_Owner->SetSpeed(40);
-						}
-					}
+					XorZBetor = XorZ;
 				}
-				if (angle == XM_PI * 0.5)
+				//2回目以降はXとZの進む方向が違うなら突進をしない
+				if (i > 0)
 				{
-					//床セルの場合
-					if (((int)unityPos.y + i) % 2 == 1 && (int)unityPos.x % 2 == 1)
+					if (XorZBetor != XorZ)//違うのであれば突進しない
 					{
-						if (unityMap[unityPos.y + i][unityPos.x] == 3)
-						{
-							break;
-						}
-					}
-
-					//壁セルの場合
-					if (((int)unityPos.y + i) % 2 == 0 && (int)unityPos.x % 2 == 1)
-					{
-						if (unityMap[unityPos.y + i][unityPos.x] == 1)
-						{
-							break;
-						}
-					}
-					if ((int)unityPos.y - n_vision == 0)
-					{
-
-						if (m_waitTime > 1 && m_waitTime < 3)
-						{
-							m_Owner->SetSpeed(0);
-						}
-						if (m_waitTime > 3)
-						{
-							m_Owner->SetSpeed(40);
-						}
+						return false;//突進できない
 					}
 				}
 
+				lineRootCount = i;
+			}
+
+			//直線の道が最低限ラッシュをするために必要な距離があればやる
+			if (lineRootCount == vision)
+			{
+				return true;//突進して良い
 			}
 		}
 
+		return false;//違うのであれば突進しない
 	}
-	//Vec3 Tracking::MoveCost()
-	//{
-	//	Math math;
-	//	auto mapMgr = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");
-	//	Vec3 pos = m_ownerPos;
-	//	Vec3 playerPos = m_playerPos;
-	//	Vec3 direction;
-	//	auto RouteSearch = mapMgr->GetUnityMap();//A*のマップ配列取得
-	//	auto sellPos = mapMgr->ConvertSelMap(pos);//Enemyの位置をセル座標に変更
-	//	auto AStarPos = mapMgr->ConvertUnityMap(sellPos);//セル座標からAStar座標に変更
-
-	//	auto rightAStar = RouteSearch[AStarPos.y][AStarPos.x + 1];
-	//	auto leftAStar = RouteSearch[AStarPos.y][AStarPos.x - 1];
-	//	auto fodAStar = RouteSearch[AStarPos.y - 1][AStarPos.x];
-	//	auto downAStar = RouteSearch[AStarPos.y + 1][AStarPos.x];
-
-
-	//	auto rightASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x + 2, AStarPos.y));
-	//	auto leftASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x - 2, AStarPos.y));
-	//	auto fodASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x, AStarPos.y - 2));
-	//	auto downASPos = mapMgr->ConvertU_S(Vec2(AStarPos.x, AStarPos.y + 2));
-
-
-	//	auto rightWPos = mapMgr->ConvertWorldMap(rightASPos);
-	//	auto leftWPos = mapMgr->ConvertWorldMap(leftASPos);
-	//	auto fodWPos = mapMgr->ConvertWorldMap(fodASPos);
-	//	auto downWPos = mapMgr->ConvertWorldMap(downASPos);
-
-
-	//	auto rightVec = math.GetDistance(rightWPos, m_playerPos);
-	//	auto liftVec = math.GetDistance(leftWPos, m_playerPos);
-	//	auto fodVec = math.GetDistance(fodWPos, m_playerPos);
-	//	auto downVec = math.GetDistance(downWPos, m_playerPos);
-
-
-	//	if (rightAStar == 1)
-	//	{
-	//		m_costRWall += 1000;
-	//	}
-	//	else if(rightAStar == 0)
-	//	{
-	//		m_costRWall = 0;
-	//	}
-	//	if (leftAStar == 1)
-	//	{
-	//		m_costLWall = 1000;
-	//	}
-	//	else if (leftAStar == 0)
-	//	{
-	//		m_costLWall = 0;
-	//	}
-	//	if (fodAStar == 1)
-	//	{
-	//		m_costFWall += 1000;
-	//	}
-	//	else if (fodAStar == 0)
-	//	{
-	//		m_costFWall = 0;
-	//	}
-	//	if (downAStar == 1)
-	//	{
-	//		m_costDWall += 1000;
-	//	}
-	//	else if (downAStar == 0)
-	//	{
-	//		m_costDWall = 0;
-	//	}
-
-
-
-	//	int min_value[] =
-	//	{
-	//		{rightVec + m_costRight+m_costRWall},
-	//		{liftVec + m_costLeft+m_costLWall},
-	//		{fodVec + m_costFod+m_costFWall},
-	//		{downVec + m_costDown+m_costDWall},
-	//	};
-	//	int min = min_value[0];
-	//	for (int i = 0; i < 4; i++)
-	//	{
-	//		if (min_value[i] < min)
-	//		{
-	//			min = min_value[i];
-	//		}
-	//	}
-
-	//	if (min == min_value[0])
-	//	{
-	//		direction = rightWPos;
-	//	}
-	//	if (min == min_value[1])
-	//	{
-	//		direction = leftWPos;
-	//	}
-	//	if (min == min_value[2])
-	//	{
-	//		direction = fodWPos;
-	//	}
-	//	if (min == min_value[3])
-	//	{
-	//		direction = downWPos;
-	//	}
-	//	while (direction != m_playerPos)
-	//	{
-	//		if (m_count >= 0)
-	//		{
-	//			//m_posVec[m_count] = direction;
-	//			m_posVec.push_back(direction);
-
-	//		}
-
-	//		if (m_count > 0)
-	//		{
-	//			if (playerPos==m_playerPos)
-	//			{
-	//				if (rightWPos == m_posVec[m_count - 1])
-	//				{
-	//					m_costLeft += 100;
-	//					m_costRight = 0;
-	//				}
-	//				if (leftWPos == m_posVec[m_count - 1])
-	//				{
-	//					m_costRight += 100;
-	//					m_costLeft = 0;
-	//				}
-	//				if (fodWPos == m_posVec[m_count - 1])
-	//				{
-	//					m_costDown += 1;
-	//					m_costFod = 0;
-	//				}
-	//				if (downWPos == m_posVec[m_count - 1])
-	//				{
-	//					m_costFod += 1;
-	//					m_costDown = 0;
-	//				}
-	//			}
-	//		}
-	//		if (m_costRight < 0)
-	//		{
-	//			m_costRight = 0;
-	//		}
-	//		if (m_costRight > 100)
-	//		{
-	//			m_costRight = 100;
-	//		}
-	//		if (m_costLeft < 0)
-	//		{
-	//			m_costLeft = 0;
-	//		}
-	//		if (m_costLeft > 100)
-	//		{
-	//			m_costLeft = 100;
-	//		}
-	//		if(m_costFod < 0)
-	//		{
-	//			m_costFod = 0;
-	//		}
-	//		if (m_costFod > 100)
-	//		{
-	//			m_costFod = 100;
-	//		}
-	//		if (m_costDown < 0)
-	//		{
-	//			m_costDown = 0;
-	//		}
-	//		if (m_costDown > 100)
-	//		{
-	//			m_costDown = 100;
-	//		}
-	//		m_count++;
-	//		
-	//		return m_posVec[m_count - 1];
-	//	}
-
-	//}
 
 	
 

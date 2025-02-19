@@ -12,7 +12,8 @@ namespace basecross {
 		m_unityMap(vector<vector<shared_ptr<Node>>>()),
 		m_unityMapCSV(vector<vector<int>>()),//AStarMap‚ÌCSVƒf[ƒ^
 		m_roopCount(0),//Œo˜H’T¸‚µ‚½‰ñ”‚ğ”‚¦‚é•Ï”
-		m_mapManager(weak_ptr<MapManager>())
+		m_mapManager(weak_ptr<MapManager>()),
+		m_XorZ(false)//‰Šú’l‚ÍX•ûŒü
 	{
 		//m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManaegr");
 	}
@@ -272,18 +273,22 @@ namespace basecross {
 			if (m_movePos.x > 0)//³‚Ì”‚È‚ç
 			{
 				m_movePos.x = 1;//‚P‚É‚·‚é
+				m_XorZ = false;
 			}
 			if (m_movePos.x < 0)//•‰‚Ì”‚È‚ç
 			{
 				m_movePos.x = -1;//-‚P‚É‚·‚é
+				m_XorZ = false;
 			}
 			if (m_movePos.z > 0)//³‚Ì”‚È‚ç
 			{
 				m_movePos.z = 1;//‚P‚É‚·‚é
+				m_XorZ = true;
 			}
 			if (m_movePos.z < 0)//•‰‚Ì”‚È‚ç
 			{
 				m_movePos.z = -1;//-‚P‚É‚·‚é
+				m_XorZ = true;
 			}
 
 			//ŸˆÚ“®‚·‚é‚Ì‚ªxˆÚ“®‚Ìê‡
@@ -425,18 +430,22 @@ namespace basecross {
 			if (m_movePos.x > 0)//³‚Ì”‚È‚ç
 			{
 				m_movePos.x = 1;//‚P‚É‚·‚é
+				m_XorZ = false;
 			}
 			if (m_movePos.x < 0)//•‰‚Ì”‚È‚ç
 			{
 				m_movePos.x = -1;//-‚P‚É‚·‚é
+				m_XorZ = false;
 			}
 			if (m_movePos.z > 0)//³‚Ì”‚È‚ç
 			{
 				m_movePos.z = 1;//‚P‚É‚·‚é
+				m_XorZ = true;
 			}
 			if (m_movePos.z < 0)//•‰‚Ì”‚È‚ç
 			{
 				m_movePos.z = -1;//-‚P‚É‚·‚é
+				m_XorZ = true;
 			}
 
 
@@ -513,6 +522,12 @@ namespace basecross {
 		actor->SetAngle(angle + XMConvertToRadians(90.0f));
 
 		return false;//–Ú“I’n‚É‚½‚Ç‚è’…‚¯‚Ä‚È‚©‚Á‚½‚çfalse
+	}
+
+	//¡X,Z‚Ì‚Ç‚Á‚¿‚Ì•ûŒü‚Éi‚ñ‚Å‚¢‚é‚©“n‚·ŠÖ”
+	bool AStar::GetMoveXorZ()
+	{
+		return m_XorZ;
 	}
 
 }

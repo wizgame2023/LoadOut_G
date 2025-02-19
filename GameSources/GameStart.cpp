@@ -80,7 +80,7 @@ namespace basecross {
 			sprite3->SetColor(Col4(1.0f, 0.0f, 0.0f, 1.0f));
 			m_spriteVec.push_back(sprite3);		
 			//“|‚·‚×‚«“G‚Ì”•\Ž¦
-			m_nuberManager = GetStage()->AddGameObject<NuberManager>(m_EnemyUpClearNum, Vec2(150, 150), Vec3(-490.0f, 0.0f, 0.0f), true,80.0f);//ŒÂ”
+			m_nuberManager = GetStage()->AddGameObject<NuberManager>(m_EnemyUpClearNum, Vec2(150, 150), Vec3(-480.0f, 0.0f, 0.0f), true,70.0f);//ŒÂ”
 			//auto sprite4 = stage->AddGameObject<Sprite>(L"StartMozi", Vec2(900 * 0.6f, 150 * 1.0f), Vec3(0.0f, -300.0f, 0.0f));
 			//sprite2->SetColor(Col4(0.3f, 0.3f, 0.3f, 1.0f));
 			//m_spriteVec.push_back(sprite4);
