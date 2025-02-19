@@ -32,6 +32,7 @@ namespace basecross {
 		float m_directionRad;
 		float m_aStarTime;//AStar更新時までのタイム計測用変数
 		float m_waitTime;
+		float m_delta;
 
 		
 		int m_costRWall;
@@ -47,8 +48,8 @@ namespace basecross {
 		int m_directionCount;
 
 		int m_roodCount;//今A*の移動でどの段階にいるか決める変数
-		int m_moveXorZ;//x方向に移動しているかz方向に移動しているか保存する変数
-		Vec3 m_targetPos;////現在の目的地を保存する変数
+		//int m_moveXorZ;//x方向に移動しているかz方向に移動しているか保存する変数
+		//Vec3 m_targetPos;////現在の目的地を保存する変数
 		Vec3 m_movePos;//どう移動するか覚える変数(中の変数は-1か1,0のみ入れて良いものとする)
 
 		bool m_rightFlag;
@@ -56,6 +57,20 @@ namespace basecross {
 		bool m_upFlag;
 		bool m_downFlag;
 
+		//ラッシュ関係
+
+		enum RUSH_FLOW//ラッシュの状態遷移
+		{
+			Rush_Start,
+			Rush_SetSpeed,
+			Rush_Continue
+		};
+
+		bool m_rushMoveFlag;//ラッシュ状態にしていいかのフラグ
+		bool m_XorZBefor;//前どの方向に進んでいたか保存する変数
+		int m_rushFlow;//ラッシュ状態のフロー状態を保存する
+		float m_rushSetSpeedCountTime;//スピードを入れる時間を計測する変数
+		//
 
 		shared_ptr<Transform> m_trans;
 
@@ -101,7 +116,11 @@ namespace basecross {
 			m_directionCount(0),
 			m_roodCount(0),
 			m_aStarTime(0.0f),
-			m_moveXorZ(move_X)
+			//m_moveXorZ(move_X),
+			m_XorZBefor(false),
+			m_rushFlow(Rush_Start),
+			m_rushMoveFlag(false),
+			m_rushSetSpeedCountTime(0.0f)
 		{
 		}
 
@@ -116,7 +135,8 @@ namespace basecross {
 		vector<Vec3> RouteSearchNotA();
 
 		bool LookAround(shared_ptr<Node> node, Vec2 goalPos);
-		void RushMove(Vec3 pos, int vision);
+		bool RushMoveChack(Vec3 pos, int vision);//突進していいか確認する関数
+		void RushMove(bool onOff);
 
 
 	};
