@@ -15,11 +15,14 @@ namespace basecross {
 	private:
 		Vec3 m_pos;//ポジション
 		weak_ptr<MapManager> m_mapManager;//マップマネージャー
+		shared_ptr<MapManager> m_lockMapManager;//マップマネージャー
 
 		shared_ptr<ClearObject> m_clearObject;//透明な壁
 		shared_ptr<WaterPillar> m_waterPillar;//水柱
 		shared_ptr<BillBoard> m_billBoard;//ビルボード
 		shared_ptr<BillBoardGauge> m_billBoardSecond;//2つめのビルボード
+
+		shared_ptr<Stage> m_stage;//今いるステージ
 
 		vector<weak_ptr<Enemy>> m_upEnemyVec;//打ち上げる敵ポインタの配列
 
@@ -56,6 +59,9 @@ namespace basecross {
 		void OnCollisionEnter(shared_ptr<GameObject>& other)override;//当たった時に処理
 		void OnCollisionExcute(shared_ptr<GameObject>& other)override;//入り続けているときに処理
 		void OnCollisionExit(shared_ptr<GameObject>& other)override;//離れたときに処理
+
+		//コリジョンによって敵やプレイヤーが当たった時の処理
+		void CollisionUpManhole(shared_ptr<Enemy> enemy,shared_ptr<Player> player);
 
 		int GetState();//ゲッター
 		void SetUpdateSwitch(bool onOff);//アップデートするかのセッター

@@ -47,6 +47,9 @@ namespace basecross {
 		ptrColl->SetAfterCollision(AfterCollision::None);
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 
+		//ステージ取得
+		m_stage = GetStage();
+
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
@@ -74,8 +77,13 @@ namespace basecross {
 		if (!m_UpdateFlag) return;
 
 		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
+		m_lockMapManager = m_mapManager.lock();
+
+		//マップマネージャーがちゃんと入っていなければアップデートできない
+		if (!m_lockMapManager) return;
+
 		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
-		auto stage = GetStage();//ステージ取得
+		//auto m_stage = GetStage();//ステージ取得
 
 		ManholeTransition();//マンホールの遷移
 
@@ -231,138 +239,20 @@ namespace basecross {
 	//入り続けているとき処理
 	void Manhole::OnCollisionExcute(shared_ptr<GameObject>& other)
 	{
-		auto mapManager = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
 		auto player = dynamic_pointer_cast<Player>(other);
-		auto stage = GetStage();
 
-		if (mapManager->SelMapNow(m_pos) == 2)
-		{//もし当たったオブジェクトが敵なら
-			if (enemy)
-			{
-				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
-
-				player = stage->GetSharedGameObject<Player>(L"Player");
-				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
-				auto playerSelPos = mapManager->ConvertSelMap(playerPos);
-				auto selPos = mapManager->ConvertSelMap(m_pos);
-
-				//ステージのオブジェクトを全て取得
-				auto objVec = stage->GetGameObjectVec();
-				//取得したオブジェクトがアイテムに変換できたら配列に入れる
-				for (auto obj : objVec)
-				{
-					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
-
-					//マンホールの座標が近ければ同じなら打ち上げる配列に入れる
-					if (castEnemy)
-					{
-						Vec3 castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
-						if (abs(m_pos.x - castEnemyPos.x) <= 8.0f || abs(m_pos.z - castEnemyPos.z) <= 8.0f)
-						{
-							m_upEnemyVec.push_back(castEnemy);
-						}
-					}
-				}
-
-				AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
-				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
-				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
-				{
-					stage->AddGameObject<MovieUpEandP>(enemy, player);
-				}
-				else if (m_upEnemyVec.size() >= 2)//打ちあがる敵が２体以上いたら
-				{
-					stage->AddGameObject<MovieUpEnemyMulti>(m_upEnemyVec);//複数の敵が打ちあがる時のムービー
-				}
-				else//敵だけマンホールを踏んでいる映像
-				{
-					stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
-				}
-			}
-			else if (player)//プレイヤーなら
-			{
-				if (m_playerUpTime >= 0.5f)
-				{
-					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-					m_charen = Manhole_Up;//マンホールが上がる状態にする
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする					
-					AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
-					GetStage()->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
-				}
-			}
-		}
-
+		//マンホールが上がる処理
+		CollisionUpManhole(enemy, player);
 	}
+
 	void Manhole::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
-		auto mapManager = m_mapManager.lock(); //->SelMapNow(m_pos) == 2
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
-		//auto enemyPos = enemy->GetComponent<Transform>()->GetPosition();
 		auto player = dynamic_pointer_cast<Player>(other);
-		auto stage = GetStage();
 
-		if (mapManager->SelMapNow(m_pos) == 2)
-		{//もし当たったオブジェクトが敵なら
-			if (enemy)
-			{
-				mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
-
-				player = stage->GetSharedGameObject<Player>(L"Player");
-				auto playerPos = stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
-				auto playerSelPos = mapManager->ConvertSelMap(playerPos);
-				auto selPos = mapManager->ConvertSelMap(m_pos);
-
-				//ステージのオブジェクトを全て取得
-				auto objVec = stage->GetGameObjectVec();
-				//取得したオブジェクトがアイテムに変換できたら配列に入れる
-				for (auto obj : objVec)
-				{
-					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
-
-					//マンホールの座標から近ければ同じなら打ち上げる配列に入れる
-					if (castEnemy)
-					{			
-						Vec3 castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
-						if (abs(m_pos.x - castEnemyPos.x) <= 8.0f && abs(m_pos.z - castEnemyPos.z) <= 8.0f)
-						{
-							m_upEnemyVec.push_back(castEnemy);
-						}
-					}
-				}
-
-				AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
-				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
-				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
-				{
-					stage->AddGameObject<MovieUpEandP>(enemy, player);
-				}
-				else if (m_upEnemyVec.size() >= 2)//打ちあがる敵が２体以上いたら
-				{
-					stage->AddGameObject<MovieUpEnemyMulti>(m_upEnemyVec);//複数の敵が打ちあがる時のムービー
-				}
-				else//敵だけマンホールを踏んでいる映像
-				{
-					stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
-				}
-
-				m_upEnemyVec.clear();//使い終わったor使わないので削除する
-
-			}
-			else if (player)//プレイヤーなら
-			{
-				if (m_playerUpTime >= 0.5f)
-				{
-					mapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
-					m_charen = Manhole_Up;//マンホールが上がる状態にする
-					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");		
-					AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
-					stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
-				}
-			}
-		}
+		//マンホールが上がる処理
+		CollisionUpManhole(enemy, player);
 	}
 
 	void Manhole::OnCollisionExit(shared_ptr<GameObject>& other)
@@ -376,6 +266,72 @@ namespace basecross {
 			if (player)
 			{
 				m_playerStanbyFlag = true;
+			}
+		}
+
+	}
+
+	//コリジョンによってマンホールが上がる処理
+	void Manhole::CollisionUpManhole(shared_ptr<Enemy> enemy, shared_ptr<Player> player)
+	{
+		if (m_lockMapManager->SelMapNow(m_pos) == 2)
+		{//もし当たったオブジェクトが敵なら
+			if (enemy)
+			{
+				m_lockMapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
+
+				player = m_stage->GetSharedGameObject<Player>(L"Player");
+				auto playerPos = m_stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
+				auto playerSelPos = m_lockMapManager->ConvertSelMap(playerPos);
+				auto selPos = m_lockMapManager->ConvertSelMap(m_pos);
+
+				//ステージのオブジェクトを全て取得
+				auto objVec = m_stage->GetGameObjectVec();
+				//取得したオブジェクトがアイテムに変換できたら配列に入れる
+				for (auto obj : objVec)
+				{
+					auto castEnemy = dynamic_pointer_cast<Enemy>(obj);//Enemyにキャストする
+
+					//マンホールの座標から近ければ同じなら打ち上げる配列に入れる
+					if (castEnemy)
+					{
+						Vec3 castEnemyPos = castEnemy->GetComponent<Transform>()->GetPosition();
+						if (abs(m_pos.x - castEnemyPos.x) <= 8.0f && abs(m_pos.z - castEnemyPos.z) <= 8.0f)
+						{
+							m_upEnemyVec.push_back(castEnemy);
+						}
+					}
+				}
+
+				AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
+				//敵がマンホールを踏んでいる際にプレイヤーもマンホールを踏んでいる際にはプレイヤーと敵が打ちあがるムービーが出る
+				if (playerSelPos.x == selPos.x && playerSelPos.y == selPos.y)
+				{
+					m_stage->AddGameObject<MovieUpEandP>(enemy, player);
+				}
+				else if (m_upEnemyVec.size() >= 2)//打ちあがる敵が２体以上いたら
+				{
+					m_stage->AddGameObject<MovieUpEnemyMulti>(m_upEnemyVec);//複数の敵が打ちあがる時のムービー
+				}
+				else//敵だけマンホールを踏んでいる映像
+				{
+					m_stage->AddGameObject<MovieUpEnemy>(enemy);//打ちあがる時の敵のムービー
+				}
+
+				m_upEnemyVec.clear();//使い終わったor使わないので削除する
+
+			}
+			else if (player)//プレイヤーなら
+			{
+				if (m_playerUpTime >= 0.5f)
+				{
+					m_lockMapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
+					m_charen = Manhole_Up;//マンホールが上がる状態にする
+					GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+					AddTag(L"MovieManhole");//ムービーの発生元のマンホールだと覚える
+					m_stage->AddGameObject<MovieUpPlayer>();//Playerが上がってしまうムービが出る
+				}
 			}
 		}
 
