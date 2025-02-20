@@ -17,25 +17,10 @@ namespace basecross {
 		wstringstream wss(L"");
 		m_trans = m_Owner->GetComponent<Transform>();//所有者(Enemy)のTransformを取得
 		m_ownerPos = m_trans->GetPosition();//所有者(Enemy)のポジションを取得
-		int anger = m_Owner->GetAnger();//怒り値を取得
-		//怒り値によってトラッキング時ののスピードを変更する
-		switch (anger)
-		{
-		case ANGER_NONE://怒ってない
-			m_Owner->SetSpeed(21.0f);
-			break;
-		case ANGER_LOW://怒ってる(弱)
-			m_Owner->SetSpeed(21.0f*1.065f);
-			break;
-		case ANGER_MIDDLE://怒ってる(中)
-			m_Owner->SetSpeed(21.0f*1.25f);
-			break;
-		case ANGER_HI://怒ってる(強)
-			m_Owner->SetSpeed(21.0f*1.5f);
-			break;
-		default:
-			break;
-		}
+
+		m_anger = m_Owner->GetAnger();//怒り値を取得
+		//怒り値によってトラッキング時のスピードを変更する
+		AngerSpeed(m_anger);
 
 		AStarMove();//Aスター処理
 
@@ -309,7 +294,7 @@ namespace basecross {
 		{			
 			if (m_rushMoveFlag == false)
 			{
-				m_rushMoveFlag = RushMoveChack(m_ownerPos, 3);
+				m_rushMoveFlag = RushMoveChack(m_ownerPos, 2);
 			}
 
 			m_waitTime+= app()->GetElapsedTime();
@@ -618,7 +603,7 @@ namespace basecross {
 			if (m_XorZBefor != GetMoveXorZ())
 			{
 				m_rushMoveFlag = false;//ラッシュ状態をやめる
-				m_Owner->SetSpeed(21.0f);
+				AngerSpeed(m_anger);
 				m_rushFlow = Rush_Start;//リセットする
 				m_rushSetSpeedCountTime = 0.0f;//ラッシュ状態の待機時間もリセット
 			}
@@ -629,7 +614,8 @@ namespace basecross {
 
 			if(m_rushSetSpeedCountTime >= 0.15f)
 			{
-				m_Owner->SetSpeed(42.0f);//ラッシュ状態の待機状態にする	
+				AngerSpeed(m_anger);
+				m_Owner->SetSpeed(m_Owner->GetSpeed() * 2.0f);//ラッシュ状態の待機状態にする
 				m_rushFlow = Rush_Continue;//この処理を終わらせたら継続処理に遷移する
 			}
 		}
@@ -738,7 +724,27 @@ namespace basecross {
 		return false;//違うのであれば突進しない
 	}
 
-	
+	//怒り値によってスピードを決める処理
+	void Tracking::AngerSpeed(int anger)
+	{
+		switch (anger)
+		{
+		case ANGER_NONE://怒ってない
+			m_Owner->SetSpeed(21.0f);
+			break;
+		case ANGER_LOW://怒ってる(弱)
+			m_Owner->SetSpeed(21.0f * 1.065f);
+			break;
+		case ANGER_MIDDLE://怒ってる(中)
+			m_Owner->SetSpeed(21.0f * 1.25f);
+			break;
+		case ANGER_HI://怒ってる(強)
+			m_Owner->SetSpeed(21.0f * 1.5f);
+			break;
+		default:
+			break;
+		}
+	}
 
 }
 

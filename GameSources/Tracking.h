@@ -47,6 +47,8 @@ namespace basecross {
 		int m_count;
 		int m_directionCount;
 
+		int m_anger;//怒り値
+
 		int m_roodCount;//今A*の移動でどの段階にいるか決める変数
 		//int m_moveXorZ;//x方向に移動しているかz方向に移動しているか保存する変数
 		//Vec3 m_targetPos;////現在の目的地を保存する変数
@@ -131,6 +133,8 @@ namespace basecross {
 
 		void AStarMove();//Aスターの移動処理
 		void nextSelLook(int right,int left,int up, int down,Vec2 enemyAStarPos,Vec2 playerAStarPos);//隣に壁か上げているマンホールがあるか確認する
+
+		void AngerSpeed(int anger);//怒り値によってスピードを変更する処理
 
 		vector<Vec3> RouteSearchNotA();
 
