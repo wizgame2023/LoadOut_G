@@ -52,7 +52,6 @@ namespace basecross {
 		return m_selPosBefor;
 	}
 
-
 	void Actor::SetAngle(float angle)
 	{
 		m_angle = angle;
@@ -62,7 +61,5 @@ namespace basecross {
 	{
 		m_move = onoff;
 	}
-
-
 }
 //end basecross

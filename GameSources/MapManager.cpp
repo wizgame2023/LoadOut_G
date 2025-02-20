@@ -119,7 +119,7 @@ namespace basecross {
 					GetStage()->AddGameObject<Hatch>(Vec3((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
 				case 6://バッテリー生成
-					//GetStage()->AddGameObject<Battery>((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f), Vec3(0.0f, 0.0f, 0.0f));
+					//GetStage()->AddGameObject<Spanner>((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f), Vec3(0.0f, 0.0f, 0.0f));
 					break;
 				case 7://エネミー生成
 

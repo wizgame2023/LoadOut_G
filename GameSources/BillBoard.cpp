@@ -46,8 +46,6 @@ namespace basecross{
 			PtrTransform->SetQuaternion(SeekTransPtr->GetQuaternion());
 			//変更できるスクエアリソースを作成
 
-			//頂点配列
-			//vector<VertexPositionNormalTexture> vertices;
 			//インデックスを作成するための配列
 			vector<uint16_t> indices;
 			//Squareの作成(ヘルパー関数を利用)
@@ -62,7 +60,7 @@ namespace basecross{
 			//右下頂点
 			m_vertices[3].textureCoordinate = Vec2(1, 1.0f);
 
-			//頂点の型を変えた新しい頂点を作成
+			//頂点の型を変えた新しい頂点を作成(こうしないと色がつかない)
 			vector<VertexPositionColorTexture> new_vertices;
 			for (auto& v : m_vertices) {
 				VertexPositionColorTexture nv;
@@ -91,6 +89,7 @@ namespace basecross{
 			auto SeekPtr = m_actor.lock();
 			auto SeekTransPtr = SeekPtr->GetComponent<Transform>();
 
+			//トランスフォーム取得
 			auto PtrTransform = GetComponent<Transform>();
 			auto Pos = SeekTransPtr->GetPosition();
 			Pos.y += m_pushY;
@@ -98,7 +97,7 @@ namespace basecross{
 			PtrTransform->SetScale(m_scale);
 
 			auto DrawComp = GetComponent<PCTStaticDraw>();
-			DrawComp->SetTextureResource(m_textureName);
+			DrawComp->SetTextureResource(m_textureName);//テクスチャ更新
 
 			auto PtrCamera = GetStage()->GetView()->GetTargetCamera();
 

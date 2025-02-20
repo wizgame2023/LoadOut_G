@@ -55,16 +55,16 @@ namespace basecross {
 		SetSharedGameObject(L"MiniMapManager", miniMapManager);
 		
 		//ÉAÉCÉeÉÄÇÃê∂ê¨
-		AddGameObject<Battery>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Battery>(Vec3(50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Battery>(Vec3(-50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Battery>(Vec3(-10.0f, 2.5f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Battery>(Vec3(-10.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
-		AddGameObject<Battery>(Vec3(-10.0f, 2.5f, -50.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-		//AddGameObject<Battery>(Vec3(30.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Spanner>(Vec3(15.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Spanner>(Vec3(50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Spanner>(Vec3(-50.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Spanner>(Vec3(-10.0f, 2.5f, 50.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Spanner>(Vec3(-10.0f, 2.5f, 25.0f), Vec3(0.0f, 0.0f, 0.0f));
+		AddGameObject<Spanner>(Vec3(-10.0f, 2.5f, -50.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Spanner>(Vec3(10.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Spanner>(Vec3(20.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Spanner>(Vec3(25.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+		//AddGameObject<Spanner>(Vec3(30.0f, 2.5f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		//PlayerÇÃê∂ê¨
 		auto player = AddGameObject<Player>(Vec3(0.0f, 3.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 		SetSharedGameObject(L"Player", player);

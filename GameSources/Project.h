@@ -38,7 +38,7 @@
 #include"YuutaStage.h"
 #include"Ground.h"
 #include"MapManager.h"
-#include"Battery.h"//電池
+#include"Spanner.h"//スパナ
 #include"Enemy.h"
 #include"Manhole.h"
 #include"Wall.h"

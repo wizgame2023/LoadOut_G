@@ -1,13 +1,13 @@
 /*!
-@file Character.h
-@brief キャラクターなど
+@file Spanner.h
+@brief スパナ(マンホールを打ち上げるためのアイテム)
 */
 
 #pragma once
 #include "stdafx.h"
 
 namespace basecross {
-	class Battery :public GameObject
+	class Spanner :public GameObject
 	{
 	private:
 		Vec3 m_pos;//ポジション
@@ -16,8 +16,8 @@ namespace basecross {
 		bool m_updateFlag;//アップデートするかのフラグ
 
 	public:
-		Battery(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot);
-		~Battery();
+		Spanner(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot);
+		~Spanner();
 
 		void OnCreate()override;
 		void OnUpdate()override;

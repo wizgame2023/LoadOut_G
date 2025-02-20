@@ -22,8 +22,8 @@ namespace basecross {
 		int m_clearManagerCount;//クリアマネージャーの処理のカウント
 		int m_stageMode;//ステージのモードを決める変数
 
-		float m_repopItemCountTime;//アイテムがリポップするタイムを測る変数
-		float m_repopItemCountTimeMax;//アイテムがリポップする時間
+		float m_repopItemCountTime;//アイテム(スパナ)がリポップするタイムを測る変数
+		float m_repopItemCountTimeMax;//アイテム(スパナ)がリポップする時間
 		float m_repopEnemyCountTime;//敵がリポップするタイムを測る変数
 		float m_repopEnemyCountTimeMax;//敵がリポップする時間
 		float m_repopRamdomItemCountTime;//ランダムアイテムがリポップする時間を測る変数

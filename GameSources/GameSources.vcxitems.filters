@@ -234,7 +234,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.h">
       <Filter>Headers\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Battery.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)Spanner.h">
       <Filter>Headers\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RandomItem.h">
@@ -495,7 +495,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Battery.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)Spanner.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RandomItem.cpp">

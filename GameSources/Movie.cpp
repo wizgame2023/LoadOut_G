@@ -29,7 +29,7 @@ namespace basecross {
 		for (auto obj : objVec)
 		{
 			auto actorCast = dynamic_pointer_cast<Actor>(obj);
-			auto batteryCast = dynamic_pointer_cast<Battery>(obj);
+			auto batteryCast = dynamic_pointer_cast<Spanner>(obj);
 			auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
 			auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
 

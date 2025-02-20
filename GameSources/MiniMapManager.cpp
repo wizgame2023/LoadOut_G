@@ -61,7 +61,7 @@ namespace basecross {
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto item : objVec)
 		{
-			auto castitem = dynamic_pointer_cast<Battery>(item);
+			auto castitem = dynamic_pointer_cast<Spanner>(item);
 			if (castitem)//アイテム型にキャストする
 			{
 				auto itemTrans = item->GetComponent<Transform>();
@@ -87,7 +87,7 @@ namespace basecross {
 		//ステージにあるアイテムの数をカウントする
 		for (auto item : objVec)
 		{
-			auto castitem = dynamic_pointer_cast<Battery>(item);
+			auto castitem = dynamic_pointer_cast<Spanner>(item);
 			if (castitem)//アイテム型にキャストする
 			{
 				itemNumNow++;

@@ -31,9 +31,6 @@ namespace basecross {
 		Vec2 m_scrollVelocity;//XY•ûŒü‚Ì‘¬“x
 
 		bool m_isUpdate = false;
-
-		Vec2 m_test;
-
 	public:
 		PillarEffect(shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velovity, int square = 36);
 		~PillarEffect();
@@ -41,11 +38,9 @@ namespace basecross {
 		virtual void OnCreate() override;
 		virtual void OnUpdate() override;
 
-		void SetScrollPerSecond(Vec2 velocity);
 		void SetVelocity(Vec2 velocity);
 		void SetTexture(wstring textureName);
 		virtual void UpdateTest(bool OnOff);
-
 	};
 
 }

@@ -137,7 +137,7 @@ namespace basecross {
 
 		for (int i = 0; i < posVec.size(); i++)
 		{
-			AddGameObject<Battery>(posVec[i], Vec3(0.0f, 0.0f, 0.0f));
+			AddGameObject<Spanner>(posVec[i], Vec3(0.0f, 0.0f, 0.0f));
 		}
 
 	}

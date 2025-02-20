@@ -14,7 +14,7 @@ namespace basecross {
 	{
 	private:
 		vector<weak_ptr<Actor>> m_actorVec;//動くオブジェクトを入れる配列
-		vector<weak_ptr<Battery>> m_batteryVec;//バッテリーを入れる配列
+		vector<weak_ptr<Spanner>> m_batteryVec;//バッテリーを入れる配列
 		vector<weak_ptr<Manhole>> m_manholeVec;//マンホールを入れる配列
 		vector<weak_ptr<Sprite>> m_spriteVec;//スプライトをを入れる配列
 	protected:
