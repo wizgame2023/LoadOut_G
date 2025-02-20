@@ -1,5 +1,5 @@
 /*!
-@file GameStage.cpp
+@file GameStage10.cpp
 @brief ゲームステージ実体
 */
 
