@@ -20,7 +20,6 @@
 #include"Patrol.h"
 #include"Attack.h"
 #include"RepopEnemy.h"
-#include"TrackingBoar.h"
 #include"TargetLost.h"//見失ったときのステート
 
 //親クラス用
