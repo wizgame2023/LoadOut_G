@@ -18,7 +18,8 @@ namespace basecross {
 		m_speed(10),
 		m_angle(0),
 		m_startPop(true),//初めてのスポーンかどうか
-		m_anger(ANGER_NONE)
+		m_anger(ANGER_NONE),
+		m_ability(normal)//Enemyの能力の宣言用
 	{
 	}
 	Enemy::Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startPop, int ability,int anger) :
@@ -48,11 +49,11 @@ namespace basecross {
 	{
 		GetComponent<Transform>()->SetScale(m_scale);
 		GetComponent<Transform>()->SetPosition(m_pos);
-		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
-		ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
-		ptrDraw->AddAnimation(L"Default", 6, 10, true, 20.0f);
-		ptrDraw->AddAnimation(L"Ran", 6, 20, true, 20.0f);
-		ptrDraw->AddAnimation(L"All", 0, 100, true, 10.0f);
+		m_ptrDraw = AddComponent<PNTBoneModelDraw>();
+		m_ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
+		m_ptrDraw->AddAnimation(L"Default", 6, 10, true, 20.0f);
+		m_ptrDraw->AddAnimation(L"Ran", 6, 20, true, 20.0f);
+		m_ptrDraw->AddAnimation(L"All", 0, 100, true, 10.0f);
 
 		m_mapMgr = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
 
@@ -74,15 +75,17 @@ namespace basecross {
 			Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
+
+		m_ptrDraw->SetMeshToTransformMatrix(spanMat);
+
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		//影を付ける
-		auto ptrShadow = AddComponent<Shadowmap>();
-		ptrShadow->SetMeshResource(L"Boss_Mesh_Kari");
-		ptrShadow->SetMeshToTransformMatrix(spanMat);
+		m_ptrShadow = AddComponent<Shadowmap>();
+		m_ptrShadow->SetMeshResource(L"Boss_Mesh_Kari");
+		m_ptrShadow->SetMeshToTransformMatrix(spanMat);
 
 		AddTag(L"Enemy");
 
@@ -284,6 +287,25 @@ namespace basecross {
 	int Enemy::GetAnger()
 	{
 		return m_anger;
+	}
+
+	//アビリティを変更する
+	void Enemy::ChangeAbility(int ability)
+	{
+		//ノーマルに変更
+		if (ability == normal)
+		{
+			//見た目を変える
+			m_ptrDraw->SetMeshResource(L"Boss_Mesh_Kari");
+		}
+
+		//ラッシュ状態に変更
+		if (ability == rush)
+		{
+			//見た目を変える
+			m_ptrDraw->SetMeshResource(L"Boss_Mesh_Spec");//仮で透視の敵のメッシュにしています
+		}
+		m_ability = ability;
 	}
 
 	void Enemy::SetAngle(float angle)

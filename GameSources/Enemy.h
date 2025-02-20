@@ -42,6 +42,10 @@ namespace basecross {
 		bool m_startPop;//最初のスポーンかリポップかを表す変数
 
 
+		//シャドウマップ
+		shared_ptr<Shadowmap> m_ptrShadow;
+		//メッシュデータ
+		shared_ptr<PNTBoneModelDraw> m_ptrDraw;
 
 		// 現在のステートを入れておく
 		shared_ptr<StateBase> m_CurrentSt;
@@ -75,6 +79,7 @@ namespace basecross {
 
 			m_NextSt = make_shared<NextState>(GetThis<Enemy>());
 		}
+		void ChangeAbility(int state);//ステートを変更する処理
 		float GetSpeed();
 		void SetSpeed(float speed);
 		float GetAngle();
