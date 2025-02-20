@@ -11,7 +11,14 @@ namespace basecross {
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_charen(Manhole_None),
-		m_UpdateFlag(true)
+		m_UpdateFlag(true),
+		m_coolTime(0.0f),
+		m_stanbyTime(0.0f),
+		m_blinkingTime(0.0f),
+		m_billBoardTime(0.0f),
+		m_playerUpTime(0.0f),
+		m_delta(0.0f),
+		m_playerStanbyFlag(false)
 	{
 
 	}
@@ -54,21 +61,11 @@ namespace basecross {
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
-		//m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
-
 		AddTag(L"Manhole");//マンホール用のタグ
-
-		//GetStage()->AddGameObject<BillBoard>();
 
 		//ビルボードの生成
 		m_billBoard = GetStage()->AddGameObject<BillBoard>(GetThis<GameObject>(), L"Clear",3, 13.0f, Vec3(0.0f, 0.0f, 0.0f));
 		m_billBoardSecond = GetStage()->AddGameObject<BillBoardGauge>(GetThis<GameObject>(), L"Clear", 3, 18.0f, Vec3(0.0f, 0.0f, 0.0f));
-
-
-		//水柱が発生するデバック用
-		//m_waterPillar = GetStage()->AddGameObject<WaterPillar>(m_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(3.2f, 0.1f, 3.2f));
-
-
 	}
 
 	void Manhole::OnUpdate()
@@ -77,20 +74,19 @@ namespace basecross {
 		if (!m_UpdateFlag) return;
 
 		m_mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャーのポインタ取得
-		m_lockMapManager = m_mapManager.lock();
+		m_lockMapManager = m_mapManager.lock();//ちゃんとマネージャーが入っているか確認
 
 		//マップマネージャーがちゃんと入っていなければアップデートできない
 		if (!m_lockMapManager) return;
 
-		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
-		//auto m_stage = GetStage();//ステージ取得
+		m_delta = App::GetApp()->GetElapsedTime();//デルタタイム
 
 		ManholeTransition();//マンホールの遷移
 
 		//マンホールに電池が設置されたときのビルボード処理
 		if (m_mapManager.lock()->SelMapNow(m_pos) >= 2)
 		{			
-			m_billBoardTime += delta;
+			m_billBoardTime += m_delta;
 			if (m_billBoardTime < 0.8f)
 			{
 				m_billBoard->SetPushY(13.0f);
@@ -135,17 +131,13 @@ namespace basecross {
 		//プレイヤーが設置したマンホールから離れた際に少しの間だけ無敵にする
 		if (m_playerStanbyFlag&& m_playerUpTime<0.5f)
 		{
-			m_playerUpTime += delta;
+			m_playerUpTime += m_delta;
 		}
-
 	}
 
 	//マンホールの遷移
 	void Manhole::ManholeTransition()
 	{
-		auto delta = App::GetApp()->GetElapsedTime();//デルタタイム
-		auto stage = GetStage();//ステージ取得
-		auto a = m_mapManager.lock()->SelMapNow(m_pos);
 		//セル座標にアイテムを設置した情報があったら
 		if (m_mapManager.lock()->SelMapNow(m_pos) == 2 && m_charen == Manhole_None)
 		{
@@ -156,7 +148,7 @@ namespace basecross {
 		//クールタイム過ぎたら電池の抗力が切れてマンホールが上がらないようにする
 		if (m_charen == Manhole_Start)//電池を入れている状態
 		{
-			m_stanbyTime += delta;
+			m_stanbyTime += m_delta;
 			//3秒経ったら点滅する
 			if (m_stanbyTime > 3.0f)
 			{
@@ -165,11 +157,13 @@ namespace basecross {
 			}
 		}
 
+		//点滅時の処理
 		if (m_charen == Manhole_SoonUp)
 		{
-			m_stanbyTime += delta;
-			m_blinkingTime += delta;
-
+			m_stanbyTime += m_delta;
+			m_blinkingTime += m_delta;
+			
+			//一定時間たったら赤→元に戻るのテクスチャ変更の繰り返しをする
 			if (m_blinkingTime < 0.1f)
 			{
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");
@@ -182,7 +176,8 @@ namespace basecross {
 			{
 				m_blinkingTime = 0;
 			}
-			//スタンバイ状態を終える
+
+			//一定時間たったので強制的にマンホールを上げてスタンバイ状態を終える
 			if (m_stanbyTime > 5.0f)
 			{
 				m_charen = Manhole_Up;//電池が上がった状態にする
@@ -190,30 +185,31 @@ namespace basecross {
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//自分自身にアイテムが置かれていない状態だと分かりやすくする
 				m_mapManager.lock()->MapDataUpdate(m_pos, 3);//上げるようにする
 			}
-
 		}
 
-		//通行禁止になる時の処理
-		if (m_mapManager.lock()->SelMapNow(m_pos) == 3 && (m_charen == Manhole_Up||m_charen == Manhole_Start||m_charen == Manhole_None))
+		//マンホールが上がる時の処理
+		if (m_mapManager.lock()->SelMapNow(m_pos) == 3)
 		{
-			m_mapManager.lock()->SetUpdataUnityMapFlag(true);//UnityMapデータ更新
-			m_charen = Manhole_Used;//通行禁止になっている状態
-			Vec3 clearPos = m_pos;
-			clearPos.y += 0.0f;
-			m_clearObject = GetStage()->AddGameObject<ClearObject>(clearPos, Vec3(0.0f, 0.0f, 0.0f));
-			GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
-			m_blinkingTime = 0;//点滅のクールタイムをリセットする
+			if (m_charen == Manhole_Up || m_charen == Manhole_Start)
+			{
+				m_mapManager.lock()->SetUpdataUnityMapFlag(true);//UnityMapデータ更新
+				m_charen = Manhole_Used;//通行禁止になっている状態
+				Vec3 clearPos = m_pos;
+				clearPos.y += 0.0f;
+				m_clearObject = GetStage()->AddGameObject<ClearObject>(clearPos, Vec3(0.0f, 0.0f, 0.0f));
+				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");
+				m_blinkingTime = 0;//点滅のクールタイムをリセットする
 
-			//水柱が発生する
-			m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(3.0f, 0.02f, 3.0f));
+				//水柱が発生する
+				m_waterPillar = GetStage()->AddGameObject<WaterPillar>(clearPos, Vec3(0.0f, 0.0f, 0.0f), Vec3(3.0f, 0.02f, 3.0f));
+			}
 		}
 
 		//通行禁止の時の際の処理
 		if (m_charen == Manhole_Used)
 		{
-
 			//クールタイム過ぎたら通れるようにする
-			m_coolTime += delta;
+			m_coolTime += m_delta;
 
 			m_billBoardSecond->SetPercent(m_coolTime / 10.0f);//クールタイムの進行度を渡している
 			
@@ -223,8 +219,8 @@ namespace basecross {
 				m_coolTime = 0;//クールタイムリセット
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Manhole");//自分自身にアイテムが置かれていると分かりやすくする
 				m_mapManager.lock()->MapDataUpdate(m_pos, 1);//マップマネージャーに通れる状態だと返す
-				stage->RemoveGameObject<ClearObject>(m_clearObject);//前生成した透明なオブジェクトを消す
-				stage->RemoveGameObject<WaterPillar>(m_waterPillar);//前生成した水柱を消す
+				m_stage->RemoveGameObject<ClearObject>(m_clearObject);//前生成した透明なオブジェクトを消す
+				m_stage->RemoveGameObject<WaterPillar>(m_waterPillar);//前生成した水柱を消す
 				m_charen = Manhole_None;
 				m_blinkingTime = 0;
 				m_stanbyTime = 0;
@@ -233,10 +229,9 @@ namespace basecross {
 			}
 
 		}
-
 	}
 
-	//入り続けているとき処理
+	//コリジョンに入り続けているとき処理
 	void Manhole::OnCollisionExcute(shared_ptr<GameObject>& other)
 	{
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
@@ -246,6 +241,7 @@ namespace basecross {
 		CollisionUpManhole(enemy, player);
 	}
 
+	//コリジョンに入った時の処理
 	void Manhole::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
 		auto enemy = dynamic_pointer_cast<Enemy>(other);
@@ -268,7 +264,6 @@ namespace basecross {
 				m_playerStanbyFlag = true;
 			}
 		}
-
 	}
 
 	//コリジョンによってマンホールが上がる処理
@@ -334,7 +329,6 @@ namespace basecross {
 				}
 			}
 		}
-
 	}
 
 	//アップデートするかのセッター

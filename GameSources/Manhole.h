@@ -33,6 +33,7 @@ namespace basecross {
 		float m_blinkingTime;//点滅する時間を測る
 		float m_billBoardTime;//ビルボードが出ている時間を測る
 		float m_playerUpTime;//マンホールから出てプレイヤーが踏むと上がる時間計測
+		float m_delta;//デルタタイム
 
 		bool m_playerStanbyFlag;//プレイヤーが踏むかまつフラグ
 		bool m_UpdateFlag;//アップデートするかのフラグ
