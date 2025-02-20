@@ -294,9 +294,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TargetLost.h">
       <Filter>Headers\StateEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TrackingBoar.h">
-      <Filter>Headers\StateEnemy</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEnemyMulti.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
@@ -523,9 +520,6 @@
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TargetLost.cpp">
-      <Filter>Sources\StateEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TrackingBoar.cpp">
       <Filter>Sources\StateEnemy</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpEnemyMulti.cpp">
