@@ -269,8 +269,9 @@ namespace basecross {
 			//鍵を持つ敵をランダムに決める
 			int haveKeyNum = rand() % enemyVec.size();
 
-			//決まった敵に鍵をもつタグを付ける
+			//決まった敵に鍵をもつタグを付ける＆ラッシュアビリティ持ちにする
 			enemyVec[haveKeyNum].lock()->AddTag(L"Key");
+			enemyVec[haveKeyNum].lock()->ChangeAbility(rush);
 
 			m_clearManagerCount = 1;//もうクリアマネージャーの処理はしない
 		}
