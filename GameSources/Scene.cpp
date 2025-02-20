@@ -398,7 +398,7 @@ namespace basecross{
 		//ボーンマルチメッシュ
 		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");//プレイヤー(仮)メッシュ
 		app->RegisterResource(L"Player_Mesh_Kari", boneMultiModelMesh);
-		boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"misterybox.bmf");
+		boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"box_ver2.0.bmf");
 		app->RegisterResource(L"MisteryBox", boneMultiModelMesh);
 		//boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"police_test.bmf");//敵(仮)メッシュ
 		//app->RegisterResource(L"Boss_Mesh_Kari2", boneMultiModelMesh);
