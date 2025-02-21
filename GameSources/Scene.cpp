@@ -396,7 +396,7 @@ namespace basecross{
 		app->RegisterResource(L"WaterPillerMesh", boneModelMesh);
 
 		//ボーンマルチメッシュ
-		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");//プレイヤー(仮)メッシュ
+		auto boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"Model_male.bmf");//プレイヤーメッシュ
 		app->RegisterResource(L"Player_Mesh_Kari", boneMultiModelMesh);
 		boneMultiModelMesh = MultiMeshResource::CreateBoneModelMultiMesh(modPath, L"box_ver2.0.bmf");
 		app->RegisterResource(L"MisteryBox", boneMultiModelMesh);
