@@ -25,25 +25,23 @@ namespace basecross {
 
 	}
 
+	//生成処理
 	void MiniMapManager::OnCreate()
 	{
 		auto stage = GetStage();//ステージ取得
 		float Lenght = 225.0f;//ミニマップの直径
-		auto haikei = stage->AddGameObject<Sprite>(L"Gray", Vec2(Lenght, Lenght), Vec3(-640+(Lenght/2.0f), 400.0f - (Lenght / 2.0f), 0.0f));
-		haikei->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.5f));
+		auto background = stage->AddGameObject<Sprite>(L"Gray", Vec2(Lenght, Lenght), Vec3(-640+(Lenght/2.0f), 400.0f - (Lenght / 2.0f), 0.0f));
+		background->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.5f));
 		m_startPos = Vec3(-640 + (Lenght / 2.0f), 400.0f - (Lenght / 2.0f),5.0f);//スタートポジション
-		auto test = m_startPos;
-		auto a = 0;
-		//m_mapSize = 200;//mapの直径
 		m_mapMagnification = Lenght / m_mapSize;//マップの倍率
 
 		CreateManhole();//マンホールを生成
-		CreateEnemy();
-		CreatePlayer();
-		CreateWall();
-		//CreateHatch();
+		CreateEnemy();//敵UI生成
+		CreatePlayer();//PlayerUI作成
+		CreateWall();//壁UI生成
 	}
 
+	//更新処理
 	void MiniMapManager::OnUpdate()
 	{
 		UpdateBattery();
@@ -57,7 +55,7 @@ namespace basecross {
 		auto stage = GetStage();//ステージ取得
 		//ステージのオブジェクトを全て取得
 		auto objVec = stage->GetGameObjectVec();
-		auto count = 0;
+		int count = 0;
 		//取得したオブジェクトがアイテムに変換できたら配列に入れる
 		for (auto item : objVec)
 		{
@@ -110,9 +108,9 @@ namespace basecross {
 					}
 				}
 			}
+
 			//再生成する
 			CreateBattery();
-
 		}
 
 		m_beforeItemNum = itemNumNow;//更新する
@@ -261,7 +259,6 @@ namespace basecross {
 		}
 
 		m_beforeEnemyNum = count;//生成したミニマップのEnemyの数を渡す
-
 	}
 
 	void MiniMapManager::CreatePlayer()
