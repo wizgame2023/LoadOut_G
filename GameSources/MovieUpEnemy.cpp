@@ -26,7 +26,6 @@ namespace basecross {
 		auto enemyTrans = m_Enemy.lock()->GetComponent<Transform>();
 		auto enemyPos = enemyTrans->GetPosition();
 		
-
 		m_movieCamera->SetAt(enemyPos);//’Ž‹“_‚ð‘Å‚¿‚ ‚ª‚éEnemy‚ÉŒÅ’è‚·‚é
 
 		m_Enemy.lock()->MoveSwitch(false);//“®‚©‚È‚­‚·‚é

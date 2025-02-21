@@ -118,12 +118,6 @@ namespace basecross {
 				case 4://ハッチ作成
 					GetStage()->AddGameObject<Hatch>(Vec3((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f)));//ブロックのピポットが真ん中のせいで100でなく95になっています
 					break;
-				case 6://バッテリー生成
-					//GetStage()->AddGameObject<Spanner>((j * 10.0f) - m_push, 0.05f, m_push - (i * 10.0f), Vec3(0.0f, 0.0f, 0.0f));
-					break;
-				case 7://エネミー生成
-
-					break;
 				default:
 					break;
 				}
@@ -217,7 +211,6 @@ namespace basecross {
 				case 1://縦壁生成
 					GetStage()->AddGameObject<Wall>(Vec3((j * 10.0f) - m_push+5 - 10, 5.0f, m_push - (i * 10.0f)), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(9.5f, 5.0f, 1.0f));
 					break;
-
 				default:
 					break;
 				}
@@ -360,21 +353,12 @@ namespace basecross {
 		return m_stageMap[SelPos.y][SelPos.x];
 	}
 
-	void MapManager::WallCreate()
-	{
-
-	}
-
-
+	//縦壁、横壁、地面のマップデータを合体させたマップデータを作成する関数
 	void MapManager::UnityMapCreate()
 	{
 		m_unityMap.clear();//初期化
 		for (int y = 0; y < (m_stageMap.size() * 2)+1; y++)
 		{
-
-			int count = 0;
-			count = 0;//リセット
-
 			for (int x = 0; x < (m_stageMap[0].size() * 2)+1; x++)
 			{
 				bool evenX;//縦が偶数かどうか
@@ -415,13 +399,9 @@ namespace basecross {
 				}
 			}
 
-			count = 0;//リセット
-
 			//aStarMapにA＊の一行ずつ配列を入れる
 			m_unityMap.push_back(m_unityLine);
 			m_unityLine.clear();//使わない配列は削除
-			auto a = 0;
-
 		}
 
 	}
@@ -455,8 +435,6 @@ namespace basecross {
 			count++;
 			m_unityMap.push_back(extra);//配列を余分に入れておく
 		}
-		m_unityMap;
-
 	}
 
 	//A*マップを渡す

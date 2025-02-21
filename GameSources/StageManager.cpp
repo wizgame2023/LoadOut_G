@@ -71,9 +71,6 @@ namespace basecross {
 		}
 
 		EnemyStateCheck();//敵が追いかけてきてるか確認する
-		//auto stage = GetStage();
-		//auto objVec = stage->GetGameObjectVec();
-		//auto delta = App::GetApp()->GetElapsedTime();
 
 		//決まった数敵を打ち上げたら鍵を入手できる(関数にする)
 		if (m_stageMode == 2 && m_clearManagerCount == 0)
@@ -213,14 +210,14 @@ namespace basecross {
 					GetStage()->AddGameObject<PillarEffect>(hatchPos, L"Escape", Vec2(0.0f, 0.5f), 36);
 
 				}
-				auto castPlayer = dynamic_pointer_cast<Player>(hatch);
-				if (castPlayer)//プレイヤーにキャスト出来たら
-				{
-					auto playerTrans = castPlayer->GetComponent<Transform>();
-					auto playerPos = playerTrans->GetPosition();
+				//auto castPlayer = dynamic_pointer_cast<Player>(hatch);
+				//if (castPlayer)//プレイヤーにキャスト出来たら
+				//{
+				//	auto playerTrans = castPlayer->GetComponent<Transform>();
+				//	auto playerPos = playerTrans->GetPosition();
 
-					//鍵の板ポリを表示
-				}
+				//	//鍵の板ポリを表示
+				//}
 
 			}
 		}
@@ -229,16 +226,6 @@ namespace basecross {
 		{
 			auto GetTextTrans = m_KeyGetText->GetComponent<Transform>();
 			auto GetTextPos = GetTextTrans->GetPosition();
-			//GetTextPos.x -= 500 * delta;//移動
-			//GetTextTrans->SetPosition(GetTextPos);
-
-		//	//テキストが画面範囲外に移動したら移動処理をしないようにする
-		//	if (GetTextPos.x >= 1000)
-		//	{
-		//		m_PlayerKeyFlag = 3;//この処理をしないようにする
-		//		stage->RemoveGameObject<Sprite>(m_KeyGetText);
-		//	}
-		//}
 		}
 
 	}

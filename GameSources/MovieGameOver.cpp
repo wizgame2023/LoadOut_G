@@ -27,8 +27,6 @@ namespace basecross {
 		player->MoveSwitch(false);//player‚ğ“®‚©‚³‚È‚¢
 		auto playerDraw = player->GetComponent<PNTBoneModelDraw>();
 		playerDraw->ChangeCurrentAnimation(L"Player_Down");//‚â‚ç‚ê‚½ƒ‚[ƒVƒ‡ƒ“‚É•ÏX
-
-
 	}
 
 	void MovieGameOver::OnUpdate()
