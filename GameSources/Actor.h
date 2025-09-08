@@ -18,7 +18,7 @@ namespace basecross {
 		Vec2 m_selPosBefor;//‘O‚¢‚½ƒZƒ‹À•W‚ğ•Û‘¶‚·‚é•Ï”
 
 	public:
-		Actor(shared_ptr<Stage>& stagePtr);
+		Actor(const shared_ptr<Stage>& stagePtr);
 		~Actor();
 
 		virtual void OnUpdate()override;
