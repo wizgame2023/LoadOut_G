@@ -13,7 +13,7 @@ namespace basecross {
 	private:
 		weak_ptr<Actor> m_actor;
 	public:
-		TrackingPillarEfect(shared_ptr<Stage>& stagePtr,weak_ptr<Actor> m_actor, Vec3 pos, wstring textureName, Vec2 velovity, int square = 36);
+		TrackingPillarEfect(const shared_ptr<Stage>& stagePtr,const weak_ptr<Actor>& m_actor,const Vec3& pos,const wstring& textureName,const Vec2& velovity, int square = 36);
 		~TrackingPillarEfect();
 
 		virtual void OnUpdate() override;

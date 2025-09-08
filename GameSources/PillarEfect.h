@@ -32,14 +32,14 @@ namespace basecross {
 
 		bool m_isUpdate = false;
 	public:
-		PillarEffect(shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velovity, int square = 36);
+		PillarEffect(const shared_ptr<Stage>& stagePtr,const Vec3& pos,const wstring& textureName,const Vec2& velovity, int square = 36);
 		~PillarEffect();
 
 		virtual void OnCreate() override;
 		virtual void OnUpdate() override;
 
-		void SetVelocity(Vec2 velocity);
-		void SetTexture(wstring textureName);
+		void SetVelocity(const Vec2& velocity);
+		void SetTexture(const wstring& textureName);
 		virtual void UpdateTest(bool OnOff);
 	};
 

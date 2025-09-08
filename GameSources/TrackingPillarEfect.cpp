@@ -1,6 +1,6 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file TrackingPillarEfect.cpp
+@brief 追いかける柱のエフェクト処理
 */
 
 #include "stdafx.h"
@@ -8,7 +8,7 @@
 
 namespace basecross {
 	//コンストラクタ
-	TrackingPillarEfect::TrackingPillarEfect(shared_ptr<Stage>& stagePtr,weak_ptr<Actor> actor, Vec3 pos, wstring textureName, Vec2 velocity, int square) :
+	TrackingPillarEfect::TrackingPillarEfect(const shared_ptr<Stage>& stagePtr,const weak_ptr<Actor>& actor,const Vec3& pos,const wstring& textureName,const Vec2& velocity, int square) :
 		PillarEffect(stagePtr,pos,textureName,velocity,square),
 		m_actor(actor)
 	{
