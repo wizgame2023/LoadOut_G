@@ -251,6 +251,7 @@ namespace basecross {
 		CollisionUpManhole(enemy, player);
 	}
 
+	//ƒRƒŠƒWƒ‡ƒ“‚©‚ç—£‚ê‚½‚Ìˆ—
 	void Manhole::OnCollisionExit(shared_ptr<GameObject>& other)
 	{
 		auto mapManager = m_mapManager.lock();

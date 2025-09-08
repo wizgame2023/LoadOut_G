@@ -75,7 +75,7 @@ namespace basecross {
 	}
 
 
-	//カラーの数値を変更する
+	//テクスチャを変更する
 	void Sprite::SetTexture(wstring texture)
 	{
 		m_drawComp->SetTextureResource(texture);//テクスチャの名前指定
