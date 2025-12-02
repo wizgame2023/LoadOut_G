@@ -14,7 +14,7 @@ namespace basecross {
 		Vec3 m_rot;//‰ñ“]
 
 	public:
-		ClearObject(shared_ptr<Stage>& stagePtr, Vec3 pos, Vec3 rot);
+		ClearObject(const shared_ptr<Stage>& stagePtr, Vec3 pos, Vec3 rot);
 		~ClearObject();
 
 		void OnCreate()override;

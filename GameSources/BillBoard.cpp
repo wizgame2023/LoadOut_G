@@ -9,7 +9,7 @@
 namespace basecross{
 
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<GameObject>& actorPtr, size_t Number,float pushY,Vec3 scale) :
+		const shared_ptr<GameObject>& actorPtr, size_t Number,float pushY,Vec3 scale) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(Number),
@@ -20,7 +20,7 @@ namespace basecross{
 		m_layer(2)
 	{}
 	BillBoard::BillBoard(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<GameObject>& actorPtr, wstring spriteName,int layer,float pushY,Vec3 scale,Col4 color) :
+		const shared_ptr<GameObject>& actorPtr,const wstring& spriteName,int layer,float pushY,Vec3 scale,Col4 color) :
 		GameObject(StagePtr),
 		m_actor(actorPtr),
 		m_Number(0),
@@ -106,19 +106,18 @@ namespace basecross{
 			Qt = Billboard(PtrCamera->GetAt() - PtrCamera->GetEye());
 
 			PtrTransform->SetQuaternion(Qt);
-
 		}
 
 	}
 
 	//ビルボードのテクスチャ変更
-	void BillBoard::ChangeTexture(wstring textureName)
+	void BillBoard::ChangeTexture(const wstring& textureName)
 	{
 		m_textureName = textureName;
 	}
 
 	//サイズのセッター
-	void BillBoard::SetScale(Vec3 scale)
+	void BillBoard::SetScale(const Vec3& scale)
 	{
 		m_scale = scale;
 	}

@@ -1,6 +1,6 @@
 /*!
-@file Character.h
-@brief キャラクターなど
+@file Enemy.h
+@brief 敵の処理
 */
 
 #pragma once
@@ -62,8 +62,8 @@ namespace basecross {
 
 	public:
 		//コンストラクタ・デストラクタ
-		Enemy(shared_ptr<Stage>& StagePtr);
-		Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startpop = true, int ability = normal,int anger = 0);
+		Enemy(const shared_ptr<Stage>& StagePtr);
+		Enemy(const shared_ptr<Stage>& StagePtr,const Vec3 pos, bool startpop = true, int ability = normal,int anger = 0);
 
 		~Enemy();
 		//生成・更新・削除
