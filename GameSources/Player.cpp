@@ -7,14 +7,13 @@
 #include "Project.h"
 
 namespace basecross{
-	Player::Player(shared_ptr<Stage>& StagePtr,Vec3 pos,Vec3 rot,bool gameFlag) :
+	Player::Player(const shared_ptr<Stage>& StagePtr,const Vec3& pos,const Vec3& rot,bool gameFlag) :
 		Actor(StagePtr),
 		m_Pos(pos),
 		m_Rot(rot),
 		m_speed(10),
 		m_pushSpeed(0),
 		m_gameStageFlag(gameFlag)
-		//m_move(true)
 	{
 	}
 	Player::~Player()
@@ -46,18 +45,10 @@ namespace basecross{
 		ptrDraw->AddAnimation(L"Happey", 20, 24, true, 30.0f);//ゲームクリア状態
 		ptrDraw->ChangeCurrentAnimation(L"Walk");
 
-		//ptrDraw->AddAnimation(L"Defalt2", 17, 25, true, 30.0f);
-		//ptrDraw->Ani
-
-		//ptrDraw->SetTextureResource(L"");
-
-		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 
 		auto ptrColl = AddComponent<CollisionSphere>();//コリジョンスフィアの方が壁にぶつかる判定に違和感がない
-		//ptrColl->SetFixed(true);
-		//ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
 		ptrColl->SetAfterCollision(AfterCollision::Auto);
 
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
@@ -207,57 +198,57 @@ namespace basecross{
 		}
 
 		//デバック用/////////////////////////////////////////////////////////////
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)//Aボタンを押したとき
-		{
-			auto test = 0;
-		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)//L
-		{
-			auto test = 0;
+		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_A)//Aボタンを押したとき
+		//{
+		//	auto test = 0;
+		//}
+		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)//L
+		//{
+		//	auto test = 0;
 
-			//auto objVec = GetStage()->GetGameObjectVec();
-			////アクターを継承しているものだけ取得
-			//for (auto obj : objVec)
-			//{
-			//	auto actorCast = dynamic_pointer_cast<Actor>(obj);
-			//	auto batteryCast = dynamic_pointer_cast<Spanner>(obj);
-			//	auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
-			//	auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
+		//	//auto objVec = GetStage()->GetGameObjectVec();
+		//	////アクターを継承しているものだけ取得
+		//	//for (auto obj : objVec)
+		//	//{
+		//	//	auto actorCast = dynamic_pointer_cast<Actor>(obj);
+		//	//	auto batteryCast = dynamic_pointer_cast<Spanner>(obj);
+		//	//	auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
+		//	//	auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
 
-			//	//スプライトを継承しているオブジェクトを透明にする
-			//	if (spriteCast)
-			//	{
-			//		spriteCast->OnClear(true);//透明にする
-			//	}
+		//	//	//スプライトを継承しているオブジェクトを透明にする
+		//	//	if (spriteCast)
+		//	//	{
+		//	//		spriteCast->OnClear(true);//透明にする
+		//	//	}
 
-			//}
+		//	//}
 
-		}
-		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)//R
-		{
-			auto test = 0;
-			//デバック用
-			//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
-			//mapManager->MapChange();
-			
-			//auto objVec = GetStage()->GetGameObjectVec();
-			////アクターを継承しているものだけ取得
-			//for (auto obj : objVec)
-			//{
-			//	auto actorCast = dynamic_pointer_cast<Actor>(obj);
-			//	auto batteryCast = dynamic_pointer_cast<Spanner>(obj);
-			//	auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
-			//	auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
+		//}
+		//if (m_controler.wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)//R
+		//{
+		//	auto test = 0;
+		//	//デバック用
+		//	//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");
+		//	//mapManager->MapChange();
+		//	
+		//	//auto objVec = GetStage()->GetGameObjectVec();
+		//	////アクターを継承しているものだけ取得
+		//	//for (auto obj : objVec)
+		//	//{
+		//	//	auto actorCast = dynamic_pointer_cast<Actor>(obj);
+		//	//	auto batteryCast = dynamic_pointer_cast<Spanner>(obj);
+		//	//	auto manholeCast = dynamic_pointer_cast<Manhole>(obj);
+		//	//	auto spriteCast = dynamic_pointer_cast<Sprite>(obj);
 
-			//	//スプライトを継承しているオブジェクトを透明にする
-			//	if (spriteCast)
-			//	{
-			//		spriteCast->OnClear(false);//透明から戻す
-			//	}
+		//	//	//スプライトを継承しているオブジェクトを透明にする
+		//	//	if (spriteCast)
+		//	//	{
+		//	//		spriteCast->OnClear(false);//透明から戻す
+		//	//	}
 
-			//}
+		//	//}
 
-		}
+		//}
 		////////////////////////////////////////////////////////////////////////
 
 

@@ -31,11 +31,6 @@ namespace basecross {
 
 		void MoveSwitch(bool onOff);//“®‚¢‚Ä‚¢‚¢‚©‚Ìƒtƒ‰ƒO
 
-		//void OnCreate()override;
-		//void OnUpdate()override;
-
-		//void OnCollisionEnter(shared_ptr<GameObject>& other)override;
-
 	};
 
 }
