@@ -12,7 +12,7 @@ namespace basecross {
 	private:
 		Vec3 m_Pos;//ˆÊ’u
 	public:
-		MyCamera(Vec3 pos);
+		MyCamera(const Vec3& pos);
 		~MyCamera();
 
 		void OnCreate()override;

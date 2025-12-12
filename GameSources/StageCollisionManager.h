@@ -1,6 +1,7 @@
 /*!
 @file StageCollisionManager.h
 @brief コリジョンの管理
+担当：三瓶裕太
 */
 
 #pragma once
@@ -12,7 +13,7 @@ namespace basecross {
 	private:
 		bool m_CollisionSwhich;
 
-		void CollisionActive(bool On);//ステージ上の有効なコリジョン範囲を決める
+		void CollisionActive(bool On); // ステージ上の有効なコリジョン範囲を決める
 
 	public:
 		StageCollisionManager(shared_ptr<Stage>& stagePtr);
@@ -20,7 +21,7 @@ namespace basecross {
 
 		void OnCreate()override;
 		void OnUpdate()override;
-		void SetCollisionSwhich(bool On);//コリジョン範囲を決めるためのフラグを取得する関数
+		void SetCollisionSwhich(bool On); // コリジョン範囲を決めるためのフラグを取得する関数
 
 	};
 }

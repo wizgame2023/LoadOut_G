@@ -1,6 +1,6 @@
 /*!
-@file Character.h
-@brief キャラクターなど
+@file MathTools.h
+@brief 数学計算
 */
 
 #pragma once

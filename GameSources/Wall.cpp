@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	Wall::Wall(shared_ptr<Stage>& stagePtr, Vec3 pos, Vec3 rot,Vec3 miniMapStartPos,Vec3 scale) :
+	Wall::Wall(const shared_ptr<Stage>& stagePtr,const Vec3& pos,const Vec3& rot,const Vec3& miniMapStartPos,const Vec3& scale) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rot(rot),
@@ -68,7 +68,7 @@ namespace basecross {
 	}
 
 	//ミニマップの自分自身を生成
-	void Wall::MiniMapCreate(Vec3 miniMapStartPos)
+	void Wall::MiniMapCreate(const Vec3& miniMapStartPos)
 	{
 		//ミニマップに自分を映させる
 		//auto Lenght = 200;

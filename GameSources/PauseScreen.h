@@ -7,7 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross {
-
+	// 作る予定だったのがステージマネージャーに処理を統一したことによって使わなくなりました
 
 }
 //end basecross

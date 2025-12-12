@@ -1,6 +1,7 @@
 /*!
 @file Wall.h
-@brief キャラクターなど
+@brief 壁
+担当：三瓶裕太
 */
 
 #pragma once
@@ -17,10 +18,10 @@ namespace basecross {
 		Vec3 m_miniMapStartPos;//ミニマップの中心点
 
 	public:
-		Wall(shared_ptr<Stage>& stagePtr, Vec3 pos, Vec3 rot,Vec3 miniMapStartPos,Vec3 scalse = Vec3(10.0f, 10.0f, 1.0f));//コンストラクタ
+		Wall(const shared_ptr<Stage>& stagePtr,const Vec3& pos,const Vec3& rot,const Vec3& miniMapStartPos,const Vec3& scalse = Vec3(10.0f, 10.0f, 1.0f));//コンストラクタ
 		~Wall();//デストラクタ
 
-		void MiniMapCreate(Vec3 miniMapStartPos);//ミニマップの自分自身を生成
+		void MiniMapCreate(const Vec3& miniMapStartPos);//ミニマップの自分自身を生成
 
 		void OnCreate()override;//生成
 	};

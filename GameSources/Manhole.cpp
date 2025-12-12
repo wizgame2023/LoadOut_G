@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	Manhole::Manhole(shared_ptr<Stage>& stagePtr,Vec3 pos) :
+	Manhole::Manhole(const shared_ptr<Stage>& stagePtr,Vec3 pos) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_charen(Manhole_None),
@@ -251,6 +251,7 @@ namespace basecross {
 		CollisionUpManhole(enemy, player);
 	}
 
+	//コリジョンから離れた時の処理
 	void Manhole::OnCollisionExit(shared_ptr<GameObject>& other)
 	{
 		auto mapManager = m_mapManager.lock();
@@ -267,7 +268,7 @@ namespace basecross {
 	}
 
 	//コリジョンによってマンホールが上がる処理
-	void Manhole::CollisionUpManhole(shared_ptr<Enemy> enemy, shared_ptr<Player> player)
+	void Manhole::CollisionUpManhole(const shared_ptr<Enemy>& enemy,const shared_ptr<Player>& player)
 	{
 		if (m_lockMapManager->SelMapNow(m_pos) == 2)
 		{//もし当たったオブジェクトが敵なら
@@ -276,7 +277,7 @@ namespace basecross {
 				m_lockMapManager->MapDataUpdate(m_pos, 3);//現在はその道は通れないようにする
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
 
-				player = m_stage->GetSharedGameObject<Player>(L"Player");
+				auto localPlayer = m_stage->GetSharedGameObject<Player>(L"Player"); // player変数に入れることはconstによってできないためこれでPlayerを受け取ります
 				auto playerPos = m_stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
 				auto playerSelPos = m_lockMapManager->ConvertSelMap(playerPos);
 				auto selPos = m_lockMapManager->ConvertSelMap(m_pos);

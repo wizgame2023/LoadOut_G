@@ -1,6 +1,7 @@
 /*!
 @file MovieGameClear.h
 @brief ゲームクリアのムービー
+担当：三瓶裕太
 */
 
 #pragma once
@@ -11,7 +12,7 @@ namespace basecross {
 	class MovieGameClear :public Movie
 	{
 	private:
-		Vec3 m_tagetPos;//目的地
+		Vec3 m_tagetPos; // 目的地
 	public:
 		MovieGameClear(shared_ptr<Stage>& stagePtr);
 		~MovieGameClear();

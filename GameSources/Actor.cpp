@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	Actor::Actor(shared_ptr<Stage>& stagePtr):
+	Actor::Actor(const shared_ptr<Stage>& stagePtr):
 		GameObject(stagePtr),
 		m_move(true)
 	{

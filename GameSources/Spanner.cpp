@@ -8,7 +8,7 @@
 #include "Project.h"
 
 namespace basecross {
-	Spanner::Spanner(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot) :
+	Spanner::Spanner(const shared_ptr<Stage>& stagePtr,const Vec3& pos,const Vec3& rot) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rot(rot),

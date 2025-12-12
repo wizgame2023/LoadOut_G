@@ -1,6 +1,7 @@
 /*!
 @file Manhole.h
 @brief マンホール
+担当：三瓶裕太
 */
 
 #pragma once
@@ -49,7 +50,7 @@ namespace basecross {
 			Manhole_Used
 		};
 
-		Manhole(shared_ptr<Stage>& stagePtr,Vec3 pos);
+		Manhole(const shared_ptr<Stage>& stagePtr,Vec3 pos);
 		~Manhole();
 
 		void OnCreate()override;
@@ -61,8 +62,8 @@ namespace basecross {
 		void OnCollisionExcute(shared_ptr<GameObject>& other)override;//入り続けているときに処理
 		void OnCollisionExit(shared_ptr<GameObject>& other)override;//離れたときに処理
 
-		//コリジョンによって敵やプレイヤーが当たった時の処理
-		void CollisionUpManhole(shared_ptr<Enemy> enemy,shared_ptr<Player> player);
+		//コリジョンによって敵やプレイヤーが当たった時の処理 これ修正すべきところかも当たったオブジェクトがenemyとplayerじゃなかったら見たい引数が変わるのがちょっと
+		void CollisionUpManhole(const shared_ptr<Enemy>& enemy,const shared_ptr<Player>& player);
 
 		int GetState();//ゲッター
 		void SetUpdateSwitch(bool onOff);//アップデートするかのセッター

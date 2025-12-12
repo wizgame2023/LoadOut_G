@@ -1,6 +1,6 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file BillBoardGauge.cpp
+@brief ビルボードのゲージ処理
 */
 
 #include "stdafx.h"
@@ -8,7 +8,7 @@
 
 namespace basecross {
 	BillBoardGauge::BillBoardGauge(const shared_ptr<Stage>& StagePtr,
-		shared_ptr<GameObject>& actorPtr, wstring spriteName,int layer, float pushY, Vec3 scale) :
+		const shared_ptr<GameObject>& actorPtr,const wstring& spriteName,int layer, float pushY,const Vec3& scale) :
 		BillBoard(StagePtr, actorPtr, spriteName,layer, pushY, scale),
 		m_indices(vector<uint16_t>())
 	{
@@ -22,7 +22,6 @@ namespace basecross {
 
 	void BillBoardGauge::OnCreate()
 	{
-		m_parsecond = 0;//全体の何パーセント出すか決める
 		auto PtrTransform = GetComponent<Transform>();
 		if (!m_actor.expired()) {
 			auto SeekPtr = m_actor.lock();

@@ -1,6 +1,7 @@
 /*!
-@file Character.h
+@file Movie.h
 @brief ムービー関係の親クラス
+担当：三瓶裕太
 */
 
 #pragma once
@@ -13,15 +14,15 @@ namespace basecross {
 	class Movie :public GameObject
 	{
 	private:
-		vector<weak_ptr<Actor>> m_actorVec;//動くオブジェクトを入れる配列
-		vector<weak_ptr<Spanner>> m_batteryVec;//バッテリーを入れる配列
-		vector<weak_ptr<Manhole>> m_manholeVec;//マンホールを入れる配列
-		vector<weak_ptr<Sprite>> m_spriteVec;//スプライトをを入れる配列
+		vector<weak_ptr<Actor>> m_actorVec;		// 動くオブジェクトを入れる配列
+		vector<weak_ptr<Spanner>> m_batteryVec; // バッテリーを入れる配列
+		vector<weak_ptr<Manhole>> m_manholeVec; // マンホールを入れる配列
+		vector<weak_ptr<Sprite>> m_spriteVec;   // スプライトをを入れる配列
 	protected:
-		shared_ptr<MyCamera> m_stageCamera;//ステージ用のカメラ
-		shared_ptr<Camera> m_movieCamera;//ムービー用のかめら
-		shared_ptr<StageCollisionManager> m_collsionManager;//コリジョンマネージャー
-		shared_ptr<StageManager> m_stageManager;//ステージマネージャー
+		shared_ptr<MyCamera> m_stageCamera;					 // ステージ用のカメラ
+		shared_ptr<Camera> m_movieCamera;					 // ムービー用のカメラ
+		shared_ptr<StageCollisionManager> m_collsionManager; // コリジョンマネージャー
+		shared_ptr<StageManager> m_stageManager;			 // ステージマネージャー
 		int m_count;
 	public:
 		Movie(shared_ptr<Stage>& stagePtr);
@@ -31,10 +32,10 @@ namespace basecross {
 		virtual void OnUpdate()override;
 		virtual void OnDestroy()override;
 
-		//ムービー用のカメラに変更させる
+		// ムービー用のカメラに変更させる
 		virtual void CameraChange();
 
-		//カメラを目的地に向けて移動させる
+		// カメラを目的地に向けて移動させる
 		virtual Vec3 CameraMove(float speed,Vec3 pos,Vec3 tagetPos);
 	};
 

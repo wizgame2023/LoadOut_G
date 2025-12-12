@@ -1,6 +1,7 @@
 /*!
 @file GameStart.h
 @brief ステージを開始するための処理
+担当：三瓶裕太
 */
 
 #pragma once

@@ -1,13 +1,13 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file Hatch.cpp
+@brief ハッチ処理
 */
 
 #include "stdafx.h"
 #include "Project.h"
 
 namespace basecross {
-	Hatch::Hatch(shared_ptr<Stage>& stagePtr,Vec3 pos) :
+	Hatch::Hatch(const shared_ptr<Stage>& stagePtr,const Vec3 pos) :
 		GameObject(stagePtr),
 		m_pos(pos)
 	{

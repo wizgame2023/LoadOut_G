@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	MyCamera::MyCamera(Vec3 pos):
+	MyCamera::MyCamera(const Vec3& pos):
 		m_Pos(pos)
 	{
 

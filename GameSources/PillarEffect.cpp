@@ -8,7 +8,7 @@
 
 namespace basecross {
 	//コンストラクタ
-	PillarEffect::PillarEffect(shared_ptr<Stage>& stagePtr,Vec3 pos, wstring textureName,Vec2 velocity, int square):
+	PillarEffect::PillarEffect(const shared_ptr<Stage>& stagePtr,const Vec3& pos,const wstring& textureName,const Vec2& velocity, int square):
 		Actor(stagePtr),
 		m_height(10.0f),
 		m_topRadius(4.5f),
@@ -122,13 +122,13 @@ namespace basecross {
 		m_isUpdate = OnOff;
 	}
 
-	void PillarEffect::SetVelocity(Vec2 velocity)
+	void PillarEffect::SetVelocity(const Vec2& velocity)
 	{
 		m_scrollVelocity = velocity;
 	}
 
 	//テクスチャの変更
-	void PillarEffect::SetTexture(wstring textureName)
+	void PillarEffect::SetTexture(const wstring& textureName)
 	{
 		m_textureName = textureName;
 		m_drawComp->SetTextureResource(m_textureName);

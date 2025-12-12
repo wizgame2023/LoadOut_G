@@ -7,7 +7,7 @@
 #include "Project.h"
 
 namespace basecross {
-	ClearObject::ClearObject(shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot) :
+	ClearObject::ClearObject(const shared_ptr<Stage>& stagePtr,Vec3 pos,Vec3 rot) :
 		GameObject(stagePtr),
 		m_pos(pos),
 		m_rot(rot)

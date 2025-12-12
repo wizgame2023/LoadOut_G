@@ -1,6 +1,7 @@
 /*!
 @file Player.h
 @brief プレイヤーなど
+担当：三瓶裕太
 */
 
 #pragma once
@@ -38,7 +39,7 @@ namespace basecross{
 		shared_ptr<BillBoard> m_billBoard;//ビルボード
 		shared_ptr<TrackingPillarEfect> m_pillar;//柱上のエフェクト
 	public:
-		Player(shared_ptr<Stage>& StagePtr, Vec3 pos,Vec3 rot,bool GameFlag = true);//コンストラクタ
+		Player(const shared_ptr<Stage>& StagePtr,const Vec3& pos,const Vec3& rot,bool GameFlag = true);//コンストラクタ
 		~Player();
 
 		virtual void OnCreate()override;
@@ -51,7 +52,7 @@ namespace basecross{
 		void PlayerMove();
 		void ManholeSet(Vec3 pos);//マンホールの上にわなを仕掛ける
 
-		void OnCollisionEnter(shared_ptr<GameObject>& other);//当たり判定
+		void OnCollisionEnter(shared_ptr<GameObject>& other)override;//当たり判定
 		void KeyBoardMove();
 
 		float GetAngle()override;//角度を渡す
@@ -61,10 +62,6 @@ namespace basecross{
 		void SetKey(bool key);//鍵を持っているかどうか渡す
 		bool GetKey();//鍵を持っているかどうか渡す
 		void SetPushSpeed(float pushSpeed);//追加するスピードを渡す
-
-
-		//bool m_move;//動くか動かないかのフラグ
-
 	};
 
 }

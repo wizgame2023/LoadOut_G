@@ -9,7 +9,7 @@
 
 namespace basecross {
 	//コンストラクタの宣言・デストラクタ
-	Enemy::Enemy(shared_ptr<Stage>& StagePtr) :
+	Enemy::Enemy(const shared_ptr<Stage>& StagePtr) :
 		Actor(StagePtr),
 		m_pos(-95.0f,2.5f,95.0f),
 		m_startPos(-95.0f, 2.5f, 95.0f),
@@ -22,7 +22,7 @@ namespace basecross {
 		m_ability(normal)//Enemyの能力の宣言用
 	{
 	}
-	Enemy::Enemy(shared_ptr<Stage>& StagePtr, Vec3 pos, bool startPop, int ability,int anger) :
+	Enemy::Enemy(const shared_ptr<Stage>& StagePtr,const Vec3 pos, bool startPop, int ability,int anger) :
 		Actor(StagePtr),
 		m_pos(pos),
 		m_startPos(pos),
