@@ -1,6 +1,7 @@
 /*!
 @file Manhole.h
 @brief マンホール
+担当：三瓶裕太
 */
 
 #pragma once

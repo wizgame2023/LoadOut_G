@@ -1,6 +1,7 @@
 /*!
 @file MovieGameStart.h
 @brief ゲーム開始時のムービ用
+担当：三瓶裕太
 */
 
 #pragma once
@@ -11,9 +12,9 @@ namespace basecross {
 	class MovieGameStart :public Movie
 	{
 	private:
-		int m_count;//ムービーの進行度
-		weak_ptr<ViewBase> m_StageView;//ステージのビュー(ゲームプレイ用)
-		float m_mapSize;//マップのサイズ
+		int m_count;					// ムービーの進行度
+		weak_ptr<ViewBase> m_StageView; // ステージのビュー(ゲームプレイ用)
+		float m_mapSize;				// マップのサイズ
 		float m_speed;
 
 	public:
@@ -22,9 +23,9 @@ namespace basecross {
 
 		void OnCreate()override;
 		void OnUpdate()override;
-		void OnDestroy()override;
+		void OnDestroy()override; // 削除時処理
 
-		void CameraChange()override;
+		void CameraChange()override; // ムービー用のカメラに変更させる処理
 	};
 
 }

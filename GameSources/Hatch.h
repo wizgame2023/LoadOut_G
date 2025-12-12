@@ -1,6 +1,7 @@
 /*!
 @file Hatch.h
 @brief ハッチ
+担当：三瓶裕太
 */
 
 #pragma once

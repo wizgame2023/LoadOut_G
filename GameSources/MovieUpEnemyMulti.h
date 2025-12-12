@@ -1,6 +1,7 @@
 /*!
 @file MovieUpEnemyMulti.h
 @brief 敵が複数打ちあがるムービー
+担当：三瓶裕太
 */
 
 #pragma once
@@ -11,13 +12,13 @@ namespace basecross {
 	class MovieUpEnemyMulti :public Movie
 	{
 	private:
-		Vec3 m_tagetPos;//目的地
-		Vec3 m_movieCameraAt;//カメラの注視点
+		Vec3 m_tagetPos;	  // 目的地
+		Vec3 m_movieCameraAt; // カメラの注視点
 
-		vector<weak_ptr<Enemy>> m_upEnemyVec;//打ち上げる敵のポインタの配列
-		vector<float> m_upEnemyMoveAngleVec;//打ちあがる敵がどの方向に打ちあがるのか保存する配列
+		vector<weak_ptr<Enemy>> m_upEnemyVec; // 打ち上げる敵のポインタの配列
+		vector<float> m_upEnemyMoveAngleVec;  // 打ちあがる敵がどの方向に打ちあがるのか保存する配列
 
-		bool m_removeFlag;//ムービーを終了するフラグ
+		bool m_removeFlag; // ムービーを終了するフラグ
 	public:
 		MovieUpEnemyMulti(shared_ptr<Stage>& stagePtr,vector<weak_ptr<Enemy>> enemyVec);
 		~MovieUpEnemyMulti();

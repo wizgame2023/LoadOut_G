@@ -1,6 +1,7 @@
 /*!
 @file MovieGameOver.h
-@brief ゲームクリアのムービー
+@brief ゲームオーバーのムービー
+担当：三瓶裕太
 */
 
 #pragma once

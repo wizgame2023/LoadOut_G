@@ -1,6 +1,7 @@
 /*!
-@file Actor.h
-@brief PlayerやEnemyなど動くオブジェクトの親クラス
+@file Radomitem.h
+@brief 取得するとランダムにイベントが起きるオブジェクト
+担当：三瓶裕太
 */
 
 #pragma once

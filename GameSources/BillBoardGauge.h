@@ -1,6 +1,7 @@
 /*!
 @file BillBoardGauge.h
 @brief ビルボードのゲージ処理
+担当：三瓶裕太
 */
 
 #pragma once
@@ -11,9 +12,9 @@ namespace basecross {
 	class BillBoardGauge :public BillBoard
 	{
 	private:
-		float m_parsecond = 0;//全体の何パーセント出すか決める
+		float m_parsecond = 0; // 全体の何パーセント出すか決める
 
-		vector<uint16_t> m_indices;//インデックス情報
+		vector<uint16_t> m_indices; // インデックス情報
 
 	public:
 		BillBoardGauge(const shared_ptr<Stage>& StagePtr, 

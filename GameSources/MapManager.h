@@ -1,6 +1,7 @@
 /*!
-@file Character.h
-@brief キャラクターなど
+@file MapManager.h
+@brief マップ生成のマネージャー
+担当：三瓶裕太
 */
 
 #pragma once
@@ -10,17 +11,17 @@ namespace basecross {
 	class MapManager :public GameObject
 	{
 	private:
-		vector<vector<int>> m_stageMap;
-		vector<vector<int>> m_upWallMap;
-		vector<vector<int>> m_rightWallMap;
-		vector<vector<int>> m_unityMap;//A*のマップ
-		vector<int> m_unityLine;//A*のマップの一行
-		wstring m_stageName;//ステージの名前
+		vector<vector<int>> m_stageMap;     // マップのギミックを管理する配列
+		vector<vector<int>> m_upWallMap;    // 四角の中での上辺部分に生成する壁を管理する配列
+		vector<vector<int>> m_rightWallMap; // 四角の中での右辺部分に生成する壁を管理する配列
+		vector<vector<int>> m_unityMap;     // A*のマップ
+		vector<int> m_unityLine;			// A*のマップの一行
+		wstring m_stageName;				// ステージの名前
 
-		float m_mapSize;//マップのサイズ(直径)
-		float m_push;//一気にオブジェクト生成する際にエクセルの座標と合わせるための数値
+		float m_mapSize; // マップのサイズ(直径)
+		float m_push;	 // 一気にオブジェクト生成する際にエクセルの座標と合わせるための数値
 
-		bool m_UpdetaUnityMapFlag;//UnityMapの更新
+		bool m_UpdetaUnityMapFlag; // UnityMapの更新
 
 	public:
 		enum SelMapCount
@@ -33,36 +34,36 @@ namespace basecross {
 			Map_ExitOpen,
 			Map_Item
 		};
-		MapManager(shared_ptr<Stage>& stagePtr,wstring stageName=L"Stage01/");//コンストラクタ
-		~MapManager();//デストラクタ
+		MapManager(shared_ptr<Stage>& stagePtr,wstring stageName=L"Stage01/"); // コンストラクタ
+		~MapManager(); // デストラクタ
 
-		void OnCreate()override;//生成
-		void OnUpdate()override;//更新
+		void OnCreate()override; // 生成
+		void OnUpdate()override; // 更新
 
-		Vec2 ConvertSelMap(Vec3 worldPosition);//ワールド座標からセル座標に変える
-		Vec3 ConvertWorldMap(Vec2 selPosition);
-		Vec2 ConvertUnityMap(Vec2 selPosition);
-		Vec2 ConvertU_S(Vec2 AStarPosition);//AStarからセルマップに変える
+		Vec2 ConvertSelMap(Vec3 worldPosition); // ワールド座標からセル座標に変える
+		Vec3 ConvertWorldMap(Vec2 selPosition); // セル座標からワールド座標に変える
+		Vec2 ConvertUnityMap(Vec2 selPosition); // セル座標からAStar用のマップ座標に変える(壁座標と地面座標を合わせた物)
+		Vec2 ConvertU_S(Vec2 AStarPosition);    // AStarからセルマップに変える
 
-		void MapDataUpdate(Vec3 worldPosition,int change);
-		int SelMapNow(Vec3 worldPosition);//今のセル座標に何があるのかを返す
+		void MapDataUpdate(Vec3 worldPosition,int change); // 地面座標の情報を変更する処理
+		int SelMapNow(Vec3 worldPosition);				   // 今の足元にに何があるのかを返す
 
-		void StageMapLoad();
-		void WallMapLoad();
-		void UnityMapCreate();//A*マップの作成
-		void WallCreate();//壁を生成消すこと
-		void AddExctraUnity(int addArray);//余分にA*に配列を入れる処理
-		void AddArray(int loop,int num);//配列に数値を入れる処理
-		void MapChange();//マップの形が変わる
+		void StageMapLoad();		       // CSVを読み込んで道に置くオブジェクトの生成処理
+		void WallMapLoad();				   // CSVを読み込んで壁オブジェクトの生成処理
+		void UnityMapCreate();			   //A*マップの作成
+		void WallCreate();				   // 壁を生成消すこと
+		void AddExctraUnity(int addArray); // 余分にA*に配列を入れる処理
+		void AddArray(int loop,int num);   // 配列に数値を入れる処理
+		void MapChange();				   // マップの形が変わる
 
 
 		void SetUpdataUnityMapFlag(bool flag);
 
-		float GetMapSize();//マップのサイズを渡す処理
+		float GetMapSize(); // マップのサイズを渡す処理
 
-		vector<vector<int>> TestAStar();//A*のテスト用のマップ取得
+		vector<vector<int>> TestAStar(); // A*のテスト用のマップ取得
 
-		vector<vector<int>> GetUnityMap();//A*マップの取得
+		vector<vector<int>> GetUnityMap(); // A*マップの取得
 	};
 
 

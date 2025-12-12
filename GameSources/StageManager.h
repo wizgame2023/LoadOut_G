@@ -1,6 +1,7 @@
 /*!
 @file StageManager.h
 @brief ステージの進行を管理する
+担当：三瓶裕太
 */
 
 #pragma once
@@ -11,31 +12,31 @@ namespace basecross {
 	class StageManager :public GameObject
 	{
 	private:
-		int m_BGMhow;//今なにのBGMを流れているか保存する変数
-		int m_PlayerKeyFlag;///Playerが鍵を持ったかのフラグ
-		int m_batteryCountMax;//ステージのバッテリー出現上限
-		int m_EnemyUpClearNum;//敵を倒す目標数
+		int m_BGMhow;		   // 今なにのBGMを流れているか保存する変数
+		int m_PlayerKeyFlag;   // Playerが鍵を持ったかのフラグ
+		int m_batteryCountMax; // ステージのバッテリー出現上限
+		int m_EnemyUpClearNum; // 敵を倒す目標数
 
 		int m_pausCount;
 		int m_count;
-		int m_upEnemyCount;//敵を打ち上げた数
-		int m_clearManagerCount;//クリアマネージャーの処理のカウント
-		int m_stageMode;//ステージのモードを決める変数
+		int m_upEnemyCount;		 // 敵を打ち上げた数
+		int m_clearManagerCount; // クリアマネージャーの処理のカウント
+		int m_stageMode;		 // ステージのモードを決める変数
 
-		float m_repopItemCountTime;//アイテム(スパナ)がリポップするタイムを測る変数
-		float m_repopItemCountTimeMax;//アイテム(スパナ)がリポップする時間
-		float m_repopEnemyCountTime;//敵がリポップするタイムを測る変数
-		float m_repopEnemyCountTimeMax;//敵がリポップする時間
-		float m_repopRamdomItemCountTime;//ランダムアイテムがリポップする時間を測る変数
-		float m_repopRamdomItemCountTimeMax;//ランダムアイテムがリポップする時間
+		float m_repopItemCountTime;			// アイテム(スパナ)がリポップするタイムを測る変数
+		float m_repopItemCountTimeMax;		// アイテム(スパナ)がリポップする時間
+		float m_repopEnemyCountTime;		// 敵がリポップするタイムを測る変数
+		float m_repopEnemyCountTimeMax;		// 敵がリポップする時間
+		float m_repopRamdomItemCountTime;	// ランダムアイテムがリポップする時間を測る変数
+		float m_repopRamdomItemCountTimeMax;// ランダムアイテムがリポップする時間
 		
-		bool m_startFlag;//ゲームスタート開始したかのフラグ
-		bool m_ClearFlag;//クリアのフラグ判定
-		bool m_GameOverFlag;//ゲームオーバー用のフラグ	
-		bool m_repopItemFlag;//アイテムのリポップフラグ
-		bool m_BGMChase;//追いかけられているか保存する変数
-		bool m_updateFlag;//アップデート処理をするかのフラグ
-		bool m_RepopTimeCountFlag;//リポップ時間を測っていいかのフラグ
+		bool m_startFlag;		   // ゲームスタート開始したかのフラグ
+		bool m_ClearFlag;		   // クリアのフラグ判定
+		bool m_GameOverFlag;	   // ゲームオーバー用のフラグ	
+		bool m_repopItemFlag;	   // アイテムのリポップフラグ
+		bool m_BGMChase;		   // 追いかけられているか保存する変数
+		bool m_updateFlag;		   // アップデート処理をするかのフラグ
+		bool m_RepopTimeCountFlag; // リポップ時間を測っていいかのフラグ
 
 		bool m_pause;
 		bool m_pauseFlag;
@@ -59,12 +60,12 @@ namespace basecross {
 		shared_ptr<Sprite>m_pauseButton;
 
 		shared_ptr<Sprite> m_operation;
-		shared_ptr<BlackOut> m_blackOut;//暗転処理
+		shared_ptr<BlackOut> m_blackOut; // 暗転処理
 
-		vector<Vec3> m_repopEnemyPos;//リポップするEnemyのポジション
-		vector<Vec3> m_repopRandomItemPos;//リポップするRandomItemのポジション
+		vector<Vec3> m_repopEnemyPos;		// リポップするEnemyのポジション
+		vector<Vec3> m_repopRandomItemPos;	// リポップするRandomItemのポジション
 
-		vector<int> m_repopEnemyAnger;//リポップするEnemyの怒り値の配列
+		vector<int> m_repopEnemyAnger; // リポップするEnemyの怒り値の配列
 
 	public:
 		StageManager(shared_ptr<Stage>& stagePtr, int batteryMax = 5, float repopItemCountTimeMax = 15.0f,float repopEnemyCountTimeMax = 15.0f,
@@ -75,34 +76,34 @@ namespace basecross {
 		void OnCreate()override;
 		void OnUpdate()override;
 
-		void BGMChange();//BGMの変更処理
+		void BGMChange();		  //BGMの変更処理
 		void EnemyStateCheck();
-		void OnDestroy()override;//削除されたときの処理
+		void OnDestroy()override; //削除されたときの処理
 
-		void RepopEnemy();//Enemyのリポップ処理
-		void RepopItem();//乾電池のリポップ処理
+		void RepopEnemy(); // Enemyのリポップ処理
+		void RepopItem();  // 乾電池のリポップ処理
 		void RepopRandamItem();
 
 		void PauseEvent();
 
-		void KeyEvent();//鍵関係のイベント
+		void KeyEvent(); // 鍵関係のイベント
 
-		void ClearMode(int mode,int modeTwoCount = 5);//ステージのクリア条件の管理
+		void ClearMode(int mode,int modeTwoCount = 5); // ステージのクリア条件の管理
 
-		void SetClearFlag(bool flag);//セッター
-		void SetGameOverFlag(bool flag);//セッター
-		void SetPlayerKeyFlag(int flag);//セッター
-		void SetRepopEnemyPos(Vec3 pos);//セッター
-		void SetRepopEnemyAnger(int anger);//リポップする敵の怒り値のセッター
-		void SetRepopRandomItemPos(Vec3 pos);//セッター
-		void SetUpdateFlag(bool flag);//アップデートするかのセッター
-		void SetStartFlag(bool Step);//ゲームが開始したかのセッター
+		void SetClearFlag(bool flag);		  // クリアフラグのセッタ
+		void SetGameOverFlag(bool flag);	  // ゲームオーバーフラグのセッタ
+		void SetPlayerKeyFlag(int flag);	  // プレイヤーが鍵を手に入れたフラグのセッタ
+		void SetRepopEnemyPos(Vec3 pos);	  // 敵がリポップする際の位置のセッタ
+		void SetRepopEnemyAnger(int anger);   // リポップする敵の怒り値のセッタ
+		void SetRepopRandomItemPos(Vec3 pos); // ライダムアイテムがリポップする際の位置のセッタ
+		void SetUpdateFlag(bool flag);		  // アップデートするかのセッタ
+		void SetStartFlag(bool Step);		  // ゲームが開始したかのセッタ
 
-		bool GetStartFlag();//ゲームが開始したかのゲッター
-		int GetStageMode();//ステージモードを取得
-		int GetUpEnemyCount();//倒した敵の数を渡す
-		int GetUpEnemyCountMax();//倒すべき敵の数を渡す
-		void AddUpEnemyCount(int count);//倒した数を追加する
+		bool GetStartFlag();			 // ゲームが開始したかのゲッタ
+		int GetStageMode();				 // ステージモードを取得
+		int GetUpEnemyCount();			 // 倒した敵の数を渡す
+		int GetUpEnemyCountMax();		 // 倒すべき敵の数を渡す
+		void AddUpEnemyCount(int count); // 倒した数を追加する
 	};
 
 }

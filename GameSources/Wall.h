@@ -1,6 +1,7 @@
 /*!
 @file Wall.h
-@brief キャラクターなど
+@brief 壁
+担当：三瓶裕太
 */
 
 #pragma once

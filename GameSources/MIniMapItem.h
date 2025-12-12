@@ -1,5 +1,5 @@
 /*!
-@file Sprite.h
+@file MiniMapItem.h
 @brief スプライト用のクラス
 */
 

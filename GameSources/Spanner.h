@@ -1,6 +1,7 @@
 /*!
 @file Spanner.h
 @brief スパナ(マンホールを打ち上げるためのアイテム)
+担当：三瓶裕太
 */
 
 #pragma once

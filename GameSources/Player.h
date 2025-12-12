@@ -1,6 +1,7 @@
 /*!
 @file Player.h
 @brief プレイヤーなど
+担当：三瓶裕太
 */
 
 #pragma once
