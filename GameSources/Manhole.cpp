@@ -84,7 +84,7 @@ namespace basecross {
 		ManholeTransition();//マンホールの遷移
 
 		//マンホールに電池が設置されたときのビルボード処理
-		if (m_mapManager.lock()->SelMapNow(m_pos) >= 2)
+		if (m_mapManager.lock()->CellMapNow(m_pos) >= 2)
 		{			
 			m_billBoardTime += m_delta;
 			if (m_billBoardTime < 0.8f)
@@ -120,7 +120,7 @@ namespace basecross {
 		}
 
 		//テクスチャリセット
-		if (m_mapManager.lock()->SelMapNow(m_pos) < 2)
+		if (m_mapManager.lock()->CellMapNow(m_pos) < 2)
 		{
 			m_billBoard->SetScale(Vec3(0.0f, 0.0f, 0.0f));
 			m_billBoard->ChangeTexture(L"Clear");
@@ -139,7 +139,7 @@ namespace basecross {
 	void Manhole::ManholeTransition()
 	{
 		//セル座標にアイテムを設置した情報があったら
-		if (m_mapManager.lock()->SelMapNow(m_pos) == 2 && m_charen == Manhole_None)
+		if (m_mapManager.lock()->CellMapNow(m_pos) == 2 && m_charen == Manhole_None)
 		{
 			m_charen = Manhole_Start;//アイテムが置かれている状態
 			GetComponent<PNTStaticDraw>()->SetTextureResource(L"RedManhole");//自分自身にアイテムが置かれていると分かりやすくする
@@ -188,7 +188,7 @@ namespace basecross {
 		}
 
 		//マンホールが上がる時の処理
-		if (m_mapManager.lock()->SelMapNow(m_pos) == 3)
+		if (m_mapManager.lock()->CellMapNow(m_pos) == 3)
 		{
 			if (m_charen == Manhole_Up || m_charen == Manhole_Start)
 			{
@@ -257,7 +257,7 @@ namespace basecross {
 		auto mapManager = m_mapManager.lock();
 		auto player = dynamic_pointer_cast<Player>(other);
 
-		if (mapManager->SelMapNow(m_pos)==2)
+		if (mapManager->CellMapNow(m_pos)==2)
 		{
 			//Playerが離れたらまたプレイヤが来るか待つフラグを立てる
 			if (player)
@@ -270,7 +270,7 @@ namespace basecross {
 	//コリジョンによってマンホールが上がる処理
 	void Manhole::CollisionUpManhole(const shared_ptr<Enemy>& enemy,const shared_ptr<Player>& player)
 	{
-		if (m_lockMapManager->SelMapNow(m_pos) == 2)
+		if (m_lockMapManager->CellMapNow(m_pos) == 2)
 		{//もし当たったオブジェクトが敵なら
 			if (enemy)
 			{
@@ -278,9 +278,10 @@ namespace basecross {
 				GetComponent<PNTStaticDraw>()->SetTextureResource(L"Black");//マンホールの蓋が出たテクスチャにする
 
 				auto localPlayer = m_stage->GetSharedGameObject<Player>(L"Player"); // player変数に入れることはconstによってできないためこれでPlayerを受け取ります
-				auto playerPos = m_stage->GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
-				auto playerSelPos = m_lockMapManager->ConvertSelMap(playerPos);
-				auto selPos = m_lockMapManager->ConvertSelMap(m_pos);
+				auto player = m_stage->GetSharedGameObject<Player>(L"Player");
+				auto playerPos = GetComponent<Transform>()->GetPosition();
+				auto playerSelPos = m_lockMapManager->ConvertCellMap(playerPos);
+				auto selPos = m_lockMapManager->ConvertCellMap(m_pos);
 
 				//ステージのオブジェクトを全て取得
 				auto objVec = m_stage->GetGameObjectVec();
