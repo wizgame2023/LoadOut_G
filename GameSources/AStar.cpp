@@ -95,8 +95,9 @@ namespace basecross {
 				}
 			}
 
+			int roopNumMax = 99; // ループの限界回数
 			//無限ループしてしまったら
-			if (m_roopCount >= 99)
+			if (m_roopCount >= roopNumMax)
 			{
 				//目的地を現在地にする
 				goalPos = originPos;
@@ -110,6 +111,8 @@ namespace basecross {
 		//まず、目標地点であるPlayerのセル座標をワールド座標に変更する
 		Vec3 goalwolrdPos = m_mapManager.lock()->ConvertWorldMap(playerSelPos);
 		rootVec.push_back(goalwolrdPos);
+
+		// 親ノードがなくなるまで辿っていくと芋づる式にどのように移動すれば分かる
 		shared_ptr<Node> parentSel = m_unityMap[goalPos.y][goalPos.x]->Parent;
 		while (parentSel != NULL)
 		{
