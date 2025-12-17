@@ -23,8 +23,8 @@ namespace basecross {
 	{
 		auto pos = GetComponent<Transform>()->GetPosition();//ポジション取得
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
-		Vec2 selPos = mapManager->ConvertSelMap(pos);//今いるセル座標を取得
-		int selNow = mapManager->SelMapNow(pos);//現在いるセル座標に何があるかを取得
+		Vec2 selPos = mapManager->ConvertCellMap(pos);//今いるセル座標を取得
+		int selNow = mapManager->CellMapNow(pos);//現在いるセル座標に何があるかを取得
 
 		//確認したセル座標が前より違っていたら
 		if (selPos != m_selPosNow)

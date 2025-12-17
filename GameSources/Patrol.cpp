@@ -187,13 +187,13 @@ namespace basecross
 
 		auto unityMap = mapMgr->GetUnityMap();
 
-		auto sellPos = mapMgr->ConvertSelMap(n_pos);
+		auto sellPos = mapMgr->ConvertCellMap(n_pos);
 		auto unityPos = mapMgr->ConvertUnityMap(sellPos);
 
-		auto fsellPos = mapMgr->ConvertSelMap(n_fpos);
+		auto fsellPos = mapMgr->ConvertCellMap(n_fpos);
 		auto funityPos = mapMgr->ConvertUnityMap(fsellPos);
 
-		auto sellTargetPos = mapMgr->ConvertSelMap(n_target);
+		auto sellTargetPos = mapMgr->ConvertCellMap(n_target);
 		auto unityTargetPos = mapMgr->ConvertUnityMap(sellTargetPos);
 
 		auto delta = App::GetApp()->GetElapsedTime();
@@ -429,7 +429,7 @@ namespace basecross
 	{
 		auto mapMgr = m_Owner->GetMapMgr();//マップマネージャー
 		//座標をセルのポジションに変換してからワールド座標に再変換する
-		Vec2 selPos = mapMgr->ConvertSelMap(worldPos);
+		Vec2 selPos = mapMgr->ConvertCellMap(worldPos);
 		Vec3 muchPos = mapMgr->ConvertWorldMap(selPos);
 
 		return muchPos;

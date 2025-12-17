@@ -322,9 +322,9 @@ namespace basecross {
 				Vec3 randVec = Vec3(randX, 0.0f, randY);
 
 				//ランダムに決めた場所がアイテムがない場所なら出現させる
-				if (mapManager->SelMapNow(randVec) == mapManager->Map_None)
+				if (mapManager->CellMapNow(randVec) == mapManager->Map_None)
 				{
-					auto randSelVec = mapManager->ConvertSelMap(randVec);//セルマップに変える
+					auto randSelVec = mapManager->ConvertCellMap(randVec);//セルマップに変える
 					auto popSelVec = mapManager->ConvertWorldMap(randSelVec);//ワールド座標に変換する
 					stage->AddGameObject<Spanner>(Vec3(popSelVec), Vec3(0.0f, 0.0f, 0.0f));//生成
 					m_repopItemFlag = false;//フラグリセット

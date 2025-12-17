@@ -110,8 +110,8 @@ namespace basecross{
 		PlayerMove();//プレイヤーの動き
 
 		auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
-		Vec2 selPos = mapManager->ConvertSelMap(pos);//今いるセル座標を取得
-		int selNow = mapManager->SelMapNow(pos);//現在いるセル座標に何があるかを取得
+		Vec2 selPos = mapManager->ConvertCellMap(pos);//今いるセル座標を取得
+		int selNow = mapManager->CellMapNow(pos);//現在いるセル座標に何があるかを取得
 
 		ManholeSet(pos);//マンホールの上にわなを仕掛ける処理
 
@@ -259,8 +259,8 @@ namespace basecross{
 		//m_Pos = GetComponent<Transform>()->GetPosition();
 
 		//wss /* << L"デバッグ用文字列 "*/
-		//	<<L"\nSelx:"<<mapManager->ConvertSelMap(m_Pos).x
-		//	<<L"\nSely:"<<mapManager->ConvertSelMap(m_Pos).y
+		//	<<L"\nSelx:"<<mapManager->ConvertCellMap(m_Pos).x
+		//	<<L"\nSely:"<<mapManager->ConvertCellMap(m_Pos).y
 		//	<< L"\n傾き " << m_deg
 		//	<< L"\nPos.x " << pos.x << "\nPos.z " << pos.z
 		//	<<L"\nrot.x "<<rot.x << L"\nrot.y " << rot.y << "\nrot.z" << rot.z
@@ -342,7 +342,7 @@ namespace basecross{
 
 		if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
 		{
-			if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールなら
+			if (mapManager->CellMapNow(pos) == 1)//もし、現在いるセル座標がマンホールなら
 			{
 				if (m_itemCount <= 0)
 				{
@@ -350,7 +350,7 @@ namespace basecross{
 					auto SE = SEManager->Start(L"Error", 0, 1.3f);
 				}
 			}
-			if (mapManager->SelMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
+			if (mapManager->CellMapNow(pos) == 4)//もし、現在いるセル座標がハッチなら
 			{
 				if (!m_key)
 				{
@@ -378,7 +378,7 @@ namespace basecross{
 			auto device = App::GetApp()->GetInputDevice().GetControlerVec();
 			if (m_controler.wPressedButtons & XINPUT_GAMEPAD_B)//Bボタンを押したとき
 			{
-				if (mapManager->SelMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
+				if (mapManager->CellMapNow(pos) == 1)//もし、現在いるセル座標がマンホールの上ならば
 				{
 					m_itemCount--;
 
@@ -412,7 +412,7 @@ namespace basecross{
 		auto pos = GetComponent<Transform>()->GetPosition();
 
 		//そのセル座標がマンホールの上なら罠を置く処理
-		if (mapManager->SelMapNow(pos) == 1)
+		if (mapManager->CellMapNow(pos) == 1)
 		{
 			mapManager->MapDataUpdate(pos, 2);//現在のセル座標に罠を置く処理をする
 		}

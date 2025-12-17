@@ -40,13 +40,13 @@ namespace basecross {
 		void OnCreate()override; // 生成
 		void OnUpdate()override; // 更新
 
-		Vec2 ConvertSelMap(Vec3 worldPosition); // ワールド座標からセル座標に変える
+		Vec2 ConvertCellMap(Vec3 worldPosition); // ワールド座標からセル座標に変える
 		Vec3 ConvertWorldMap(Vec2 selPosition); // セル座標からワールド座標に変える
 		Vec2 ConvertUnityMap(Vec2 selPosition); // セル座標からAStar用のマップ座標に変える(壁座標と地面座標を合わせた物)
-		Vec2 ConvertU_S(Vec2 AStarPosition);    // AStarからセルマップに変える
+		Vec2 ConvertU_C(Vec2 AStarPosition);    // AStarからセルマップに変える
 
 		void MapDataUpdate(Vec3 worldPosition,int change); // 地面座標の情報を変更する処理
-		int SelMapNow(Vec3 worldPosition);				   // 今の足元にに何があるのかを返す
+		int CellMapNow(Vec3 worldPosition);				   // 今の足元にに何があるのかを返す
 
 		void StageMapLoad();		       // CSVを読み込んで道に置くオブジェクトの生成処理
 		void WallMapLoad();				   // CSVを読み込んで壁オブジェクトの生成処理

@@ -146,7 +146,7 @@ namespace basecross {
 
 		//auto mapManager = GetStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 
-		//if (mapManager->SelMapNow(trans->GetPosition())==2)
+		//if (mapManager->CellMapNow(trans->GetPosition())==2)
 		//{
 		//	GetStage()->RemoveGameObject<Enemy>(GetThis<Enemy>());
 		//}

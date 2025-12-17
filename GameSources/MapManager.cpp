@@ -34,7 +34,7 @@ namespace basecross {
 	}
 
 	//ワールド座標をセル座標に変換する
-	Vec2 MapManager::ConvertSelMap(Vec3 worldPosition)
+	Vec2 MapManager::ConvertCellMap(Vec3 worldPosition)
 	{
 		float length = ((worldPosition.x + m_push) / 10.0f) + 0.5f;//横のセル座標
 		float height = -((worldPosition.z - m_push) / 10.0f) + 0.5f;//縦のセル座標
@@ -60,7 +60,7 @@ namespace basecross {
 	}
 
 	//AStar座標からセル座標へ
-	Vec2 MapManager::ConvertU_S(Vec2 aStarPosition)
+	Vec2 MapManager::ConvertU_C(Vec2 aStarPosition)
 	{
 		int Length = (aStarPosition.x - 1) / 2 ;
 		int Height = (aStarPosition.y - 1) / 2 ;
@@ -338,7 +338,7 @@ namespace basecross {
 	//セルマップにマンホールなどを置く処理
 	void MapManager::MapDataUpdate(Vec3 worldPosition,int change)
 	{
-		Vec2 SelPos = ConvertSelMap(worldPosition);
+		Vec2 SelPos = ConvertCellMap(worldPosition);
 
 		//決めた配列の場所に数値を変更させる
 		m_stageMap[SelPos.y][SelPos.x] = change;
@@ -346,9 +346,9 @@ namespace basecross {
 
 
 	//今のセル座標に何があるのかを返す
-	int MapManager::SelMapNow(Vec3 worldPosition)
+	int MapManager::CellMapNow(Vec3 worldPosition)
 	{
-		Vec2 SelPos = ConvertSelMap(worldPosition);
+		Vec2 SelPos = ConvertCellMap(worldPosition);
 
 		return m_stageMap[SelPos.y][SelPos.x];
 	}

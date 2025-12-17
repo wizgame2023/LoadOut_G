@@ -37,8 +37,7 @@ namespace basecross {
 		auto mapManager = m_mapManager.lock();
 
 
-		m_unityMapCSV = mapManager->GetUnityMap();//AStarマップ取得
-		//vector<vector<shared_ptr<Node>>> aStarMap;//マップのノード配列
+		m_unityMapCSV = mapManager->GetUnityMap();//AStar用のマップ取得
 		vector<shared_ptr<Node>> aStarMapline;
 		//AStarマップの配列と同じ配列の大きさのノードを作る
 		for (int y = 0; y < m_unityMapCSV.size(); y++)
@@ -50,24 +49,23 @@ namespace basecross {
 			m_unityMap.push_back(aStarMapline);
 			aStarMapline.clear();//リセット
 		}
-		auto test = 0;
 
 		//初期位置を決める自分自身(Enemy)の現在地点
-		auto enemySelPos = mapManager->ConvertSelMap(startWPos);//セルに変える
-		auto enemyAStarPos = mapManager->ConvertUnityMap(enemySelPos);
-		auto originPos = enemyAStarPos;
+		Vec2 enemySelPos = mapManager->ConvertCellMap(startWPos);//セルに変える
+		Vec2 enemyAStarPos = mapManager->ConvertUnityMap(enemySelPos);
+		Vec2 originPos = enemyAStarPos;
 		m_unityMap[originPos.y][originPos.x]->Status = Status_Open;
-		auto cost = 0;
+		int cost = 0;
 		//ゴール地点(Player)	
-		auto playerSelPos = mapManager->ConvertSelMap(goalWPos);
-		auto playerASterPos = mapManager->ConvertUnityMap(playerSelPos);
-		auto goalPos = playerASterPos;
+		Vec2 playerSelPos = mapManager->ConvertCellMap(goalWPos);
+		Vec2 playerASterPos = mapManager->ConvertUnityMap(playerSelPos);
+		Vec2 goalPos = playerASterPos;
 		bool root = false;//経路が見つかったかどうか
 
 		//一番最初のPlayerとの距離を確認する
 		m_unityMap[originPos.y][originPos.x]->Status = Status_Open;
-		auto lookCost = m_unityMap[originPos.y][originPos.x]->Cost = cost++;//コストの変数まだ作ってない
-		auto lookHCost = m_unityMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
+		int lookCost = m_unityMap[originPos.y][originPos.x]->Cost = cost++;//コストの変数まだ作ってない
+		int lookHCost = m_unityMap[originPos.y][originPos.x]->HeuristicCost = abs(goalPos.x - originPos.x) + abs(goalPos.y - originPos.y);
 		m_unityMap[originPos.y][originPos.x]->Score = lookCost + lookHCost;
 
 		//経路が見つかるまでループする
@@ -77,8 +75,8 @@ namespace basecross {
 			root = LookAround(m_unityMap[originPos.y][originPos.x], goalPos);
 
 			//検索の中心点を探す
-			auto openScore = 0;
-			auto minScore = 999;
+			int openScore = 0;
+			int minScore = 999;
 			for (auto map : m_unityMap)
 			{
 				for (auto mapline : map)
@@ -110,13 +108,13 @@ namespace basecross {
 		//ルートが見つかったらどう進めばいいかを伝える
 		vector<Vec3> rootVec;
 		//まず、目標地点であるPlayerのセル座標をワールド座標に変更する
-		auto goalwolrdPos = m_mapManager.lock()->ConvertWorldMap(playerSelPos);
+		Vec3 goalwolrdPos = m_mapManager.lock()->ConvertWorldMap(playerSelPos);
 		rootVec.push_back(goalwolrdPos);
-		auto parentSel = m_unityMap[goalPos.y][goalPos.x]->Parent;
+		shared_ptr<Node> parentSel = m_unityMap[goalPos.y][goalPos.x]->Parent;
 		while (parentSel != NULL)
 		{
 			Vec2 AStarPos = Vec2(parentSel->x, parentSel->y);
-			Vec2 SelPos = mapManager->ConvertU_S(AStarPos);
+			Vec2 SelPos = mapManager->ConvertU_C(AStarPos);
 			Vec3 worldPos = mapManager->ConvertWorldMap(SelPos);
 			rootVec.push_back(worldPos);
 			parentSel = parentSel->Parent;
@@ -126,7 +124,6 @@ namespace basecross {
 		{
 			rootReverse.push_back(rootVec[i]);
 		}
-		auto a = mapManager->ConvertUnityMap(Vec2(6, 6));
 		m_aStarFirst = true;//AStarを更新したことを伝える
 		return rootReverse;
 	}
@@ -146,7 +143,6 @@ namespace basecross {
 			{
 				int lookX = pushx + originPos.x;
 				int lookY = pushy + originPos.y;
-				auto test = m_unityMap.size();
 
 				//確認する座標が親座標から見て左右上下以外なら確認しない
 				if (pushy == 0 && pushx == 0 || pushy != 0 && pushx != 0) continue;
@@ -171,30 +167,20 @@ namespace basecross {
 					continue;
 				}
 
-
-				if (lookX < 0 || lookX>m_unityMap.size() - 1)
-				{
-					auto test = 0;
-				}
-				if (lookY < 0 || lookY>m_unityMap.size() - 1)
-				{
-					auto test = 0;
-				}
-
 				if (m_unityMap[lookY][lookX]->Status == Status_None)//探索したことがないなら
 				{
 
 					m_unityMap[lookY][lookX]->Status = Status_Open;
-					auto lookCost = m_unityMap[lookY][lookX]->Cost = cost;//コストの変数まだ作ってない
-					auto lookHCost = m_unityMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - lookX) + abs(goalPos.y - lookY);
+					int lookCost = m_unityMap[lookY][lookX]->Cost = cost;//コストの変数まだ作ってない
+					int lookHCost = m_unityMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - lookX) + abs(goalPos.y - lookY);
 					m_unityMap[lookY][lookX]->Score = lookCost + lookHCost;
 					m_unityMap[lookY][lookX]->Parent = m_unityMap[originPos.y][originPos.x];
 				}
 				if (m_unityMap[lookY][lookX]->Status == Status_Open)//探索済みなら
 				{
-					auto Cost = m_unityMap[lookY][lookX]->Cost = cost;
+					int Cost = m_unityMap[lookY][lookX]->Cost = cost;
 					m_unityMap[lookY][lookX]->HeuristicCost = abs(goalPos.x - (lookX)) + abs(goalPos.y - (lookY));
-					auto score = m_unityMap[lookY][lookX]->Score = m_unityMap[lookY][lookX]->Cost + m_unityMap[lookY][lookX]->HeuristicCost;
+					int score = m_unityMap[lookY][lookX]->Score = m_unityMap[lookY][lookX]->Cost + m_unityMap[lookY][lookX]->HeuristicCost;
 
 					if (m_unityMap[lookY][lookX]->Score > score)//スコアが前よりも少なかったら
 					{

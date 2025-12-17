@@ -61,7 +61,7 @@ namespace basecross {
 		auto stage = GetStage();
 		auto mapManager = stage->GetSharedGameObject<MapManager>(L"MapManager");
 		auto pos = GetComponent<Transform>()->GetPosition();
-		auto nowYuka = mapManager->SelMapNow(pos);//今のセル座標はどの状態かを見る
+		auto nowYuka = mapManager->CellMapNow(pos);//今のセル座標はどの状態かを見る
 		if (nowYuka == 5)//ハッチが開かれている状態であれば
 		{
 			if (m_count == 0)

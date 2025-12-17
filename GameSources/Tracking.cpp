@@ -56,7 +56,7 @@ namespace basecross {
 
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 		//Playerの位置をAStarの座標にする
-		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
+		auto playerSelPos = mapManager->ConvertCellMap(m_playerPos);//ワールド座標からセル座標にしてから
 		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
 		//AStarの処理////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//プレイヤーのA*座標がが変わっていたらA*処理をもう一度やる
@@ -105,7 +105,7 @@ namespace basecross {
 		Vec3 pos = m_ownerPos;
 		Vec3 playerPos = m_playerPos;
 		auto RouteSearch = mapMgr->GetUnityMap();
-		auto sellPos = mapMgr->ConvertSelMap(pos);
+		auto sellPos = mapMgr->ConvertCellMap(pos);
 		auto AStarPos = mapMgr->ConvertUnityMap(sellPos);
 
 		float deg = m_directionRad * 180 / XM_PI;//ラジアンをディグリーに変換（デバック用）
@@ -158,7 +158,7 @@ namespace basecross {
 	{
 		auto mapManager = App::GetApp()->GetScene<Scene>()->GetActiveStage()->GetSharedGameObject<MapManager>(L"MapManager");//マップマネージャー取得
 		//Playerの位置をAStarの座標にする
-		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);//ワールド座標からセル座標にしてから
+		auto playerSelPos = mapManager->ConvertCellMap(m_playerPos);//ワールド座標からセル座標にしてから
 		auto playerAStarPos = mapManager->ConvertUnityMap(playerSelPos);//A*の座標に変える
 		m_unityMap.clear();
 		m_roodCount = 0;
@@ -265,13 +265,13 @@ namespace basecross {
 		auto test=0;
 		
 		//初期位置を決める自分自身(Enemy)の現在地点
-		auto enemySelPos = mapManager->ConvertSelMap(m_ownerPos);//セルに変える
+		auto enemySelPos = mapManager->ConvertCellMap(m_ownerPos);//セルに変える
 		auto enemyAStarPos = mapManager->ConvertUnityMap(enemySelPos);
 		auto originPos = enemyAStarPos;
 		m_unityMap[originPos.y][originPos.x]->Status = Status_Open;
 		auto cost = 0;
 		//ゴール地点(Player)	
-		auto playerSelPos = mapManager->ConvertSelMap(m_playerPos);
+		auto playerSelPos = mapManager->ConvertCellMap(m_playerPos);
 		auto playerASterPos = mapManager->ConvertUnityMap(playerSelPos);
 		auto goalPos = playerASterPos;
 		bool root = false;//経路が見つかったかどうか
@@ -319,7 +319,7 @@ namespace basecross {
 		while (parentSel != NULL)
 		{
 			Vec2 AStarPos = Vec2(parentSel->x, parentSel->y);
-			Vec2 SelPos = mapManager->ConvertU_S(AStarPos);
+			Vec2 SelPos = mapManager->ConvertU_C(AStarPos);
 			Vec3 worldPos = mapManager->ConvertWorldMap(SelPos);
 			rootVec.push_back(worldPos);
 			parentSel = parentSel->Parent;
