@@ -1,6 +1,7 @@
 /*!
 @file GameStart.cpp
 @brief ステージを開始するための処理
+担当：三瓶裕太
 */
 
 #include "stdafx.h"
@@ -49,8 +50,6 @@ namespace basecross {
 		auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
 		stageManager->SetUpdateFlag(false);//更新できないようにする
 
-		//auto m_StageText = stage->AddGameObject<Sprite>(L"StageText", Vec2(800/2, 150/2), Vec3(-105.0f, 250.0f, 0.0f));//タイトル用のスプライト生成
-		//m_StageText->SetDrawLayer(2);
 		
 		//最後にプレイしているステージを渡す
 		int PlayStage = App::GetApp()->GetScene<Scene>()->GetLastPlayStage();

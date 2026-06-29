@@ -1,6 +1,7 @@
 ﻿/*!
 @file StageManaegr.cpp
 @brief ステージの進行を管理する
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

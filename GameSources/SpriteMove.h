@@ -1,6 +1,7 @@
 /*!
 @file SpriteMove.h
-@brief キャラクターなど
+@brief 動くスプライト
+担当：三瓶裕太
 */
 
 #pragma once

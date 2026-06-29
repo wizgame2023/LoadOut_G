@@ -1,6 +1,7 @@
 /*!
 @file MovieUpEnemyMulti.cpp
 @brief 敵が複数打ちあがるムービー
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

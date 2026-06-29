@@ -1,6 +1,7 @@
 /*!
 @file Movie.cpp
 @brief ムービー関係の親クラス
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

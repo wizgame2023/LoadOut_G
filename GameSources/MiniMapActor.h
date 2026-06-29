@@ -1,6 +1,7 @@
 /*!
 @file MiniMapActor.h
 @brief 動くオブジェクトをミニマップに表示
+担当：三瓶裕太
 */
 
 #pragma once

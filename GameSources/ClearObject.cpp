@@ -1,6 +1,7 @@
 /*!
 @file Character.cpp
 @brief “§–¾‚ÈáŠQ•¨
+’S“–FO•r—T‘¾
 */
 
 #include "stdafx.h"

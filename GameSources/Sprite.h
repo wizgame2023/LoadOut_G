@@ -20,9 +20,6 @@ namespace basecross {
 		bool m_Clear;//透明にするかしないかの変数
 		bool m_updateFlag;//アップデートするかしないかの変数
 
-		//vector<VertexPositionColorTexture> m_vertices;
-		//vector<uint16_t> m_indices;
-		//shared_ptr<PCTSpriteDraw> m_draw;
 		wstring m_textureName;//テクスチャの名前
 
 		shared_ptr<Transform> m_trans;

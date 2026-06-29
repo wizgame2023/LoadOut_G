@@ -1,6 +1,7 @@
 /*!
 @file RandomItem.cpp
 @brief 手に入れるとランダムにイベントが発生するアイテム
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

@@ -1,6 +1,7 @@
 /*!
 @file MovieUpEnemy.cpp
 @brief 敵が上がるムービー
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

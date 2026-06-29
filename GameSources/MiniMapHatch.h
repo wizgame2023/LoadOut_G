@@ -1,6 +1,7 @@
 /*!
 @file MiniMapHatch.h
 @brief ミニマップ用のハッチ
+担当：三瓶裕太
 */
 
 #pragma once

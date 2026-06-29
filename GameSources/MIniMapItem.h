@@ -1,6 +1,7 @@
 /*!
 @file MiniMapItem.h
 @brief スプライト用のクラス
+担当：三瓶裕太
 */
 
 #pragma once

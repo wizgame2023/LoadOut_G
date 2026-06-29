@@ -1,6 +1,7 @@
 /*!
 @file MovieGameStart.cpp
 @brief ゲーム開始時のムービ用
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

@@ -1,6 +1,7 @@
 /*!
 @file Player.cpp
 @brief プレイヤーなど実体
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

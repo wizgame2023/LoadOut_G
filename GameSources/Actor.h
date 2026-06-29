@@ -20,7 +20,7 @@ namespace basecross {
 
 	public:
 		Actor(const shared_ptr<Stage>& stagePtr);
-		~Actor();
+		virtual ~Actor();
 
 		virtual void OnUpdate()override;
 

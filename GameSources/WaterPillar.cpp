@@ -1,7 +1,7 @@
 /*!
 @file WaterPillar.cpp
 @brief ブロックのオブジェクトの実装
-担当：三瓶
+担当：三瓶裕太
 */
 
 #include "stdafx.h"
@@ -46,8 +46,6 @@ namespace basecross {
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		ptrDraw->SetMeshResource(L"WaterPillerMesh");
 		ptrDraw->AddAnimation(L"Defalt", 0, 30, true, 30.0f);//アニメーション追加
-
-		//ptrDraw->SetTextureResource(L"Water");
 
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 

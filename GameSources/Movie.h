@@ -26,7 +26,7 @@ namespace basecross {
 		int m_count;
 	public:
 		Movie(shared_ptr<Stage>& stagePtr);
-		~Movie();
+		virtual ~Movie();
 
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;

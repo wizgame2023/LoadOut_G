@@ -1,6 +1,7 @@
 /*!
 @file MovieGameUPEandP.cpp
 @brief 敵が打ちあがる際プレイヤーもマンホールを踏んでた際の処理
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

@@ -297,12 +297,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MovieUpEnemyMulti.h">
       <Filter>Headers\Movie</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapHatch.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)TutorialBoard.h">
-      <Filter>Headers\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameExplanation.h">
       <Filter>Headers\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TutorialBoard.h">
+      <Filter>Headers\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MiniMapHatch.h">
+      <Filter>Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -525,12 +527,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MovieUpEnemyMulti.cpp">
       <Filter>Sources\Movie</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapHatch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TutorialBoard.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameExplanation.cpp">
       <Filter>Sources\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiniMapHatch.cpp">
+      <Filter>Sources\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

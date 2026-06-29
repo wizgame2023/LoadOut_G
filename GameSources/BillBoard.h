@@ -1,6 +1,6 @@
 /*!
-@file Character.h
-@brief キャラクターなど
+@file BillBoard.h
+@brief ビルボード
 */
 
 #pragma once

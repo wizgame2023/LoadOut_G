@@ -1,6 +1,6 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file NumberManager.cpp
+@brief 数字のスプライトを管理するクラス
 */
 
 #include "stdafx.h"

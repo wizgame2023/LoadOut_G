@@ -29,7 +29,7 @@ namespace basecross {
 
 	public:
 		AStar();  // コンストラクタ
-		~AStar(); // デストラクタ
+		virtual ~AStar(); // デストラクタ
 
 		vector<Vec3> RouteSearch(Vec3 startPos,Vec3 goalPos); // 経路探査
 		bool MoveActor(shared_ptr<Actor> actor,vector<Vec3> routePos,int& routeCount,float speed); // 移動処理

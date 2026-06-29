@@ -237,18 +237,7 @@ namespace basecross {
 
 		}
 
-		////目的地に移動したとみなす処理１
-		//if (abs(pos.x - routePos[routeCount].x) <= 1.0f && abs(pos.z - routePos[routeCount].z) <= 1.0f)
-		//{
-		//	pos = routePos[routeCount];
-		//	trans->SetPosition(pos);//所有者(Enemy)のポジションの更新
-		//	if (routeCount < routePos.size() - 1)//この先に進まないといけない先がある場合
-		//	{
-		//		routeCount++;//目的地を変える
-		//	}
-		//}
-
-		//目的地に移動したとみなす処理２バグが出ている可能性があるため注意すべし
+		//目的地に移動したとみなす処理２
 		if (routePos.size() - 1 >= routeCount + 1)//指定する配列数が配列範囲内であるか確認する
 		{
 			//ルートサーチを最初にした場合の移動方法の検索処理
@@ -491,7 +480,7 @@ namespace basecross {
 		Math math;	
 		auto angle = math.GetAngle(pos, routePos[routeCount]);
 
-		//移動処理先生になぜここがxもプラスされるか聞く
+		//移動処理
 		if (m_movePos.x != 0)
 		{
 			pos.x += -sin(angle) * speed * delta;

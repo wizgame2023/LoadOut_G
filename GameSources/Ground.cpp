@@ -1,7 +1,7 @@
 /*!
 @file Ground.cpp
 @brief ブロックのオブジェクトの実装
-担当：三瓶
+担当：三瓶裕太
 */
 
 #include "stdafx.h"
@@ -75,19 +75,11 @@ namespace basecross {
 			}
 		}
 
-
-		//コリジョン生成 コリジョンいらなくなった
-		//auto ptrColl = AddComponent<CollisionObb>();
-		//ptrColl->SetFixed(false);
-		//ptrColl->SetSleepActive(true);//ぶつからない限りスリープ状態になる
-		//ptrColl->SetDrawActive(true);//コリジョンを見えるようにする
-
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
 		AddTag(L"Ground");//地面用のタグ
-
 	}
 
 }

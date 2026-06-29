@@ -1,6 +1,6 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file Sprite.cpp
+@brief スプライト実体
 */
 
 #include "stdafx.h"

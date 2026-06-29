@@ -1,6 +1,6 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file MiniMapManager.cpp
+@brief ミニマップ表示のために管理
 */
 
 #include "stdafx.h"

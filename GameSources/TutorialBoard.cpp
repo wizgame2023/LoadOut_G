@@ -1,6 +1,7 @@
 /*!
 @file TutorialBoard.cpp
 @brief チュートリアルのマネージャー
+担当：三瓶裕太
 */
 
 #include "stdafx.h"
@@ -37,7 +38,7 @@ namespace basecross {
 		m_ptrDraw->SetMeshResource(L"DEFAULT_SQUARE");
 		m_ptrDraw->SetTextureResource(L"Tutorial_Manhole");
 		m_ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 1.0f));
-		SetAlphaActive(true);
+		SetAlphaActive(false);
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -45,9 +46,6 @@ namespace basecross {
 
 		//Player取得
 		m_player = GetStage()->GetSharedGameObject<Player>(L"Player");
-
-		//AddTag(L"Block");//ブロック用のタグこれが基礎のオブジェクト
-
 	}
 
 	//更新

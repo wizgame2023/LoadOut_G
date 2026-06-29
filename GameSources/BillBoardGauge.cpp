@@ -1,6 +1,7 @@
 /*!
 @file BillBoardGauge.cpp
 @brief ビルボードのゲージ処理
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

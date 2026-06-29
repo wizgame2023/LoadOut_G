@@ -1,6 +1,7 @@
 /*!
 @file MovieUpPlayer.cpp
 @brief Playerが打ちあがる時のムービー
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

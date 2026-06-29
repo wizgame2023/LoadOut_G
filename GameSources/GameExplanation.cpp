@@ -1,6 +1,7 @@
 /*!
 @file GameExplanation.cpp
 @brief 説明用のゲームオブジェクト
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

@@ -1,6 +1,7 @@
 /*!
 @file Hatch.cpp
 @brief ハッチ処理
+担当：三瓶裕太
 */
 
 #include "stdafx.h"
@@ -42,17 +43,11 @@ namespace basecross {
 		ptrDraw->SetOwnShadowActive(true); // 影の映り込みを反映させる
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
-		////コリジョン生成
-		//auto ptrColl = AddComponent<CollisionObb>();
-		//ptrColl->SetAfterCollision(AfterCollision::None);
-		//ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
-
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
 
 		AddTag(L"Hatch");//ハッチ用のタグ
-
 	}
 
 	void Hatch::OnUpdate()
@@ -68,12 +63,7 @@ namespace basecross {
 			{
 				m_count = 1;
 				stage->AddGameObject<MovieGameClear>();//デバック用
-
 			}
-
-			//ステージマネージャーにゲームクリアのフラグを渡す
-			//auto stageManager = stage->GetSharedGameObject<StageManager>(L"StageManager");
-			//stageManager->SetClearFlag(true);
 		}
 	}
 

@@ -1,6 +1,7 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file Wall.cpp
+@brief 壁
+担当：三瓶裕太
 */
 
 #include "stdafx.h"
@@ -50,13 +51,6 @@ namespace basecross {
 		ptrColl->SetSleepActive(false);//ぶつからない限りスリープ状態になる
 
 		ptrColl->SetDrawActive(false);//コリジョンを見えるようにする
-
-
-		//影を付ける
-		//auto ptrShadow = AddComponent<Shadowmap>();
-		//ptrShadow->SetMeshResource(L"DEFAULT_CUBE");
-		//ptrShadow->SetMeshToTransformMatrix(spanMat);
-
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);

@@ -1,6 +1,7 @@
 /*!
 @file MovieGameOver.cpp
 @brief ゲームオーバーのムービー
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

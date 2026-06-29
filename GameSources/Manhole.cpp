@@ -1,6 +1,7 @@
 /*!
 @file Manhole.cpp
 @brief ƒ}ƒ“ƒz[ƒ‹
+’S“–FŽO•r—T‘¾
 */
 
 #include "stdafx.h"
@@ -279,7 +280,7 @@ namespace basecross {
 
 				auto localPlayer = m_stage->GetSharedGameObject<Player>(L"Player"); // player•Ï”‚É“ü‚ê‚é‚±‚Æ‚Íconst‚É‚æ‚Á‚Ä‚Å‚«‚È‚¢‚½‚ß‚±‚ê‚ÅPlayer‚ðŽó‚¯Žæ‚è‚Ü‚·
 				auto player = m_stage->GetSharedGameObject<Player>(L"Player");
-				auto playerPos = GetComponent<Transform>()->GetPosition();
+				auto playerPos = player->GetComponent<Transform>()->GetPosition();
 				auto playerSelPos = m_lockMapManager->ConvertCellMap(playerPos);
 				auto selPos = m_lockMapManager->ConvertCellMap(m_pos);
 

@@ -1,6 +1,7 @@
 /*!
 @file MyCamera.cpp
 @brief プレイヤーを追尾するカメラ
+担当：三瓶裕太
 */
 
 #include "stdafx.h"
@@ -20,6 +21,7 @@ namespace basecross {
 
 	void MyCamera::OnCreate()
 	{
+
 	}
 
 	void MyCamera::OnUpdate()
@@ -32,7 +34,6 @@ namespace basecross {
 
 		//カメラの座標を決める	
 		SetEye(m_Pos+posPlayer);
-
 	}
 
 }

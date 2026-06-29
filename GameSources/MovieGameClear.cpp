@@ -1,6 +1,7 @@
 /*!
 @file MovieGameClear.cpp
 @brief ゲームクリアのムービー
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

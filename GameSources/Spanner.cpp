@@ -2,6 +2,7 @@
 @file Spanner.cpp
 @brief フラグ管理用のアイテム
        このアイテムを拾うことによってマンホールを上げて攻撃することができる
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

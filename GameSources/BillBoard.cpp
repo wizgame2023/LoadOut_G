@@ -1,6 +1,7 @@
 /*!
-@file Character.cpp
-@brief キャラクターなど実体
+@file BillBoard.cpp
+@brief ビルボード
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

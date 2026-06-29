@@ -1,6 +1,7 @@
 /*!
 @file Actor.cpp
 @brief PlayerやEnemyなど動くオブジェクトの親クラス
+担当：三瓶裕太
 */
 
 #include "stdafx.h"

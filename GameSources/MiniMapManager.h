@@ -12,8 +12,6 @@ namespace basecross {
 	private:
 		Vec3 m_startPos; // 初期位置(ピポット)
 
-		//weak_ptr<Hatch> m_spriteHatch;//ミニマップのハッチ
-
 		int m_beforeItemNum;  // 前のアイテムの個数
 		int m_beforeEnemyNum; // 前の敵の数
 

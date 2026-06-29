@@ -1,6 +1,6 @@
 /*!
-@file Character.h
-@brief キャラクターなど
+@file NumberManager.cpp
+@brief 数字のスプライトを管理するクラス
 */
 
 #pragma once
